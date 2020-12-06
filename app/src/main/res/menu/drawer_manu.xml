@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <group
+        android:id="@+id/group1"
+        android:checkableBehavior="single"
+        >
+        <item
+            android:id="@+id/deshboard"
+            android:icon="@drawable/ic_dashboard"
+            android:title="@string/dashboard" />
+        <item
+            android:id="@+id/myWallet"
+            android:icon="@drawable/ic_walet"
+            android:title="@string/myWallet" />
+        <item
+            android:id="@+id/exchange"
+            android:icon="@drawable/ic_exchange"
+            android:title="@string/exchange" />
+        <item
+            android:id="@+id/profile"
+            android:icon="@drawable/ic_profile"
+            android:title="@string/profile" />
+        <item
+            android:id="@+id/security"
+            android:icon="@drawable/ic_security"
+            android:title="@string/security" />
+        <item
+            android:id="@+id/setting"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/setting" />
+        <item
+            android:id="@+id/support"
+            android:icon="@drawable/ic_support"
+            android:title="@string/support" />
+        <item
+            android:id="@+id/dark_mode"
+            android:icon="@drawable/ic_dark_mode"
+            android:title="@string/dark_mode" />
+        <item
+            android:id="@+id/pay_history"
+            android:icon="@drawable/ic_history"
+            android:title="@string/pay_history" />
+    </group>
+    <item
+        android:title="@string/other">
+        <menu>
+            <group
+
+                android:checkableBehavior="single">
+                <item
+                    android:id="@+id/customer"
+                    android:icon="@drawable/ic_customer_support"
+                    android:title="@string/customer_support" />
+                <item
+                    android:id="@+id/share"
+                    android:icon="@drawable/ic_share"
+                    android:title="@string/share" />
+                <item
+                    android:id="@+id/logout"
+                    android:icon="@drawable/ic_logout"
+                    android:title="@string/logout" />
+
+
+            </group>
+        </menu>
+    </item>
+
+
+
+</menu>

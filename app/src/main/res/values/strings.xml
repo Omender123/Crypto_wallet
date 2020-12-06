@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">Croyto Wallet</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="dashboard">Dashboard</string>
+    <string name="wallet">Wallet</string>
+    <string name="myWallet">My Wallet</string>
+    <string name="exchange">Exchange</string>
+    <string name="profile">Profile</string>
+    <string name="security">Security</string>
+    <string name="setting">Setting</string>
+    <string name="support">Support</string>
+    <string name="dark_mode">Dark Mode </string>
+    <string name="pay_history">Pay History</string>
+    <string name="customer_support">Customer Support</string>
+    <string name="share">Share</string>
+    <string name="logout">Logout</string>
+    <string name="other">Other</string>
+
+    <string name="get_started">Get Started</string>
+    <string name="send_bitcoin">Send Bitcoin to your IMT Wallet</string>
 </resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FF03DAC5</color> <!--progress bar color-->
+    <color name="purple_500">#ED8A4C</color><!-- tool bar color-->
+    <color name="purple_700">#1F2641</color> <!--status bar color-->
+   <!-- <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+   --> <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="background">#1F2641</color>
+    <color name="status_color">#1F2641</color>
+    <color name="toolbar">#1F2641</color>
+    <color name="toolbar_text_color">#F8F8F8</color>
+    <color name="Orange">#ED8A4C</color>
+    <color name="drawer_background">#1F2641</color>
+    <color name="drawer_icon">#F8F8F8</color>
+    <color name="drawer_tittle">#F8F8F8</color>
+    <color name="card_background">#363F61</color>
+    <color name="pink">#EA485C</color>
+</resources>
