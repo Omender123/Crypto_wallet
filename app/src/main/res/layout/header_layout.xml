@@ -1,28 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/Orange"
+    android:layout_height="100dp"
+    android:background="@drawable/gradient"
     android:paddingBottom="10dp"
+    android:gravity="center"
     android:orientation="vertical">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="UserName"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        android:layout_marginTop="28dp"
+        android:textSize="18dp"
+        android:layout_gravity="center"
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
+        android:layout_marginTop="13dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:gravity="center_horizontal" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Username@gmail.com"
-        android:textSize="15dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:layout_marginTop="2dp"
+        android:layout_gravity="center"
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:gravity="center_horizontal" />
 
 

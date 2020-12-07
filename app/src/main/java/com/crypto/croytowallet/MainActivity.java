@@ -3,6 +3,7 @@ package com.crypto.croytowallet;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -11,8 +12,10 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -37,21 +40,25 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar=findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitleTextColor(getResources().getColor(R.color.toolbar_text_color));
-        toolbar.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+      //  toolbar.setTitleTextColor(getResources().getColor(R.color.toolbar_text_color));
 
         changeStatusBarColor();
         init();
 
+
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
+
     }
 
     private void init() {
         drawer = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.navigationView);
         bottomNavigationView = findViewById(R.id.bottomNavigation);
+        Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_support, getApplicationContext().getTheme());
+
+
 
         navController = Navigation.findNavController(this,R.id.main);
         appBarConfiguration = new AppBarConfiguration.Builder(new int[]{R.id.deshboard,R.id.myWallet,R.id.exchange,R.id.profile})
