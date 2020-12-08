@@ -10,13 +10,13 @@
 
       <LinearLayout
           android:layout_width="match_parent"
-          android:layout_height="150dp"
+          android:layout_height="170dp"
           android:layout_marginRight="15dp"
           android:layout_marginLeft="15dp"
           android:layout_marginTop="20dp"
           android:orientation="vertical"
           android:gravity="center"
-          android:background="@drawable/ic_rectangle_16917">
+          android:background="@drawable/ic_one12">
           <TextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"

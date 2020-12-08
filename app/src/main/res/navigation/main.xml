@@ -6,25 +6,6 @@
     android:id="@+id/main"
     app:startDestination="@id/deshboard">
 
-   <!-- <fragment
-        android:id="@+id/home"
-        android:name="com.example.navigationcomponentwithbottomnavigationanddrawer.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
-
-    <fragment
-        android:id="@+id/about"
-        android:name="com.example.navigationcomponentwithbottomnavigationanddrawer.AboutFragment"
-        android:label="fragment_about"
-        tools:layout="@layout/fragment_about" />
-
-    <fragment
-        android:id="@+id/bookmark"
-        android:name="com.example.navigationcomponentwithbottomnavigationanddrawer.BookmarkFragment"
-        android:label="fragment_bookmark"
-        tools:layout="@layout/fragment_bookmark" />
-
--->
     <fragment
         android:id="@+id/deshboard"
         android:name="com.crypto.croytowallet.fragement.Deshboard"
@@ -45,4 +26,13 @@
         android:name="com.crypto.croytowallet.fragement.Profile"
         android:label="@string/profile"
         tools:layout="@layout/fragment_profile" />
+    <activity
+        android:id="@+id/security"
+        android:name="com.crypto.croytowallet.Activity.Security"
+
+        tools:layout="@layout/activity_security" />
+ <activity
+     android:id="@+id/support"
+     android:name="com.crypto.croytowallet.Activity.Support"
+     tools:layout="@layout/activity_support" />
 </navigation>

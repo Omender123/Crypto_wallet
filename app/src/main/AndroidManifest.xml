@@ -9,7 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CroytoWallet">
-        <activity android:name=".MainActivity" android:theme="@style/Theme.CroytoWallet.NoActionBar">
+        <activity android:name=".Activity.Support"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar"></activity>
+        <activity
+            android:name=".Activity.Security"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

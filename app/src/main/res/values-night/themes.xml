@@ -6,11 +6,13 @@
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
-     <!--   <item name="colorSecondary">@color/teal_200</item>
+      <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
-     -->   <item name="colorOnSecondary">@color/purple_700</item>
+      <item name="colorOnSecondary">@color/purple_700</item>
         <!-- Status bar color. -->
         <item name="android:colorPrimaryDark">@color/status_color</item>
+
+
     </style>
     <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>
