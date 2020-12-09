@@ -18,43 +18,28 @@ import android.widget.LinearLayout;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
 
-public class Support extends AppCompatActivity {
-ImageView imageView;
-ActionBar actionBar;
-    LinearLayout support;
+public class Setting extends AppCompatActivity {
+    ImageView imageView;
+    LinearLayout setting;
     Animation down;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_support);
+        setContentView(R.layout.activity_setting);
         imageView =findViewById(R.id.back);
-        support=findViewById(R.id.support2);
+        setting=findViewById(R.id.setting2);
         down = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_down1);
-        support.startAnimation(down);
+        setting.startAnimation(down);
 
-
-        // toolbar=findViewById(R.id.toolbar);
-        //  setSupportActionBar(toolbar);
-        // actionBarSetup();
         back();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        Intent intent = new Intent(Support.this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // todo: goto back activity from here
 
-                Intent intent = new Intent(Support.this, MainActivity.class);
+
+                Intent intent = new Intent(Setting.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 return true;
@@ -62,22 +47,12 @@ ActionBar actionBar;
         }
         return super.onOptionsItemSelected(item);
     }
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    private void actionBarSetup() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            actionBar = getSupportActionBar();
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setDisplayShowHomeEnabled(true);
 
-            //   actionBar.setTitle("Price Action Strategy ");
-
-        }
-    }
     public void back(){
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Support.this, MainActivity.class);
+                Intent intent = new Intent(Setting.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }

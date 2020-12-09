@@ -11,7 +11,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 
 import com.crypto.croytowallet.MainActivity;
@@ -21,14 +24,19 @@ public class Security extends AppCompatActivity {
 ActionBar actionBar;
 Toolbar toolbar;
 ImageView imageView;
+    LinearLayout security;
+    Animation down;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_security);
         imageView =findViewById(R.id.back);
+        security=findViewById(R.id.security2);
        // toolbar=findViewById(R.id.toolbar);
       //  setSupportActionBar(toolbar);
        // actionBarSetup();
+        down = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_down1);
+        security.startAnimation(down);
         back();
     }
 

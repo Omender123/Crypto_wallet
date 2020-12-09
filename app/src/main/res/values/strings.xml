@@ -29,14 +29,53 @@
     <string name="knowledge">Knowledge Base</string>
     <string name="status">Status</string>
     <string name="contact_us">Contact Us</string>
-   <string name="support_text">Use the options below tolearn about IMT,  </string>
+    <string name="support_text">Use the options below tolearn about IMT,  </string>
     <string name="support_text1">Solve the problem and get in touch,</string>
     <string name="text3">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut</string>
-    
+
     <string name="text2">a fingerprint or digital fingerprint refers to any trace of information left by someone.</string>
     <string name="text1">A passcode, is a memorized secret, typically a string of characters, usually used to confirm a user identity.</string>
     <string name="text">A proper backup copy is stored in a separate system or medium, such as tape, from the primary data to protect against the possibility of data loss due to primary hardware or software failure.</string>
 
     <string name="get_started">Get Started</string>
     <string name="send_bitcoin">Send Bitcoin to your IMT Wallet</string>
+
+    <!--text for setting screen-->
+    <string name="notification">Notifications</string>
+    <string name="sound">Sounds</string>
+    <string name="currency">Currency</string>
+    <string name="advance">Advanced</string>
+    <string name="sync">Sync Devices</string>
+    <string name="restore">Restore Wallet</string>
+    <string name="detele">Delete Wallet</string>
+    <string name="usd">USD</string>
+    <string name="below_text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna </string>
+
+    <!--text for Login and Signup screen-->
+    <string name="login">Login</string>
+    <string name="sign_up">Signup</string>
+    <string name="hello">Hello!!</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="re_password">Repeat_Password</string>
+    <string name="referal_code">Referral Code</string>
+    <string name="phone">Phone No.</string>
+    <string name="username">Username</string>
+    <string name="hello_nice">Hello, nice to meet you!</string>
+    <string name="crate">Create your Account</string>
+    <string name="enter_referral">Enter Your Referral Code</string>
+    <string name="your_referral">Your Referral Code</string>
+    <string name="ready">Ready to go </string>
+    <string name="not_referral">I Dont Have Referral Code</string>
+    <string name="next">Next</string>
+    <string name="forget">Forgot My Password</string>
+    <string name="forget_password">Forgot Password</string>
+    <string name="otp_send">OTP  receive in your email account</string>
+    <string name="comfirm">Confirm email address / OTP</string>
+    <string name="enter_otp">Enter Your OTP</string>
+    <string name="not_otp">I Do not Receive OTP Send Again</string>
+
+
 </resources>

@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".Activity.Support">
+    tools:context=".Activity.Setting">
     <LinearLayout
-        android:id="@+id/support2"
+        android:id="@+id/setting2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -44,29 +44,12 @@
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                     android:layout_gravity="center"
-                    android:text="@string/support"
+                    android:text="@string/setting"
                     android:textColor="@color/white"
                     android:id="@+id/toolbar_title" />
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/support_text"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:textAlignment="center"
-            android:gravity="center" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/support_text1"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:textAlignment="center"
-            android:gravity="center" />
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -103,7 +86,7 @@
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="15dp"
                     android:textStyle="bold"
-                    android:text="@string/mobile_support"
+                    android:text="@string/notification"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/toolbar_text_color"
                     android:textSize="16dp" />
@@ -114,10 +97,10 @@
                     android:layout_alignLeft="@id/backup"
                     android:layout_below="@id/text"
                     android:layout_marginLeft="40dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="60dp"
                     android:layout_marginTop="2dp"
                     android:textSize="10dp"
-                    android:text="@string/text3"
+                    android:text="@string/below_text"
                     android:justificationMode="inter_word"
                     />
                 <ImageView
@@ -128,7 +111,7 @@
                     android:layout_marginTop="12dp"
                     android:layout_marginLeft="17dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_mobile_support" />
+                    android:src="@drawable/ic_notifications" />
 
             </RelativeLayout>
 
@@ -168,10 +151,10 @@
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="15dp"
                     android:textStyle="bold"
-                    android:text="@string/knowledge"
+                    android:text="@string/sound"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/toolbar_text_color"
-                    android:textSize="16dp" />
+                    android:textSize="17dp" />
 
                 <ImageView
                     android:id="@+id/passcode"
@@ -181,20 +164,20 @@
                     android:layout_marginTop="12dp"
                     android:layout_marginLeft="17dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_knowledge_base" />
+                    android:src="@drawable/ic_sounds" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/text1"
                     android:layout_alignLeft="@id/passcode"
-                    android:layout_marginLeft="39dp"
+                    android:layout_marginLeft="40dp"
                     android:layout_marginTop="2dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="60dp"
                     android:layout_toLeftOf="@+id/checkbox"
                     android:justificationMode="inter_word"
-                    android:textSize="11dp"
-                    android:text="@string/text3"
+                    android:textSize="10dp"
+                    android:text="@string/below_text"
                     />
             </RelativeLayout>
 
@@ -234,10 +217,10 @@
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="15dp"
                     android:textStyle="bold"
-                    android:text="@string/status"
+                    android:text="@string/currency"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/toolbar_text_color"
-                    android:textSize="17dp" />
+                    android:textSize="16dp" />
 
                 <ImageView
                     android:id="@+id/finger"
@@ -247,24 +230,44 @@
                     android:layout_marginTop="12dp"
                     android:layout_marginLeft="17dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_status" />
+                    android:src="@drawable/ic_currency" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/text2"
                     android:layout_alignLeft="@id/finger"
-                    android:layout_marginLeft="39dp"
+                    android:layout_marginLeft="40dp"
                     android:layout_marginTop="2dp"
-                    android:textSize="11dp"
-                    android:layout_marginRight="20dp"
+                    android:textSize="10dp"
+                    android:layout_marginRight="60dp"
                     android:layout_toLeftOf="@+id/checkbox1"
                     android:justificationMode="inter_word"
-                    android:text="@string/text3"
+                    android:text="@string/below_text"
                     />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/text2"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
+                    android:text="@string/usd"
+                    android:textColor="@color/toolbar_text_color"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
             </RelativeLayout>
 
         </androidx.cardview.widget.CardView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/advance"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="4dp"/>
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -299,7 +302,7 @@
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="15dp"
                     android:textStyle="bold"
-                    android:text="@string/contact_us"
+                    android:text="@string/sync"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/toolbar_text_color"
                     android:textSize="16dp" />
@@ -312,36 +315,161 @@
                     android:layout_marginTop="12dp"
                     android:layout_marginLeft="15dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_mobile_support_1" />
+                    android:src="@drawable/ic_sync_devices" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/text3"
                     android:layout_alignLeft="@id/contact"
-                    android:layout_marginLeft="39dp"
+                    android:layout_marginLeft="40dp"
                     android:layout_marginTop="2dp"
-                    android:textSize="11dp"
-                    android:layout_marginRight="20dp"
+                    android:textSize="10dp"
+                    android:layout_marginRight="60dp"
                     android:layout_toLeftOf="@+id/checkbox1"
                     android:justificationMode="inter_word"
-                    android:text="@string/text3"
+                    android:text="@string/below_text"
                     />
 
             </RelativeLayout>
 
         </androidx.cardview.widget.CardView>
 
-        <TextView
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/card_background"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="50dp"
-            android:textAlignment="center"
-            android:text="@string/privacy"
-            android:layout_gravity="bottom"/>
+            android:layout_marginTop="5dp"
+            app:cardCornerRadius="5dp"
+            android:elevation="2dp">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingBottom="15dp">
+
+                <View
+                    android:id="@+id/view4"
+                    android:layout_width="5dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/gradient" />
+
+
+                <TextView
+                    android:id="@+id/text4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/restore"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="15dp"
+                    android:textStyle="bold"
+                    android:text="@string/restore"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@color/toolbar_text_color"
+                    android:textSize="16dp" />
+
+                <ImageView
+                    android:id="@+id/restore"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_alignLeft="@id/view4"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginLeft="15dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_restore_wallet" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/text4"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginRight="60dp"
+                    android:layout_toEndOf="@+id/restore"
+                    android:layout_toRightOf="@+id/restore"
+                    android:justificationMode="inter_word"
+                    android:text="@string/below_text"
+                    android:textSize="10dp" />
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/card_background"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            app:cardCornerRadius="5dp"
+            android:elevation="2dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingBottom="15dp">
+
+                <View
+                    android:id="@+id/view5"
+                    android:layout_width="5dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/gradient" />
+
+
+                <TextView
+                    android:id="@+id/text5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/detele"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="15dp"
+                    android:textStyle="bold"
+                    android:text="@string/detele"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@color/toolbar_text_color"
+                    android:textSize="16dp" />
+
+                <ImageView
+                    android:id="@+id/detele"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_alignLeft="@id/view5"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginLeft="15dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_delete_wallet" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/text5"
+                    android:layout_alignLeft="@id/detele"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="2dp"
+                    android:textSize="10dp"
+                    android:layout_marginRight="60dp"
+                    android:layout_toLeftOf="@+id/checkbox1"
+                    android:justificationMode="inter_word"
+                    android:text="@string/below_text"
+                    />
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
-   </ScrollView>
+</ScrollView>

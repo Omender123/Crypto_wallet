@@ -7,6 +7,7 @@
     android:background="@color/background"
     tools:context=".fragement.Profile">
 <LinearLayout
+    android:id="@+id/profile1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
@@ -14,15 +15,15 @@
     android:paddingBottom="30dp"
     android:orientation="vertical">
     <ImageView
+
         android:layout_marginTop="15dp"
-        android:id="@+id/share"
+        android:id="@+id/share1"
         android:layout_width="70dp"
         android:layout_height="70dp"
-
         android:src="@drawable/ic_profile_share"/>
 
     <TextView
-
+        android:id="@+id/get"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/get_started"
@@ -32,6 +33,7 @@
         android:textColor="@color/toolbar_text_color"
         android:textStyle="bold|normal"/>
     <TextView
+        android:id="@+id/send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/send_bitcoin"
@@ -41,6 +43,7 @@
 
         />
     <androidx.cardview.widget.CardView
+        android:id="@+id/security1"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         app:cardBackgroundColor="@color/card_background"
@@ -88,6 +91,7 @@
 
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/setting1"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         app:cardBackgroundColor="@color/card_background"
@@ -133,6 +137,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/support1"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         app:cardBackgroundColor="@color/card_background"
@@ -141,6 +146,7 @@
         android:elevation="2dp">
 
         <RelativeLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center">
