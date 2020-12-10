@@ -59,7 +59,7 @@
     <string name="name">Name</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="re_password">Repeat_Password</string>
+    <string name="re_password">Repeat Password</string>
     <string name="referal_code">Referral Code</string>
     <string name="phone">Phone No.</string>
     <string name="username">Username</string>
@@ -76,6 +76,13 @@
     <string name="comfirm">Confirm email address / OTP</string>
     <string name="enter_otp">Enter Your OTP</string>
     <string name="not_otp">I Do not Receive OTP Send Again</string>
+    <string name="change_password">Change Password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="done">Done</string>
+    <string name="transaction">Transaction Pin</string>
+    <string name="c_transaction">Confirm Transaction Pin</string>
+    <string name="enter_pin">Enter Transaction Pin</string>
 
 
 </resources>

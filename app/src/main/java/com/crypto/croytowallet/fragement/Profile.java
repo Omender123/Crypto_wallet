@@ -56,13 +56,13 @@ TextView get,send;
         left = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_left);
 
         //set animation
-        profile.startAnimation(down);
-        setting.startAnimation(right);
-        support.startAnimation(right);
-        security.startAnimation(right);
+       profile.startAnimation(right);
+       /* setting.startAnimation(left);
+        support.startAnimation(left);
+        security.startAnimation(left);
         share.startAnimation(left);
         get.startAnimation(left);
-        send.startAnimation(left);
+        send.startAnimation(left);*/
 
         setting.setOnClickListener(new View.OnClickListener() {
             @Override

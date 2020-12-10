@@ -2,15 +2,31 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.crypto.croytowallet">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.CroytoWallet">
-        <activity android:name=".login.OTP_Activity"
+        <activity android:name=".TransactionPin.TransactionPin"
             android:theme="@style/Theme.CroytoWallet.NoActionBar"></activity>
+        <activity android:name=".signup.SignUp"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar"/>
+        <activity android:name=".signup.Referral_code"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar"/>
+        <activity
+            android:name=".login.Change_Password"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+        <activity
+            android:name=".login.OTP_Activity"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
         <activity
             android:name=".login.ForgetPassword"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />

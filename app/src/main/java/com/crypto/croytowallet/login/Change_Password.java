@@ -9,17 +9,17 @@ import android.widget.Button;
 
 import com.crypto.croytowallet.R;
 
-public class OTP_Activity extends AppCompatActivity {
-Button next2;
+public class Change_Password extends AppCompatActivity {
+Button done;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_o_t_p_);
-        next2=findViewById(R.id.next2);
-        next2.setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.activity_change__password);
+        done=findViewById(R.id.done);
+        done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),Change_Password.class));
+                startActivity(new Intent(getApplicationContext(),Login.class));
             }
         });
     }
@@ -27,7 +27,7 @@ Button next2;
     public void onBackPressed() {
         super.onBackPressed();
 
-        Intent intent = new Intent(getApplicationContext(), ForgetPassword.class);
+        Intent intent = new Intent(getApplicationContext(), OTP_Activity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
