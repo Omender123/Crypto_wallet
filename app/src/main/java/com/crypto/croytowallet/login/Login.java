@@ -26,13 +26,16 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
+import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.signup.Referral_code;
 import com.crypto.croytowallet.signup.SignUp;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,6 +65,13 @@ EditText username,password;
 
         forget_password=findViewById(R.id.forget);
         listener();
+        //if the user is already logged in we will directly start the profile activity
+
+      /*  if (SharedPrefManager.getInstance(this).isLoggedIn()) {
+            finish();
+            startActivity(new Intent(this, MainActivity.class));
+            return;
+        }*/
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,7 +103,7 @@ EditText username,password;
         String usernames = username.getText().toString().trim();
 
         if (passwords.isEmpty() || passwords.length() < 8) {
-            password.setError("please enter your password is more then 8 dight");
+            password.setError("please enter your password is more then 8 digit");
             requestFocus(password);
             valid = false;
         } else {
@@ -130,18 +140,8 @@ EditText username,password;
             @Override
             public void onResponse(String response) {
                 hidepDialog();
-               /* //   responsess.setText(response);
-                try {
-                    JSONObject jsonObject=new JSONObject(response);
-                    String result=jsonObject.getString("result");
-                    JSONObject jsonObject1=new JSONObject(result);
-                    id=jsonObject1.getString("_id");
-                    Token =jsonObject.getString("token");
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-             */
+
                 Toast.makeText(Login.this, "Login Successfully", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
@@ -151,7 +151,8 @@ EditText username,password;
             @Override
             public void onErrorResponse(VolleyError error) {
                 hidepDialog();
-                  Toast.makeText(getBaseContext(), "Some thing is Wrong", Toast.LENGTH_LONG).show();
+                parseVolleyError(error);
+                 // Toast.makeText(getBaseContext(), "Some thing is Wrong", Toast.LENGTH_LONG).show();
               //  Toast.makeText(Login.this, ""+error.toString(), Toast.LENGTH_SHORT).show();
 
             }
@@ -174,6 +175,7 @@ EditText username,password;
 
                 return headers;
             }
+
         };
 
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
@@ -181,6 +183,17 @@ EditText username,password;
 
     }
 
+    public void parseVolleyError(VolleyError error) {
+        try {
+            String responseBody = new String(error.networkResponse.data, "utf-8");
+            JSONObject data = new JSONObject(responseBody);
+
+            String message=data.getString("error");
+            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+        } catch (JSONException e) {
+        } catch (UnsupportedEncodingException errorr) {
+        }
+    }
     private void showpDialog() {
         if (!progressDialog.isShowing())
             progressDialog.show();

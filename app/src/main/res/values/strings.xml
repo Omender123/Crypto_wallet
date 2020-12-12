@@ -83,6 +83,8 @@
     <string name="transaction">Transaction Pin</string>
     <string name="c_transaction">Confirm Transaction Pin</string>
     <string name="enter_pin">Enter Transaction Pin</string>
+    <string name="mnemonic">Copy to Mnemonic</string>
+
 
 
 </resources>

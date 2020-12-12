@@ -15,7 +15,7 @@
 
         <!-- Customize your theme here. -->
 
-
+      <item name="pinViewStyle">@style/PinWidget.PinView</item>
       <!--  <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
 -->
     </style>
