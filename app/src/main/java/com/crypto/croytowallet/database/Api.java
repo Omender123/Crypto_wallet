@@ -17,7 +17,14 @@ public interface Api {
             @Field("username") String username,
             @Field("password") String password,
             @Field("referalCode")String referalCode,
-            @Field("phone") String phone
+            @Field("phone") String phone);
 
-    );
+    @FormUrlEncoded
+    @POST("user/transactionPin")
+    Call<ResponseBody> Transaction(
+
+            @Field("mnemonic") String mnemonic,
+            @Field("transactionPin") String TransactionPin,
+            @Field("username") String username);
+
 }

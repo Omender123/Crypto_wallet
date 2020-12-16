@@ -115,11 +115,10 @@
 
 
                 <Button
-                    android:id="@+id/referral_ready"
+                    android:id="@+id/referral_ready4"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_below="@id/user"
-                    android:onClick="Next"
                     android:text="@string/next"
                     android:textSize="20dp"
                     android:background="@drawable/rounded_button"

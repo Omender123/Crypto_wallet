@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,39 +13,49 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crypto.croytowallet.R;
+import com.crypto.croytowallet.SharedPrefernce.SignUpData;
+import com.crypto.croytowallet.SharedPrefernce.SignUpRefernace;
 
 public class ShowMnemonic extends AppCompatActivity {
-Context context;
-TextView textView;
-Button copy;
+
+Button copy,next;
+    SharedPreferences preferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_mnemonic);
         //textView=findViewById(R.id.mnemonic);
         copy=findViewById(R.id.copy);
-
+        next =findViewById(R.id.referral_ready4);
         final TextView txtcopypaste = findViewById(R.id.mnemonic);
-        txtcopypaste.setText("dasfad");
         // my textview
+
+        SignUpData user = SignUpRefernace.getInstance(this).getUser();
+        String text= user.getMnemonic();
+        txtcopypaste.setText(text);
+
         copy.setOnClickListener(new View.OnClickListener() { // set onclick listener to my textview
             @Override
             public void onClick(View view) {
                 ClipboardManager cm = (ClipboardManager)getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
                 cm.setText(txtcopypaste.getText().toString());
-                Toast.makeText(getApplicationContext(), "Copied :)", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Copied ", Toast.LENGTH_SHORT).show();
             }
         });
 
 
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+             Intent intent=new Intent(getApplicationContext(),EnterConfirmMnemonic.class);
+             startActivity(intent);
+
+            }
+        });
     }
 
-    public void Next(View view) {
-    }
 
-    public void copy(View view) {
-        ClipboardManager cm = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
-        cm.setText(textView.getText());
-        Toast.makeText(context, cm+"", Toast.LENGTH_SHORT).show();
-    }
+
 }

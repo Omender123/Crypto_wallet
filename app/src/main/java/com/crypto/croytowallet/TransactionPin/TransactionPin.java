@@ -2,7 +2,9 @@ package com.crypto.croytowallet.TransactionPin;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.Editable;
@@ -12,30 +14,47 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.chaos.view.PinView;
 import com.crypto.croytowallet.R;
+import com.goodiebag.pinview.Pinview;
+
 public class TransactionPin extends AppCompatActivity {
     private EditText e1, e2, e3, e4, e5, e6, e11, e22, e33, e44, e55, e66;
-
+   // Pinview enterPin,confirmPin;
+   SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_pin);
-        init();
+       init();
 
-
-
+      /*  enterPin = findViewById(R.id.pinview);
+        confirmPin = findViewById(R.id.pinview1);
+*/
+        sharedPreferences=getSharedPreferences("MyData", Context.MODE_PRIVATE);
     }
 
     public void Trnasaction_Pin(View view) {
 
+      /*  String first= enterPin.getValue();
+        String second =confirmPin.getValue();
+        if (first.isEmpty() || second.isEmpty()){
+            Toast.makeText(this, "Please enter Transaction pin", Toast.LENGTH_SHORT).show();
+        } else if (first.equals(second))
+        {
+         //   startActivity(new Intent(getApplicationContext(),ShowMnemonic.class));
+            Toast.makeText(this, "Transaction Pin is Match", Toast.LENGTH_SHORT).show();
+        }else {
+
+            Toast.makeText(this, "Transaction Pin is Don't Match", Toast.LENGTH_SHORT).show();
+
+        }*/
         //startActivity(new Intent(getApplicationContext(),ShowMnemonic.class));
         com();
 
     }
 
     public void init()
-    {
+  {
 
         e1=findViewById(R.id.otp_edit_box1);
         e2=findViewById(R.id.otp_edit_box2);
@@ -67,6 +86,7 @@ public class TransactionPin extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 if (editable.length() == 1) {
                     e2.requestFocus();
+
                 }
             }
         });
@@ -275,8 +295,9 @@ public class TransactionPin extends AppCompatActivity {
 
 
     }
-    public void com()
-    {
+
+
+ public void com() {
 
         String a1=e1.getText().toString();
         String a2=e2.getText().toString();
@@ -293,10 +314,19 @@ public class TransactionPin extends AppCompatActivity {
 
         String first=a1+a2+a3+a4+a5+a6;
         String second=a11+a22+a33+a44+a55+a66;
-        if (first.equals(second))
-        {
 
-            Toast.makeText(this, "Transaction Pin is Match", Toast.LENGTH_SHORT).show();
+     if (first.isEmpty() || second.isEmpty()){
+         Toast.makeText(this, "Please enter Transaction pin", Toast.LENGTH_SHORT).show();
+      }
+     else if (first.equals(second))
+        {
+            SharedPreferences.Editor editor=sharedPreferences.edit();
+            editor.putString("transaction",first);
+            editor.commit();
+
+            Intent intent =new Intent(getApplicationContext(),ShowMnemonic.class);
+            startActivity(intent);
+
 
         }else {
 
@@ -309,21 +339,4 @@ public class TransactionPin extends AppCompatActivity {
 
 }
 
-/*
-   Pinview enterPin,confirmPin;
-   enterPin=findViewById(R.id.enterPin);
-        confirmPin=findViewById(R.id.confirmPin);
-       enterPin.setPinViewEventListener(new Pinview.PinViewEventListener() {
-           @Override
-           public void onDataEntered(Pinview pinview, boolean fromUser) {
-               firstPin=pinview.getValue();
-           }
-       });
 
-        enterPin.setPinViewEventListener(new Pinview.PinViewEventListener() {
-            @Override
-            public void onDataEntered(Pinview pinview, boolean fromUser) {
-                secondPin=pinview.getValue();
-            }
-        });
-   */

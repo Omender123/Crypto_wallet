@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -14,8 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CroytoWallet"
         android:usesCleartextTraffic="true">
-        <activity android:name=".TransactionPin.ShowMnemonic"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar"></activity>
+        <activity android:name=".TransactionPin.EnterConfirmMnemonic"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" ></activity>
+        <activity
+            android:name=".TransactionPin.ShowMnemonic"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
         <activity
             android:name=".TransactionPin.TransactionPin"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />

@@ -1,10 +1,20 @@
 package com.crypto.croytowallet.login;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -29,14 +39,25 @@ import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.signup.Referral_code;
 import com.crypto.croytowallet.signup.SignUp;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class Login extends AppCompatActivity {
@@ -47,6 +68,8 @@ EditText username,password;
     String url="http://13.233.136.56:8080/api/user/login";
     ConstraintLayout linearLayout;
     Animation fade_in,blink;
+    FusedLocationProviderClient fusedLocationProviderClient;
+    String locations,ipAddress,os;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +88,8 @@ EditText username,password;
 
         forget_password=findViewById(R.id.forget);
         listener();
+
+
         //if the user is already logged in we will directly start the profile activity
 
       /*  if (SharedPrefManager.getInstance(this).isLoggedIn()) {
@@ -193,6 +218,90 @@ EditText username,password;
         } catch (JSONException e) {
         } catch (UnsupportedEncodingException errorr) {
         }
+    }
+
+    public void getDetails(){
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        if (ActivityCompat.checkSelfPermission(Login.this,
+                Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED){
+            getLocation();
+
+        }else{
+            ActivityCompat.requestPermissions(Login.this,new String[]{ Manifest.permission.ACCESS_FINE_LOCATION}
+                    ,44);
+        }
+        getosName();
+        Ipaddress();
+    }
+    public void getosName(){
+        StringBuilder builder = new StringBuilder();
+        builder.append("android : ").append(Build.VERSION.RELEASE);
+
+        Field[] fields = Build.VERSION_CODES.class.getFields();
+        for (Field field : fields) {
+            String fieldName = field.getName();
+            int fieldValue = -1;
+
+            try {
+                fieldValue = field.getInt(new Object());
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            }
+
+            if (fieldValue == Build.VERSION.SDK_INT) {
+                os= String.valueOf(builder.append(fieldName));
+                //    builder.append("sdk=").append(fieldValue);
+
+            }
+        }
+    }
+    public void Ipaddress(){
+        try {
+            //permition
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            URL myIp = new URL("https://checkip.amazonaws.com/");
+            URLConnection c = myIp.openConnection();
+            c.setConnectTimeout(1000);
+            c.setReadTimeout(1000);
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(c.getInputStream()));
+            // textView.setText(in.readLine());
+            ipAddress=in.readLine();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } }
+
+    @SuppressLint("MissingPermission")
+    private void getLocation() {
+        fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+            @Override
+            public void onComplete(@NonNull Task<Location> task) {
+                // Initialize Location
+                Location location =task.getResult();
+                if (location!=null){
+                    try {
+                        // Initialize geoCoder
+                        Geocoder geocoder = new Geocoder(Login.this, Locale.getDefault());
+                        // Initialize addressList
+                        List<Address> addresses =geocoder.getFromLocation(
+                                location.getLatitude(),location.getLongitude(),1
+                        );
+                        locations=addresses.get(0).getSubLocality()+","+addresses.get(0).getLocality();
+                       /* textView1.setText(Html.fromHtml("<font color='#6200EE'><b>Latitude : </b><br></font>"
+                                +addresses.get(0).getLocality()));*//* +addresses.get(0).getLatitude()+"<br>"+"<font color='#6200EE'><b>Longitude : </b><br></font> "
+                            +addresses.get(0).getLongitude()));
+ *//*               //    Toast.makeText(MainActivity.this, ""+addresses.get(0).getLocality(), Toast.LENGTH_SHORT).show();
+                         */  }catch (Exception e){
+                    }
+
+                }
+            }
+        });
     }
     private void showpDialog() {
         if (!progressDialog.isShowing())

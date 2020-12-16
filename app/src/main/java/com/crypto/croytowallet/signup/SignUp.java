@@ -3,30 +3,31 @@ package com.crypto.croytowallet.signup;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.crypto.croytowallet.R;
+import com.crypto.croytowallet.SharedPrefernce.SignUpData;
+import com.crypto.croytowallet.SharedPrefernce.SignUpRefernace;
 import com.crypto.croytowallet.TransactionPin.TransactionPin;
 import com.crypto.croytowallet.database.RetrofitClient;
-import com.crypto.croytowallet.login.ForgetPassword;
 import com.crypto.croytowallet.login.Login;
-import com.google.gson.JsonObject;
+import com.google.android.material.snackbar.Snackbar;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -41,6 +42,8 @@ public class SignUp extends AppCompatActivity {
     KProgressHUD progressDialog;
     String url="http://13.233.136.56:8080/api/user/register";
     //RequestQueue requestQueue;
+    SharedPreferences sharedPreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,8 @@ public class SignUp extends AppCompatActivity {
         // animation
         constraintLayout =findViewById(R.id.signup1);
         fade_in = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_in);
+        sharedPreferences=getSharedPreferences("MyData", Context.MODE_PRIVATE);
+
       //  constraintLayout.startAnimation(fade_in);
 
 
@@ -68,19 +73,25 @@ public class SignUp extends AppCompatActivity {
         ready_to1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             //   signup();
-           startActivity(new Intent(getApplicationContext(),TransactionPin.class));
+           signup(v);
+                hideKeyboard((Button)v);
             }
         });
 
     }
-
-    public void signup() {
+    public void hideKeyboard(View view) {
+        try {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        } catch (Exception ignored) {
+        }
+    }
+    public void signup(View parentView) {
         if (validate() == false) {
             onSignupFailed();
             return;
         }
-        saveToServerDB();
+        saveToServerDB(parentView);
     }
 
 
@@ -149,7 +160,7 @@ public class SignUp extends AppCompatActivity {
         return valid;
     }
 
-    private void saveToServerDB() {
+    private void saveToServerDB(View parentView) {
 
         progressDialog=  KProgressHUD.create(SignUp.this)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
@@ -185,27 +196,49 @@ public class SignUp extends AppCompatActivity {
                         JSONObject object=new JSONObject(s);
                         String result=object.getString("result");
                         JSONObject object1=new JSONObject(result);
-                        String username=object1.getString("username");
+                    /*    String username=object1.getString("username");
                         String mnemonic=object1.getString("mnemonic");
-                       // Toast.makeText(SignUp.this, username+mnemonic+"", Toast.LENGTH_SHORT).show();
+*/
+                        SignUpData user = new SignUpData(
+                                object1.getString("username"),
+                                object1.getString("mnemonic")
+                        );
+
+                        //storing the user in shared preferences
+                        SignUpRefernace.getInstance(getApplicationContext()).UserSignUP(user);
+
+                        Intent intent = new Intent(getApplicationContext(),TransactionPin.class);
+                        startActivity(intent);
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
-                   /* JSONObject jsonObject=new JSONObject(s);
-                    String result=jsonObject.getString("result");
-                    JSONObject jsonObject1=new JSONObject(result);
-                    username2=jsonObject1.getString("username");
-                    mnemonic =jsonObject.getString("mnemonic");
-               */ }
+                }
                 else if (response.code()==400)
                 {
+
                     try {
+                       ;
                         s=response.errorBody().string();
                         JSONObject jsonObject1=new JSONObject(s);
-                        Toast.makeText(SignUp.this, jsonObject1.getString("error")+"", Toast.LENGTH_SHORT).show();
+                        String error =jsonObject1.getString("error");
+
+                        Snackbar snackbar = Snackbar
+                                .make(parentView, "Oops username or email address is already exist", Snackbar.LENGTH_LONG)
+                                .setAction("ok", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        Snackbar snackbar1 = Snackbar.make(parentView, " "+error, Snackbar.LENGTH_SHORT);
+                                        snackbar1.show();
+                                    }
+                                });
+
+                        snackbar.show();
+                       // Toast.makeText(SignUp.this, jsonObject1.getString("error")+"", Toast.LENGTH_SHORT).show();
+
 
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
