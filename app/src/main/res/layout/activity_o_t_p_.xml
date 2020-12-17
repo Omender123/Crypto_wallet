@@ -8,6 +8,7 @@
     android:background="#FFFFFF">
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="210dp"
         android:scaleType="fitXY"
@@ -16,130 +17,134 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-        <LinearLayout
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingBottom="30dp">
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp">
 
-            <RelativeLayout
+            <TextView
+                android:id="@+id/login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="130dp"
+                android:text="@string/login"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/signup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="130dp"
+                android:layout_marginRight="20dp"
+                android:text="@string/sign_up"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/purple_500"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/hello"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:layout_editor_absoluteX="16dp"
-                >
+                android:layout_height="wrap_content"
+                android:layout_below="@id/login"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="80dp"
+                android:text="@string/hello_nice"
+                android:textColor="@color/toolbar"
+                android:textSize="12dp" />
 
-                <TextView
-                    android:id="@+id/login"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="130dp"
-                    android:text="@string/login"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="20dp"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textStyle="bold" />
-                <TextView
-                    android:id="@+id/signup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="130dp"
-                    android:text="@string/sign_up"
-                    android:textColor="@color/purple_500"
-                    android:textSize="20dp"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textStyle="bold" />
+            <TextView
+                android:id="@+id/welcome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/hello"
+                android:layout_marginLeft="20dp"
+                android:text="@string/comfirm"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/toolbar"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+        </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/hello"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/login"
-                    android:text="@string/hello_nice"
-                    android:layout_marginTop="80dp"
-                    android:textSize="12dp"
-                    android:textColor="@color/toolbar"
-                    android:layout_marginLeft="20dp"/>
-                <TextView
-                    android:id="@+id/welcome"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/hello"
-                    android:text="@string/comfirm"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/toolbar"
-                    android:layout_marginLeft="20dp"/>
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/user"
-                    android:layout_below="@id/welcome"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:passwordToggleTint="@android:color/darker_gray"
-                     android:hint="@string/enter_otp"
-                    app:passwordToggleEnabled="true"
-                    style="@style/OutlineBox"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp">
-                    <EditText
-                        android:id="@+id/enter_otp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="numberPassword"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="@android:color/darker_gray"/>
-                </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/user"
+            style="@style/OutlineBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/welcome"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:hint="@string/enter_otp"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@android:color/darker_gray">
 
-                <TextView
-                    android:id="@+id/text2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/user"
-                    android:text="@string/otp_send"
-                    android:textColor="@android:color/darker_gray"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginLeft="20dp"
-                    />
-                <Button
-                    android:id="@+id/next2"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_below="@id/text2"
-                    android:text="@string/next"
-                    android:textSize="20dp"
-                    android:background="@drawable/rounded_button"
-                    android:textAllCaps="false"
-                    android:layout_margin="20dp"/>
+            <EditText
+                android:id="@+id/enter_otp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="10dp"
+                android:drawableTint="@android:color/darker_gray"
+                android:ems="10"
+                android:inputType="numberPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/text2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:text="@string/otp_send"
+            android:textColor="@android:color/darker_gray" />
+
+        <Button
+            android:id="@+id/next2"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_below="@id/text2"
+            android:layout_margin="20dp"
+            android:background="@drawable/rounded_button"
+            android:text="@string/next"
+            android:textAllCaps="false"
+            android:textSize="20dp" />
 
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_below="@id/next2"
-                    android:text="@string/not_otp"
-                    android:textAlignment="center"
-                    android:layout_marginBottom="150dp"
-                    android:textColor="@android:color/darker_gray"
-                    android:gravity="center_horizontal" />
 
-            </RelativeLayout>
-        </LinearLayout>
 
-    </ScrollView>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/resendOtp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:text="@string/not_otp"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:onClick="resendOTP"
+        android:layout_marginBottom="10dp"
+        android:textColor="@android:color/darker_gray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

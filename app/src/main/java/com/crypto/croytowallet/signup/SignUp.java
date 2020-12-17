@@ -221,7 +221,7 @@ public class SignUp extends AppCompatActivity {
                 {
 
                     try {
-                       ;
+
                         s=response.errorBody().string();
                         JSONObject jsonObject1=new JSONObject(s);
                         String error =jsonObject1.getString("error");

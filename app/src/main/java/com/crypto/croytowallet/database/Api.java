@@ -5,6 +5,7 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 
 public interface Api {
 
@@ -26,5 +27,28 @@ public interface Api {
             @Field("mnemonic") String mnemonic,
             @Field("transactionPin") String TransactionPin,
             @Field("username") String username);
+
+
+    @FormUrlEncoded
+    @POST("user/sendOTP")
+    Call<ResponseBody>sendOtp(
+            @Field("username") String username
+    );
+
+
+    @FormUrlEncoded
+    @POST("user/otpExpiry")
+    Call<ResponseBody>expireOtp(
+            @Field("username") String username
+    );
+
+    @FormUrlEncoded
+    @PUT("user/forgot-password")
+    Call<ResponseBody>ChanagePassword(
+            @Field("username") String username,
+            @Field("mnemonic") String mnemonic,
+            @Field("password") String password,
+            @Field("otp")  String Otp
+    );
 
 }

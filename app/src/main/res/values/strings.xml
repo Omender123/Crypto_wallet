@@ -85,6 +85,6 @@
     <string name="enter_pin">Enter Transaction Pin</string>
     <string name="mnemonic">Copy to Mnemonic</string>
     <string name="enter_mnemonic">Enter Mnemonic</string>
-
+    <string name="fortext">Please save the mnemonic for life time. and the requirment of this Mnemonic need at the time of the Forget password. </string>
 
 </resources>
