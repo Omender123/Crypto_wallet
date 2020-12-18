@@ -100,8 +100,10 @@ EditText username,password;
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signIn();
+               // signIn();
                 login.startAnimation(blink);
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
             }
         });
     }
