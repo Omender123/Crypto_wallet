@@ -49,6 +49,25 @@ Context context;
         holder.name.setText(iconname);
         holder.currencyPrice.setText("$"+CurrentPrice);
         holder.increaseRate.setText(currencyRate);
+
+        holder.increaseRate.setTextColor(crptoInfoModels.get(position).getCurrencyRate().contains("-")?
+                context.getResources().getColor(R.color.red): context.getResources().getColor(R.color.green)  );
+        holder.percentage.setTextColor(crptoInfoModels.get(position).getCurrencyRate().contains("-")?
+                context.getResources().getColor(R.color.red): context.getResources().getColor(R.color.green) );
+
+       if(crptoInfoModels.get(position).getCurrencyRate().contains("-")){
+           holder.increaseRate.setText(currencyRate);
+       }else{
+           holder.increaseRate.setText("+"+currencyRate);
+       }
+         /*   int rate=Integer.parseInt(currencyRate);
+        if(rate<=0) {
+            holder.increaseRate.setTextColor(context.getResources().getColor(R.color.green));
+        }else{
+            holder.increaseRate.setTextColor(context.getResources().getColor(R.color.red));
+        }
+*/
+
        // Picasso.get().load(crptoInfoModels.get(position).getImage()).into(holder.imageView);
     }
 
@@ -59,14 +78,14 @@ Context context;
 
     public class MyHolder extends RecyclerView.ViewHolder{
         ImageView imageView;
-        TextView increaseRate,name,currencyPrice;
+        TextView increaseRate,name,currencyPrice,percentage;
         public MyHolder(@NonNull View itemView) {
             super(itemView);
             imageView=itemView.findViewById(R.id.coinImage);
             increaseRate=itemView.findViewById(R.id.increaseRate);
             name=itemView.findViewById(R.id.coinname);
             currencyPrice=itemView.findViewById(R.id.coinrate);
-
+            percentage=itemView.findViewById(R.id.null1);
         }
     }
 }

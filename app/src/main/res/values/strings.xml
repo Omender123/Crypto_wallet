@@ -52,6 +52,14 @@
     <string name="below_text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna </string>
 
     <string name="cryptoinfo">Cryptocurrency Info</string>
+    <string name="barcode_scan">Scan Any QR Code </string>
+    <string name="recieve">Receive</string>
+    <string name="scan">Scan</string>
+    <string name="balance">Balance</string>
+
+    <string name="your_barcode">Your Wallet Address</string>
+    <string name="tab_barcode">Tab Wallet address to Copy</string>
+    <string name="barcode">Barcode Addrees</string>
     <!--text for Login and Signup screen-->
     <string name="login">Login</string>
     <string name="sign_up">Signup</string>

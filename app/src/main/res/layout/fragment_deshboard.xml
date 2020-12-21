@@ -51,6 +51,7 @@
         app:cardElevation="5dp">
 
         <LinearLayout
+            android:id="@+id/multiOptions"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
@@ -58,10 +59,11 @@
             android:weightSum="3">
 
             <LinearLayout
-                android:id="@+id/lythome"
+                android:id="@+id/lytScan"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+
                 android:orientation="vertical">
 
                 <!--  <View
@@ -82,16 +84,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Scan"
+                    android:text="@string/scan"
                     android:textColor="@color/toolbar_text_color"
                     android:textSize="15dp" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/lytcategory"
+                android:id="@+id/lytPay"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+
                 android:orientation="vertical">
 
 
@@ -113,7 +116,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Pay"
+                    android:text="@string/recieve"
                     android:textColor="@color/toolbar_text_color"
                     android:textSize="15dp" />
 
@@ -121,7 +124,7 @@
 
 
             <LinearLayout
-                android:id="@+id/lytfav"
+                android:id="@+id/lytwallet"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -146,7 +149,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="wallet"
+                    android:text="@string/balance"
                     android:textColor="@color/toolbar_text_color"
                     android:textSize="15dp" />
             </LinearLayout>
@@ -167,6 +170,79 @@
         android:id="@+id/deshboardRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+   <!-- <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cardBackgroundColor="@color/background1"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="5dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <ImageView
+                android:id="@+id/coinImage1"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="10dp"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/coinprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/coinImage1"
+                android:text="$2500.00"
+                android:textStyle="bold"
+
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/toolbar_text_color"
+                android:layout_marginTop="20dp"/>
+            <TextView
+                android:id="@+id/coinname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/coinImage1"
+                android:text="Bitcoin"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/toolbar_text_color"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/coinprice"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="0"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_marginRight="20dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/toolbar_text_color"
+                android:layout_marginTop="15dp"/>
+            <TextView
+                android:id="@+id/coinrate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+4.80%"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/toolbar_text_color"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/coinprice"/>
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>-->
 </LinearLayout>
 
 </ScrollView>

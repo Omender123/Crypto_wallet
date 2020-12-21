@@ -1,10 +1,14 @@
 package com.crypto.croytowallet.fragement;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -18,6 +22,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.crypto.croytowallet.Activity.WalletBalance;
+import com.crypto.croytowallet.Activity.WalletReceive;
+import com.crypto.croytowallet.Activity.WalletScan;
 import com.crypto.croytowallet.Adapter.Crypto_currencyInfo;
 import com.crypto.croytowallet.Model.CrptoInfoModel;
 import com.crypto.croytowallet.R;
@@ -32,11 +39,12 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Deshboard extends Fragment {
+public class Deshboard extends Fragment implements View.OnClickListener {
     ArrayList<CrptoInfoModel> crptoInfoModels;
     RecyclerView cryptoInfoRecyclerView;
     RequestQueue requestQueue;
     Crypto_currencyInfo crypto_currencyInfo;
+    LinearLayout lytscan,lytPay,lytWalletBalance;
 
     public Deshboard() {
         // Required empty public constructor
@@ -49,6 +57,12 @@ public class Deshboard extends Fragment {
         // Inflate the layout for this fragment
       View view= inflater.inflate(R.layout.fragment_deshboard, container, false);
         cryptoInfoRecyclerView = view.findViewById(R.id.deshboardRecyclerView);
+        lytscan=view.findViewById(R.id.lytScan);
+        lytPay=view.findViewById(R.id.lytPay);
+        lytWalletBalance=view.findViewById(R.id.lytwallet);
+        lytscan.setOnClickListener(this);
+        lytPay.setOnClickListener(this);
+        lytWalletBalance.setOnClickListener(this);
         crptoInfoModels=new ArrayList<CrptoInfoModel>();
 
         CryptoInfoRecyclerView();
@@ -105,4 +119,61 @@ public class Deshboard extends Fragment {
         requestQueue.add(stringRequest);
 
     }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        deepChangeTextColor(1);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+
+   /* switch (id){
+        case R.id.lytScan:
+
+            break;
+    }*/
+
+      if (id == R.id.lytScan) {
+            deepChangeTextColor(1);
+            startActivity(new Intent(getContext(), WalletScan.class));
+            getActivity().finish();
+        } else if (id == R.id.lytPay) {
+            deepChangeTextColor(2);
+            startActivity(new Intent(getContext(), WalletReceive.class));
+            getActivity().finish();
+
+        } else if (id == R.id.lytwallet) {
+            deepChangeTextColor(3);
+            startActivity(new Intent(getContext(), WalletBalance.class));
+            getActivity().finish();
+
+        }
+
+    }
+
+    public void deepChangeTextColor(int changeId) {
+        for (int i = 1; i <= 3; i++) {
+            int img = getResources().getIdentifier("img" + i, "id", getActivity().getPackageName());
+            int txt = getResources().getIdentifier("txt" + i, "id", getActivity().getPackageName());
+
+            TextView textView = getView().findViewById(txt);
+            ImageView imageView = getView().findViewById(img);
+
+            if (changeId == i) {
+                imageView.setColorFilter(getResources().getColor(R.color.purple_500));
+                textView.setTextColor(getResources().getColor(R.color.purple_500));
+                //  textView.setVisibility(View.VISIBLE);
+            } else {
+                imageView.setColorFilter(getResources().getColor(R.color.toolbar_text_color));
+                textView.setTextColor(getResources().getColor(R.color.toolbar_text_color));
+                //  textView.setVisibility(View.GONE);
+            }
+        }
+    }
+
 }

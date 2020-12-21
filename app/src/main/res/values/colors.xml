@@ -22,5 +22,6 @@
     <color name="card_background">#FFFFFFFF</color>
     <color name="pink">#EA485C</color>
     <color name="green">#00E676</color>
-
+    <color name="red">#FF1100</color>
+    <color name="light_gray">@android:color/darker_gray</color>
 </resources>

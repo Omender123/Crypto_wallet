@@ -20,4 +20,5 @@
     <color name="card_background">#363F61</color>
     <color name="pink">#EA485C</color>
     <color name="green">#00E676</color>
+    <color name="red">#FF1100</color>
 </resources>
