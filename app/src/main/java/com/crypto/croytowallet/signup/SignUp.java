@@ -20,6 +20,7 @@ import com.crypto.croytowallet.SharedPrefernce.SignUpData;
 import com.crypto.croytowallet.SharedPrefernce.SignUpRefernace;
 import com.crypto.croytowallet.TransactionPin.TransactionPin;
 import com.crypto.croytowallet.database.RetrofitClient;
+import com.crypto.croytowallet.login.Change_Password;
 import com.crypto.croytowallet.login.Login;
 import com.google.android.material.snackbar.Snackbar;
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -29,6 +30,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import de.mateware.snacky.Snacky;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -96,7 +98,15 @@ public class SignUp extends AppCompatActivity {
 
 
     public void onSignupFailed() {
-        Toast.makeText(getBaseContext(), "Please fill all requirement ", Toast.LENGTH_LONG).show();
+     //   Toast.makeText(getBaseContext(), "Please fill all requirement ", Toast.LENGTH_LONG).show();
+
+        Snackbar warningSnackBar = Snacky.builder()
+                .setActivity(SignUp.this)
+                .setText("Please fill all requirement")
+                .setTextColor(getResources().getColor(R.color.white))
+                .setDuration(Snacky.LENGTH_SHORT)
+                .warning();
+        warningSnackBar.show();
         ready_to1.setEnabled(true);
     }
 
@@ -253,6 +263,7 @@ public class SignUp extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                hidepDialog();
                 Toast.makeText(SignUp.this, "net", Toast.LENGTH_SHORT).show();
 
             }

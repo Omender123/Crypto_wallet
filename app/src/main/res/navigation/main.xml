@@ -39,4 +39,6 @@
         android:id="@+id/setting"
         android:name="com.crypto.croytowallet.Activity.Setting"
         tools:layout="@layout/activity_setting" />
+
+
 </navigation>

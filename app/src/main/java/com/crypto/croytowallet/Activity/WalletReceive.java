@@ -1,6 +1,7 @@
 package com.crypto.croytowallet.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -8,12 +9,15 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
+import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.google.zxing.WriterException;
 
 import androidmads.library.qrgenearator.QRGContents;
@@ -22,14 +26,18 @@ import androidmads.library.qrgenearator.QRGEncoder;
 public class WalletReceive extends AppCompatActivity {
 TextView barcodeAddress;
     ImageView qrImage;
+    CardView barCodeshare;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet_receive);
         barcodeAddress=findViewById(R.id.barCodeAddress);
         qrImage = findViewById(R.id.qrPlaceHolder);
+        barCodeshare=findViewById(R.id.barCodeshare);
+        UserData userData= SharedPrefManager.getInstance(this).getUser();
 
         String barcodeText=barcodeAddress.getText().toString();
+        barcodeAddress.setText(userData.getId());
 
         barcodeAddress.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +56,19 @@ TextView barcodeAddress;
         } catch (WriterException e) {
             e.printStackTrace();
         }
+
+
+        barCodeshare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("text/plain");
+                i.putExtra(Intent.EXTRA_TEXT, userData.getId());
+                startActivity(Intent.createChooser(i, "Share With"));
+            }
+        });
+
+
     }
 
 

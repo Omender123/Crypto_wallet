@@ -54,10 +54,14 @@
                     android:icon="@drawable/ic_customer_support"
                     android:title="@string/customer_support" />
                 <item
+                    android:checkable="false"
+                    android:checked="false"
                     android:id="@+id/share"
                     android:icon="@drawable/ic_share"
                     android:title="@string/share" />
                 <item
+                    android:checkable="false"
+                    android:checked="false"
                     android:id="@+id/logout"
                     android:icon="@drawable/ic_logout"
                     android:title="@string/logout" />

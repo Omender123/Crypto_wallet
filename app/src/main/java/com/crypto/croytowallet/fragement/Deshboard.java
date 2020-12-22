@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -28,12 +29,16 @@ import com.crypto.croytowallet.Activity.WalletScan;
 import com.crypto.croytowallet.Adapter.Crypto_currencyInfo;
 import com.crypto.croytowallet.Model.CrptoInfoModel;
 import com.crypto.croytowallet.R;
+import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.UserData;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -44,7 +49,7 @@ public class Deshboard extends Fragment implements View.OnClickListener {
     RecyclerView cryptoInfoRecyclerView;
     RequestQueue requestQueue;
     Crypto_currencyInfo crypto_currencyInfo;
-    LinearLayout lytscan,lytPay,lytWalletBalance;
+    LinearLayout lytscan,lytPay,lytWalletBalance,lytaddMoney;
 
     public Deshboard() {
         // Required empty public constructor
@@ -57,15 +62,23 @@ public class Deshboard extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
       View view= inflater.inflate(R.layout.fragment_deshboard, container, false);
         cryptoInfoRecyclerView = view.findViewById(R.id.deshboardRecyclerView);
+
         lytscan=view.findViewById(R.id.lytScan);
         lytPay=view.findViewById(R.id.lytPay);
         lytWalletBalance=view.findViewById(R.id.lytwallet);
+        lytaddMoney=view.findViewById(R.id.lytaddMoney);
         lytscan.setOnClickListener(this);
         lytPay.setOnClickListener(this);
         lytWalletBalance.setOnClickListener(this);
+        lytaddMoney.setOnClickListener(this);
+
         crptoInfoModels=new ArrayList<CrptoInfoModel>();
 
+
+
         CryptoInfoRecyclerView();
+        checkBalance();
+
     return view;
     }
 
@@ -120,6 +133,57 @@ public class Deshboard extends Fragment implements View.OnClickListener {
 
     }
 
+ public void checkBalance(){
+     UserData user = SharedPrefManager.getInstance(getContext()).getUser();
+     String id=user.getId();
+     String url="http://13.233.136.56:8080/api/user/totalAirDrop/"+id;
+
+//     balance=getView().findViewById(R.id.balance);
+
+     StringRequest stringRequest =new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+         @Override
+         public void onResponse(String response) {
+          //   Toast.makeText(getContext(), ""+response, Toast.LENGTH_SHORT).show();
+
+             try {
+                 JSONObject object=new JSONObject(response);
+                 String   checkBalance=object.getString("airDrop");
+
+                 TextView textView=getActivity().findViewById(R.id.balance);
+
+                 textView.setText("$"+checkBalance+".00");
+              //   Toast.makeText(getContext(), ""+checkBalance, Toast.LENGTH_SHORT).show();
+             } catch (JSONException e) {
+                 e.printStackTrace();
+             }
+         }
+     }, new Response.ErrorListener() {
+         @Override
+         public void onErrorResponse(VolleyError error) {
+
+         }
+     }) {
+         @Override
+         protected Map<String, String> getParams() throws AuthFailureError {
+             Map<String, String> params = new HashMap<>();
+            /* params.put("_id", id);*/
+
+                return params;
+         }
+
+         @Override
+         public Map<String, String> getHeaders() throws AuthFailureError {
+             Map<String, String> headers = new HashMap<String, String>();
+
+             // headers.put("Authorization", "Bearer "+Token);
+
+             return headers;
+         }
+     };
+
+     requestQueue = Volley.newRequestQueue(getContext());
+     requestQueue.add(stringRequest);
+ }
 
     @Override
     public void onResume() {
@@ -152,7 +216,14 @@ public class Deshboard extends Fragment implements View.OnClickListener {
             startActivity(new Intent(getContext(), WalletBalance.class));
             getActivity().finish();
 
-        }
+        }else if (id == R.id.lytaddMoney) {
+          deepChangeTextColor(4);
+          /*startActivity(new Intent(getContext(), WalletBalance.class));
+          getActivity().finish();*/
+
+          Toast.makeText(getContext(), "Add Money", Toast.LENGTH_SHORT).show();
+
+      }
 
     }
 
@@ -173,6 +244,7 @@ public class Deshboard extends Fragment implements View.OnClickListener {
                 textView.setTextColor(getResources().getColor(R.color.toolbar_text_color));
                 //  textView.setVisibility(View.GONE);
             }
+
         }
     }
 

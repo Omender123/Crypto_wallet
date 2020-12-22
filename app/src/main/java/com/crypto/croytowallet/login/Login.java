@@ -37,12 +37,15 @@ import com.android.volley.toolbox.Volley;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.UserData;
+import com.crypto.croytowallet.database.RetrofitClient;
 import com.crypto.croytowallet.signup.Referral_code;
 import com.crypto.croytowallet.signup.SignUp;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONArray;
@@ -50,6 +53,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
@@ -59,6 +63,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import de.mateware.snacky.Snacky;
 
 public class Login extends AppCompatActivity {
 Button login;
@@ -88,38 +94,45 @@ EditText username,password;
 
         forget_password=findViewById(R.id.forget);
         listener();
-
+      //  getDetails();
 
         //if the user is already logged in we will directly start the profile activity
 
-      /*  if (SharedPrefManager.getInstance(this).isLoggedIn()) {
+   if (SharedPrefManager.getInstance(this).isLoggedIn()) {
             finish();
             startActivity(new Intent(this, MainActivity.class));
             return;
-        }*/
+        }
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // signIn();
-                login.startAnimation(blink);
+               signIn(v);
+               /* login.startAnimation(blink);
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                finish();
+                finish();*/
             }
         });
     }
 
 
-    public void signIn() {
+    public void signIn(View view) {
         if (validate() == false) {
             onSignupFailed();
             return;
         }
-        saveToServerDB();
+        saveToServerDB(view);
 
     }
     public void onSignupFailed() {
-        Toast.makeText(getBaseContext(), "Please fill all requirement ", Toast.LENGTH_LONG).show();
-
+     //   Toast.makeText(getBaseContext(), "Please fill all requirement ", Toast.LENGTH_LONG).show();
+        Snackbar warningSnackBar = Snacky.builder()
+                .setActivity(Login.this)
+                .setText("Please fill all requirement")
+                .setTextColor(getResources().getColor(R.color.white))
+                .setDuration(Snacky.LENGTH_SHORT)
+                .warning();
+        warningSnackBar.show();
         login.setEnabled(true);
     }
 
@@ -148,7 +161,7 @@ EditText username,password;
         return valid;
     }
 
-    private void saveToServerDB() {
+    private void saveToServerDB(View view) {
 
         String passwords = password.getText().toString().trim();
         String usernames = username.getText().toString().trim();
@@ -163,34 +176,65 @@ EditText username,password;
 
         showpDialog();
 
-        StringRequest request=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 hidepDialog();
 
+                try {
+                    JSONObject object =new JSONObject(response);
+                    String result = object.getString("result");
+                    JSONObject object1 = new JSONObject(result);
+                    String id=object1.getString("_id");
+                    String name=object1.getString("name");
+                    String email=object1.getString("email");
+                    String phone=object1.getString("phone");
+                    String username=object1.getString("username");
+                    String mnemonic=object1.getString("mnemonic");
+                    String myreferral_code=object1.getString("myReferalcode");
+                    String transaction_pin=object1.getString("transactionPin");
+                    String token=object.getString("token");
+                   // Toast.makeText(Login.this, ""+id+name+email+phone+username+mnemonic+myreferral_code, Toast.LENGTH_SHORT).show();
 
-                Toast.makeText(Login.this, "Login Successfully", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                finish();
+                    UserData userData=new UserData(id,name,email,phone,username,mnemonic,myreferral_code,transaction_pin,token);
+
+                    //storing the user in shared preferences
+                    SharedPrefManager.getInstance(getApplicationContext()).userLogin(userData);
+
+                    Toast.makeText(Login.this, "Login Successfully", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    finish();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+
             }
 
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 hidepDialog();
-                parseVolleyError(error);
-                 // Toast.makeText(getBaseContext(), "Some thing is Wrong", Toast.LENGTH_LONG).show();
-              //  Toast.makeText(Login.this, ""+error.toString(), Toast.LENGTH_SHORT).show();
+
+                try {
+                    parseVolleyError(error);
+                } catch (Exception e) {
+                    Toast.makeText(Login.this, "" + e.toString(), Toast.LENGTH_SHORT).show();
+                }
 
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("username",usernames);
-                params.put("password",passwords);
-
-
+                params.put("username", usernames);
+                params.put("password", passwords);
+           /*  params.put("ip",ipAddress);
+                params.put("os",os);
+                params.put("location",locations);
+*/
                 return params;
             }
 
@@ -210,11 +254,78 @@ EditText username,password;
 
     }
 
-    public void parseVolleyError(VolleyError error) {
+    /*    Call<ResponseBody>call= RetrofitClient.getInstance().getApi()
+                .Login(usernames,passwords);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String s=null;
+                hidepDialog();
+
+                if (response.code()==200){
+                    try {
+                        s=response.body().string();
+                        JSONObject object=new JSONObject(s);
+                        String result=object.getString("result");
+                        JSONObject object1=new JSONObject(result);
+
+                        UserData user = new UserData(
+                                object1.getInt("_id"),
+                                object1.getString("name"),
+                                object1.getString("email"),
+                                object1.getString("password"),
+                                object1.getString("username"),
+                                object1.getString("mnemonic"),
+                                object1.getString("myReferalcode")
+                        );
+
+                        //storing the user in shared preferences
+                        SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
+
+                        Toast.makeText(Login.this, "Login Successfully", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        finish();
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+                }else  if (response.code()==400){
+                    try {
+                        s = response.errorBody().string();
+                        JSONObject jsonObject1 = new JSONObject(s);
+                        String error = jsonObject1.getString("error");
+                        Snacky.builder()
+                                .setView(view)
+                                .setText(error)
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
+                    }catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+               hidepDialog();
+                Snacky.builder()
+                        .setView(view)
+                        .setText("Please Check Your Internet Connection")
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+            }
+        });
+    }
+*/
+ public void parseVolleyError(VolleyError error) {
         try {
             String responseBody = new String(error.networkResponse.data, "utf-8");
             JSONObject data = new JSONObject(responseBody);
-
             String message=data.getString("error");
             Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
         } catch (JSONException e) {

@@ -1,28 +1,30 @@
 package com.crypto.croytowallet.SharedPrefernce;
 
 public class UserData {
-    private int id;
-    private String name, email, mobile,username,mnemonic,token;
+    private String id;
+    private String name, email, mobile, username, mnemonic, Referral_code, transaction_Pin, token;
 
 
-    public UserData(int id, String name, String email, String mobile,String username,String mnemonic, String token ) {
+    public UserData(String id, String name, String email, String mobile, String username, String mnemonic, String Referral_code, String transaction_Pin, String token) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.mobile = mobile;
-        this.username=username;
-        this.mnemonic=mnemonic;
-        this.token=token;
+        this.username = username;
+        this.mnemonic = mnemonic;
+        this.Referral_code = Referral_code;
+        this.transaction_Pin = transaction_Pin;
+        this.token = token;
     }
 
     public UserData() {
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -64,6 +66,22 @@ public class UserData {
 
     public void setMnemonic(String mnemonic) {
         this.mnemonic = mnemonic;
+    }
+
+    public String getReferral_code() {
+        return Referral_code;
+    }
+
+    public void setReferral_code(String referral_code) {
+        Referral_code = referral_code;
+    }
+
+    public String getTransaction_Pin() {
+        return transaction_Pin;
+    }
+
+    public void setTransaction_Pin(String transaction_Pin) {
+        this.transaction_Pin = transaction_Pin;
     }
 
     public String getToken() {

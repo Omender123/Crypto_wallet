@@ -21,6 +21,12 @@ public interface Api {
             @Field("phone") String phone);
 
     @FormUrlEncoded
+    @POST("user/login")
+    Call<ResponseBody> Login(
+            @Field("username") String username,
+            @Field("password") String password);
+
+    @FormUrlEncoded
     @POST("user/transactionPin")
     Call<ResponseBody> Transaction(
 

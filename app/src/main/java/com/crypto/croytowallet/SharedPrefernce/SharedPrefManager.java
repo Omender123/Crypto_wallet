@@ -14,8 +14,9 @@ public class SharedPrefManager {
     private static final String KEY_ID = "keyid";
     private static final String KEY_USERNAME = "keyusername";
     private static final String KEY_MNEMONIC = "keymnemonic";
+    private static final String KEY_REFERRAL_CODE = "keyreferral_code";
+    private static final String KEY_TRANSACTION_PIN = "keytransaction_pin";
     private static final String KEY_TOKEN = "keytoken";
-
     private static SharedPrefManager mInstance;
     private static Context mCtx;
 
@@ -35,12 +36,14 @@ public class SharedPrefManager {
     public void userLogin(UserData user) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(KEY_ID, user.getId());
+        editor.putString(KEY_ID, user.getId());
         editor.putString(KEY_NAME, user.getName());
         editor.putString(KEY_EMAIL, user.getEmail());
         editor.putString(KEY_MOBILE, user.getMobile());
         editor.putString(KEY_USERNAME, user.getUsername());
         editor.putString(KEY_MNEMONIC, user.getMnemonic());
+        editor.putString(KEY_REFERRAL_CODE, user.getReferral_code());
+        editor.putString(KEY_TRANSACTION_PIN, user.getTransaction_Pin());
         editor.putString(KEY_TOKEN, user.getToken());
         editor.apply();
     }
@@ -55,12 +58,14 @@ public class SharedPrefManager {
     public UserData getUser() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return new UserData(
-                sharedPreferences.getInt(KEY_ID, -1),
+                sharedPreferences.getString(KEY_ID, null),
                 sharedPreferences.getString(KEY_NAME, null),
                 sharedPreferences.getString(KEY_EMAIL, null),
                 sharedPreferences.getString(KEY_MOBILE, null),
                 sharedPreferences.getString(KEY_USERNAME, null),
                 sharedPreferences.getString(KEY_MNEMONIC, null),
+                sharedPreferences.getString(KEY_REFERRAL_CODE, null),
+                sharedPreferences.getString(KEY_TRANSACTION_PIN, null),
                 sharedPreferences.getString(KEY_TOKEN, null)
         );
     }

@@ -56,6 +56,7 @@
     <string name="recieve">Receive</string>
     <string name="scan">Scan</string>
     <string name="balance">Balance</string>
+    <string name="add_money">Add Credit</string>
 
     <string name="your_barcode">Your Wallet Address</string>
     <string name="tab_barcode">Tab Wallet address to Copy</string>
