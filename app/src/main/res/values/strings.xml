@@ -56,8 +56,13 @@
     <string name="recieve">Receive</string>
     <string name="scan">Scan</string>
     <string name="balance">Balance</string>
-    <string name="add_money">Add Credit</string>
-
+    <string name="add_money">Top Up</string>
+    <string name="pay">Pay</string>
+    <string name="add">Enter Amount </string>
+    <string name="add1">Add Money</string>
+    <string name="complete">Complete</string>
+    <string name="add_text">Before adding money into your wallet up, you accept our Terms &amp; Privacy policy</string>
+    <string name="add_trem_and_condition">accept our Terms &amp; Privacy policy</string>
     <string name="your_barcode">Your Wallet Address</string>
     <string name="tab_barcode">Tab Wallet address to Copy</string>
     <string name="barcode">Barcode Addrees</string>

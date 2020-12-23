@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -16,12 +16,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CroytoWallet"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.WalletBalance"
+        <activity android:name=".Payment.Enter_transaction_pin"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar"></activity>
+        <activity android:name=".Payment.Complate_payment"
             android:theme="@style/Theme.CroytoWallet.NoActionBar"/>
-        <activity android:name=".Activity.WalletReceive"
+        <activity android:name=".Payment.Top_up_Money"
             android:theme="@style/Theme.CroytoWallet.NoActionBar"/>
-        <activity android:name=".Activity.WalletScan"
+        <activity android:name=".Payment.Pay_money"
             android:theme="@style/Theme.CroytoWallet.NoActionBar"/>
+        <activity
+            android:name=".Activity.WalletBalance"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+        <activity
+            android:name=".Activity.WalletReceive"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+        <activity
+            android:name=".Activity.WalletScan"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
         <activity
             android:name=".TransactionPin.EnterConfirmMnemonic"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />

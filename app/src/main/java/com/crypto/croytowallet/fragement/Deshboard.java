@@ -28,6 +28,9 @@ import com.crypto.croytowallet.Activity.WalletReceive;
 import com.crypto.croytowallet.Activity.WalletScan;
 import com.crypto.croytowallet.Adapter.Crypto_currencyInfo;
 import com.crypto.croytowallet.Model.CrptoInfoModel;
+import com.crypto.croytowallet.Payment.Complate_payment;
+import com.crypto.croytowallet.Payment.Enter_transaction_pin;
+import com.crypto.croytowallet.Payment.Top_up_Money;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
@@ -218,17 +221,15 @@ public class Deshboard extends Fragment implements View.OnClickListener {
 
         }else if (id == R.id.lytaddMoney) {
           deepChangeTextColor(4);
-          /*startActivity(new Intent(getContext(), WalletBalance.class));
-          getActivity().finish();*/
-
-          Toast.makeText(getContext(), "Add Money", Toast.LENGTH_SHORT).show();
+         startActivity(new Intent(getContext(), Top_up_Money.class));
+          getActivity().finish();
 
       }
 
     }
 
     public void deepChangeTextColor(int changeId) {
-        for (int i = 1; i <= 3; i++) {
+        for (int i = 1; i <= 4; i++) {
             int img = getResources().getIdentifier("img" + i, "id", getActivity().getPackageName());
             int txt = getResources().getIdentifier("txt" + i, "id", getActivity().getPackageName());
 

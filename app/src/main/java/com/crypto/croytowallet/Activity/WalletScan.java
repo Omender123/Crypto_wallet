@@ -15,6 +15,7 @@ import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
 import com.crypto.croytowallet.MainActivity;
+import com.crypto.croytowallet.Payment.Pay_money;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.fragement.Wallet;
 import com.google.zxing.Result;
@@ -53,6 +54,8 @@ public class WalletScan extends AppCompatActivity {
                     @Override
                     public void run() {
                         resultData.setText(result.getText());
+                        startActivity(new Intent(WalletScan.this, Pay_money.class));
+                        finish();
                     }
                 });
 

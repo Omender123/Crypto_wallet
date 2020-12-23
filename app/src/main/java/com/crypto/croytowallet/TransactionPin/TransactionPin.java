@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crypto.croytowallet.R;
-import com.goodiebag.pinview.Pinview;
+
 
 public class TransactionPin extends AppCompatActivity {
     private EditText e1, e2, e3, e4, e5, e6, e11, e22, e33, e44, e55, e66;
@@ -35,20 +35,6 @@ public class TransactionPin extends AppCompatActivity {
 
     public void Trnasaction_Pin(View view) {
 
-      /*  String first= enterPin.getValue();
-        String second =confirmPin.getValue();
-        if (first.isEmpty() || second.isEmpty()){
-            Toast.makeText(this, "Please enter Transaction pin", Toast.LENGTH_SHORT).show();
-        } else if (first.equals(second))
-        {
-         //   startActivity(new Intent(getApplicationContext(),ShowMnemonic.class));
-            Toast.makeText(this, "Transaction Pin is Match", Toast.LENGTH_SHORT).show();
-        }else {
-
-            Toast.makeText(this, "Transaction Pin is Don't Match", Toast.LENGTH_SHORT).show();
-
-        }*/
-        //startActivity(new Intent(getApplicationContext(),ShowMnemonic.class));
         com();
 
     }

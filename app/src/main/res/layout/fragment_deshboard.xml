@@ -87,7 +87,7 @@
                     android:gravity="center"
                     android:text="@string/scan"
                     android:textColor="@color/toolbar_text_color"
-                    android:textSize="13dp" />
+                    android:textSize="15dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -119,7 +119,7 @@
                     android:gravity="center"
                     android:text="@string/recieve"
                     android:textColor="@color/toolbar_text_color"
-                    android:textSize="13dp" />
+                    android:textSize="15dp" />
 
             </LinearLayout>
 
@@ -152,7 +152,7 @@
                     android:gravity="center"
                     android:text="@string/balance"
                     android:textColor="@color/toolbar_text_color"
-                    android:textSize="13dp" />
+                    android:textSize="15dp" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/lytaddMoney"
@@ -173,7 +173,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="5dp"
-                    android:src="@drawable/ic_walet" />
+                    android:src="@drawable/ic_add_money" />
 
                 <TextView
                     android:id="@+id/txt4"
@@ -182,7 +182,7 @@
                     android:gravity="center"
                     android:text="@string/add_money"
                     android:textColor="@color/toolbar_text_color"
-                    android:textSize="13dp" />
+                    android:textSize="15dp" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

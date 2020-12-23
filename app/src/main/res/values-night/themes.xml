@@ -21,6 +21,9 @@
     <item name="windowActionBar">false</item>
     <item name="windowNoTitle">true</item> </style>
 
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <item name="pinViewStyle">@style/PinWidget.PinView</item>
+    </style>
     <style name="OutlineBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
         <item name="boxStrokeColor">@android:color/darker_gray</item>
         <item name="hintTextColor">@android:color/darker_gray</item>
