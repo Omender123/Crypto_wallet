@@ -3,25 +3,45 @@ package com.crypto.croytowallet.Payment;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
+import com.crypto.croytowallet.SharedPrefernce.PearToPearModel;
+import com.crypto.croytowallet.SharedPrefernce.PearToPearSharedPrefManager;
 
 public class Complate_payment extends AppCompatActivity {
 LottieAnimationView lottieAnimationView;
     ImageView imageView;
     CardView done;
+    TextView success;
+    PearToPearModel pearToPearModel;
+    SharedPreferences preferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complate_payment);
         imageView =findViewById(R.id.back);
         lottieAnimationView = findViewById(R.id.animationView);
+
+        pearToPearModel= PearToPearSharedPrefManager.getInstance(getApplicationContext()).getPearToPear();
+        preferences=getApplicationContext().getSharedPreferences("walletScan", Context.MODE_PRIVATE);
+        String username = preferences.getString("username","");
+
+      //  pearToPearModel.getStatus();
+       // pearToPearModel.getAmtOfCrypto();
+
+        success=findViewById(R.id.success);
+            success.setText("Payment of "+pearToPearModel.getAmtOfCrypto()+" To " +username+"\n"+pearToPearModel.getStatus());
+
+
                 done=findViewById(R.id.done);
                 done.setOnClickListener(new View.OnClickListener() {
                     @Override

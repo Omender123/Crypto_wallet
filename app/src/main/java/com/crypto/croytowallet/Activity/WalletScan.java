@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.view.View;
@@ -30,6 +32,7 @@ public class WalletScan extends AppCompatActivity {
     CodeScanner codeScanner;
     CodeScannerView scannView;
     TextView resultData,back;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,9 @@ public class WalletScan extends AppCompatActivity {
                 finish();
             }
         });
+
+        sharedPreferences=getSharedPreferences("walletScan", Context.MODE_PRIVATE);
+
         codeScanner.setDecodeCallback(new DecodeCallback() {
             @Override
             public void onDecoded(@NonNull final Result result) {
@@ -54,6 +60,18 @@ public class WalletScan extends AppCompatActivity {
                     @Override
                     public void run() {
                         resultData.setText(result.getText());
+                       String s= result.getText();
+                       String [] strings=s.split(" ");
+
+                       String id,username;
+                       id=strings[0];
+                       username=strings[1];
+
+                        SharedPreferences.Editor editor=sharedPreferences.edit();
+                        editor.putString("id",id);
+                        editor.putString("username",username);
+                        editor.commit();
+
                         startActivity(new Intent(WalletScan.this, Pay_money.class));
                         finish();
                     }

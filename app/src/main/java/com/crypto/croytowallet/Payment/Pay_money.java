@@ -3,7 +3,9 @@ package com.crypto.croytowallet.Payment;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -17,7 +19,8 @@ public class Pay_money extends AppCompatActivity {
     ImageView imageView;
     CardView pay;
     EditText pay_enter_amount;
-    TextView go_top_up;
+    TextView go_top_up,payUsername;
+    SharedPreferences preferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,14 +29,28 @@ public class Pay_money extends AppCompatActivity {
         pay_enter_amount=findViewById(R.id.pay_enter_amount);
         go_top_up=findViewById(R.id.go_top_up);
         pay=findViewById(R.id.pay);
+
+        payUsername=findViewById(R.id.payUsername);
+
+        preferences=getApplicationContext().getSharedPreferences("walletScan", Context.MODE_PRIVATE);
+        String username = preferences.getString("username","");
+        payUsername.setText(username);
+
         pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),Enter_transaction_pin.class));
-                finish();
+                String enter_amount=pay_enter_amount.getText().toString().trim();
+                if (enter_amount.isEmpty()){
+                    pay_enter_amount.setError("Please enter Amount to Pay");
+                    pay_enter_amount.requestFocus();
+                }else{
+                    startActivity(new Intent(getApplicationContext(),Enter_transaction_pin.class).putExtra("amount12",enter_amount));
+                    finish();
+                }
+
             }
         });
-
+//add money
         go_top_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

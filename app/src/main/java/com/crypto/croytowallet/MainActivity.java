@@ -36,6 +36,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.crypto.croytowallet.Activity.Security;
+import com.crypto.croytowallet.SharedPrefernce.PearToPearSharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.login.Login;
@@ -229,6 +230,7 @@ public void logout(){
         public void onResponse(String response) {
             hidepDialog();
             SharedPrefManager.getInstance(getApplicationContext()).logout();
+            PearToPearSharedPrefManager.getInstance(getApplicationContext()).clearPearData();
             Toast.makeText(MainActivity.this, "Logout Successfully", Toast.LENGTH_SHORT).show();
 
          //   Toast.makeText(MainActivity.this, ""+response, Toast.LENGTH_SHORT).show();

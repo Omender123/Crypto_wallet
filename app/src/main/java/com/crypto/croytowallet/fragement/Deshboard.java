@@ -80,7 +80,7 @@ public class Deshboard extends Fragment implements View.OnClickListener {
 
 
         CryptoInfoRecyclerView();
-        checkBalance();
+    //    checkBalance();
 
     return view;
     }

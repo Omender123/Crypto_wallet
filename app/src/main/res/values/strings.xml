@@ -25,6 +25,7 @@
     <string name="finger">Secure With Fingerprint</string>
     <string name="privacy">Privacy Policy</string>
 
+
     <string name="mobile_support">Mobile Support</string>
     <string name="knowledge">Knowledge Base</string>
     <string name="status">Status</string>
@@ -40,6 +41,7 @@
     <string name="get_started">Get Started</string>
     <string name="send_bitcoin">Send Bitcoin to your IMT Wallet</string>
 
+    <string name="account_balance">Account Balance</string>
     <!--text for setting screen-->
     <string name="notification">Notifications</string>
     <string name="sound">Sounds</string>

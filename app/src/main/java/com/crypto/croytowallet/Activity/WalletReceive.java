@@ -36,20 +36,23 @@ TextView barcodeAddress;
         barCodeshare=findViewById(R.id.barCodeshare);
         UserData userData= SharedPrefManager.getInstance(this).getUser();
 
-        String barcodeText=barcodeAddress.getText().toString();
-        barcodeAddress.setText(userData.getId());
+      //  String barcodeText=barcodeAddress.getText().toString();
+        String username=userData.getUsername();
+        String id=userData.getId();
+        barcodeAddress.setText(id);
 
+        Toast.makeText(this, id+" "+username, Toast.LENGTH_SHORT).show();
         barcodeAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ClipboardManager cm = (ClipboardManager)getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                cm.setText(barcodeText);
+                cm.setText(id);
                 Toast.makeText(getApplicationContext(), "Copied ", Toast.LENGTH_SHORT).show();
 
             }
         });
 
-        QRGEncoder qrgEncoder = new QRGEncoder(barcodeText,null, QRGContents.Type.TEXT,500);
+        QRGEncoder qrgEncoder = new QRGEncoder(id+" "+username,null, QRGContents.Type.TEXT,500);
         try {
             Bitmap qrBits = qrgEncoder.encodeAsBitmap();
             qrImage.setImageBitmap(qrBits);
