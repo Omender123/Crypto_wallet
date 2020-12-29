@@ -2,6 +2,13 @@ plugins {
     id 'com.android.application'
 }
 
+repositories {
+    mavenCentral()
+
+    flatDir {
+        dirs 'libs'
+    }
+}
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
@@ -39,6 +46,10 @@ dependencies {
     implementation 'com.nex3z:toggle-button-group:1.2.3'
 
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+
+    // razorpay 
+    implementation 'com.razorpay:checkout:1.5.16'
+
     //Image library
     implementation 'com.squareup.picasso:picasso:2.71828'
 

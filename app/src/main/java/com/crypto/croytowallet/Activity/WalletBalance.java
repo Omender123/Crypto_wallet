@@ -48,7 +48,7 @@ public class WalletBalance extends AppCompatActivity {
                 // This method will be executed once the timer is over
                checkBalance();
             }
-        }, 500);
+        }, 200);
     }
 
 

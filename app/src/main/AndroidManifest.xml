@@ -16,14 +16,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CroytoWallet"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Payment.Enter_transaction_pin"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar"></activity>
-        <activity android:name=".Payment.Complate_payment"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar"/>
-        <activity android:name=".Payment.Top_up_Money"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar"/>
-        <activity android:name=".Payment.Pay_money"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar"/>
+        <activity android:name=".TransactionHistory.Full_Transaction_History"></activity>
+        <activity
+            android:name=".Payment.Enter_transaction_pin"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+        <activity
+            android:name=".Payment.Complate_payment"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+        <activity
+            android:name=".Payment.Top_up_Money"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+        <activity
+            android:name=".Payment.Pay_money"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
         <activity
             android:name=".Activity.WalletBalance"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />
@@ -78,6 +83,10 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+
+        <meta-data
+            android:name="com.razorpay.ApiKey"
+            android:value="@string/razor_api_key" />
     </application>
 
 </manifest>
