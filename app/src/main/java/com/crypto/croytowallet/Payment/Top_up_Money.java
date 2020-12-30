@@ -2,11 +2,15 @@ package com.crypto.croytowallet.Payment;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -25,6 +29,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.crypto.croytowallet.Activity.Setting;
+import com.crypto.croytowallet.AppUtils;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.Model.RozerPayModelData;
 import com.crypto.croytowallet.R;
@@ -53,7 +58,7 @@ public class Top_up_Money extends AppCompatActivity implements PaymentResultWith
     CheckBox checkBox;
     EditText enter_amount;
     KProgressHUD progressDialog;
-    String orderId;
+    String orderId,dbID,payedAmount,status;
     UserData userData;
     RozerPayModelData rozerPayModelData1;
     private PaymentData paymentData1;
@@ -126,15 +131,28 @@ public class Top_up_Money extends AppCompatActivity implements PaymentResultWith
 
                 try {
                     JSONObject object=new JSONObject(response);
-                        orderId=object.getString("id");
-                    Snacky.builder()
+
+                        dbID=object.getString("_id");
+                    String alldetails=object.getString("allPaymentDetails");
+
+                    JSONObject object1=new JSONObject(alldetails);
+                    orderId=object1.getString("razorpay_order_id");
+
+  //                Toast.makeText(Top_up_Money.this, ""+dbID+"\n"+orderId, Toast.LENGTH_SHORT).show();
+               Snacky.builder()
                             .setActivity(Top_up_Money.this)
-                            .setText("Your order created successfully"+"\n"+orderId)
+                            .setText("Your order created successfully")
                             .setDuration(Snacky.LENGTH_SHORT)
                             .success()
                             .show();
-               //  Toast.makeText(Top_up_Money.this, "Order Created "+orderId, Toast.LENGTH_SHORT).show();
-                    startPayment();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            // This method will be executed once the timer is over
+                            startPayment();
+                        }
+                    }, 300);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -144,8 +162,7 @@ public class Top_up_Money extends AppCompatActivity implements PaymentResultWith
             @Override
             public void onErrorResponse(VolleyError error) {
                 hidepDialog();
-
-                 parseVolleyError(error);
+                parseVolleyError(error);
 
             }
         }){
@@ -235,7 +252,7 @@ public class Top_up_Money extends AppCompatActivity implements PaymentResultWith
         this.paymentData1 = paymentData;
         Snacky.builder()
                 .setActivity(Top_up_Money.this)
-                .setText(s)
+                .setText("Payment paid successfully")
                 .setDuration(Snacky.LENGTH_SHORT)
                 .success()
                 .show();
@@ -245,7 +262,20 @@ public class Top_up_Money extends AppCompatActivity implements PaymentResultWith
         System.out.println("amt pd "+amount);
         rozerPayModelData1=new RozerPayModelData(amount,paymentData.getOrderId(),
                   paymentData.getPaymentId(),paymentData.getSignature());
-      CaptureData();
+        Snacky.builder()
+                .setActivity(Top_up_Money.this)
+                .setText("Please wait  your payment is currently under Processing......")
+                .setDuration(Snacky.LENGTH_SHORT)
+                .success()
+                .show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // This method will be executed once the timer is over
+                CaptureData();
+            }
+        }, 500);
+
 
     }
 
@@ -288,21 +318,23 @@ public class Top_up_Money extends AppCompatActivity implements PaymentResultWith
             @Override
             public void onResponse(String response) {
                 hidepDialog();
-                Toast.makeText(Top_up_Money.this, ""+response, Toast.LENGTH_SHORT).show();
-               /* try {
+                try {
                     JSONObject object=new JSONObject(response);
-                    orderId=object.getString("id");
+                    payedAmount=object.getString("amount");
+                    status=object.getString("status");
+                 //   Toast.makeText(Top_up_Money.this, ""+payedAmount+status, Toast.LENGTH_SHORT).show();
                     //  Toast.makeText(Top_up_Money.this, ""+orderId, Toast.LENGTH_SHORT).show();
-                    startPayment();
+
+                    savedataInDb();
                 } catch (JSONException e) {
                     e.printStackTrace();
-                }*/
+                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 hidepDialog();
-             //   parseVolleyError(error);
+              parseVolleyError(error);
 
             }
         }){
@@ -331,6 +363,74 @@ public class Top_up_Money extends AppCompatActivity implements PaymentResultWith
         queue.add(stringRequest);
     }
 
+public void savedataInDb(){
+    progressDialog = KProgressHUD.create(Top_up_Money.this)
+            .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+            .setLabel("Please wait.....")
+            .setCancellable(false)
+            .setAnimationSpeed(2)
+            .setDimAmount(0.5f)
+            .show();
+
+    showpDialog();
+
+    String token=userData.getToken();
+    String razorpay_order_id=rozerPayModelData1.getRazorpayOrderId();
+    String razorpay_payment_id=rozerPayModelData1.getRazorpayPaymentId();
+    String razorpay_signature=rozerPayModelData1.getRazorpaySignature();
+
+    String url="http://13.233.136.56:8080/api/razorpay/data?id="+dbID;
+
+    StringRequest stringRequest=new StringRequest(Request.Method.PUT, url, new Response.Listener<String>() {
+        @Override
+        public void onResponse(String response) {
+            hidepDialog();
+      //      Toast.makeText(Top_up_Money.this, ""+response, Toast.LENGTH_SHORT).show();
+            AppUtils.showMessageOKCancel("Money Successfully Added to Your Wallet \n" +"Order No :" + orderId, Top_up_Money.this, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Intent intent = new Intent(Top_up_Money.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+
+        }
+    }, new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            hidepDialog();
+         parseVolleyError(error);
+
+        }
+    }){
+        @Override
+        protected Map<String, String> getParams() throws AuthFailureError {
+            Map<String, String> params = new HashMap<>();
+            params.put("razorpay_order_id",razorpay_order_id);
+            params.put("razorpay_payment_id",razorpay_payment_id);
+            params.put("razorpay_signature",razorpay_signature);
+            params.put("payedAmount",payedAmount);
+            params.put("paymentType","razorpay");
+            params.put("status","success");
+            return params;
+        }
+
+        @Override
+        public Map<String, String> getHeaders() throws AuthFailureError {
+            Map<String, String> headers = new HashMap<String, String>();
+
+            headers.put("Authorization", token);
+
+            return headers;
+        }
+
+    };
+
+    RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+    queue.add(stringRequest);
+
+}
 
 
     public void parseVolleyError(VolleyError error) {

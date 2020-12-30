@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.crypto.croytowallet.MainActivity;
@@ -37,10 +38,22 @@ LottieAnimationView lottieAnimationView;
 
       //  pearToPearModel.getStatus();
        // pearToPearModel.getAmtOfCrypto();
+        Bundle bundle = getIntent().getExtras();
+
 
         success=findViewById(R.id.success);
-            success.setText("Payment of "+pearToPearModel.getAmtOfCrypto()+" To " +username+"\n"+pearToPearModel.getStatus());
+        try {
+            String status = bundle.getString("status");
+            String amount = bundle.getString("amt");
+            success.setText("Payment of "+amount+" To " +username+"\n"+status);
+        }catch (Exception e){
+            Toast.makeText(this, ""+e, Toast.LENGTH_SHORT).show();
+        }
 
+
+       /* success=findViewById(R.id.success);
+            success.setText("Payment of "+pearToPearModel.getAmtOfCrypto()+" To " +username+"\n"+pearToPearModel.getStatus());
+*/
 
                 done=findViewById(R.id.done);
                 done.setOnClickListener(new View.OnClickListener() {

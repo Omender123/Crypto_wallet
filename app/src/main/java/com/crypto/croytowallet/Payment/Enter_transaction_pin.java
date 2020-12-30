@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -71,6 +72,13 @@ CardView pay_money;
                     pinView.setLineColor(getResources().getColor(R.color.green));
                     done();
                 }else{
+                     new Handler().postDelayed(new Runnable() {
+                         @Override
+                    public void run() {
+                            // This method will be executed once the timer is over
+                             pinView.setLineColor(getResources().getColor(R.color.light_gray));
+                                         }
+                                      }, 100);
                     pinView.setLineColor(getResources().getColor(R.color.red));
                 }
                // Toast.makeText(Enter_transaction_pin.this, ""+enterPin, Toast.LENGTH_SHORT).show();
@@ -114,29 +122,24 @@ CardView pay_money;
                     String result=object.getString("result");
                     JSONObject object1=new JSONObject(result);
                     String id=object1.getString("_id");
-                    String userPublicKey=object1.getString("userPublicKey");
                     String status=object1.getString("status");
                     String amtOfCrypto=object1.getString("amtOfCrypto");
-                    String withdrawlFees=object1.getString("withdrawlFees");
-                    String transactionHash=object1.getString("transactionHash");
-                    String cryptoCurrency=object1.getString("cryptoCurrency");
-                    String userId=object1.getString("userId");
-                    String createdAt=object1.getString("createdAt");
-                    String updatedAt=object1.getString("updatedAt");
 
-                    PearToPearModel pearToPearModel=new PearToPearModel(id,userPublicKey,status,amtOfCrypto,withdrawlFees,transactionHash
-                                                                           ,cryptoCurrency,userId,createdAt,updatedAt);
+                  /*  PearToPearModel pearToPearModel=new PearToPearModel(id,status,amtOfCrypto);
                     PearToPearSharedPrefManager.getInstance(getApplicationContext()).pearToPearData(pearToPearModel);
+                  */
 
-                    startActivity(new Intent(getApplicationContext(),Complate_payment.class));
-                    finish();
+                   // Toast.makeText(Enter_transaction_pin.this, ""+id+"\n"+status+"\n"+amtOfCrypto, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(Enter_transaction_pin.this, Complate_payment.class);
+                    intent.putExtra("status",status);
+                    intent.putExtra("amt",amtOfCrypto);
+                    startActivity(intent);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-
-            //   Toast.makeText(Enter_transaction_pin.this, ""+response, Toast.LENGTH_SHORT).show();
+            //  Toast.makeText(Enter_transaction_pin.this, ""+response, Toast.LENGTH_SHORT).show();
                 pinView.setLineColor(getResources().getColor(R.color.light_gray));
             }
 
@@ -151,11 +154,10 @@ CardView pay_money;
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-               params.put("userAddress",userAddressID);
                 params.put("cryptoCurrency",cryptoCurrency);
                 params.put("cryptoAmt",Amount);
                 params.put("transactionPin",enterPin);
-                params.put("toAddress",to_addressID);
+                params.put("receiverId",to_addressID);
 
 
                 return params;
