@@ -40,5 +40,10 @@
         android:name="com.crypto.croytowallet.Activity.Setting"
         tools:layout="@layout/activity_setting" />
 
+    <activity
+        android:id="@+id/pay_history"
+        android:name="com.crypto.croytowallet.TransactionHistory.Transaction_history"
+        tools:layout="@layout/activity_transaction_history" />
+
 
 </navigation>

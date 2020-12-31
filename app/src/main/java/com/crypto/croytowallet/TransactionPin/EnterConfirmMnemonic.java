@@ -21,6 +21,8 @@ import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SignUpData;
 import com.crypto.croytowallet.SharedPrefernce.SignUpRefernace;
+import com.crypto.croytowallet.VolleyDatabase.URLs;
+import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
 import com.crypto.croytowallet.login.Login;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
@@ -38,8 +40,7 @@ String text1,text2,text3,text4,text5,text6,text7,text8,text9,text10,text11,text1
     SharedPreferences preferences;
     SignUpData user;
     KProgressHUD progressDialog;
-    String url="http://13.233.136.56:8080/api/user/transactionPin";
-    @Override
+   @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter_confirm_mnemonic);
@@ -137,14 +138,13 @@ String text1,text2,text3,text4,text5,text6,text7,text8,text9,text10,text11,text1
 
             String transaction = preferences.getString("transaction","");
             String username=   user.getUsername();
-   //     Toast.makeText(this, ""+Mnemonic+" "+username+" "+transaction, Toast.LENGTH_SHORT).show();
 
-        StringRequest request=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        StringRequest request=new StringRequest(Request.Method.POST, URLs.URL_SET_TRANSACTIONPin, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 hidepDialog();
                  startActivity(new Intent(getApplicationContext(),Login.class));
-             //   Toast.makeText(EnterConfirmMnemonic.this, ""+response, Toast.LENGTH_SHORT).show();
+
             }
 
         }, new Response.ErrorListener() {
@@ -177,8 +177,8 @@ String text1,text2,text3,text4,text5,text6,text7,text8,text9,text10,text11,text1
 
         };
 
-        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        queue.add(request);
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
+
 
     }
 

@@ -234,7 +234,7 @@ public class ForgetPassword extends AppCompatActivity {
                 // This method will be executed once the timer is over
                 expire();
             }
-        }, 120000);
+        }, 15000);
     }
 
     public void expire(){

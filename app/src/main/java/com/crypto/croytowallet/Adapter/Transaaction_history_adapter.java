@@ -37,9 +37,9 @@ Context context;
 
     @Override
     public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
-      holder.transaction_status.setText(transactionHistoryModels.get(position).getStatus());
+      holder.transaction_status.setText("Paid To "+transactionHistoryModels.get(position).getStatus());
         holder.transaction_amount.setText(transactionHistoryModels.get(position).getAmountTrans());
-        holder.transaction_username.setText(transactionHistoryModels.get(position).getUsername());
+        holder.transaction_username.setText("Paid From "+transactionHistoryModels.get(position).getUsername());
         holder.transaction_time.setText(transactionHistoryModels.get(position).getDate());
     }
 

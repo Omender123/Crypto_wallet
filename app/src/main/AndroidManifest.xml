@@ -16,7 +16,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CroytoWallet"
         android:usesCleartextTraffic="true">
-        <activity android:name=".TransactionHistory.Full_Transaction_History"></activity>
+        <activity android:name=".TransactionHistory.Transaction_history"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar">
+
+        </activity>
+        <activity android:name=".TransactionHistory.Full_Transaction_History"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar"/>
         <activity
             android:name=".Payment.Enter_transaction_pin"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />

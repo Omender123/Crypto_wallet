@@ -35,6 +35,8 @@ import com.crypto.croytowallet.Model.RozerPayModelData;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
+import com.crypto.croytowallet.VolleyDatabase.URLs;
+import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.JsonObject;
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -120,11 +122,11 @@ public class Top_up_Money extends AppCompatActivity implements PaymentResultWith
 
         showpDialog();
 
-        String url="http://13.233.136.56:8080/api/razorpay/order";
+      //  String url="http://13.233.136.56:8080/api/razorpay/order";
         String amount=enter_amount.getText().toString().trim();
         String token=userData.getToken();
 
-        StringRequest stringRequest=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, URLs.URL_CREATE_ORDER_ID, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 hidepDialog();
@@ -182,9 +184,9 @@ public class Top_up_Money extends AppCompatActivity implements PaymentResultWith
             }
 
         };
-
-        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        queue.add(stringRequest);
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+        /*RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        queue.add(stringRequest);*/
     }
 
     public void startPayment() {
@@ -306,7 +308,7 @@ public class Top_up_Money extends AppCompatActivity implements PaymentResultWith
 
         showpDialog();
 
-        String url="http://13.233.136.56:8080/api/razorpay/capture";
+     //   String url="http://13.233.136.56:8080/api/razorpay/capture";
         String amount=enter_amount.getText().toString().trim();
         String token=userData.getToken();
         String razorpay_order_id=rozerPayModelData1.getRazorpayOrderId();
@@ -314,7 +316,7 @@ public class Top_up_Money extends AppCompatActivity implements PaymentResultWith
         String razorpay_signature=rozerPayModelData1.getRazorpaySignature();
 
 
-        StringRequest stringRequest=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, URLs.URL_CAPTURE_ORDER, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 hidepDialog();
@@ -358,9 +360,9 @@ public class Top_up_Money extends AppCompatActivity implements PaymentResultWith
             }
 
         };
-
-        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        queue.add(stringRequest);
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+       /* RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        queue.add(stringRequest);*/
     }
 
 public void savedataInDb(){
@@ -379,7 +381,7 @@ public void savedataInDb(){
     String razorpay_payment_id=rozerPayModelData1.getRazorpayPaymentId();
     String razorpay_signature=rozerPayModelData1.getRazorpaySignature();
 
-    String url="http://13.233.136.56:8080/api/razorpay/data?id="+dbID;
+    String url= URLs.URL_SAVE_DATA+""+dbID;
 
     StringRequest stringRequest=new StringRequest(Request.Method.PUT, url, new Response.Listener<String>() {
         @Override
@@ -426,9 +428,9 @@ public void savedataInDb(){
         }
 
     };
-
-    RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-    queue.add(stringRequest);
+    VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+  /*  RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+    queue.add(stringRequest);*/
 
 }
 

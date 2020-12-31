@@ -29,6 +29,8 @@ import com.crypto.croytowallet.SharedPrefernce.PearToPearSharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.TransactionPin.EnterConfirmMnemonic;
+import com.crypto.croytowallet.VolleyDatabase.URLs;
+import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
 import com.crypto.croytowallet.login.Login;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
@@ -78,7 +80,7 @@ CardView pay_money;
                             // This method will be executed once the timer is over
                              pinView.setLineColor(getResources().getColor(R.color.light_gray));
                                          }
-                                      }, 100);
+                                      }, 200);
                     pinView.setLineColor(getResources().getColor(R.color.red));
                 }
                // Toast.makeText(Enter_transaction_pin.this, ""+enterPin, Toast.LENGTH_SHORT).show();
@@ -113,7 +115,7 @@ CardView pay_money;
 
 
 
-        StringRequest request=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        StringRequest request=new StringRequest(Request.Method.POST, URLs.URL_PEER_TO_PEER, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 hidepDialog();
@@ -173,9 +175,9 @@ CardView pay_money;
             }
 
         };
-
-        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        queue.add(request);
+        VolleySingleton.getInstance(this).addToRequestQueue(request);
+     /*   RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        queue.add(request);*/
 
     }
 

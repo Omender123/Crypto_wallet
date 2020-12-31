@@ -39,6 +39,8 @@ import com.crypto.croytowallet.Activity.Security;
 import com.crypto.croytowallet.SharedPrefernce.PearToPearSharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
+import com.crypto.croytowallet.VolleyDatabase.URLs;
+import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
 import com.crypto.croytowallet.login.Login;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -126,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_support, getApplicationContext().getTheme());
 
         navController = Navigation.findNavController(this,R.id.main);
-        appBarConfiguration = new AppBarConfiguration.Builder(new int[]{R.id.deshboard,R.id.myWallet,R.id.exchange,R.id.profile,R.id.security,R.id.support,R.id.setting})
+        appBarConfiguration = new AppBarConfiguration.Builder(new int[]{R.id.deshboard,R.id.myWallet,R.id.exchange,R.id.profile,R.id.security,R.id.support,R.id.setting,R.id.pay_history})
                 .setDrawerLayout(drawer)
                 .build();
 
@@ -225,7 +227,7 @@ public void logout(){
     String url="http://13.233.136.56:8080/api/user/removeCurrentlyActiveDevices";
     showpDialog();
 
-    StringRequest stringRequest =new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+    StringRequest stringRequest =new StringRequest(Request.Method.POST, URLs.URL_LOGOUT, new Response.Listener<String>() {
         @Override
         public void onResponse(String response) {
             hidepDialog();
@@ -248,10 +250,7 @@ public void logout(){
             Map<String, String> params = new HashMap<>();
             params.put("username", username);
             params.put("jwt", token);
-           /*  params.put("ip",ipAddress);
-                params.put("os",os);
-                params.put("location",locations);
-*/
+
             return params;
         }
 
@@ -265,10 +264,11 @@ public void logout(){
         }
 
     };
+    VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
 
-    RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+   /* RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
     queue.add(stringRequest);
-
+*/
     }
 
     public void parseVolleyError(VolleyError error) {

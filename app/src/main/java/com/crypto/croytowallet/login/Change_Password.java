@@ -21,6 +21,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
+import com.crypto.croytowallet.VolleyDatabase.URLs;
+import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
 import com.google.android.material.snackbar.Snackbar;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
@@ -38,7 +40,6 @@ public class Change_Password extends AppCompatActivity {
 Button done;
     KProgressHUD progressDialog;
     EditText enter_username,enter_password,enter_Cpass,enter_mnemonic;
-    String url="http://13.233.136.56:8080/api/user/forgot-password";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,66 +143,9 @@ Button done;
                 .setDimAmount(0.5f)
                 .show();
 
+        showpDialog();
 
-       /* Call<ResponseBody> call=  RetrofitClient
-                .getInstance()
-                .getApi().ChanagePassword(usernames,mnemonic,password,otp);
-
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                hidepDialog();
-
-                String s=null;
-                if (response.code()==200){
-                    hideKeyboard(view);
-
-                    Intent intent= new Intent(getApplicationContext(), Login.class);
-                     startActivity(intent);
-                    finish();
-
-                    Toast.makeText(Change_Password.this, "Password Changed Successfully", Toast.LENGTH_SHORT).show();
-
-                }else if(response.code()==400){
-                    hideKeyboard(view);
-                    try {
-
-                        s=response.errorBody().string();
-                        JSONObject jsonObject1=new JSONObject(s);
-                        String error =jsonObject1.getString("error");
-
-                        Snacky.builder()
-                                .setView(view)
-                                .setText(error)
-                                .setDuration(Snacky.LENGTH_SHORT)
-                                .setActionText(android.R.string.ok)
-                                .error()
-                                .show();
-
-
-                    } catch (IOException | JSONException e) {
-                        e.printStackTrace();
-                    }
-
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                hidepDialog();
-                hideKeyboard(view);
-                Snacky.builder()
-                        .setView(view)
-                        .setText("Please Check Your Internet Connection")
-                        .setDuration(Snacky.LENGTH_SHORT)
-                        .setActionText(android.R.string.ok)
-                        .error()
-                        .show();
-            }
-        });
-*/
-        StringRequest request=new StringRequest(Request.Method.PUT, url, new Response.Listener<String>() {
+        StringRequest request=new StringRequest(Request.Method.PUT, URLs.URL_CHANGE_PASSWORD, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 hidepDialog();
@@ -241,9 +185,8 @@ Button done;
             }
 
         };
+        VolleySingleton.getInstance(this).addToRequestQueue(request);
 
-        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        queue.add(request);
 
     }
 

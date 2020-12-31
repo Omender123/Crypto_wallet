@@ -40,7 +40,6 @@ import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.database.RetrofitClient;
 import com.crypto.croytowallet.signup.Referral_code;
-import com.crypto.croytowallet.signup.SignUp;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -65,6 +64,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import de.mateware.snacky.Snacky;
+
 
 public class Login extends AppCompatActivity {
 Button login;
@@ -176,43 +176,43 @@ EditText username,password;
 
         showpDialog();
 
+
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 hidepDialog();
-
                 try {
                     JSONObject object =new JSONObject(response);
-                    String result = object.getString("result");
-                    JSONObject object1 = new JSONObject(result);
-                    String id=object1.getString("_id");
-                    String name=object1.getString("name");
-                    String email=object1.getString("email");
-                    String phone=object1.getString("phone");
-                    String username=object1.getString("username");
-                    String mnemonic=object1.getString("mnemonic");
-                    String myreferral_code=object1.getString("myReferalcode");
-                    String transaction_pin=object1.getString("transactionPin");
-                    String token=object.getString("token");
-                   // Toast.makeText(Login.this, ""+id+name+email+phone+username+mnemonic+myreferral_code, Toast.LENGTH_SHORT).show();
+                    String result =object.getString("result");
+                    String token =object.getString("token");
 
-                    UserData userData=new UserData(id,name,email,phone,username,mnemonic,myreferral_code,transaction_pin,token);
+                    JSONObject  object1 = new JSONObject(result);
+                    String id= object1.getString("_id");
+                    String name = object1.getString("name");
+                    String email = object1.getString("email");
+                    String phone = object1.getString("phone");
+                    String username = object1.getString("username");
+                    String mnemonic = object1.getString("mnemonic");
+                    String Referral_code = object1.getString("myReferalcode");
+                    String transaction_Pin = object1.getString("transactionPin");
+
+                    UserData userData=new UserData(id,name,email,phone,username,mnemonic,Referral_code,transaction_Pin,token);
 
                     //storing the user in shared preferences
                     SharedPrefManager.getInstance(getApplicationContext()).userLogin(userData);
-
-                    Toast.makeText(Login.this, "Login Successfully", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
                     finish();
 
+                    Toast.makeText(Login.this, "Login Successfully", Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(Login.this, "" +id+name+email+phone+username+mnemonic+Referral_code+transaction_Pin, Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
 
 
-            }
 
+            }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -221,7 +221,14 @@ EditText username,password;
                 try {
                     parseVolleyError(error);
                 } catch (Exception e) {
-                    Toast.makeText(Login.this, "" + e.toString(), Toast.LENGTH_SHORT).show();
+                    Snacky.builder()
+                            .setActivity(Login.this)
+                            .setText("Please wait sever not response and try again")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+                  //  Toast.makeText(Login.this, "Please wait sever not response", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -231,10 +238,12 @@ EditText username,password;
                 Map<String, String> params = new HashMap<>();
                 params.put("username", usernames);
                 params.put("password", passwords);
-           /*  params.put("ip",ipAddress);
+
+/*  params.put("ip",ipAddress);
                 params.put("os",os);
                 params.put("location",locations);
 */
+
                 return params;
             }
 
@@ -252,9 +261,10 @@ EditText username,password;
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         queue.add(request);
 
-    }
 
-    /*    Call<ResponseBody>call= RetrofitClient.getInstance().getApi()
+        }
+
+    /* Call<ResponseBody> call= RetrofitClient.getInstance().getApi()
                 .Login(usernames,passwords);
 
         call.enqueue(new Callback<ResponseBody>() {
@@ -266,30 +276,37 @@ EditText username,password;
                 if (response.code()==200){
                     try {
                         s=response.body().string();
+
                         JSONObject object=new JSONObject(s);
+
                         String result=object.getString("result");
+
                         JSONObject object1=new JSONObject(result);
 
-                        UserData user = new UserData(
-                                object1.getInt("_id"),
-                                object1.getString("name"),
-                                object1.getString("email"),
-                                object1.getString("password"),
-                                object1.getString("username"),
-                                object1.getString("mnemonic"),
-                                object1.getString("myReferalcode")
-                        );
+                      String id=object1.getString("_id");
+                        String name=object1.getString("name");
+                        String phone=object1.getString("phone");
+                        String email=object1.getString("email");
+                        String username=object1.getString("username");
+                        String mnemonic=object1.getString("mnemonic");
+                        String myreferral_code=object1.getString("myReferalcode");
+                        String transaction_pin=object1.getString("transactionPin");
+                        String token=object.getString("token");
 
+
+                        Toast.makeText(Login.this, ""+object1, Toast.LENGTH_SHORT).show();
                         //storing the user in shared preferences
-                        SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
+                      //  SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
 
-                        Toast.makeText(Login.this, "Login Successfully", Toast.LENGTH_SHORT).show();
+                     Toast.makeText(Login.this, "Login Successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         finish();
 
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }
+
+
                 }else  if (response.code()==400){
                     try {
                         s = response.errorBody().string();
@@ -320,14 +337,22 @@ EditText username,password;
                         .show();
             }
         });
-    }
-*/
+  }*/
+
+
  public void parseVolleyError(VolleyError error) {
         try {
             String responseBody = new String(error.networkResponse.data, "utf-8");
             JSONObject data = new JSONObject(responseBody);
             String message=data.getString("error");
-            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+            Snacky.builder()
+                    .setActivity(Login.this)
+                    .setText(message)
+                    .setDuration(Snacky.LENGTH_SHORT)
+                    .setActionText(android.R.string.ok)
+                    .error()
+                    .show();
+      //      Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
         } catch (JSONException e) {
         } catch (UnsupportedEncodingException errorr) {
         }
