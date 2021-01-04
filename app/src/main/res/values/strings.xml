@@ -23,6 +23,7 @@
     <string name="razor_api_key">rzp_test_23oYrEfMJY6cVI</string>
 
     <string name="backup">Backups</string>
+    <string name="To_fa">2FA</string>
     <string name="passcode">Secure With Passcode</string>
     <string name="finger">Secure With Fingerprint</string>
     <string name="privacy">Privacy Policy</string>
@@ -41,6 +42,10 @@
     <string name="text1">A passcode, is a memorized secret, typically a string of characters, usually used to confirm a user identity.</string>
     <string name="text">A proper backup copy is stored in a separate system or medium, such as tape, from the primary data to protect against the possibility of data loss due to primary hardware or software failure.</string>
 
+    <string name="google2fa">Google 2FA</string>
+    <string name="email2fa">Email 2FA</string>
+    <string name="text_google2fa">Turn on Google 2FA Security to better secure your Account.</string>
+    <string name="text_email2fa">Turn on Email 2FA Security to better secure your Account.</string>
     <string name="get_started">Get Started</string>
     <string name="send_bitcoin">Send Bitcoin to your IMT Wallet</string>
 

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
@@ -15,29 +16,28 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
 
-public class Security extends AppCompatActivity {
+public class Security extends AppCompatActivity implements View.OnClickListener {
 ActionBar actionBar;
 Toolbar toolbar;
 ImageView imageView;
-    LinearLayout security;
-    Animation down;
+
+CardView Two_FA1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_security);
         imageView =findViewById(R.id.back);
-        security=findViewById(R.id.security2);
-       // toolbar=findViewById(R.id.toolbar);
-      //  setSupportActionBar(toolbar);
-       // actionBarSetup();
-        down = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_down1);
-        security.startAnimation(down);
-        back();
+        Two_FA1 =findViewById(R.id.tofa);
+
+        Two_FA1.setOnClickListener(this);
+
+         back();
     }
 
     @Override
@@ -84,5 +84,18 @@ ImageView imageView;
             }
         });
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id=v.getId();
+
+        switch (id){
+
+            case R.id.tofa:
+                startActivity(new Intent(Security.this, Two_FA.class));
+                finish();
+                break;
+        }
     }
 }

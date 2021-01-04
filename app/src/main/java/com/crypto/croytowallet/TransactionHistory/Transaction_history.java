@@ -18,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.crypto.croytowallet.Activity.WalletBalance;
 import com.crypto.croytowallet.Adapter.Transaaction_history_adapter;
+import com.crypto.croytowallet.Interface.HistoryClickLister;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.Model.TransactionHistoryModel;
 import com.crypto.croytowallet.R;
@@ -32,10 +33,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Transaction_history extends AppCompatActivity {
+public class Transaction_history extends AppCompatActivity implements HistoryClickLister {
     ImageView imageView;
     RecyclerView recyclerView;
     ArrayList<TransactionHistoryModel> transactionHistoryModels;
@@ -52,6 +54,7 @@ public class Transaction_history extends AppCompatActivity {
         recyclerView=findViewById(R.id.recyclerTransation);
 
         transactionHistoryModels =new ArrayList<TransactionHistoryModel>();
+
         getHistory();
     }
 
@@ -83,11 +86,13 @@ public class Transaction_history extends AppCompatActivity {
                         String data =jsonArray.getString(i);
                         JSONObject  object1=new JSONObject(data);
                         TransactionHistoryModel transactionHistoryModel1=new TransactionHistoryModel();
+                        String id = object1.getString("_id");
                         String sendername=object1.getString("senderName");
                         String receviername=object1.getString("receiverName");
                         String amount=object1.getString("amtOfCrypto");
                         String time=object1.getString("updatedAt");
 
+                        transactionHistoryModel1.setId(id);
                         transactionHistoryModel1.setStatus(receviername);
                         transactionHistoryModel1.setUsername(sendername);
                         transactionHistoryModel1.setAmountTrans(amount);
@@ -96,13 +101,14 @@ public class Transaction_history extends AppCompatActivity {
 
                         transactionHistoryModels.add(transactionHistoryModel1);
 
+                   //   Collections.reverse(transactionHistoryModels);
                       //  Toast.makeText(Transaction_history.this, ""+data, Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                transaaction_history_adapter = new Transaaction_history_adapter(transactionHistoryModels,getApplicationContext());
+                transaaction_history_adapter = new Transaaction_history_adapter(transactionHistoryModels,getApplicationContext(),Transaction_history.this);
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL,false);
                 recyclerView.setLayoutManager(mLayoutManager);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -173,4 +179,10 @@ public class Transaction_history extends AppCompatActivity {
             });
 
         }
+
+    @Override
+    public void onHistoryItemClickListener(int position) {
+
+        Toast.makeText(this, ""+ position, Toast.LENGTH_SHORT).show();
+    }
 }

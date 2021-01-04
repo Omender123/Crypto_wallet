@@ -29,9 +29,9 @@ ActionBar actionBar;
         setContentView(R.layout.activity_support);
         imageView =findViewById(R.id.back);
         support=findViewById(R.id.support2);
-        down = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_down1);
+      /*  down = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_down1);
         support.startAnimation(down);
-
+*/
 
         // toolbar=findViewById(R.id.toolbar);
         //  setSupportActionBar(toolbar);

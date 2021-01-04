@@ -25,12 +25,15 @@ import androidmads.library.qrgenearator.QRGEncoder;
 
 public class WalletReceive extends AppCompatActivity {
 TextView barcodeAddress;
-    ImageView qrImage;
+    ImageView qrImage,imageView;
     CardView barCodeshare;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet_receive);
+        imageView =findViewById(R.id.back);
+        back();
+
         barcodeAddress=findViewById(R.id.barCodeAddress);
         qrImage = findViewById(R.id.qrPlaceHolder);
         barCodeshare=findViewById(R.id.barCodeshare);
@@ -87,10 +90,15 @@ TextView barcodeAddress;
 
     }
 
-    public void Back_Receive(View view) {
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
+    public void back(){
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WalletReceive.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
+
     }
 }

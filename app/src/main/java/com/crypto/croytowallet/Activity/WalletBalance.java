@@ -22,11 +22,13 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.crypto.croytowallet.Adapter.Crypto_currencyInfo;
 import com.crypto.croytowallet.Adapter.Transaaction_history_adapter;
+import com.crypto.croytowallet.Interface.HistoryClickLister;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.Model.TransactionHistoryModel;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
+import com.crypto.croytowallet.TransactionHistory.Transaction_history;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
 import com.crypto.croytowallet.fragement.Wallet;
@@ -39,12 +41,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WalletBalance extends AppCompatActivity {
+public class WalletBalance extends AppCompatActivity implements HistoryClickLister {
     ImageView imageView;
-    TextView textView;
+    TextView textView,more;
     RequestQueue requestQueue;
     RecyclerView recyclerView;
     ArrayList<TransactionHistoryModel> transactionHistoryModels;
@@ -57,6 +60,7 @@ public class WalletBalance extends AppCompatActivity {
         imageView =findViewById(R.id.back);
         back();
         textView=findViewById(R.id.wallet_balance);
+        more=findViewById(R.id.moretransactions);
         recyclerView=findViewById(R.id.recyclerViewAddBalance);
 
         transactionHistoryModels =new ArrayList<TransactionHistoryModel>();
@@ -70,6 +74,14 @@ public class WalletBalance extends AppCompatActivity {
         }, 50);
 
 
+        more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WalletBalance.this, Transaction_history.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
     }
 
 
@@ -148,6 +160,7 @@ public class WalletBalance extends AppCompatActivity {
 
 
                         transactionHistoryModels.add(transactionHistoryModel1);
+                   //   Collections.reverse(transactionHistoryModels);
 
                  //       Toast.makeText(WalletBalance.this, ""+data, Toast.LENGTH_SHORT).show();
                     }
@@ -155,7 +168,7 @@ public class WalletBalance extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                transaaction_history_adapter = new Transaaction_history_adapter(transactionHistoryModels,getApplicationContext());
+                transaaction_history_adapter = new Transaaction_history_adapter(transactionHistoryModels,getApplicationContext(), WalletBalance.this);
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL,false);
                 recyclerView.setLayoutManager(mLayoutManager);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -223,5 +236,10 @@ public class WalletBalance extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onHistoryItemClickListener(int position) {
+        Toast.makeText(this, ""+position, Toast.LENGTH_SHORT).show();
     }
 }

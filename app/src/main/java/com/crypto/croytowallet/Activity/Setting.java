@@ -20,16 +20,12 @@ import com.crypto.croytowallet.R;
 
 public class Setting extends AppCompatActivity {
     ImageView imageView;
-    LinearLayout setting;
-    Animation down;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         imageView =findViewById(R.id.back);
-        setting=findViewById(R.id.setting2);
-        down = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_down1);
-        setting.startAnimation(down);
 
         back();
     }

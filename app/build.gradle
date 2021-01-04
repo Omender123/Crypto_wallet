@@ -47,7 +47,8 @@ dependencies {
 
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
 
-    // razorpay 
+    implementation 'com.zcw:togglebutton-library:1.0.0'
+    // razorpay
     implementation 'com.razorpay:checkout:1.5.16'
 
     //Image library
