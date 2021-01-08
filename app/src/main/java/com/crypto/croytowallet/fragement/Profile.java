@@ -56,7 +56,7 @@ TextView get,send;
         left = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_left);
 
         //set animation
-       profile.startAnimation(right);
+      // profile.startAnimation(right);
        /* setting.startAnimation(left);
         support.startAnimation(left);
         security.startAnimation(left);

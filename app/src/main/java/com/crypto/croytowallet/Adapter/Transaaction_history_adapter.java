@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.crypto.croytowallet.AppUtils;
 import com.crypto.croytowallet.Interface.HistoryClickLister;
 import com.crypto.croytowallet.Model.TransactionHistoryModel;
 import com.crypto.croytowallet.R;
@@ -43,9 +44,10 @@ private HistoryClickLister historyClickLister;
       holder.transaction_status.setText("Paid To "+transactionHistoryModels.get(position).getStatus());
         holder.transaction_amount.setText(transactionHistoryModels.get(position).getAmountTrans());
         holder.transaction_username.setText("Paid From "+transactionHistoryModels.get(position).getUsername());
-        holder.transaction_time.setText(transactionHistoryModels.get(position).getDate());
+        holder.transaction_time.setText(AppUtils.getDate(transactionHistoryModels.get(position).getDate()));
 
-
+       // holder.event_time.setText(AppUtils.getDate(data.get(position).getStartDate()));
+    
     }
 
     @Override

@@ -197,7 +197,6 @@ public class SignUp extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 String s=null;
                 hidepDialog();
-//                Toast.makeText(SignUp.this, response.body().toString()+"", Toast.LENGTH_SHORT).show();
 
                 if (response.code()==200) {
 
@@ -206,10 +205,8 @@ public class SignUp extends AppCompatActivity {
                         JSONObject object=new JSONObject(s);
                         String result=object.getString("result");
                         JSONObject object1=new JSONObject(result);
-                    /*    String username=object1.getString("username");
-                        String mnemonic=object1.getString("mnemonic");
-*/
-                        SignUpData user = new SignUpData(
+
+                    SignUpData user = new SignUpData(
                                 object1.getString("username"),
                                 object1.getString("mnemonic")
                         );

@@ -106,8 +106,12 @@
     <string name="change_password">Change Password</string>
     <string name="new_password">New Password</string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="create_passcode">Create Your Passcode </string>
+    <string name="confirm_passcode">Confirm Your Passcode </string>
+    <string name="enter_passcode">Enter Your Passcode </string>
     <string name="done">Done</string>
     <string name="transaction">Transaction Pin</string>
+    <string name="Secure_wallet">Secure wallet</string>
     <string name="c_transaction">Confirm Transaction Pin</string>
     <string name="enter_pin">Enter Transaction Pin</string>
     <string name="mnemonic">Copy to Mnemonic</string>

@@ -270,6 +270,7 @@ public class Top_up_Money extends AppCompatActivity implements PaymentResultWith
                 .setDuration(Snacky.LENGTH_SHORT)
                 .success()
                 .show();
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
