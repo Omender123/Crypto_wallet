@@ -183,6 +183,8 @@ public class Transaction_history extends AppCompatActivity implements HistoryCli
     @Override
     public void onHistoryItemClickListener(int position) {
 
-        Toast.makeText(this, ""+ position, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(Transaction_history.this,Full_Transaction_History.class);
+        intent.putExtra("position",position);
+        startActivity(intent);
     }
 }

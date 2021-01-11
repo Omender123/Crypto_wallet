@@ -1,17 +1,35 @@
 package com.crypto.croytowallet.Model;
 
 public class CrptoInfoModel {
-    String id,Name,Image,CurrentPrice,currencyRate;
+    String id,Name,Image,CurrentPrice,currencyRate,high_price,low_price;
 
-    public CrptoInfoModel(String id, String name, String image, String currentPrice, String currencyRate) {
+    public CrptoInfoModel(String id, String name, String image, String currentPrice, String currencyRate,String high_price,String low_price) {
         this.id = id;
-        Name = name;
-        Image = image;
-        CurrentPrice = currentPrice;
+        this.Name = name;
+        this.Image = image;
+        this.CurrentPrice = currentPrice;
         this.currencyRate = currencyRate;
+        this.high_price=high_price;
+        this.low_price=low_price;
     }
 
     public CrptoInfoModel() {
+    }
+
+    public String getHigh_price() {
+        return high_price;
+    }
+
+    public void setHigh_price(String high_price) {
+        this.high_price = high_price;
+    }
+
+    public String getLow_price() {
+        return low_price;
+    }
+
+    public void setLow_price(String low_price) {
+        this.low_price = low_price;
     }
 
     public String getId() {

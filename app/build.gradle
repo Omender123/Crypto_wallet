@@ -79,4 +79,8 @@ dependencies {
     implementation 'com.budiyev.android:code-scanner:2.1.0'
     implementation 'com.karumi:dexter:6.0.0'
 
+    // graph
+  //  implementation 'com.github.lecho:hellocharts-library:1.5.8@aar'
+    implementation 'com.github.blackfizz:eazegraph:1.2.2@aar'
+    implementation 'com.nineoldandroids:library:2.4.0'
 }

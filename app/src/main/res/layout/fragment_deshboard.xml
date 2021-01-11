@@ -202,6 +202,228 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-  </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/overview"
+        android:textSize="15dp" />
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="0dp"
+        android:padding="10dp"
+        app:cardBackgroundColor="@color/card_background"
+        app:cardCornerRadius="5dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:id="@+id/backup1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="15dp"
+                android:padding="1dp"
+                android:scaleType="fitXY"
+                android:src="@mipmap/group16188" />
+
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="86dp"
+                android:layout_height="41dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="42dp"
+                android:layout_marginLeft="150dp"
+                android:layout_marginTop="8dp"
+                android:layout_toEndOf="@+id/text1"
+                android:padding="10dp"
+                app:srcCompat="@mipmap/path2059" />
+
+            <TextView
+                android:id="@+id/text1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/backup1"
+                android:layout_marginLeft="38dp"
+                android:layout_marginTop="15dp"
+                android:padding="1dp"
+                android:text="$2000.00"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/toolbar_text_color"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text1"
+                android:layout_alignLeft="@id/backup1"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginRight="20dp"
+                android:justificationMode="inter_word"
+                android:padding="1dp"
+                android:text="Bitcoin"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/price1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toEndOf="@+id/imageView3"
+                android:fontFamily="sans-serif-black"
+                android:text="0"
+                android:textAlignment="center"
+                android:textColor="#000" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/price1"
+                android:layout_alignParentEnd="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toEndOf="@+id/imageView3"
+                android:text="35434e24"
+                android:textAlignment="center"
+                android:textColor="#8bd780" />
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="10dp"
+        android:padding="10dp"
+        app:cardBackgroundColor="@color/card_background"
+        app:cardCornerRadius="5dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:id="@+id/backup"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="15dp"
+                android:padding="1dp"
+                android:scaleType="fitXY"
+                android:src="@mipmap/group_blue" />
+
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="86dp"
+                android:layout_height="41dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="42dp"
+                android:layout_marginLeft="150dp"
+                android:layout_marginTop="8dp"
+                android:layout_toEndOf="@+id/text"
+                android:padding="10dp"
+                app:srcCompat="@mipmap/path2060" />
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/backup"
+                android:layout_marginLeft="38dp"
+                android:layout_marginTop="15dp"
+                android:padding="1dp"
+                android:text="$2000.00"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/toolbar_text_color"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text"
+                android:layout_alignLeft="@id/backup"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="20dp"
+                android:justificationMode="inter_word"
+                android:padding="1dp"
+                android:text="Ethereum"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toEndOf="@+id/imageView2"
+                android:fontFamily="sans-serif-black"
+                android:text="0"
+                android:textAlignment="center"
+                android:textColor="#000" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textView2"
+                android:layout_alignParentEnd="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toEndOf="@+id/imageView2"
+                android:text="35434e24"
+                android:textAlignment="center"
+                android:textColor="#8bd780" />
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/custom_border"
+        android:gravity="center"
+        android:paddingBottom="0dp"
+        android:text="@string/add_more"
+        android:textAlignment="center"
+        android:textSize="15dp"
+        android:textStyle="bold" />
+
+
+
+</LinearLayout>
 
 </ScrollView>

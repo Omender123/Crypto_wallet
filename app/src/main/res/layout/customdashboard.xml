@@ -86,14 +86,22 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
     <ImageView
+        android:id="@+id/chart"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:src="@drawable/ic_group_16186"
+        android:src="@mipmap/wave"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:scaleType="fitXY"
         android:layout_below="@id/coinrate"
         />
+    <!--<lecho.lib.hellocharts.view.LineChartView
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_below="@id/coinrate"
+        />-->
 </RelativeLayout>
     </androidx.cardview.widget.CardView>
 

@@ -23,10 +23,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.crypto.croytowallet.Activity.Graph_layout;
 import com.crypto.croytowallet.Activity.WalletBalance;
 import com.crypto.croytowallet.Activity.WalletReceive;
 import com.crypto.croytowallet.Activity.WalletScan;
 import com.crypto.croytowallet.Adapter.Crypto_currencyInfo;
+import com.crypto.croytowallet.Interface.CryptoClickListner;
 import com.crypto.croytowallet.Model.CrptoInfoModel;
 import com.crypto.croytowallet.Payment.Complate_payment;
 import com.crypto.croytowallet.Payment.Enter_transaction_pin;
@@ -34,6 +36,8 @@ import com.crypto.croytowallet.Payment.Top_up_Money;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
+import com.crypto.croytowallet.TransactionHistory.Full_Transaction_History;
+import com.crypto.croytowallet.TransactionHistory.Transaction_history;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,12 +51,13 @@ import java.util.Map;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Deshboard extends Fragment implements View.OnClickListener {
+public class Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
     ArrayList<CrptoInfoModel> crptoInfoModels;
     RecyclerView cryptoInfoRecyclerView;
     RequestQueue requestQueue;
     Crypto_currencyInfo crypto_currencyInfo;
     LinearLayout lytscan,lytPay,lytWalletBalance,lytaddMoney;
+
 
     public Deshboard() {
         // Required empty public constructor
@@ -79,6 +84,8 @@ public class Deshboard extends Fragment implements View.OnClickListener {
 
 
 
+
+
         CryptoInfoRecyclerView();
     //    checkBalance();
 
@@ -100,12 +107,16 @@ public class Deshboard extends Fragment implements View.OnClickListener {
                         String name=jsonObject1.getString("name");
                         String rate=jsonObject1.getString("price_change_percentage_24h");
                         String price=jsonObject1.getString("current_price");
+                        String high_price=jsonObject1.getString("high_24h");
+                        String low_price=jsonObject1.getString("low_24h");
 
                         crptoInfoModel1.setId(id);
                         crptoInfoModel1.setImage(image);
                         crptoInfoModel1.setName(name);
                         crptoInfoModel1.setCurrencyRate(rate);
                         crptoInfoModel1.setCurrentPrice(price);
+                        crptoInfoModel1.setHigh_price(high_price);
+                        crptoInfoModel1.setLow_price(low_price);
                         crptoInfoModels.add(crptoInfoModel1);
 
 
@@ -116,7 +127,7 @@ public class Deshboard extends Fragment implements View.OnClickListener {
                     e.printStackTrace();
                 }
 
-                crypto_currencyInfo = new Crypto_currencyInfo(crptoInfoModels,getContext());
+                crypto_currencyInfo = new Crypto_currencyInfo(crptoInfoModels,getContext(),Deshboard.this::onCryptoItemClickListener );
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
                 cryptoInfoRecyclerView.setLayoutManager(mLayoutManager);
                 cryptoInfoRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -249,4 +260,10 @@ public class Deshboard extends Fragment implements View.OnClickListener {
         }
     }
 
+    @Override
+    public void onCryptoItemClickListener(int position) {
+        Intent intent = new Intent(getContext(), Graph_layout.class);
+        intent.putExtra("position",position);
+        startActivity(intent);
+    }
 }

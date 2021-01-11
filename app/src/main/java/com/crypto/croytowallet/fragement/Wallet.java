@@ -20,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.crypto.croytowallet.Adapter.Crypto_currencyInfo;
+import com.crypto.croytowallet.Interface.CryptoClickListner;
 import com.crypto.croytowallet.Model.CrptoInfoModel;
 import com.crypto.croytowallet.R;
 
@@ -33,7 +34,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Wallet extends Fragment {
+public class Wallet extends Fragment implements  CryptoClickListner{
     ArrayList<CrptoInfoModel> crptoInfoModels;
     RecyclerView WalletRecyclerView;
     RequestQueue requestQueue;
@@ -87,7 +88,7 @@ public class Wallet extends Fragment {
                     e.printStackTrace();
                 }
 
-                crypto_currencyInfo = new Crypto_currencyInfo(crptoInfoModels,getContext());
+                crypto_currencyInfo = new Crypto_currencyInfo(crptoInfoModels,getContext(), Wallet.this::onCryptoItemClickListener);
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
                 WalletRecyclerView.setLayoutManager(mLayoutManager);
                 WalletRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -104,6 +105,11 @@ public class Wallet extends Fragment {
         });
         requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);
+
+    }
+
+    @Override
+    public void onCryptoItemClickListener(int position) {
 
     }
 }
