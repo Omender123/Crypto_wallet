@@ -1,9 +1,9 @@
 package com.crypto.croytowallet.Model;
 
 public class CrptoInfoModel {
-    String id,Name,Image,CurrentPrice,currencyRate,high_price,low_price;
+    String id,Name,Image,CurrentPrice,currencyRate,high_price,low_price,symbol;
 
-    public CrptoInfoModel(String id, String name, String image, String currentPrice, String currencyRate,String high_price,String low_price) {
+    public CrptoInfoModel(String id, String name, String image, String currentPrice, String currencyRate,String high_price,String low_price,String symbol) {
         this.id = id;
         this.Name = name;
         this.Image = image;
@@ -11,9 +11,18 @@ public class CrptoInfoModel {
         this.currencyRate = currencyRate;
         this.high_price=high_price;
         this.low_price=low_price;
+        this.symbol=symbol;
     }
 
     public CrptoInfoModel() {
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
     public String getHigh_price() {

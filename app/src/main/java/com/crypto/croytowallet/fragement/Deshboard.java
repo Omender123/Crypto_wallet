@@ -1,7 +1,9 @@
 package com.crypto.croytowallet.fragement;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,7 +59,7 @@ public class Deshboard extends Fragment implements View.OnClickListener, CryptoC
     RequestQueue requestQueue;
     Crypto_currencyInfo crypto_currencyInfo;
     LinearLayout lytscan,lytPay,lytWalletBalance,lytaddMoney;
-
+    SharedPreferences sharedPreferences;
 
     public Deshboard() {
         // Required empty public constructor
@@ -83,7 +85,7 @@ public class Deshboard extends Fragment implements View.OnClickListener, CryptoC
         crptoInfoModels=new ArrayList<CrptoInfoModel>();
 
 
-
+        sharedPreferences=getActivity().getSharedPreferences("symbols", Context.MODE_PRIVATE);
 
 
         CryptoInfoRecyclerView();
@@ -103,6 +105,7 @@ public class Deshboard extends Fragment implements View.OnClickListener, CryptoC
                         CrptoInfoModel  crptoInfoModel1= new CrptoInfoModel();
                          JSONObject jsonObject1=jsonArray.getJSONObject(i);
                         String id=jsonObject1.getString("id");
+                        String symbol =jsonObject1.getString("symbol");
                         String image=jsonObject1.getString("image");
                         String name=jsonObject1.getString("name");
                         String rate=jsonObject1.getString("price_change_percentage_24h");
@@ -117,6 +120,7 @@ public class Deshboard extends Fragment implements View.OnClickListener, CryptoC
                         crptoInfoModel1.setCurrentPrice(price);
                         crptoInfoModel1.setHigh_price(high_price);
                         crptoInfoModel1.setLow_price(low_price);
+                        crptoInfoModel1.setSymbol(symbol);
                         crptoInfoModels.add(crptoInfoModel1);
 
 
@@ -265,5 +269,11 @@ public class Deshboard extends Fragment implements View.OnClickListener, CryptoC
         Intent intent = new Intent(getContext(), Graph_layout.class);
         intent.putExtra("position",position);
         startActivity(intent);
+
+        String result=crptoInfoModels.get(position).getSymbol();
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putString("symbol1",result);
+        editor.commit();
+
     }
 }

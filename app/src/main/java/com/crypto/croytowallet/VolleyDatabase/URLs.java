@@ -26,6 +26,7 @@ public class URLs {
     // google or email 2fa
     public static final String URL_2FA= ROOT_URL + "user/twoFaEnableOrDisable";
 
-
+    //coinTransfer
+    public static final String URL_COIN_TRANSFER= ROOT_URL + "transaction/transfer";
 
 }

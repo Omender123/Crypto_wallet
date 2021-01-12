@@ -2,6 +2,9 @@
 package com.crypto.croytowallet.fragement;
 
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.crypto.croytowallet.Activity.Graph_layout;
 import com.crypto.croytowallet.Adapter.Crypto_currencyInfo;
 import com.crypto.croytowallet.Interface.CryptoClickListner;
 import com.crypto.croytowallet.Model.CrptoInfoModel;
@@ -39,7 +43,7 @@ public class Wallet extends Fragment implements  CryptoClickListner{
     RecyclerView WalletRecyclerView;
     RequestQueue requestQueue;
     Crypto_currencyInfo crypto_currencyInfo;
-
+    SharedPreferences sharedPreferences;
 
     public Wallet() {
         // Required empty public constructor
@@ -54,6 +58,9 @@ public class Wallet extends Fragment implements  CryptoClickListner{
 
         WalletRecyclerView =view.findViewById(R.id.walletRecyclerView);
         crptoInfoModels=new ArrayList<CrptoInfoModel>();
+
+        sharedPreferences=getActivity().getSharedPreferences("symbols", Context.MODE_PRIVATE);
+
         CryptoInfoRecyclerView();
     return view;
     }
@@ -110,6 +117,13 @@ public class Wallet extends Fragment implements  CryptoClickListner{
 
     @Override
     public void onCryptoItemClickListener(int position) {
+        Intent intent = new Intent(getContext(), Graph_layout.class);
+        intent.putExtra("position",position);
+        startActivity(intent);
 
+        String result=crptoInfoModels.get(position).getSymbol();
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putString("symbol1",result);
+        editor.commit();
     }
 }

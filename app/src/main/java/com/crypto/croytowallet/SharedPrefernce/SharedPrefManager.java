@@ -17,6 +17,12 @@ public class SharedPrefManager {
     private static final String KEY_REFERRAL_CODE = "keyreferral_code";
     private static final String KEY_TRANSACTION_PIN = "keytransaction_pin";
     private static final String KEY_TOKEN = "keytoken";
+    private static final String KEY_ETHADDRESS = "key_ETH";
+    private static final String KEY_BTCADDRESS = "key_BTC";
+    private static final String KEY_LITEADDRESS = "key_LITE";
+    private static final String KEY_XRPADDRESS = "key_XRP";
+    private static final String KEY_GOOGLE2FA = "key_GOOGLE2FA";
+    private static final String KEY_EMAIL2FA = "key_EMAIL_2FA";
     private static SharedPrefManager mInstance;
     private static Context mCtx;
 
@@ -45,6 +51,12 @@ public class SharedPrefManager {
         editor.putString(KEY_REFERRAL_CODE, user.getReferral_code());
         editor.putString(KEY_TRANSACTION_PIN, user.getTransaction_Pin());
         editor.putString(KEY_TOKEN, user.getToken());
+        editor.putString(KEY_ETHADDRESS, user.getETH());
+        editor.putString(KEY_BTCADDRESS, user.getBTC());
+        editor.putString(KEY_LITEADDRESS, user.getLITE());
+        editor.putString(KEY_XRPADDRESS, user.getXRP());
+        editor.putBoolean(KEY_GOOGLE2FA, user.getGOOGLE2FA());
+        editor.putBoolean(KEY_EMAIL2FA, user.getEMAIL2FA());
         editor.apply();
     }
 
@@ -66,7 +78,13 @@ public class SharedPrefManager {
                 sharedPreferences.getString(KEY_MNEMONIC, null),
                 sharedPreferences.getString(KEY_REFERRAL_CODE, null),
                 sharedPreferences.getString(KEY_TRANSACTION_PIN, null),
-                sharedPreferences.getString(KEY_TOKEN, null)
+                sharedPreferences.getString(KEY_TOKEN, null),
+                sharedPreferences.getString(KEY_ETHADDRESS, null),
+                sharedPreferences.getString(KEY_BTCADDRESS, null),
+                sharedPreferences.getString(KEY_LITEADDRESS, null),
+                sharedPreferences.getString(KEY_XRPADDRESS, null),
+                sharedPreferences.getBoolean(KEY_GOOGLE2FA, false),
+                sharedPreferences.getBoolean(KEY_EMAIL2FA, false)
         );
     }
 

@@ -195,16 +195,29 @@ EditText username,password;
                     String mnemonic = object1.getString("mnemonic");
                     String Referral_code = object1.getString("myReferalcode");
                     String transaction_Pin = object1.getString("transactionPin");
+                    String ETH = object1.getString("ethAddress");
+                    String BTC = object1.getString("bitcoinAddress");
+                    String LITE = object1.getString("litecoinAddress");
+                    String XRP = object1.getString("xrpAddress");
 
-                    UserData userData=new UserData(id,name,email,phone,username,mnemonic,Referral_code,transaction_Pin,token);
+                    String security=object1.getString("securityEnable");
+                    JSONObject object2=new JSONObject(security);
+                    String GOOGLE2FA = object2.getString("google2fa");
+                    String EMAIL2FA = object2.getString("email2fa");
+
+                    Boolean google2fa = Boolean.valueOf(GOOGLE2FA);
+                    Boolean email2fa = Boolean.valueOf(EMAIL2FA);
+
+                    UserData userData=new UserData(id,name,email,phone,username,mnemonic,Referral_code,transaction_Pin,token
+                                                   ,ETH,BTC,LITE,XRP,google2fa,email2fa);
 
                     //storing the user in shared preferences
                     SharedPrefManager.getInstance(getApplicationContext()).userLogin(userData);
-                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                   startActivity(new Intent(getApplicationContext(),MainActivity.class));
                     finish();
 
                     Toast.makeText(Login.this, "Login Successfully", Toast.LENGTH_SHORT).show();
-                  //  Toast.makeText(Login.this, "" +id+name+email+phone+username+mnemonic+Referral_code+transaction_Pin, Toast.LENGTH_SHORT).show();
+                  // Toast.makeText(Login.this, "" +ETH+BTC+LITE+XRP+GOOGLE2FA+EMAIL2FA, Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

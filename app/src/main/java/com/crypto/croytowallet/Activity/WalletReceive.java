@@ -44,7 +44,7 @@ TextView barcodeAddress;
         String id=userData.getId();
         barcodeAddress.setText(id);
 
-        Toast.makeText(this, id+" "+username, Toast.LENGTH_SHORT).show();
+     //   Toast.makeText(this, id+" "+username, Toast.LENGTH_SHORT).show();
         barcodeAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

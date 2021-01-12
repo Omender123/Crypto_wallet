@@ -2,19 +2,30 @@ package com.crypto.croytowallet.SharedPrefernce;
 
 public class UserData {
     private String id;
-    private String name, email, mobile, username, mnemonic, Referral_code, transaction_Pin, token;
+    private String name, email, mobile, username, mnemonic, Referral_code, transaction_Pin, token,ETH,BTC,LITE,XRP;
+    private Boolean GOOGLE2FA,EMAIL2FA;
 
 
-    public UserData(String id, String name, String email, String mobile, String username, String mnemonic, String Referral_code, String transaction_Pin, String token) {
+
+
+    public UserData(String id, String name, String email, String mobile, String username, String mnemonic, String referral_code,
+                    String transaction_Pin, String token, String ETH, String BTC, String LITE, String XRP,
+                    Boolean GOOGLE2FA, Boolean EMAIL2FA) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.mobile = mobile;
         this.username = username;
         this.mnemonic = mnemonic;
-        this.Referral_code = Referral_code;
+        Referral_code = referral_code;
         this.transaction_Pin = transaction_Pin;
         this.token = token;
+        this.ETH = ETH;
+        this.BTC = BTC;
+        this.LITE = LITE;
+        this.XRP = XRP;
+        this.GOOGLE2FA = GOOGLE2FA;
+        this.EMAIL2FA = EMAIL2FA;
     }
 
     public UserData() {
@@ -90,5 +101,53 @@ public class UserData {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getETH() {
+        return ETH;
+    }
+
+    public void setETH(String ETH) {
+        this.ETH = ETH;
+    }
+
+    public String getBTC() {
+        return BTC;
+    }
+
+    public void setBTC(String BTC) {
+        this.BTC = BTC;
+    }
+
+    public String getLITE() {
+        return LITE;
+    }
+
+    public void setLITE(String LITE) {
+        this.LITE = LITE;
+    }
+
+    public String getXRP() {
+        return XRP;
+    }
+
+    public void setXRP(String XRP) {
+        this.XRP = XRP;
+    }
+
+    public Boolean getGOOGLE2FA() {
+        return GOOGLE2FA;
+    }
+
+    public void setGOOGLE2FA(Boolean GOOGLE2FA) {
+        this.GOOGLE2FA = GOOGLE2FA;
+    }
+
+    public Boolean getEMAIL2FA() {
+        return EMAIL2FA;
+    }
+
+    public void setEMAIL2FA(Boolean EMAIL2FA) {
+        this.EMAIL2FA = EMAIL2FA;
     }
 }
