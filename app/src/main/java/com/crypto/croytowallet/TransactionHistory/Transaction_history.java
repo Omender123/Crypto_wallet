@@ -5,7 +5,9 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -43,6 +45,7 @@ public class Transaction_history extends AppCompatActivity implements HistoryCli
     ArrayList<TransactionHistoryModel> transactionHistoryModels;
     Transaaction_history_adapter transaaction_history_adapter;
     KProgressHUD progressDialog;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,7 @@ public class Transaction_history extends AppCompatActivity implements HistoryCli
 
         transactionHistoryModels =new ArrayList<TransactionHistoryModel>();
 
+        sharedPreferences=getSharedPreferences("transaction", Context.MODE_PRIVATE);
         getHistory();
     }
 
@@ -184,7 +188,10 @@ public class Transaction_history extends AppCompatActivity implements HistoryCli
     public void onHistoryItemClickListener(int position) {
 
         Intent intent = new Intent(Transaction_history.this,Full_Transaction_History.class);
-        intent.putExtra("position",position);
-        startActivity(intent);
+     //   String result=transactionHistoryModels.get(position).getSymbol();
+       /* SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putString("symbol1",result);
+        editor.commit();
+       */ startActivity(intent);
     }
 }

@@ -90,6 +90,7 @@
     <string name="referal_code">Referral Code</string>
     <string name="phone">Phone No.</string>
     <string name="username">Username</string>
+    <string name="Nice">Hello,nice to meet you!</string>
     <string name="hello_nice">Hello, nice to meet you!</string>
     <string name="crate">Create your Account</string>
     <string name="enter_referral">Enter Your Referral Code</string>
@@ -120,4 +121,13 @@
     <string name="overview">Overview</string>
     <string name="fortext">Please save the mnemonic for life time. and the requirment of this Mnemonic need at the time of the Forget password. </string>
 
+
+    <string name="Gmail_Text">Google Authentication</string>
+    <string name="Emailtext"> verify your Email id </string>
+    <string name="GoogleAuthentication">Google Authentication</string>
+    <string name="createaccount">Account is created</string>
+    <string name="googleauth">Enter Google Authentication </string>
+    <string name="skip">Skip</string>
+    <string name="Addverification">Add Verification</string>
+    <string name="sucessfully">Successfully</string>
 </resources>
