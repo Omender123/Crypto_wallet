@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -67,6 +68,7 @@ Button next2;
 
           }
 
+
              /*   startActivity(new Intent(getApplicationContext(),Change_Password.class));
 
                 Bundle bundle = getIntent().getExtras();
@@ -124,6 +126,8 @@ Button next2;
                                 .setActionText(android.R.string.ok)
                                 .error()
                                 .show();
+
+                        OTPexpire();
                         // Toast.makeText(SignUp.this, jsonObject1.getString("error")+"", Toast.LENGTH_SHORT).show();
 
 
@@ -182,6 +186,48 @@ Button next2;
         Intent intent = new Intent(getApplicationContext(), ForgetPassword.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+    }
+    public void OTPexpire(){
+        new Handler().postDelayed(new Runnable() {
+
+
+            @Override
+            public void run() {
+                // This method will be executed once the timer is over
+                expire();
+            }
+        }, 300000);
+    }
+
+    public void expire(){
+        Bundle bundle = getIntent().getExtras();
+        String username = bundle.getString("username");
+
+
+
+
+        Call<ResponseBody> call=  RetrofitClient
+                .getInstance()
+                .getApi().expireOtp(username);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                hidepDialog();
+
+                String s=null;
+                if (response.code()==200){
+                    Toast.makeText(OTP_Activity.this, "Your Otp is expire", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+
     }
 
 }

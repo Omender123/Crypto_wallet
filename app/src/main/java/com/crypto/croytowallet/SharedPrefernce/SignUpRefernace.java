@@ -7,6 +7,7 @@ public class SignUpRefernace {
     private static final String SHARED_PREF_NAME = "Prebhat";
     private static final String KEY_USERNAME = "keyusername";
     private static final String KEY_MNEMONIC = "keymnemonic";
+    private static final String KEY_GOOGLE_AUTH_KEY = "keyGoogle";
 
     private static SignUpRefernace mInstance;
     private static Context mCtx;
@@ -25,9 +26,9 @@ public class SignUpRefernace {
     public void UserSignUP(SignUpData user) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-       editor.putString(KEY_USERNAME, user.getUsername());
+        editor.putString(KEY_USERNAME, user.getUsername());
         editor.putString(KEY_MNEMONIC, user.getMnemonic());
-
+        editor.putString(KEY_GOOGLE_AUTH_KEY, user.getGoogleAuthKey());
         editor.apply();
     }
 
@@ -36,7 +37,9 @@ public class SignUpRefernace {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return new SignUpData(
                 sharedPreferences.getString(KEY_USERNAME, null),
-                sharedPreferences.getString(KEY_MNEMONIC, null));
+                sharedPreferences.getString(KEY_MNEMONIC, null),
+                sharedPreferences.getString(KEY_GOOGLE_AUTH_KEY, null)
+                );
     }
 }
 

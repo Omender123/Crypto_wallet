@@ -29,4 +29,7 @@ public class URLs {
     //coinTransfer
     public static final String URL_COIN_TRANSFER= ROOT_URL + "transaction/transfer";
 
+    //2fa api
+    public static final String URL_EMAIL_VERIFY= ROOT_URL + "user/emailVerify";
+
 }

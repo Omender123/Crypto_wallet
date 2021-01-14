@@ -49,6 +49,22 @@ public interface Api {
     );
 
     @FormUrlEncoded
+    @POST("user/emailVerify")
+    Call<ResponseBody>OtpVerify(
+            @Field("username") String username,
+            @Field("otp") String otp
+
+            );
+
+    @FormUrlEncoded
+    @POST("user/checkGoogleAuthentication")
+    Call<ResponseBody>GoogleAuthVerify(
+            @Field("username") String username,
+            @Field("token") String token
+
+    );
+
+    @FormUrlEncoded
     @PUT("user/forgot-password")
     Call<ResponseBody>ChanagePassword(
             @Field("username") String username,

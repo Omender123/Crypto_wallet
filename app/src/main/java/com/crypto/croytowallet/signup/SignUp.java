@@ -206,9 +206,13 @@ public class SignUp extends AppCompatActivity {
                         String result=object.getString("result");
                         JSONObject object1=new JSONObject(result);
 
+                        String googlekey =object1.getString("googleAuthenticatorKey");
+
+                        JSONObject object2 = new JSONObject(googlekey);
                     SignUpData user = new SignUpData(
                                 object1.getString("username"),
-                                object1.getString("mnemonic")
+                                object1.getString("mnemonic"),
+                                 object2.getString("key")
                         );
 
                         //storing the user in shared preferences

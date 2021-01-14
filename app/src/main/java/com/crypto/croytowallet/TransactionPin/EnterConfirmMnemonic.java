@@ -24,6 +24,7 @@ import com.crypto.croytowallet.SharedPrefernce.SignUpRefernace;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
 import com.crypto.croytowallet.login.Login;
+import com.crypto.croytowallet.signup.Add_Verification;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONException;
@@ -143,7 +144,7 @@ String text1,text2,text3,text4,text5,text6,text7,text8,text9,text10,text11,text1
             @Override
             public void onResponse(String response) {
                 hidepDialog();
-                 startActivity(new Intent(getApplicationContext(),Login.class));
+                 startActivity(new Intent(getApplicationContext(), Add_Verification.class));
 
             }
 

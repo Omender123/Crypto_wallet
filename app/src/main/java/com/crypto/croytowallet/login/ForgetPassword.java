@@ -57,7 +57,7 @@ public class ForgetPassword extends AppCompatActivity {
             public void onClick(View v) {
                 sendOtp(v);
                 hideKeyboard(v);
-                OTPexpire();
+
             }
         });
     }
@@ -148,7 +148,7 @@ public class ForgetPassword extends AppCompatActivity {
                     intent.putExtra("username",usernames);
                     startActivity(intent);
                     finish();
-
+                    OTPexpire();
                     Toast.makeText(ForgetPassword.this, "Otp send in your registered Email", Toast.LENGTH_SHORT).show();
 
                 }else if(response.code()==400){
@@ -234,7 +234,7 @@ public class ForgetPassword extends AppCompatActivity {
                 // This method will be executed once the timer is over
                 expire();
             }
-        }, 15000);
+        }, 300000);
     }
 
     public void expire(){
