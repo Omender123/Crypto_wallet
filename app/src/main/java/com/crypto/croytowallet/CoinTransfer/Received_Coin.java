@@ -177,12 +177,43 @@ public class Received_Coin extends AppCompatActivity {
                 break;
 
             case 4:
+                //  barcodeAddress.setText("id2");
+                toolbar_title.setText("Receive Polkadot");
+                QRGEncoder qrgEncoder4 = new QRGEncoder("Bar code Address",null, QRGContents.Type.TEXT,500);
+                try {
+                    Bitmap qrBits = qrgEncoder4.encodeAsBitmap();
+                    qrImage.setImageBitmap(qrBits);
+                } catch (WriterException e) {
+                    e.printStackTrace();
+                }
+                barcodeAddress.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ClipboardManager cm = (ClipboardManager)getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                        cm.setText("Bar code Address");
+                        Toast.makeText(getApplicationContext(), "Copied ", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+                barCodeshare.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(Intent.ACTION_SEND);
+                        i.setType("text/plain");
+                        i.putExtra(Intent.EXTRA_TEXT, "bar code Address");
+                        startActivity(Intent.createChooser(i, "Share With"));
+                    }
+                });
+                break;
+
+            case 5:
                 String id4=userData.getLITE();
                 barcodeAddress.setText(id4);
                 toolbar_title.setText("Receive LITE");
-                QRGEncoder qrgEncoder4 = new QRGEncoder(id4,null, QRGContents.Type.TEXT,500);
+                QRGEncoder qrgEncoder5 = new QRGEncoder(id4,null, QRGContents.Type.TEXT,500);
                 try {
-                    Bitmap qrBits = qrgEncoder4.encodeAsBitmap();
+                    Bitmap qrBits = qrgEncoder5.encodeAsBitmap();
                     qrImage.setImageBitmap(qrBits);
                 } catch (WriterException e) {
                     e.printStackTrace();

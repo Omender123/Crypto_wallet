@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="signup.sucessfullverification">
+    <ImageView
+        android:id="@+id/sucess"
+        android:layout_width="match_parent"
+        android:layout_height="310dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_verification_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/create_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/createaccount"
+        android:textAlignment="center"
+        android:textSize="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/sucess"
+        />
+    <TextView
+        android:id="@+id/successfully"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sucessfully"
+        android:layout_below="@id/create_account"
+        android:textSize="40dp"
+        android:textColor="#000"
+        android:textStyle="bold"
+        android:gravity="center"
+        />
+    <Button
+        android:id="@+id/new_btnABC"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Next"
+        android:textColor="#000"
+        android:background="@drawable/rounded_button"
+        android:layout_below="@id/successfully"
+        android:layout_marginTop="150dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
+
+</RelativeLayout>

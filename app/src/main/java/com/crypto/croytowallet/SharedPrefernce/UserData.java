@@ -3,14 +3,14 @@ package com.crypto.croytowallet.SharedPrefernce;
 public class UserData {
     private String id;
     private String name, email, mobile, username, mnemonic, Referral_code, transaction_Pin, token,ETH,BTC,LITE,XRP;
-    private Boolean GOOGLE2FA,EMAIL2FA;
+    private Boolean EMAIL2FA;
 
 
 
 
     public UserData(String id, String name, String email, String mobile, String username, String mnemonic, String referral_code,
                     String transaction_Pin, String token, String ETH, String BTC, String LITE, String XRP,
-                    Boolean GOOGLE2FA, Boolean EMAIL2FA) {
+                     Boolean EMAIL2FA) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -24,7 +24,7 @@ public class UserData {
         this.BTC = BTC;
         this.LITE = LITE;
         this.XRP = XRP;
-        this.GOOGLE2FA = GOOGLE2FA;
+
         this.EMAIL2FA = EMAIL2FA;
     }
 
@@ -135,13 +135,6 @@ public class UserData {
         this.XRP = XRP;
     }
 
-    public Boolean getGOOGLE2FA() {
-        return GOOGLE2FA;
-    }
-
-    public void setGOOGLE2FA(Boolean GOOGLE2FA) {
-        this.GOOGLE2FA = GOOGLE2FA;
-    }
 
     public Boolean getEMAIL2FA() {
         return EMAIL2FA;

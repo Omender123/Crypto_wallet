@@ -181,8 +181,10 @@ EditText username,password;
             @Override
             public void onResponse(String response) {
                 hidepDialog();
+
+
                 try {
-                    JSONObject object =new JSONObject(response);
+                    JSONObject object= new JSONObject(response);
                     String result =object.getString("result");
                     String token =object.getString("token");
 
@@ -202,28 +204,22 @@ EditText username,password;
 
                     String security=object1.getString("securityEnable");
                     JSONObject object2=new JSONObject(security);
-                    String GOOGLE2FA = object2.getString("google2fa");
                     String EMAIL2FA = object2.getString("email2fa");
-
-                    Boolean google2fa = Boolean.valueOf(GOOGLE2FA);
                     Boolean email2fa = Boolean.valueOf(EMAIL2FA);
 
                     UserData userData=new UserData(id,name,email,phone,username,mnemonic,Referral_code,transaction_Pin,token
-                                                   ,ETH,BTC,LITE,XRP,google2fa,email2fa);
+                            ,ETH,BTC,LITE,XRP,email2fa);
 
                     //storing the user in shared preferences
                     SharedPrefManager.getInstance(getApplicationContext()).userLogin(userData);
-                   startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
                     finish();
 
                     Toast.makeText(Login.this, "Login Successfully", Toast.LENGTH_SHORT).show();
-                  // Toast.makeText(Login.this, "" +ETH+BTC+LITE+XRP+GOOGLE2FA+EMAIL2FA, Toast.LENGTH_SHORT).show();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
-
 
             }
         }, new Response.ErrorListener() {
