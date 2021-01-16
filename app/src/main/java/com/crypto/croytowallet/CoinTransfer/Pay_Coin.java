@@ -77,6 +77,7 @@ public class Pay_Coin extends AppCompatActivity {
 
         preferences=getApplicationContext().getSharedPreferences("symbols", Context.MODE_PRIVATE);
          cryptoCurrency = preferences.getString("symbol1","");
+      //  Toast.makeText(this, ""+position+cryptoCurrency, Toast.LENGTH_SHORT).show();
 
 
         next.setOnClickListener(new View.OnClickListener() {

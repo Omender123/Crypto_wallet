@@ -95,7 +95,7 @@ public class Deshboard extends Fragment implements View.OnClickListener, CryptoC
     }
 
     public void CryptoInfoRecyclerView(){
-        String url="https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&per_page=6&page=1&sparkline=false&price_change_percentage=24h";
+        String url="https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin%2Cethereum%2Ctether%2Cripple%2Clitecoin&order=market_cap_desc&sparkline=false&price_change_percentage=24h";
         StringRequest stringRequest=new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
