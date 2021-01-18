@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -42,18 +43,20 @@ public class Two_FA extends AppCompatActivity {
     ImageView imageView;
     ToggleButton google_to_fa,email_to_fa;
     KProgressHUD progressDialog;
-    UserData userData;;
+    UserData userData;
+    SharedPreferences sharedPreferences = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_two__f);
         imageView =findViewById(R.id.back);
 
-        google_to_fa=findViewById(R.id.toogle1);
+       // google_to_fa=findViewById(R.id.toogle1);
         email_to_fa=findViewById(R.id.toogle2);
         userData= SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
-        google_to_fa.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
+
+      /*  google_to_fa.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
             @Override
             public void onToggle(boolean on) {
                 if (on){
@@ -63,15 +66,30 @@ public class Two_FA extends AppCompatActivity {
                     Disable_2FA();
                 }
             }
-        });
+        });*/
+
+        sharedPreferences = getSharedPreferences("night",0);
+        Boolean booleanValue = sharedPreferences.getBoolean("ON",true);
+        if (booleanValue){
+            email_to_fa.setToggleOn(true);
+        }
         email_to_fa.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
             @Override
             public void onToggle(boolean on) {
                 if (on){
-                   Email_2FA_Enable();
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean("ON",true);
+                    editor.commit();
+                    email_to_fa.setToggleOn(true);
+                //   Email_2FA_Enable();
                 }
                 else{
-                    Disable_2FA();
+
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean("OFF",false);
+                    editor.commit();
+                    email_to_fa.setToggleOff(true);
+                  //  Disable_2FA();
                 }
             }
         });

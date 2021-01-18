@@ -14,6 +14,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.view.View;
 import android.view.WindowManager;
@@ -45,6 +46,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONArray;
@@ -64,12 +66,16 @@ import java.util.Locale;
 import java.util.Map;
 
 import de.mateware.snacky.Snacky;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 
 public class Login extends AppCompatActivity {
 Button login;
 TextView forget_password,signup;
-EditText username,password;
+EditText username,password,otp;
+TextInputLayout layout_otp;
     KProgressHUD progressDialog;
     String url="http://13.233.136.56:8080/api/user/login";
     ConstraintLayout linearLayout;
@@ -82,10 +88,11 @@ EditText username,password;
         setContentView(R.layout.activity_login);
         login =findViewById(R.id.login1);
         signup =findViewById(R.id.signup);
-
+        layout_otp =findViewById(R.id.otp);
         //input
         username = findViewById(R.id.ed_username1);
         password = findViewById(R.id.ed_password1);
+        otp = findViewById(R.id.ed_otp1);
        // animation
         linearLayout= findViewById(R.id.login_layout);
         fade_in = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_in);
@@ -142,6 +149,7 @@ EditText username,password;
         String passwords = password.getText().toString().trim();
         String usernames = username.getText().toString().trim();
 
+
         if (passwords.isEmpty() || passwords.length() < 8) {
             password.setError("please enter your password is more then 8 digit");
             requestFocus(password);
@@ -165,7 +173,7 @@ EditText username,password;
 
         String passwords = password.getText().toString().trim();
         String usernames = username.getText().toString().trim();
-
+        String otp1 = otp.getText().toString().trim();
         progressDialog = KProgressHUD.create(Login.this)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel("Please wait.....")
@@ -247,6 +255,7 @@ EditText username,password;
                 Map<String, String> params = new HashMap<>();
                 params.put("username", usernames);
                 params.put("password", passwords);
+                params.put("otp",otp1);
 
 /*  params.put("ip",ipAddress);
                 params.put("os",os);
@@ -354,17 +363,142 @@ EditText username,password;
             String responseBody = new String(error.networkResponse.data, "utf-8");
             JSONObject data = new JSONObject(responseBody);
             String message=data.getString("error");
-            Snacky.builder()
-                    .setActivity(Login.this)
-                    .setText(message)
-                    .setDuration(Snacky.LENGTH_SHORT)
-                    .setActionText(android.R.string.ok)
-                    .error()
-                    .show();
+
+            if(message.equals("Incorrect otp")){
+                resendOTP();
+                layout_otp.setVisibility(View.VISIBLE);
+            }else{
+
+                Snacky.builder()
+                        .setActivity(Login.this)
+                        .setText(message)
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+            }
+
       //      Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
         } catch (JSONException e) {
         } catch (UnsupportedEncodingException errorr) {
         }
+    }
+
+    public void resendOTP() {
+
+        String usernames = username.getText().toString().trim();
+
+
+        progressDialog = KProgressHUD.create(Login.this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Please wait.....")
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
+
+        showpDialog();
+
+        Call<ResponseBody> call=  RetrofitClient
+                .getInstance()
+                .getApi().sendOtp(usernames);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                hidepDialog();
+
+                String s=null;
+                if (response.code()==200){
+
+                    Snacky.builder()
+                            .setActivity(Login.this)
+                            .setText("Otp send in your register Email")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .success()
+                            .show();
+                }else if(response.code()==400){
+                    try {
+
+                        s=response.errorBody().string();
+                        JSONObject jsonObject1=new JSONObject(s);
+                        String error =jsonObject1.getString("error");
+
+                        Snacky.builder()
+                                .setActivity(Login.this)
+                                .setText(" Oops Username Not Found !!!!!")
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
+
+                        OTPexpire();
+                        // Toast.makeText(SignUp.this, jsonObject1.getString("error")+"", Toast.LENGTH_SHORT).show();
+
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                hidepDialog();
+                Snacky.builder()
+                        .setActivity(Login.this)
+                        .setText("Please Check Your Internet Connection")
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+            }
+        });
+
+
+    }
+
+
+    public void OTPexpire(){
+        new Handler().postDelayed(new Runnable() {
+
+
+            @Override
+            public void run() {
+                // This method will be executed once the timer is over
+                expire();
+            }
+        }, 300000);
+    }
+
+    public void expire(){
+        String usernames = username.getText().toString().trim();
+
+
+        Call<ResponseBody> call=  RetrofitClient
+                .getInstance()
+                .getApi().expireOtp(usernames);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                hidepDialog();
+
+                String s=null;
+                if (response.code()==200){
+                    Toast.makeText(Login.this, "Your Otp is expire", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+
     }
 
     public void getDetails(){

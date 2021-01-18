@@ -113,9 +113,12 @@ public class Received_Coin extends AppCompatActivity {
                 break;
 
             case 2:
-              //  barcodeAddress.setText("id2");
+                String id2=userData.getETH();
+                barcodeAddress.setText(id2);
+
+                //  barcodeAddress.setText("id2");
                 toolbar_title.setText("Receive Tether");
-                QRGEncoder qrgEncoder2 = new QRGEncoder("Bar code Address",null, QRGContents.Type.TEXT,500);
+                QRGEncoder qrgEncoder2 = new QRGEncoder(id2,null, QRGContents.Type.TEXT,500);
                 try {
                     Bitmap qrBits = qrgEncoder2.encodeAsBitmap();
                     qrImage.setImageBitmap(qrBits);
@@ -126,7 +129,7 @@ public class Received_Coin extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         ClipboardManager cm = (ClipboardManager)getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                        cm.setText("Bar code Address");
+                        cm.setText(id2);
                         Toast.makeText(getApplicationContext(), "Copied ", Toast.LENGTH_SHORT).show();
 
                     }

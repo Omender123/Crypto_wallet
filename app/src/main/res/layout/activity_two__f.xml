@@ -35,7 +35,7 @@
                 android:textColor="@color/white"
                 android:id="@+id/toolbar_title" />
         </LinearLayout>
-    <androidx.cardview.widget.CardView
+   <!-- <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/card_background"
@@ -112,7 +112,7 @@
             </com.zcw.togglebutton.ToggleButton>
                 </RelativeLayout>
 
-    </androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>-->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -182,6 +182,7 @@
                 toggle:tbOffColor="#ddd"
                 toggle:tbBorderWidth="2dp"
                 android:layout_height="30dp"
+
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="25dp"

@@ -85,7 +85,7 @@ public class Transaction_history extends AppCompatActivity implements HistoryCli
                     String result =object.getString("result");
                     JSONArray jsonArray=new JSONArray(result);
 
-                    for (int i=0;i<=jsonArray.length();i++){
+                    for (int i=0;i<=29;i++){
 
                         String data =jsonArray.getString(i);
                         JSONObject  object1=new JSONObject(data);
@@ -93,7 +93,7 @@ public class Transaction_history extends AppCompatActivity implements HistoryCli
                         String id = object1.getString("_id");
                         String sendername=object1.getString("senderName");
                         String receviername=object1.getString("receiverName");
-                        String amount=object1.getString("amtOfCrypto");
+                        String amount=object1.getString("amount");
                         String time=object1.getString("updatedAt");
 
                         transactionHistoryModel1.setId(id);

@@ -50,6 +50,7 @@ CardView pay_money;
     String url="http://13.233.136.56:8080/api/transaction/peerToPeer";
     UserData userData;
     SharedPreferences preferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,6 +111,7 @@ CardView pay_money;
         Bundle bundle = getIntent().getExtras();
         String Amount = bundle.getString("amount12");
         String enterPin=pinView.getText().toString();
+        String username = preferences.getString("username","");
         String to_addressID=preferences.getString("id","");
         String token=userData.getToken();
 
@@ -125,7 +127,7 @@ CardView pay_money;
                     JSONObject object1=new JSONObject(result);
                     String id=object1.getString("_id");
                     String status=object1.getString("status");
-                    String amtOfCrypto=object1.getString("amtOfCrypto");
+                    String amtOfCrypto=object1.getString("amount");
 
                   /*  PearToPearModel pearToPearModel=new PearToPearModel(id,status,amtOfCrypto);
                     PearToPearSharedPrefManager.getInstance(getApplicationContext()).pearToPearData(pearToPearModel);
@@ -156,10 +158,11 @@ CardView pay_money;
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("cryptoCurrency",cryptoCurrency);
-                params.put("cryptoAmt",Amount);
+                params.put("amount",Amount);
                 params.put("transactionPin",enterPin);
-                params.put("receiverId",to_addressID);
+                params.put("toUserId",to_addressID);
+                params.put("toUsername",username);
+
 
 
                 return params;

@@ -136,6 +136,31 @@
                         android:drawableTint="@android:color/darker_gray"
                         android:inputType="textPassword"/>
                 </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/otp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_below="@id/user"
+                    android:visibility="gone"
+                    android:hint="Enter your OTP"
+                    app:passwordToggleTint="@android:color/darker_gray"
+                    style="@style/OutlineBox"
+                    app:passwordToggleEnabled="true">
+
+                    <EditText
+                        android:id="@+id/ed_otp1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:textCursorDrawable="@null"
+                        android:drawablePadding="10dp"
+                        android:textColor="@color/toolbar"
+                        android:drawableTint="@android:color/darker_gray"
+                        android:inputType="textPassword"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
                     android:id="@+id/forget"

@@ -137,20 +137,20 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
         StringRequest stringRequest=new StringRequest(Request.Method.POST, URLs.URL_TRANSACTION_HISTORY, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                try {
+               try {
                     JSONObject object  = new JSONObject(response);
                     String result =object.getString("result");
                     JSONArray jsonArray=new JSONArray(result);
 
-                    for (int i=0;i<=jsonArray.length();i++){
+                    for (int i=0;i<=9;i++){
 
                        String data =jsonArray.getString(i);
-                        JSONObject  object1=new JSONObject(data);
+                       JSONObject  object1=new JSONObject(data);
                         TransactionHistoryModel transactionHistoryModel1=new TransactionHistoryModel();
 
                         String sendername=object1.getString("senderName");
                         String receviername=object1.getString("receiverName");
-                        String amount=object1.getString("amtOfCrypto");
+                        String amount=object1.getString("amount");
                         String time=object1.getString("updatedAt");
 
                       transactionHistoryModel1.setStatus(receviername);
@@ -160,9 +160,8 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
 
 
                         transactionHistoryModels.add(transactionHistoryModel1);
-                   //   Collections.reverse(transactionHistoryModels);
 
-                 //       Toast.makeText(WalletBalance.this, ""+data, Toast.LENGTH_SHORT).show();
+                    //  Toast.makeText(WalletBalance.this, ""+data, Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (JSONException e) {
@@ -174,7 +173,7 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
                 recyclerView.setAdapter(transaaction_history_adapter);
 
-                //  Toast.makeText(WalletBalance.this, ""+response, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(WalletBalance.this, ""+response, Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override

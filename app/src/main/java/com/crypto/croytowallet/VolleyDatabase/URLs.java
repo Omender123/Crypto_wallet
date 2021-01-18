@@ -20,8 +20,8 @@ public class URLs {
     public static final String URL_SAVE_DATA= ROOT_URL + "razorpay/data?id=";
 
     // all transaction history api
-    public static final String URL_TRANSACTION_HISTORY= ROOT_URL + "transaction/all?page=0&limit=10";
-    public static final String URL_TRANSACTION_HISTORY_FULL= ROOT_URL + "transaction/all?page=0&limit=30";
+    public static final String URL_TRANSACTION_HISTORY= ROOT_URL + "transaction/allPeerTransactiones1";
+    public static final String URL_TRANSACTION_HISTORY_FULL= ROOT_URL + "transaction/allPeerTransactiones1";
 
     // google or email 2fa
     public static final String URL_2FA= ROOT_URL + "user/twoFaEnableOrDisable";

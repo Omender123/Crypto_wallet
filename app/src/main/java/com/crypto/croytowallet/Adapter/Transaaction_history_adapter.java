@@ -44,8 +44,14 @@ private HistoryClickLister historyClickLister;
       holder.transaction_status.setText("Paid To "+transactionHistoryModels.get(position).getStatus());
         holder.transaction_amount.setText(transactionHistoryModels.get(position).getAmountTrans());
         holder.transaction_username.setText("Paid From "+transactionHistoryModels.get(position).getUsername());
-        holder.transaction_time.setText(AppUtils.getDate(transactionHistoryModels.get(position).getDate()));
 
+
+        String dateAndTime = transactionHistoryModels.get(position).getDate();
+        String[] s= dateAndTime.split("T");
+        String time = s[1];
+
+        holder.transaction_date.setText(AppUtils.getDate(dateAndTime));
+        holder.transaction_time.setText(time);
        // holder.event_time.setText(AppUtils.getDate(data.get(position).getStartDate()));
     
     }
@@ -56,14 +62,16 @@ private HistoryClickLister historyClickLister;
     }
 
     public class myViewHolder extends RecyclerView.ViewHolder{
-        TextView transaction_status,transaction_amount,transaction_username,transaction_time;
+        TextView transaction_status,transaction_amount,transaction_username,transaction_time,transaction_date;
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
 
             transaction_status=itemView.findViewById(R.id.transaction_status);
             transaction_amount=itemView.findViewById(R.id.transaction_amount);
             transaction_username=itemView.findViewById(R.id.transaction_username);
-            transaction_time=itemView.findViewById(R.id.transaction_date);
+            transaction_date=itemView.findViewById(R.id.transaction_date);
+            transaction_time = itemView.findViewById(R.id.transaction_Time);
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
