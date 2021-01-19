@@ -55,7 +55,13 @@ public class Two_FA extends AppCompatActivity {
         email_to_fa=findViewById(R.id.toogle2);
         userData= SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
+       String email = userData.getEMAIL2FA();
 
+       if (email.equals("true")){
+           email_to_fa.setToggleOn(true);
+       }else {
+           email_to_fa.setToggleOff(true);
+       }
       /*  google_to_fa.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
             @Override
             public void onToggle(boolean on) {
@@ -69,27 +75,28 @@ public class Two_FA extends AppCompatActivity {
         });*/
 
         sharedPreferences = getSharedPreferences("night",0);
-        Boolean booleanValue = sharedPreferences.getBoolean("ON",true);
+        Boolean booleanValue = sharedPreferences.getBoolean("email2fa",false);
         if (booleanValue){
             email_to_fa.setToggleOn(true);
         }
+
         email_to_fa.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
             @Override
             public void onToggle(boolean on) {
                 if (on){
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean("ON",true);
+                    editor.putBoolean("email2fa",true);
                     editor.commit();
                     email_to_fa.setToggleOn(true);
-                //   Email_2FA_Enable();
+                   Email_2FA_Enable();
                 }
                 else{
 
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean("OFF",false);
+                    editor.putBoolean("email2fa",false);
                     editor.commit();
                     email_to_fa.setToggleOff(true);
-                  //  Disable_2FA();
+                 Disable_2FA();
                 }
             }
         });

@@ -180,6 +180,7 @@
                 android:layout_width="54dp"
                 toggle:tbOnColor="@color/green"
                 toggle:tbOffColor="#ddd"
+                app:tbAnimate="true"
                 toggle:tbBorderWidth="2dp"
                 android:layout_height="30dp"
 

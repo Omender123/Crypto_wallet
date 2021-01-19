@@ -151,15 +151,15 @@ public class Pay_Coin extends AppCompatActivity {
                 break;
 
             case 2:
-                toolbar_title.setText("Receive Tether");
+                toolbar_title.setText("Send Tether");
                 break;
 
             case 3:
-                toolbar_title.setText("Receive XRP");
+                toolbar_title.setText("Send XRP");
                 break;
 
             case 4:
-                toolbar_title.setText("Receive Lite");
+                toolbar_title.setText("Send Lite");
                 break;}
     }
 

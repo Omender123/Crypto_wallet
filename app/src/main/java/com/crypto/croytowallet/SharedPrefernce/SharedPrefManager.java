@@ -55,7 +55,7 @@ public class SharedPrefManager {
         editor.putString(KEY_LITEADDRESS, user.getLITE());
         editor.putString(KEY_XRPADDRESS, user.getXRP());
 
-        editor.putBoolean(KEY_EMAIL2FA, user.getEMAIL2FA());
+        editor.putString(KEY_EMAIL2FA, user.getEMAIL2FA());
         editor.apply();
     }
 
@@ -82,7 +82,7 @@ public class SharedPrefManager {
                 sharedPreferences.getString(KEY_BTCADDRESS, null),
                 sharedPreferences.getString(KEY_LITEADDRESS, null),
                 sharedPreferences.getString(KEY_XRPADDRESS, null),
-                sharedPreferences.getBoolean(KEY_EMAIL2FA, false)
+                sharedPreferences.getString(KEY_EMAIL2FA, null)
         );
     }
 

@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.chaos.view.PinView;
+import com.crypto.croytowallet.Activity.ManualEnterUserName;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.PearToPearModel;
@@ -32,6 +33,7 @@ import com.crypto.croytowallet.TransactionPin.EnterConfirmMnemonic;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
 import com.crypto.croytowallet.login.Login;
+import com.google.android.material.snackbar.Snackbar;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONException;
@@ -40,6 +42,8 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
+
+import de.mateware.snacky.Snacky;
 
 public class Enter_transaction_pin extends AppCompatActivity {
 PinView pinView;
@@ -61,6 +65,7 @@ CardView pay_money;
        // enter_token = findViewById(R.id.enter_token);
          userData= SharedPrefManager.getInstance(getApplicationContext()).getUser();
         String trans =userData.getTransaction_Pin();
+
         preferences=getApplicationContext().getSharedPreferences("walletScan", Context.MODE_PRIVATE);
 
         pay_money.setOnClickListener(new View.OnClickListener() {
@@ -151,7 +156,12 @@ CardView pay_money;
             @Override
             public void onErrorResponse(VolleyError error) {
                 hidepDialog();
-                parseVolleyError(error);
+               try {
+                   parseVolleyError(error);
+               }catch (Exception e){
+                   Toast.makeText(Enter_transaction_pin.this, ""+error, Toast.LENGTH_SHORT).show();
+               }
+
                 pinView.setLineColor(getResources().getColor(R.color.light_gray));
             }
         }){
@@ -190,7 +200,15 @@ CardView pay_money;
             JSONObject data = new JSONObject(responseBody);
 
             String message=data.getString("error");
-            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+
+            Snackbar warningSnackBar = Snacky.builder()
+                    .setActivity(Enter_transaction_pin.this)
+                    .setText(message)
+                    .setTextColor(getResources().getColor(R.color.white))
+                    .setDuration(Snacky.LENGTH_SHORT)
+                    .error();
+            warningSnackBar.show();
+          //  Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
         } catch (JSONException e) {
         } catch (UnsupportedEncodingException errorr) {
         }

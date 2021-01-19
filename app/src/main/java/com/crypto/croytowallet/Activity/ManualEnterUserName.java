@@ -1,16 +1,16 @@
 package com.crypto.croytowallet.Activity;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.hardware.Camera;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -18,25 +18,18 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.budiyev.android.codescanner.CodeScanner;
-import com.budiyev.android.codescanner.CodeScannerView;
-import com.budiyev.android.codescanner.DecodeCallback;
 import com.crypto.croytowallet.MainActivity;
+import com.crypto.croytowallet.Payment.Complate_payment;
+import com.crypto.croytowallet.Payment.Enter_transaction_pin;
 import com.crypto.croytowallet.Payment.Pay_money;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
-import com.crypto.croytowallet.fragement.Wallet;
-import com.google.zxing.Result;
+import com.crypto.croytowallet.login.Login;
+import com.google.android.material.snackbar.Snackbar;
 import com.kaopiz.kprogresshud.KProgressHUD;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionDeniedResponse;
-import com.karumi.dexter.listener.PermissionGrantedResponse;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.single.PermissionListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,95 +38,74 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WalletScan extends AppCompatActivity {
-    CodeScanner codeScanner;
-    CodeScannerView scannView;
-    TextView resultData,back;
-    SharedPreferences sharedPreferences;
-    String username,token;
-    KProgressHUD progressDialog;
+import de.mateware.snacky.Snacky;
+
+public class ManualEnterUserName extends AppCompatActivity {
+    ImageView imageView;
+    EditText ed_username,ed_userid;
+    String username,userId,token;
+    CardView comfirm;
     UserData userData;
+    KProgressHUD progressDialog;
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wallet_scan);
-        scannView = findViewById(R.id.scannerView);
-        codeScanner = new CodeScanner(this,scannView);
-        resultData = findViewById(R.id.resultsOfQr);
-        back=findViewById(R.id.back1);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(WalletScan.this,MainActivity.class));
-                finish();
-            }
-        });
-
+        setContentView(R.layout.activity_manual_enter_user_name);
+        imageView =findViewById(R.id.back);
+        ed_username = findViewById(R.id.ed_username1);
+       // ed_userid  = findViewById(R.id.ed_userID);
+        comfirm  = findViewById(R.id.confirm);
         userData= SharedPrefManager.getInstance(this).getUser();
+
+
         sharedPreferences=getSharedPreferences("walletScan", Context.MODE_PRIVATE);
 
-        codeScanner.setDecodeCallback(new DecodeCallback() {
-            @Override
-            public void onDecoded(@NonNull final Result result) {
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        resultData.setText(result.getText());
-                        username= result.getText();
-
-                     /*  SharedPreferences.Editor editor=sharedPreferences.edit();
-                        editor.putString("id",id);
-                        editor.putString("username",username);
-                        editor.commit();
-*/
-                        userDetails();
-                    }
-                });
-
-            }
-        });
-
-
-        scannView.setOnClickListener(new View.OnClickListener() {
+        comfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                codeScanner.startPreview();
+                username =ed_username.getText().toString().trim();
+           //     userId =ed_userid.getText().toString().trim();
+
+                if (username.isEmpty()){
+                    ed_username.requestFocus();
+                    Snackbar warningSnackBar = Snacky.builder()
+                            .setActivity(ManualEnterUserName.this)
+                            .setText(" Please Enter username ")
+                            .setTextColor(getResources().getColor(R.color.white))
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .warning();
+                    warningSnackBar.show();
+                }else{
+                    userDetails();
+
+                }
             }
         });
+        back();
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        requestForCamera();
-
+    public void onBackPressed() {
+        super.onBackPressed();
+        onSaveInstanceState(new Bundle());
     }
 
-    public void requestForCamera() {
-        Dexter.withActivity(this).withPermission(Manifest.permission.CAMERA).withListener(new PermissionListener() {
+    public void back(){
+        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onPermissionGranted(PermissionGrantedResponse response) {
-                codeScanner.startPreview();
+            public void onClick(View v) {
+                Intent intent = new Intent(ManualEnterUserName.this, WalletScan.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
+        });
 
-            @Override
-            public void onPermissionDenied(PermissionDeniedResponse response) {
-                Toast.makeText(WalletScan.this, "Camera Permission is Required.", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
-                token.continuePermissionRequest();
-
-            }
-        }).check();
     }
-
 
     public void userDetails(){
 
-        progressDialog = KProgressHUD.create(WalletScan.this)
+        progressDialog = KProgressHUD.create(ManualEnterUserName.this)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel("Please wait.....")
                 .setCancellable(false)
@@ -144,7 +116,7 @@ public class WalletScan extends AppCompatActivity {
         showpDialog();
 
 
-        token=userData.getToken();
+      token=userData.getToken();
 
 
 
@@ -167,7 +139,7 @@ public class WalletScan extends AppCompatActivity {
                     editor.putString("id",userid);
                     editor.commit();
 
-                    startActivity(new Intent(WalletScan.this, Pay_money.class));
+                    startActivity(new Intent(ManualEnterUserName.this, Pay_money.class));
                     finish();
 
                 } catch (JSONException e) {
@@ -189,11 +161,9 @@ public class WalletScan extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("username",username);
+               params.put("username",username);
 
-
-
-                return params;
+               return params;
             }
 
             @Override
@@ -218,7 +188,14 @@ public class WalletScan extends AppCompatActivity {
             JSONObject data = new JSONObject(responseBody);
 
             String message=data.getString("error");
-            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+            Snackbar warningSnackBar = Snacky.builder()
+                    .setActivity(ManualEnterUserName.this)
+                    .setText(message)
+                    .setTextColor(getResources().getColor(R.color.white))
+                    .setDuration(Snacky.LENGTH_SHORT)
+                    .error();
+            warningSnackBar.show();
+         //   Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
         } catch (JSONException e) {
         } catch (UnsupportedEncodingException errorr) {
         }
@@ -234,20 +211,5 @@ public class WalletScan extends AppCompatActivity {
     private void hidepDialog() {
         if (progressDialog.isShowing())
             progressDialog.dismiss();
-    }
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
-
-    }
-
-    public void next(View view) {
-
-        Intent intent = new Intent(getApplicationContext(), ManualEnterUserName.class);
-        startActivity(intent);
     }
 }

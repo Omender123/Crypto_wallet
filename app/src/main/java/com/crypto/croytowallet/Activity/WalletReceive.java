@@ -27,6 +27,7 @@ public class WalletReceive extends AppCompatActivity {
 TextView barcodeAddress;
     ImageView qrImage,imageView;
     CardView barCodeshare;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +56,7 @@ TextView barcodeAddress;
             }
         });
 
-        QRGEncoder qrgEncoder = new QRGEncoder(id+" "+username,null, QRGContents.Type.TEXT,500);
+        QRGEncoder qrgEncoder = new QRGEncoder(username,null, QRGContents.Type.TEXT,500);
         try {
             Bitmap qrBits = qrgEncoder.encodeAsBitmap();
             qrImage.setImageBitmap(qrBits);

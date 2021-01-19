@@ -19,7 +19,7 @@ public class Pay_money extends AppCompatActivity {
     ImageView imageView;
     CardView pay;
     EditText pay_enter_amount;
-    TextView go_top_up,payUsername;
+    TextView go_top_up,payUsername,payname,payEmail;
     SharedPreferences preferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +31,18 @@ public class Pay_money extends AppCompatActivity {
         pay=findViewById(R.id.pay);
 
         payUsername=findViewById(R.id.payUsername);
+        payname=findViewById(R.id.name);
+        payEmail=findViewById(R.id.email);
 
         preferences=getApplicationContext().getSharedPreferences("walletScan", Context.MODE_PRIVATE);
         String username = preferences.getString("username","");
+        String name = preferences.getString("name","");
+        String email = preferences.getString("email","");
+
         payUsername.setText(username);
+        payname.setText(name);
+        payEmail.setText(email);
+
 
         pay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,4 +88,6 @@ public class Pay_money extends AppCompatActivity {
         });
 
     }
+
+
 }

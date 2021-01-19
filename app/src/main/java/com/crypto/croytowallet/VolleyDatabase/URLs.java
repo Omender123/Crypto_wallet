@@ -30,6 +30,6 @@ public class URLs {
     public static final String URL_COIN_TRANSFER= ROOT_URL + "transaction/transfer";
 
     //2fa api
-    public static final String URL_EMAIL_VERIFY= ROOT_URL + "user/emailVerify";
+    public static final String URL_USER_DETAILS= ROOT_URL + "user/userInfromation";
 
 }

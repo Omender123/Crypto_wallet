@@ -89,7 +89,7 @@ public class Deshboard extends Fragment implements View.OnClickListener, CryptoC
 
 
         CryptoInfoRecyclerView();
-    //    checkBalance();
+     checkBalance();
 
     return view;
     }

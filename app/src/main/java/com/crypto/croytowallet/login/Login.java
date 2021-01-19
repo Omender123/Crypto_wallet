@@ -213,10 +213,10 @@ TextInputLayout layout_otp;
                     String security=object1.getString("securityEnable");
                     JSONObject object2=new JSONObject(security);
                     String EMAIL2FA = object2.getString("email2fa");
-                    Boolean email2fa = Boolean.valueOf(EMAIL2FA);
+
 
                     UserData userData=new UserData(id,name,email,phone,username,mnemonic,Referral_code,transaction_Pin,token
-                            ,ETH,BTC,LITE,XRP,email2fa);
+                            ,ETH,BTC,LITE,XRP,EMAIL2FA);
 
                     //storing the user in shared preferences
                     SharedPrefManager.getInstance(getApplicationContext()).userLogin(userData);

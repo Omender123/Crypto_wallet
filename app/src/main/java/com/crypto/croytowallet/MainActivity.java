@@ -241,7 +241,13 @@ public void logout(){
         @Override
         public void onErrorResponse(VolleyError error) {
             hidepDialog();
-            parseVolleyError(error);
+
+            try{
+                parseVolleyError(error);
+            }catch (Exception e){
+
+            }
+
            // Toast.makeText(MainActivity.this, ""+error.toString(), Toast.LENGTH_SHORT).show();
         }
     }){
