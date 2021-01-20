@@ -31,7 +31,6 @@ public class CoinScan extends AppCompatActivity {
     CodeScanner codeScanner;
     CodeScannerView scannView;
     TextView resultData,back;
-    SharedPreferences sharedPreferences;
     int position;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +40,9 @@ public class CoinScan extends AppCompatActivity {
         codeScanner = new CodeScanner(this,scannView);
         resultData = findViewById(R.id.resultsOfQr);
 
-        Bundle bundle = getIntent().getExtras();
+     /*   Bundle bundle = getIntent().getExtras();
         position=bundle.getInt("position");
-
+*/
         back=findViewById(R.id.back1);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +51,6 @@ public class CoinScan extends AppCompatActivity {
             }
         });
 
-        sharedPreferences=getSharedPreferences("walletScan", Context.MODE_PRIVATE);
 
         codeScanner.setDecodeCallback(new DecodeCallback() {
             @Override
@@ -64,7 +62,7 @@ public class CoinScan extends AppCompatActivity {
                         resultData.setText(result.getText());
                         String s= result.getText();
                        Intent intent =  new Intent(CoinScan.this, Pay_Coin.class);
-                       intent.putExtra("position",position);
+                     //  intent.putExtra("position",position);
                        intent.putExtra("result",s);
                         startActivity(intent);
                         finish();

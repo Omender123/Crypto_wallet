@@ -41,16 +41,17 @@ TextView barcodeAddress;
         UserData userData= SharedPrefManager.getInstance(this).getUser();
 
       //  String barcodeText=barcodeAddress.getText().toString();
+
         String username=userData.getUsername();
         String id=userData.getId();
-        barcodeAddress.setText(id);
+        barcodeAddress.setText(username);
 
-     //   Toast.makeText(this, id+" "+username, Toast.LENGTH_SHORT).show();
+
         barcodeAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ClipboardManager cm = (ClipboardManager)getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                cm.setText(id);
+                cm.setText(username);
                 Toast.makeText(getApplicationContext(), "Copied ", Toast.LENGTH_SHORT).show();
 
             }
@@ -70,7 +71,7 @@ TextView barcodeAddress;
             public void onClick(View v) {
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("text/plain");
-                i.putExtra(Intent.EXTRA_TEXT, userData.getId());
+                i.putExtra(Intent.EXTRA_TEXT, userData.getUsername());
                 startActivity(Intent.createChooser(i, "Share With"));
             }
         });

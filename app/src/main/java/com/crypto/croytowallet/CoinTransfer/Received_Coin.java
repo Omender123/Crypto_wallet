@@ -6,6 +6,7 @@ import androidx.cardview.widget.CardView;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +29,7 @@ public class Received_Coin extends AppCompatActivity {
     TextView barcodeAddress,toolbar_title;
     ImageView qrImage,imageView;
     CardView barCodeshare;
+    SharedPreferences preferences;
     int position;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +40,12 @@ public class Received_Coin extends AppCompatActivity {
         qrImage = findViewById(R.id.qrPlaceHolder);
         barCodeshare=findViewById(R.id.barCodeshare);
         toolbar_title=findViewById(R.id.toolbar_title);
-        Bundle bundle = getIntent().getExtras();
-        position=bundle.getInt("position");
+       // Bundle bundle = getIntent().getExtras();
+
+        preferences=getApplicationContext().getSharedPreferences("symbols", Context.MODE_PRIVATE);
+        position = preferences.getInt("position", -1);
+
+      //  position=bundle.getInt("position");
 
         back();
 
@@ -212,6 +218,42 @@ public class Received_Coin extends AppCompatActivity {
                     }
                 });
                 break;
+
+            case 5:
+                String id6=userData.getETH();
+                barcodeAddress.setText(id6);
+                toolbar_title.setText("Receive USDC");
+                QRGEncoder qrgEncoder6 = new QRGEncoder(id6,null, QRGContents.Type.TEXT,500);
+                try {
+                    Bitmap qrBits = qrgEncoder6.encodeAsBitmap();
+                    qrImage.setImageBitmap(qrBits);
+                } catch (WriterException e) {
+                    e.printStackTrace();
+                }
+
+                barcodeAddress.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ClipboardManager cm = (ClipboardManager)getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                        cm.setText(id6);
+                        Toast.makeText(getApplicationContext(), "Copied ", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+                barCodeshare.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(Intent.ACTION_SEND);
+                        i.setType("text/plain");
+                        i.putExtra(Intent.EXTRA_TEXT, id6);
+                        startActivity(Intent.createChooser(i, "Share With"));
+                    }
+                });
+                break;
+
+
+
         }
 
 

@@ -31,6 +31,7 @@ import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
+import com.crypto.croytowallet.login.Login;
 import com.google.android.material.textfield.TextInputLayout;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
@@ -41,6 +42,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import de.mateware.snacky.Snacky;
 
 public class Pay_Coin extends AppCompatActivity {
     int position;
@@ -71,13 +74,18 @@ public class Pay_Coin extends AppCompatActivity {
         showTransaction = findViewById(R.id.transaction);
 
         Bundle bundle = getIntent().getExtras();
-        position=bundle.getInt("position");
+       // position=bundle.getInt("position");
         result=bundle.getString("result");
 
 
-        preferences=getApplicationContext().getSharedPreferences("symbols", Context.MODE_PRIVATE);
+         preferences=getApplicationContext().getSharedPreferences("symbols", Context.MODE_PRIVATE);
          cryptoCurrency = preferences.getString("symbol1","");
-      //  Toast.makeText(this, ""+position+cryptoCurrency, Toast.LENGTH_SHORT).show();
+        position = preferences.getInt("position", -1);
+
+        toolbar_title.setText("Send "+cryptoCurrency);
+
+
+        Toast.makeText(this, ""+position+cryptoCurrency, Toast.LENGTH_SHORT).show();
 
 
         next.setOnClickListener(new View.OnClickListener() {
@@ -140,6 +148,7 @@ public class Pay_Coin extends AppCompatActivity {
         });
       //  Toast.makeText(this, ""+position+result, Toast.LENGTH_SHORT).show();
         back();
+/*
 
         switch (position){
             case 0:
@@ -161,6 +170,7 @@ public class Pay_Coin extends AppCompatActivity {
             case 4:
                 toolbar_title.setText("Send Lite");
                 break;}
+*/
     }
 
 
@@ -221,7 +231,24 @@ public class Pay_Coin extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 hidepDialog();
+                /*try{
                 parseVolleyError(error);
+                }catch (Exception e){
+
+                }*/
+
+  /*try {
+            String responseBody = new String(error.networkResponse.data, "utf-8");
+            JSONObject data = new JSONObject(responseBody);
+
+            String message=data.getString("error");
+            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+        } catch (JSONException e) {
+        } catch (UnsupportedEncodingException errorr) {
+
+    }*/
+
+                Toast.makeText(Pay_Coin.this, ""+error.toString(), Toast.LENGTH_SHORT).show();
                 pinView.setLineColor(getResources().getColor(R.color.light_gray));
             }
         }){
@@ -256,7 +283,40 @@ public class Pay_Coin extends AppCompatActivity {
     }
 
     public void parseVolleyError(VolleyError error) {
-        try {
+
+        if (error.networkResponse.statusCode==401){
+            Snacky.builder()
+                    .setActivity(Pay_Coin.this)
+                    .setText("Unauthorised request")
+                    .setDuration(Snacky.LENGTH_SHORT)
+                    .setActionText(android.R.string.ok)
+                    .error()
+                    .show();
+
+        }else if(error.networkResponse.statusCode==400){
+
+            try {
+            String responseBody = String.valueOf(error.networkResponse.statusCode);
+            JSONObject data = new JSONObject(responseBody);
+
+            String message=data.getString("error");
+
+                Snacky.builder()
+                        .setActivity(Pay_Coin.this)
+                        .setText("Unauthorised request")
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+
+            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+        } catch (JSONException e) {
+
+    }
+        }
+
+    }
+        /*try {
             String responseBody = new String(error.networkResponse.data, "utf-8");
             JSONObject data = new JSONObject(responseBody);
 
@@ -265,6 +325,6 @@ public class Pay_Coin extends AppCompatActivity {
         } catch (JSONException e) {
         } catch (UnsupportedEncodingException errorr) {
         }
-    }
+    }*/
 
 }

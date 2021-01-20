@@ -95,7 +95,7 @@ public class Deshboard extends Fragment implements View.OnClickListener, CryptoC
     }
 
     public void CryptoInfoRecyclerView(){
-        String url="https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin%2Cethereum%2Ctether%2Cripple%2Clitecoin&order=market_cap_desc&sparkline=false&price_change_percentage=24h";
+        String url="https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin%2Cethereum%2Ctether%2Cripple%2Clitecoin%2Cusd-coin&order=market_cap_desc&sparkline=false&price_change_percentage=24h";
         StringRequest stringRequest=new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -267,12 +267,13 @@ public class Deshboard extends Fragment implements View.OnClickListener, CryptoC
     @Override
     public void onCryptoItemClickListener(int position) {
         Intent intent = new Intent(getContext(), Graph_layout.class);
-        intent.putExtra("position",position);
+       // intent.putExtra("position",position);
         startActivity(intent);
 
         String result=crptoInfoModels.get(position).getSymbol();
         SharedPreferences.Editor editor=sharedPreferences.edit();
         editor.putString("symbol1",result);
+        editor.putInt("position",position);
         editor.commit();
 
     }

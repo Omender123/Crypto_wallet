@@ -45,5 +45,10 @@
         android:name="com.crypto.croytowallet.TransactionHistory.Transaction_history"
         tools:layout="@layout/activity_transaction_history" />
 
+    <activity
+        android:id="@+id/dark_mode"
+        android:name="com.crypto.croytowallet.Activity.DarkMode"
+        tools:layout="@layout/activity_dark_mode" />
+
 
 </navigation>

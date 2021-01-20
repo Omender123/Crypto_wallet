@@ -2,7 +2,9 @@ package com.crypto.croytowallet.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -26,6 +28,8 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
     private Exchange exchange;
     int position;
     ImageView back,received,send;
+
+    SharedPreferences preferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,9 +44,13 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
          back.setOnClickListener(this);
         received.setOnClickListener(this);
         send.setOnClickListener(this);
-        Bundle bundle = getIntent().getExtras();
-        position=bundle.getInt("position");
 
+        preferences=getApplicationContext().getSharedPreferences("symbols", Context.MODE_PRIVATE);
+        position = preferences.getInt("position", -1);
+
+      /*  Bundle bundle = getIntent().getExtras();
+        position=bundle.getInt("position");
+*/
 
         ValueLineSeries series = new ValueLineSeries();
         series.addPoint(new ValueLinePoint("Jan", 2.4f));

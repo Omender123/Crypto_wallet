@@ -131,4 +131,7 @@
     <string name="skip">Skip</string>
     <string name="Addverification">Add Verification</string>
     <string name="sucessfully">Successfully</string>
+
+    <string name="light">Light Mode</string>
+    <string name="dark">Dark Mode</string>
 </resources>
