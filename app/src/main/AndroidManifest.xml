@@ -16,8 +16,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CroytoWallet"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.DarkMode"
+        <activity android:name=".Activity.StoryView"
             android:theme="@style/Theme.CroytoWallet.NoActionBar"></activity>
+        <activity
+            android:name=".Activity.DarkMode"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
         <activity
             android:name=".Activity.ManualEnterUserName"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />

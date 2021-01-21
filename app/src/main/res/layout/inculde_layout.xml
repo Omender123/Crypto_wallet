@@ -7,7 +7,7 @@
     android:background="@color/background"
  >
 
-    <androidx.appcompat.widget.Toolbar
+   <!-- <androidx.appcompat.widget.Toolbar
 
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -18,36 +18,46 @@
         android:background="@color/toolbar"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark">
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark">-->
 
-       <!-- <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:layout_gravity="center"
-            android:text="@string/dashboard"
-            android:textColor="@color/toolbar_text_color"
-            android:id="@+id/toolbar_title" />-->
-        <!--<TextView
-            android:id="@+id/toolbar_tittle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/toolbar_text_color"
-            android:textAlignment="center"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:text="@string/exchange"
-            android:layot_gravity="center" />
-    --></androidx.appcompat.widget.Toolbar>
-
-    <!--<androidx.fragment.app.FragmentContainerView
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:id="@+id/nav_host_fragment"
+    <RelativeLayout
+        android:id="@+id/relative"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/nav_graph" />-->
+        android:background="@color/toolbar"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+
+            android:layout_toStartOf="@+id/status_user"
+            android:background="@color/toolbar"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
+
+       <!-- <com.crypto.croytowallet.Storyview.StoryView
+            android:id="@+id/status_user"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="10dp"/>-->
+
+       <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/status_user"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/user_status" />
+
+    </RelativeLayout>
 
     <fragment
         android:background="@color/background"
@@ -58,7 +68,7 @@
         app:defaultNavHost="true"
         app:navGraph="@navigation/main"
         android:layout_above="@+id/bottomNavigation"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/relative"
         />
 
 

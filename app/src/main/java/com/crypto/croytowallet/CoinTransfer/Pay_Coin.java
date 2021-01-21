@@ -1,6 +1,7 @@
 package com.crypto.croytowallet.CoinTransfer;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -32,6 +33,8 @@ import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
 import com.crypto.croytowallet.login.Login;
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
 import com.google.android.material.textfield.TextInputLayout;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
@@ -39,7 +42,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,6 +64,9 @@ public class Pay_Coin extends AppCompatActivity {
     UserData userData;
     KProgressHUD progressDialog;
     SharedPreferences preferences;
+    Socket socket;
+
+    private AppCompatActivity activity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +75,7 @@ public class Pay_Coin extends AppCompatActivity {
         toolbar_title=findViewById(R.id.toolbar_title);
         pinView = findViewById(R.id.enter_pin);
         enterAmount=findViewById(R.id.ed_enter_amount);
-        token =findViewById(R.id.ed_token);
+      //  token =findViewById(R.id.ed_token);
         enterAmount1=findViewById(R.id.user);
         token1 =findViewById(R.id.pass);
 
@@ -92,7 +102,7 @@ public class Pay_Coin extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Amount = enterAmount.getText().toString().trim();
-                Token = token.getText().toString().trim();
+             //   Token = token.getText().toString().trim();
                 if (Amount.isEmpty()){
                     enterAmount.setError("Please enter amount");
                     enterAmount.requestFocus();
@@ -101,9 +111,9 @@ public class Pay_Coin extends AppCompatActivity {
                     pinView.setVisibility(View.VISIBLE);
                     send.setVisibility(View.VISIBLE);
                     enterAmount.setVisibility(View.GONE);
-                    token.setVisibility(View.GONE);
+                  //  token.setVisibility(View.GONE);
                     enterAmount1.setVisibility(View.GONE);
-                    token1.setVisibility(View.GONE);
+               //     token1.setVisibility(View.GONE);
                     next.setVisibility(View.GONE);
                 }
 
@@ -148,29 +158,8 @@ public class Pay_Coin extends AppCompatActivity {
         });
       //  Toast.makeText(this, ""+position+result, Toast.LENGTH_SHORT).show();
         back();
-/*
 
-        switch (position){
-            case 0:
-                toolbar_title.setText("Send BTC");
-                break;
-
-            case 1:
-                toolbar_title.setText("Send ETH");
-                break;
-
-            case 2:
-                toolbar_title.setText("Send Tether");
-                break;
-
-            case 3:
-                toolbar_title.setText("Send XRP");
-                break;
-
-            case 4:
-                toolbar_title.setText("Send Lite");
-                break;}
-*/
+        socketJoin();
     }
 
 
@@ -218,38 +207,37 @@ public class Pay_Coin extends AppCompatActivity {
 
 
 
-        StringRequest request=new StringRequest(Request.Method.POST, URLs.URL_COIN_TRANSFER, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, URLs.URL_COIN_TRANSFER, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 hidepDialog();
-                Toast.makeText(Pay_Coin.this, "Send successfully", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                  pinView.setLineColor(getResources().getColor(R.color.light_gray));
-            }
 
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                pinView.setLineColor(getResources().getColor(R.color.light_gray));
+                Toast.makeText(Pay_Coin.this, "Send successfully", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(Pay_Coin.this, ""+response, Toast.LENGTH_SHORT).show();
+            }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 hidepDialog();
-                /*try{
-                parseVolleyError(error);
+
+                try{
+                    parseVolleyError(error);
                 }catch (Exception e){
+                    Snacky.builder()
+                            .setActivity(Pay_Coin.this)
+                            .setText("insufficient Coin")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
 
-                }*/
+                }
 
-  /*try {
-            String responseBody = new String(error.networkResponse.data, "utf-8");
-            JSONObject data = new JSONObject(responseBody);
 
-            String message=data.getString("error");
-            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-        } catch (JSONException e) {
-        } catch (UnsupportedEncodingException errorr) {
-
-    }*/
-
-                Toast.makeText(Pay_Coin.this, ""+error.toString(), Toast.LENGTH_SHORT).show();
                 pinView.setLineColor(getResources().getColor(R.color.light_gray));
+
             }
         }){
             @Override
@@ -257,8 +245,8 @@ public class Pay_Coin extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("cryptoCurrency",cryptoCurrency);
                 params.put("cryptoAmt",Amount);
-                params.put("transactionPin",enterPin);
-                params.put("token",Token);
+               params.put("transactionPin",enterPin);
+                //  params.put("token",Token);
                 params.put("receiverAddress",result);
 
 
@@ -270,15 +258,15 @@ public class Pay_Coin extends AppCompatActivity {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<String, String>();
 
-                headers.put("Authorization", Authtoken);
+               headers.put("Authorization", Authtoken);
 
                 return headers;
             }
 
+
         };
         VolleySingleton.getInstance(this).addToRequestQueue(request);
-     /*   RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        queue.add(request);*/
+
 
     }
 
@@ -293,38 +281,62 @@ public class Pay_Coin extends AppCompatActivity {
                     .error()
                     .show();
 
-        }else if(error.networkResponse.statusCode==400){
-
+        }else {
             try {
-            String responseBody = String.valueOf(error.networkResponse.statusCode);
-            JSONObject data = new JSONObject(responseBody);
+                String responseBody = new String(error.networkResponse.data, "utf-8");
+                JSONObject data = new JSONObject(responseBody);
 
-            String message=data.getString("error");
-
-                Snacky.builder()
-                        .setActivity(Pay_Coin.this)
-                        .setText("Unauthorised request")
-                        .setDuration(Snacky.LENGTH_SHORT)
-                        .setActionText(android.R.string.ok)
-                        .error()
-                        .show();
-
-            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-        } catch (JSONException e) {
-
-    }
+                String message=data.getString("error");
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+            } catch (JSONException e) {
+            } catch (UnsupportedEncodingException errorr) {
+            }
         }
 
     }
-        /*try {
-            String responseBody = new String(error.networkResponse.data, "utf-8");
-            JSONObject data = new JSONObject(responseBody);
 
-            String message=data.getString("error");
-            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-        } catch (JSONException e) {
-        } catch (UnsupportedEncodingException errorr) {
+    private void socketJoin(){
+        try {
+           socket = IO.socket("http://13.233.136.56:8080");
+
+            socket.connect();
+
+           /* socket.emit("join",userName);
+            try {
+                JSONObject event = new JSONObject();
+                event.put("eventId",events.get(position).getId());
+                socket.emit("getEvent",event);
+            }catch (JSONException je){
+                je.printStackTrace();
+            }*/
+
+            getMessageOn();
+
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
         }
-    }*/
+
+    }
+
+    private void getMessageOn() {
+        socket.on("transactionPending", args ->activity.runOnUiThread(() -> {
+            JSONObject data = (JSONObject) args[0];
+
+            System.out.println("message");
+
+            Toast.makeText(activity, "Message", Toast.LENGTH_SHORT).show();
+           /* try {
+                JSONObject user = data.getJSONObject("user");
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }*/
+
+
+
+        }));
+
+    }
+
 
 }

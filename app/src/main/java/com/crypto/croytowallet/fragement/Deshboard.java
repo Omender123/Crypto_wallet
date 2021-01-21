@@ -53,14 +53,15 @@ import java.util.Map;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
+public class
+Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
     ArrayList<CrptoInfoModel> crptoInfoModels;
     RecyclerView cryptoInfoRecyclerView;
     RequestQueue requestQueue;
     Crypto_currencyInfo crypto_currencyInfo;
     LinearLayout lytscan,lytPay,lytWalletBalance,lytaddMoney;
     SharedPreferences sharedPreferences;
-
+    TextView textView;
     public Deshboard() {
         // Required empty public constructor
     }
@@ -84,6 +85,7 @@ public class Deshboard extends Fragment implements View.OnClickListener, CryptoC
 
         crptoInfoModels=new ArrayList<CrptoInfoModel>();
 
+        textView  =view.findViewById(R.id.balance);
 
         sharedPreferences=getActivity().getSharedPreferences("symbols", Context.MODE_PRIVATE);
 
@@ -143,7 +145,7 @@ public class Deshboard extends Fragment implements View.OnClickListener, CryptoC
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), ""+error.toString(), Toast.LENGTH_SHORT).show();
+              Toast.makeText(getContext(), ""+error.toString(), Toast.LENGTH_SHORT).show();
             }
         });
         requestQueue = Volley.newRequestQueue(getContext());
@@ -167,9 +169,9 @@ public class Deshboard extends Fragment implements View.OnClickListener, CryptoC
                  JSONObject object=new JSONObject(response);
                  String   checkBalance=object.getString("airDrop");
 
-                 TextView textView=getActivity().findViewById(R.id.balance);
+               //  TextView textView=getActivity().findViewById(R.id.balance);
 
-                 textView.setText("$"+checkBalance+".00");
+              textView.setText("$"+checkBalance+".00");
               //   Toast.makeText(getContext(), ""+checkBalance, Toast.LENGTH_SHORT).show();
              } catch (JSONException e) {
                  e.printStackTrace();

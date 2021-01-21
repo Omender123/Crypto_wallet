@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
@@ -16,6 +17,7 @@ import androidx.navigation.ui.NavigationUI;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -53,6 +55,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MainActivity extends AppCompatActivity {
     NavController navController;
     DrawerLayout drawer;
@@ -63,6 +67,11 @@ public class MainActivity extends AppCompatActivity {
     TextView username,usergmail;
     Toolbar toolbar;
     KProgressHUD progressDialog;
+    SharedPreferences preferences;
+    CircleImageView status_img;
+
+
+
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +80,9 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar=findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-      //  toolbar.setTitleTextColor(getResources().getColor(R.color.toolbar_text_color));
+        status_img = findViewById(R.id.status_user);
+
+        //  toolbar.setTitleTextColor(getResources().getColor(R.color.toolbar_text_color));
 
       // change_menu_icon();
         changeStatusBarColor();
@@ -119,6 +130,19 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+
+        preferences = getSharedPreferences("night",0);
+        Boolean booleanValue = preferences.getBoolean("night_mode",false);
+        if (booleanValue){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+
+        }else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        }
+
     }
 
     private void init() {
@@ -298,4 +322,10 @@ public void logout(){
             progressDialog.dismiss();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+    }
 }
