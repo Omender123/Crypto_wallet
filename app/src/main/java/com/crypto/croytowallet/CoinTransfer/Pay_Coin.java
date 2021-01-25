@@ -33,8 +33,7 @@ import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
 import com.crypto.croytowallet.login.Login;
-import com.github.nkzawa.socketio.client.IO;
-import com.github.nkzawa.socketio.client.Socket;
+
 import com.google.android.material.textfield.TextInputLayout;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
@@ -64,7 +63,7 @@ public class Pay_Coin extends AppCompatActivity {
     UserData userData;
     KProgressHUD progressDialog;
     SharedPreferences preferences;
-    Socket socket;
+
 
     private AppCompatActivity activity;
     @Override
@@ -159,7 +158,7 @@ public class Pay_Coin extends AppCompatActivity {
       //  Toast.makeText(this, ""+position+result, Toast.LENGTH_SHORT).show();
         back();
 
-        socketJoin();
+
     }
 
 
@@ -295,48 +294,6 @@ public class Pay_Coin extends AppCompatActivity {
 
     }
 
-    private void socketJoin(){
-        try {
-           socket = IO.socket("http://13.233.136.56:8080");
-
-            socket.connect();
-
-           /* socket.emit("join",userName);
-            try {
-                JSONObject event = new JSONObject();
-                event.put("eventId",events.get(position).getId());
-                socket.emit("getEvent",event);
-            }catch (JSONException je){
-                je.printStackTrace();
-            }*/
-
-            getMessageOn();
-
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private void getMessageOn() {
-        socket.on("transactionPending", args ->activity.runOnUiThread(() -> {
-            JSONObject data = (JSONObject) args[0];
-
-            System.out.println("message");
-
-            Toast.makeText(activity, "Message", Toast.LENGTH_SHORT).show();
-           /* try {
-                JSONObject user = data.getJSONObject("user");
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }*/
-
-
-
-        }));
-
-    }
 
 
 }

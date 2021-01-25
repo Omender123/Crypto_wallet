@@ -32,4 +32,8 @@ public class URLs {
     //2fa api
     public static final String URL_USER_DETAILS= ROOT_URL + "user/userInfromation";
 
+    //2fa api
+    public static final String URL_BANNER= ROOT_URL + "banner";
+
+
 }

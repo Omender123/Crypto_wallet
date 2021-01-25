@@ -57,6 +57,7 @@
             android:layout_marginRight="10dp"
             android:src="@drawable/user_status" />
 
+
     </RelativeLayout>
 
     <fragment

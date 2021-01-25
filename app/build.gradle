@@ -88,10 +88,9 @@ dependencies {
 
     //circle Image
     implementation 'de.hdodenhof:circleimageview:3.1.0'
-
-// Web socket
-    implementation('com.github.nkzawa:socket.io-client:0.5.0') { exclude group: 'org.json', module: 'json' }
-
+// storyView
+  // implementation 'com.github.bxute:StoryView:v1.0'
+   implementation 'com.github.shts:StoriesProgressView:3.0.0'
 
 
     implementation 'com.github.bumptech.glide:glide:4.9.0'
