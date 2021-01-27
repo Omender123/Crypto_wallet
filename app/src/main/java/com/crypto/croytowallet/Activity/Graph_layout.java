@@ -1,11 +1,13 @@
 package com.crypto.croytowallet.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,24 +19,32 @@ import com.crypto.croytowallet.CoinTransfer.Received_Coin;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.fragement.Exchange;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.Utils;
 
-import org.eazegraph.lib.charts.ValueLineChart;
-import org.eazegraph.lib.models.ValueLinePoint;
-import org.eazegraph.lib.models.ValueLineSeries;
+import java.util.ArrayList;
+
 
 public class Graph_layout extends AppCompatActivity implements View.OnClickListener {
-    ValueLineChart mCubicValueLineChart;
+
     TextView swap;
     private Exchange exchange;
     int position;
     ImageView back,received,send;
 
     SharedPreferences preferences;
+    private LineChart chart;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_layout);
-         mCubicValueLineChart = (ValueLineChart) findViewById(R.id.cubiclinechart);
+        chart =  findViewById(R.id.cubiclinechart);
          swap =findViewById(R.id.swap_btc_btn);
          back =findViewById(R.id.back);
           received =findViewById(R.id.receive_coin);
@@ -52,26 +62,65 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         position=bundle.getInt("position");
 */
 
-        ValueLineSeries series = new ValueLineSeries();
-        series.addPoint(new ValueLinePoint("Jan", 2.4f));
-        series.addPoint(new ValueLinePoint("Feb", 3.4f));
-        series.addPoint(new ValueLinePoint("Mar", 0.4f));
-        series.addPoint(new ValueLinePoint("Apr", 1.2f));
-        series.addPoint(new ValueLinePoint("Mai", 2.6f));
-        series.addPoint(new ValueLinePoint("Jun", 1.0f));
-        series.addPoint(new ValueLinePoint("Jul", 3.5f));
-        series.addPoint(new ValueLinePoint("Aug", 2.4f));
-        series.addPoint(new ValueLinePoint("Sep", 2.4f));
-        series.addPoint(new ValueLinePoint("Oct", 3.4f));
-        series.addPoint(new ValueLinePoint("Nov", 5.4f));
-        series.addPoint(new ValueLinePoint("Dec", 1.3f));
 
-        mCubicValueLineChart.addSeries(series);
-        mCubicValueLineChart.startAnimation();
-        //   series.setColor(R.drawable.gradient);
-        series.setColor(Color.rgb(228, 159, 14));
+        chart.setDragEnabled(true);
+        chart.setScaleEnabled(true);
+        //chart.setBackgroundColor(Color.rgb(244, 198, 30));
+        chart.animateXY(2000,2000);
+        chart.getXAxis().setDrawGridLines(false);
+        chart.getAxisLeft().setDrawGridLinesBehindData(false);
+        chart.getAxisLeft().setDrawGridLines(false);
+        chart.getAxisRight().setDrawGridLines(false);
+        chart.getDescription().setEnabled(false);
+        chart.getAxisLeft().setDrawLabels(false);
+        chart.getAxisRight().setDrawLabels(false);
+        chart.getXAxis().setDrawLabels(false);
 
-        mCubicValueLineChart.setBackgroundColor(Color.rgb(244, 198, 30));
+        YAxis y = chart.getAxisRight();
+        y.setEnabled(false);
+        y.setDrawAxisLine(false);
+
+        YAxis y1 = chart.getAxisLeft();
+        y1.setDrawAxisLine(false);
+
+        XAxis x = chart.getXAxis();
+        x.setDrawAxisLine(false);
+        x.setDrawGridLines(false);
+
+        ArrayList<Entry> yvalue=new ArrayList<>();
+        yvalue.add(new Entry(0,60f));
+        yvalue.add(new Entry(1,10f));
+        yvalue.add(new Entry(2,30f));
+        yvalue.add(new Entry(3,0f));
+        yvalue.add(new Entry(4,50f));
+        yvalue.add(new Entry(5,10f));
+
+        LineDataSet set1=new LineDataSet(yvalue,"");
+        set1.setFillAlpha(110);
+        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+        dataSets.add(set1);
+        LineData data = new LineData(dataSets);
+        chart.setData(data);
+
+        if (Utils.getSDKInt() >= 18) {
+            // drawables only supported on api level 18 and above
+            Drawable drawable = ContextCompat.getDrawable(this, R.drawable.gradient1);
+            set1.setFillDrawable(drawable);
+        } else {
+            set1.setFillColor(Color.rgb(229, 146, 19));
+        }
+        set1.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        set1.setLineWidth(2f);
+//        set1.setFormLineDashEffect(new DashPathEffect(new float[]{1f, 3f}, 1f));
+//        set1.setHighlightLineWidth(2);
+        //  set1.enableDashedHighlightLine(10f, 5f, 0f);
+        set1.setColor(Color.WHITE);
+        set1.setDrawFilled(true);
+        chart.setBackgroundColor(Color.rgb(243, 193, 24));
+
+
+
+
 
         switch (position){
             case 0:

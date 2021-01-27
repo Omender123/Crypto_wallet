@@ -35,31 +35,33 @@
     </LinearLayout>
 
 
+
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="190dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:background="@mipmap/first">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Total Balance"
-                android:textColor="#242424"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
-            <TextView
-                android:id="@+id/wallet_balance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="$00.00"
-                android:textSize="30dp"
-                android:textColor="#242424"
-                android:layout_marginBottom="50dp"
-                android:textStyle="bold"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"/>
-        </LinearLayout>
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@mipmap/first">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Balance"
+            android:textColor="#242424"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
+        <TextView
+            android:id="@+id/wallet_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$00.00"
+            android:textSize="30dp"
+            android:textColor="#242424"
+            android:fontFamily="@font/montserrat"
+            android:layout_marginBottom="50dp"
+            android:textStyle="bold"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"/>
+    </LinearLayout>
 
 
     <LinearLayout
@@ -84,11 +86,11 @@
             android:textSize="18sp"
             android:textAlignment="textEnd"
             android:textColor="@android:color/holo_blue_dark"
-            android:textStyle="bold"/>
+            />
 
     </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewAddBalance"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

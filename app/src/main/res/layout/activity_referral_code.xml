@@ -70,6 +70,7 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textSize="20dp"
                     android:textStyle="bold"
+                    android:fontFamily="@font/montserrat"
                     android:textColor="@color/toolbar"
                     android:layout_marginLeft="20dp"/>
                 <com.google.android.material.textfield.TextInputLayout
@@ -103,6 +104,7 @@
                     android:layout_below="@id/user"
                     android:text="@string/ready"
                     android:textSize="20dp"
+                    android:textStyle="bold"
                     android:background="@drawable/rounded_button"
                     android:textAllCaps="false"
                     android:layout_margin="20dp"/>

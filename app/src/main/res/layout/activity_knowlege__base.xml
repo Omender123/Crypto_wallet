@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f7f9fe"
+    tools:context=".Activity.knowlege_Base">
+
+    <LinearLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/toolbar"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_arrow_back_24"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:layout_marginRight="20dp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:layout_gravity="center"
+            android:text="@string/knowledge"
+            android:textColor="@color/white"
+            android:id="@+id/toolbar_title" />
+    </LinearLayout>
+
+
+ <com.google.android.material.tabs.TabLayout
+     android:id="@+id/tablayout"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     app:tabTextColor="@color/black"
+
+     android:layout_below="@id/toolbar"
+     >
+
+     <com.google.android.material.tabs.TabItem
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="Account"
+
+         />
+
+     <com.google.android.material.tabs.TabItem
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="Payment"
+         />
+     <com.google.android.material.tabs.TabItem
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="About"
+
+         />
+
+ </com.google.android.material.tabs.TabLayout>
+<androidx.viewpager.widget.ViewPager
+    android:id="@+id/pager"
+    android:layout_marginTop="5dp"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_below="@id/tablayout"/>
+</RelativeLayout>

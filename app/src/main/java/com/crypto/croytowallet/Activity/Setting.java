@@ -3,6 +3,7 @@ package com.crypto.croytowallet.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
@@ -18,15 +19,19 @@ import android.widget.LinearLayout;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
 
-public class Setting extends AppCompatActivity {
+public class Setting extends AppCompatActivity implements View.OnClickListener {
     ImageView imageView;
+    CardView Scan_devices,restore_wallet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         imageView =findViewById(R.id.back);
-
+        Scan_devices =findViewById(R.id.Scan_devices);
+        restore_wallet = findViewById(R.id.restore_wallet);
+        Scan_devices.setOnClickListener(this);
+        restore_wallet.setOnClickListener(this);
         back();
     }
     @Override
@@ -54,5 +59,18 @@ public class Setting extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+
+            case R.id.Scan_devices:
+                startActivity(new Intent(getApplicationContext(),Sync_device.class));
+                break;
+            case R.id.restore_wallet:
+                startActivity(new Intent(getApplicationContext(),Scretephases.class));
+                break;
+        }
     }
 }

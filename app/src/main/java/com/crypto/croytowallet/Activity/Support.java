@@ -14,6 +14,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
@@ -21,6 +22,8 @@ import com.crypto.croytowallet.R;
 public class Support extends AppCompatActivity {
 ImageView imageView;
 ActionBar actionBar;
+
+    RelativeLayout knowledge_base,Contact_detail,add_ticket;
     LinearLayout support;
     Animation down;
     @Override
@@ -29,13 +32,35 @@ ActionBar actionBar;
         setContentView(R.layout.activity_support);
         imageView =findViewById(R.id.back);
         support=findViewById(R.id.support2);
-      /*  down = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_down1);
-        support.startAnimation(down);
-*/
+        support=findViewById(R.id.support2);
+        knowledge_base=findViewById(R.id.knowlege_Base);
+        Contact_detail=findViewById(R.id.contact_details);
 
-        // toolbar=findViewById(R.id.toolbar);
-        //  setSupportActionBar(toolbar);
-        // actionBarSetup();
+        add_ticket=findViewById(R.id.Add_ticket_layout);
+        add_ticket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Support.this,Ticket.class);
+                startActivity(i);
+            }
+        });
+        Contact_detail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Support.this,Contact_details.class);
+                startActivity(i);
+            }
+        });
+
+        knowledge_base.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Toast.makeText(getApplicationContext(),"Knowledge",Toast.LENGTH_LONG).show();
+                Intent i = new Intent(Support.this,knowlege_Base.class);
+                startActivity(i);
+            }
+        });
+
         back();
     }
 

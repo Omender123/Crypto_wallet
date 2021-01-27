@@ -8,7 +8,7 @@
     <string name="dashboard">Dashboard</string>
     <string name="wallet">Wallet</string>
     <string name="myWallet">My Wallet</string>
-    <string name="exchange">Exchange</string>
+    <string name="exchange">Swap</string>
     <string name="profile">Profile</string>
     <string name="security">Security</string>
     <string name="send">Send</string>
@@ -32,7 +32,7 @@
 
     <string name="mobile_support">Mobile Support</string>
     <string name="knowledge">Knowledge Base</string>
-    <string name="status">Status</string>
+    <string name="ticket">Ticket</string>
     <string name="contact_us">Contact Us</string>
     <string name="support_text">Use the options below tolearn about IMT,  </string>
     <string name="support_text1">Solve the problem and get in touch,</string>
@@ -59,6 +59,7 @@
     <string name="currency">Currency</string>
     <string name="advance">Advanced</string>
     <string name="sync">Sync Devices</string>
+    <string name="sync1">Active Devices</string>
     <string name="restore">Restore Wallet</string>
     <string name="detele">Delete Wallet</string>
     <string name="usd">USD</string>
@@ -134,4 +135,28 @@
 
     <string name="light">Light Mode</string>
     <string name="dark">Dark Mode</string>
+    <string name="payout_text1">Enter Email OTP</string>
+    <string name="payout_text2">Enter Gmail OTP</string>
+    <string name="knwoledge_Text_heading">This sd dfask msadj msad mads poad wdt</string>
+    <string name="knowlege_Description_Demo">Hello I am Demo Text that show thew implementation of the layout.Now Its show the the Demo of this layout</string>
+    <string name="add_ticket">Add Ticket</string>
+
+
+    <string name="contact_website_address">abcDemoinduia</string>
+    <string name="contact_title">Contact Details</string>
+    <string name="contact_Email">Email Address</string>
+    <string name="contact_Email_Address">abc@gmail.com</string>
+    <string name="contact_Phone">Phone No.</string>
+    <string name="contact_Phone_No">9812345678</string>
+    <string name="contact_website">Website</string>
+
+
+     <string name="wallettext">Type your secrete Phases to restore existing wallet</string>
+    <string name="restorewallet">Restore Wallet </string>
+    <string name="selectcurrency">Select Currency</string>
+    <string name="secretephases">Secrete Phases</string>
+    <string name="devicesync">What Device would you like to sync to?</string>
+    <string name="scandes">Open IMT Desktop.Go To The Setting.Then Device,Then Click the Sync Button</string>
+    <string name="scanqr">Scan QR Code</string>
+
 </resources>

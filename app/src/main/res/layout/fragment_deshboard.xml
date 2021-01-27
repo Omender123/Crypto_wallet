@@ -15,7 +15,7 @@
     android:paddingBottom="20dp">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="190dp"
+        android:layout_height="220dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="20dp"
         android:orientation="vertical"
@@ -233,9 +233,11 @@
 
             <ImageView
                 android:id="@+id/backup1"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_margin="15dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:padding="1dp"
                 android:scaleType="fitXY"
                 android:src="@mipmap/group16188" />
@@ -273,12 +275,13 @@
                 android:layout_below="@id/text1"
                 android:layout_alignLeft="@id/backup1"
                 android:layout_marginLeft="40dp"
+
                 android:layout_marginTop="2dp"
                 android:layout_marginRight="20dp"
                 android:justificationMode="inter_word"
                 android:padding="1dp"
                 android:text="Bitcoin"
-                android:textSize="10dp" />
+                android:textSize="15dp" />
 
             <TextView
                 android:id="@+id/price1"
@@ -305,7 +308,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:layout_toEndOf="@+id/imageView3"
-                android:text="35434e24"
+                android:text="-1.322"
                 android:textAlignment="center"
                 android:textColor="#8bd780" />
 
@@ -330,9 +333,9 @@
 
             <ImageView
                 android:id="@+id/backup"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_margin="15dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_margin="10dp"
                 android:padding="1dp"
                 android:scaleType="fitXY"
                 android:src="@mipmap/group_blue" />
@@ -374,7 +377,7 @@
                 android:justificationMode="inter_word"
                 android:padding="1dp"
                 android:text="Ethereum"
-                android:textSize="10dp" />
+                android:textSize="15dp" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -401,13 +404,14 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:layout_toEndOf="@+id/imageView2"
-                android:text="35434e24"
+                android:text="-1.0024"
                 android:textAlignment="center"
                 android:textColor="#8bd780" />
 
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
+
 
     <TextView
         android:layout_width="match_parent"

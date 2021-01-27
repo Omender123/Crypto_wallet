@@ -71,6 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/hello"
             android:layout_marginLeft="20dp"
+            android:fontFamily="@font/montserrat"
             android:layout_marginBottom="20dp"
             android:text="@string/Addverification"
             android:textColor="@color/toolbar"
@@ -126,7 +127,6 @@
                         android:id="@+id/email_img1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
@@ -191,6 +191,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="80dp"
                     android:layout_marginRight="20dp"
+                    android:textStyle="bold"
                     android:text="@string/skip" />
             </LinearLayout>
         </ScrollView>

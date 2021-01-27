@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".Activity.Support">
-    <LinearLayout
-        android:id="@+id/support2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingBottom="30dp">
-        <LinearLayout
+      <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:background="@color/toolbar"
@@ -37,9 +32,17 @@
                 android:textColor="@color/white"
                 android:id="@+id/toolbar_title" />
         </LinearLayout>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/support2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="30dp">
 
-
-        <TextView
+    <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/support_text"
@@ -117,7 +120,7 @@
                     android:layout_marginTop="12dp"
                     android:layout_marginLeft="17dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_mobile_support" />
+                    android:src="@drawable/ic_icon_material_chat_bubble_outline" />
 
             </RelativeLayout>
 
@@ -134,6 +137,7 @@
             android:elevation="2dp">
 
             <RelativeLayout
+                android:id="@+id/knowlege_Base"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -170,7 +174,7 @@
                     android:layout_marginTop="12dp"
                     android:layout_marginLeft="17dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_knowledge_base" />
+                    android:src="@drawable/ic_icon_feather_book" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -200,6 +204,7 @@
             android:elevation="2dp">
 
             <RelativeLayout
+                android:id="@+id/Add_ticket_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -223,7 +228,7 @@
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="15dp"
                     android:textStyle="bold"
-                    android:text="@string/status"
+                    android:text="@string/ticket"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/toolbar_text_color"
                     android:textSize="17dp" />
@@ -236,7 +241,7 @@
                     android:layout_marginTop="12dp"
                     android:layout_marginLeft="17dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_status" />
+                    android:src="@drawable/ic_icon_awesome_ticket_alt" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -265,6 +270,7 @@
             android:elevation="2dp">
 
             <RelativeLayout
+                android:id="@+id/contact_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -301,7 +307,7 @@
                     android:layout_marginTop="12dp"
                     android:layout_marginLeft="15dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_mobile_support_1" />
+                    android:src="@drawable/ic_icon_metro_perm_phone_msg" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -328,9 +334,12 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="50dp"
             android:textAlignment="center"
+            android:gravity="center"
             android:text="@string/privacy"
             android:layout_gravity="bottom"/>
 
 
     </LinearLayout>
-   </ScrollView>
+
+</ScrollView>
+</LinearLayout>

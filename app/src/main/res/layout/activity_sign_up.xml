@@ -68,6 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/hello"
             android:text="@string/crate"
+            android:fontFamily="@font/montserrat"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="20dp"
             android:textStyle="bold"
@@ -230,6 +231,7 @@
             android:layout_below="@id/user"
             android:text="@string/ready"
             android:textSize="20dp"
+            android:textStyle="bold"
             android:background="@drawable/rounded_button"
             android:textAllCaps="false"
             android:layout_margin="20dp"/>

@@ -35,13 +35,14 @@
     </style>
 
     <style name="OutlineBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-        <item name="boxStrokeColor">@android:color/darker_gray</item>
-        <item name="hintTextColor">@android:color/darker_gray</item>
+        <item name="boxStrokeColor">#707070</item>
+        <item name="hintTextColor">#707070</item>
         <item name="boxCornerRadiusBottomEnd">7dp</item>
         <item name="boxCornerRadiusBottomStart">7dp</item>
         <item name="boxCornerRadiusTopEnd">7dp</item>
         <item name="boxCornerRadiusTopStart">7dp</item>
-        <item name="android:textColorHint">@android:color/darker_gray</item>
+        <item name="android:textColorHint">#707070</item>
+        <item name="android:opacity">opaque</item>
 
     </style>
     <style name="AppTheme" parent="Theme.AppCompat.Light">

@@ -76,6 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/hello"
                 android:layout_marginLeft="20dp"
+                android:fontFamily="@font/montserrat"
                 android:text="@string/comfirm"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/toolbar"
@@ -124,6 +125,7 @@
             android:layout_margin="20dp"
             android:background="@drawable/rounded_button"
             android:text="@string/next"
+            android:textStyle="bold"
             android:textAllCaps="false"
             android:textSize="20dp" />
 

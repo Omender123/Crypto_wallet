@@ -16,6 +16,34 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CroytoWallet"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".Activity.Restore_wallet"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+        <activity
+            android:name=".Activity.Scretephases"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+        <activity
+            android:name=".Activity.Sync_device"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+        <activity
+            android:name=".Activity.Sync_scannner"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+        <activity
+            android:name=".Activity.knowlege_Base"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+        <activity android:name=".Activity.Payout_verification"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar">
+        </activity>
+        <activity
+            android:name=".Activity.Ticket"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar"></activity>
+        <activity
+            android:name=".Activity.Add_Ticket"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+        <activity
+            android:name=".Activity.Contact_details"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+
         <activity android:name=".Activity.StoryView"
             android:theme="@style/Theme.CroytoWallet.NoActionBar"></activity>
         <activity

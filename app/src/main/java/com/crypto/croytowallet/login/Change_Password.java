@@ -36,7 +36,8 @@ import java.util.Map;
 
 import de.mateware.snacky.Snacky;
 
-public class Change_Password extends AppCompatActivity {
+public class
+Change_Password extends AppCompatActivity {
 Button done;
     KProgressHUD progressDialog;
     EditText enter_username,enter_password,enter_Cpass,enter_mnemonic;
