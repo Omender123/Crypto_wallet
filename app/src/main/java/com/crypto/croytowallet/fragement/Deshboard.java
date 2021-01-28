@@ -157,11 +157,12 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
  public void checkBalance(){
      UserData user = SharedPrefManager.getInstance(getContext()).getUser();
      String id=user.getId();
-     String url="http://13.233.136.56:8080/api/user/totalAirDrop/"+id;
+     String url1= URLs.URL_AIRDROP_BALANCE+""+id;
+    // String url="http://13.233.136.56:8080/api/user/totalAirDrop/"+id;
 
 //     balance=getView().findViewById(R.id.balance);
 
-     StringRequest stringRequest =new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+     StringRequest stringRequest =new StringRequest(Request.Method.GET, url1, new Response.Listener<String>() {
          @Override
          public void onResponse(String response) {
           //   Toast.makeText(getContext(), ""+response, Toast.LENGTH_SHORT).show();

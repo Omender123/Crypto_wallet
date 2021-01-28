@@ -8,12 +8,15 @@ import androidx.cardview.widget.CardView;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -22,20 +25,58 @@ import android.widget.Toast;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
 
+import de.mateware.snacky.Snacky;
+
 public class Security extends AppCompatActivity implements View.OnClickListener {
 ActionBar actionBar;
 Toolbar toolbar;
 ImageView imageView;
-
 CardView Two_FA1;
+CheckBox passcode;
+
+CardView backUp;
+
+    SharedPreferences sharedPreferences = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_security);
         imageView =findViewById(R.id.back);
         Two_FA1 =findViewById(R.id.tofa);
+        backUp = findViewById(R.id.backUp);
+
+        passcode=findViewById(R.id.checkbox);
+
+
+        sharedPreferences = getSharedPreferences("myKey1",0);
+
+        Boolean booleanValue = sharedPreferences.getBoolean("passcode",false);
+        if (booleanValue){
+            passcode.setChecked(true);
+        }
+
+        passcode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+               if (isChecked){
+                   SharedPreferences.Editor editor = sharedPreferences.edit();
+                   editor.putBoolean("passcode",true);
+                   editor.commit();
+
+                   passcode.setChecked(true);
+               }else{
+                   SharedPreferences.Editor editor = sharedPreferences.edit();
+                   editor.putBoolean("passcode",false);
+                   editor.commit();
+
+                   passcode.setChecked(false);
+               }
+            }
+        });
 
         Two_FA1.setOnClickListener(this);
+        backUp.setOnClickListener(this);
 
          back();
     }
@@ -95,6 +136,15 @@ CardView Two_FA1;
             case R.id.tofa:
                 startActivity(new Intent(Security.this, Two_FA.class));
                 finish();
+                break;
+            case R.id.backUp:
+                Snacky.builder()
+                        .setActivity(Security.this)
+                        .setText("Coming Up Features")
+                        .setTextColor(getResources().getColor(R.color.white))
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .success()
+                        .show();
                 break;
         }
     }

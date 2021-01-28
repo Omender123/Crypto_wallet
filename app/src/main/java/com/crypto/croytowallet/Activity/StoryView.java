@@ -17,19 +17,18 @@ import com.crypto.croytowallet.R;
 import jp.shts.android.storiesprogressview.StoriesProgressView;
 
 public class StoryView extends AppCompatActivity implements StoriesProgressView.StoriesListener {
-    private static final int PROGRESS_COUNT = 6;
+    private static final int PROGRESS_COUNT = 4;
 
     private StoriesProgressView storiesProgressView;
     private ImageView image,back;
 
     private int counter = 0;
     private final int[] resources = new int[]{
-            R.drawable.balance,
+            R.drawable.sample1,
             R.drawable.sample2,
             R.drawable.sample3,
-            R.drawable.sample4,
-            R.drawable.sample5,
-            R.drawable.sample6,
+            R.drawable.sample4
+
     };
 
     long pressTime = 0L;
@@ -101,10 +100,13 @@ public class StoryView extends AppCompatActivity implements StoriesProgressView.
     public void onPrev() {
         if ((counter - 1) < 0) return;
         image.setImageResource(resources[--counter]);
+
     }
 
     @Override
     public void onComplete() {
+        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+        finish();
     }
 
     @Override

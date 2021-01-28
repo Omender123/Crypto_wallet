@@ -19,11 +19,13 @@ import android.widget.RelativeLayout;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
 
+import de.mateware.snacky.Snacky;
+
 public class Support extends AppCompatActivity {
 ImageView imageView;
 ActionBar actionBar;
 
-    RelativeLayout knowledge_base,Contact_detail,add_ticket;
+    RelativeLayout knowledge_base,Contact_detail,add_ticket,Mobile_support;
     LinearLayout support;
     Animation down;
     @Override
@@ -32,11 +34,25 @@ ActionBar actionBar;
         setContentView(R.layout.activity_support);
         imageView =findViewById(R.id.back);
         support=findViewById(R.id.support2);
-        support=findViewById(R.id.support2);
         knowledge_base=findViewById(R.id.knowlege_Base);
         Contact_detail=findViewById(R.id.contact_details);
-
         add_ticket=findViewById(R.id.Add_ticket_layout);
+        Mobile_support=findViewById(R.id.Mobile_support);
+
+        Mobile_support.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snacky.builder()
+                        .setActivity(Support.this)
+                        .setText("Coming Up Features")
+                        .setTextColor(getResources().getColor(R.color.white))
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .success()
+                        .show();
+            }
+        });
+
+
         add_ticket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -3,7 +3,7 @@ package com.crypto.croytowallet.VolleyDatabase;
 public class URLs {
 
 
-    private static final String ROOT_URL = "http://13.233.136.56:8080/api/";
+    private static final String ROOT_URL = "https://api.imx.global/api/";
 
     public static final String URL_LOGIN= ROOT_URL + "login";
     public static final String URL_CHANGE_PASSWORD= ROOT_URL + "user/forgot-password";
@@ -32,8 +32,18 @@ public class URLs {
     //2fa api
     public static final String URL_USER_DETAILS= ROOT_URL + "user/userInfromation";
 
-    //2fa api
+    //Banner api
     public static final String URL_BANNER= ROOT_URL + "banner";
+
+    //Active Device
+    public static final String URL_ACTIVE_DEVICE= ROOT_URL + "user/findCurrentlyActiveDevices";
+
+    //ADD TICKET
+    public static final String URL_ADD_TIKECT= ROOT_URL + "ticket/generateTicket";
+
+    //GET TICKET
+    public static final String URL_GET_TIKECT= ROOT_URL + "ticket/myTickets";
+
 
 
 }

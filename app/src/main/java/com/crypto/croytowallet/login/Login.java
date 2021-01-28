@@ -28,10 +28,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -39,6 +38,7 @@ import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
+import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.database.RetrofitClient;
 import com.crypto.croytowallet.signup.Referral_code;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -69,6 +69,7 @@ import de.mateware.snacky.Snacky;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class Login extends AppCompatActivity {
@@ -101,8 +102,9 @@ TextInputLayout layout_otp;
 
         forget_password=findViewById(R.id.forget);
         listener();
-      //  getDetails();
 
+        getAllDetails();
+        getosName();
         //if the user is already logged in we will directly start the profile activity
 
    if (SharedPrefManager.getInstance(this).isLoggedIn()) {
@@ -184,7 +186,7 @@ TextInputLayout layout_otp;
 
         showpDialog();
 
-
+/*
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -257,10 +259,10 @@ TextInputLayout layout_otp;
                 params.put("password", passwords);
                 params.put("otp",otp1);
 
-/*  params.put("ip",ipAddress);
+*//*  params.put("ip",ipAddress);
                 params.put("os",os);
                 params.put("location",locations);
-*/
+*//*
 
                 return params;
             }
@@ -280,72 +282,90 @@ TextInputLayout layout_otp;
         queue.add(request);
 
 
-        }
+        }*/
 
-    /* Call<ResponseBody> call= RetrofitClient.getInstance().getApi()
-                .Login(usernames,passwords);
+
+        Call<ResponseBody> call =RetrofitClient.getInstance().getApi()
+                .Login(usernames,passwords,otp1,locations,os,ipAddress);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 String s=null;
                 hidepDialog();
-
                 if (response.code()==200){
+
                     try {
                         s=response.body().string();
+                        JSONObject object= new JSONObject(s);
+                        String result =object.getString("result");
+                        String token =object.getString("token");
 
-                        JSONObject object=new JSONObject(s);
+                        JSONObject  object1 = new JSONObject(result);
+                        String id= object1.getString("_id");
+                        String name = object1.getString("name");
+                        String email = object1.getString("email");
+                        String phone = object1.getString("phone");
+                        String username = object1.getString("username");
+                        String mnemonic = object1.getString("mnemonic");
+                        String Referral_code = object1.getString("myReferalcode");
+                        String transaction_Pin = object1.getString("transactionPin");
+                        String ETH = object1.getString("ethAddress");
+                        String BTC = object1.getString("bitcoinAddress");
+                        String LITE = object1.getString("litecoinAddress");
+                        String XRP = object1.getString("xrpAddress");
 
-                        String result=object.getString("result");
-
-                        JSONObject object1=new JSONObject(result);
-
-                      String id=object1.getString("_id");
-                        String name=object1.getString("name");
-                        String phone=object1.getString("phone");
-                        String email=object1.getString("email");
-                        String username=object1.getString("username");
-                        String mnemonic=object1.getString("mnemonic");
-                        String myreferral_code=object1.getString("myReferalcode");
-                        String transaction_pin=object1.getString("transactionPin");
-                        String token=object.getString("token");
+                        String security=object1.getString("securityEnable");
+                        JSONObject object2=new JSONObject(security);
+                        String EMAIL2FA = object2.getString("email2fa");
 
 
-                        Toast.makeText(Login.this, ""+object1, Toast.LENGTH_SHORT).show();
+                        UserData userData=new UserData(id,name,email,phone,username,mnemonic,Referral_code,transaction_Pin,token
+                                ,ETH,BTC,LITE,XRP,EMAIL2FA);
+
                         //storing the user in shared preferences
-                      //  SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
-
-                     Toast.makeText(Login.this, "Login Successfully", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        SharedPrefManager.getInstance(getApplicationContext()).userLogin(userData);
+                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
                         finish();
 
+                        Toast.makeText(Login.this, "Login Successfully", Toast.LENGTH_SHORT).show();
+
+                       // Toast.makeText(Login.this, ""+s, Toast.LENGTH_SHORT).show();
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }
 
-
-                }else  if (response.code()==400){
+                } else if(response.code()==400) {
                     try {
                         s = response.errorBody().string();
                         JSONObject jsonObject1 = new JSONObject(s);
                         String error = jsonObject1.getString("error");
-                        Snacky.builder()
-                                .setView(view)
-                                .setText(error)
-                                .setDuration(Snacky.LENGTH_SHORT)
-                                .setActionText(android.R.string.ok)
-                                .error()
-                                .show();
-                    }catch (IOException | JSONException e) {
+                        if(error.equals("Incorrect otp")){
+                            resendOTP();
+                            layout_otp.setVisibility(View.VISIBLE);
+                        }else{
+
+                            Snacky.builder()
+                                    .setActivity(Login.this)
+                                    .setText(error)
+                                    .setDuration(Snacky.LENGTH_SHORT)
+                                    .setActionText(android.R.string.ok)
+                                    .error()
+                                    .show();
+                        }
+                    //    Toast.makeText(Login.this, ""+s, Toast.LENGTH_SHORT).show();
+                    } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }
+
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-               hidepDialog();
+                hidepDialog();
+
+
                 Snacky.builder()
                         .setView(view)
                         .setText("Please Check Your Internet Connection")
@@ -355,10 +375,8 @@ TextInputLayout layout_otp;
                         .show();
             }
         });
-  }*/
-
-
- public void parseVolleyError(VolleyError error) {
+    }
+/* public void parseVolleyError(VolleyError error) {
         try {
             String responseBody = new String(error.networkResponse.data, "utf-8");
             JSONObject data = new JSONObject(responseBody);
@@ -382,7 +400,7 @@ TextInputLayout layout_otp;
         } catch (JSONException e) {
         } catch (UnsupportedEncodingException errorr) {
         }
-    }
+    }*/
 
     public void resendOTP() {
 
@@ -499,6 +517,32 @@ TextInputLayout layout_otp;
             }
         });
 
+    }
+
+    public void getAllDetails(){
+
+        StringRequest stringRequest =new StringRequest(Request.Method.GET, "http://ip-api.com/json", new com.android.volley.Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject object =new JSONObject(response);
+                    ipAddress = object.getString("query");
+                    locations = object.getString("city");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        queue.add(stringRequest);
     }
 
     public void getDetails(){

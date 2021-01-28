@@ -158,5 +158,7 @@
     <string name="devicesync">What Device would you like to sync to?</string>
     <string name="scandes">Open IMT Desktop.Go To The Setting.Then Device,Then Click the Sync Button</string>
     <string name="scanqr">Scan QR Code</string>
+    <string name="passcode_text">Enter phone screen lock pattern, PIN, password or Fingerprint</string>
+    <string name="passcode_detail">Unlock Crypto Wallet</string>
 
 </resources>

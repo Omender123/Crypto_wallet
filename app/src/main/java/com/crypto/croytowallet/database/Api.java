@@ -4,6 +4,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 
@@ -25,7 +26,12 @@ Api {
     @POST("user/login")
     Call<ResponseBody> Login(
             @Field("username") String username,
-            @Field("password") String password);
+            @Field("password") String password,
+            @Field("otp") String otp,
+            @Field("location") String location,
+            @Field("os") String OsName,
+            @Field("ip") String IpAddress
+            );
 
     @FormUrlEncoded
     @POST("user/transactionPin")
@@ -74,4 +80,11 @@ Api {
             @Field("otp")  String Otp
     );
 
+    @FormUrlEncoded
+    @PUT("ticket/generateTicket")
+    Call<ResponseBody>AddTicket(
+            @Header("Authorization")String token,
+            @Field("subject") String subject,
+            @Field("description") String description
+    );
 }

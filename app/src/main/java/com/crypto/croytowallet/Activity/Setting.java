@@ -18,10 +18,15 @@ import android.widget.LinearLayout;
 
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
+import com.crypto.croytowallet.login.Login;
+
+import java.util.Set;
+
+import de.mateware.snacky.Snacky;
 
 public class Setting extends AppCompatActivity implements View.OnClickListener {
     ImageView imageView;
-    CardView Scan_devices,restore_wallet;
+    CardView Scan_devices,restore_wallet,notification,sound,currency;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +35,15 @@ public class Setting extends AppCompatActivity implements View.OnClickListener {
         imageView =findViewById(R.id.back);
         Scan_devices =findViewById(R.id.Scan_devices);
         restore_wallet = findViewById(R.id.restore_wallet);
+        notification = findViewById(R.id.notification);
+        sound = findViewById(R.id.sound);
+        currency = findViewById(R.id.currency);
         Scan_devices.setOnClickListener(this);
         restore_wallet.setOnClickListener(this);
+        notification.setOnClickListener(this);
+        sound.setOnClickListener(this);
+        currency.setOnClickListener(this);
+
         back();
     }
     @Override
@@ -71,6 +83,35 @@ public class Setting extends AppCompatActivity implements View.OnClickListener {
             case R.id.restore_wallet:
                 startActivity(new Intent(getApplicationContext(),Scretephases.class));
                 break;
+            case R.id.notification:
+                Snacky.builder()
+                        .setActivity(Setting.this)
+                        .setText("Coming Up Features")
+                        .setTextColor(getResources().getColor(R.color.white))
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .success()
+                        .show();
+
+                break;
+            case R.id.sound:
+                Snacky.builder()
+                        .setActivity(Setting.this)
+                        .setText("Coming Up Features")
+                        .setTextColor(getResources().getColor(R.color.white))
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .success()
+                        .show();
+                break;
+            case R.id.currency:
+                Snacky.builder()
+                        .setActivity(Setting.this)
+                        .setText("Coming Up Features")
+                        .setTextColor(getResources().getColor(R.color.white))
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .success()
+                        .show();
+                break;
+
         }
     }
 }

@@ -39,40 +39,45 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/main_textview"
+    <EditText
+        android:id="@+id/subject"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginRight="20dp"
-        android:text="  Subject"
+        android:hint="  Subject"
         android:textSize="15dp"
-       android:textAlignment="textStart"
-        android:gravity="center"
+        android:textColor="@color/black"
+        android:textAlignment="textStart"
         android:layout_marginLeft="20dp"
         android:background="@drawable/verifying_textview"
         android:layout_below="@id/layout_title"
-        android:layout_marginTop="50dp"
-        tools:ignore="RtlCompat" />
-<TextView
-    android:id="@+id/large_textview"
-    android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:layout_below="@id/main_textview"
-    android:layout_marginTop="80dp"
-    android:text=" Add Query"
-    android:textAlignment="textStart"
-    android:textSize="15dp"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp"
-    android:layout_marginBottom="30dp"
-    android:background="@drawable/verifying_textview"
-    />
+        android:layout_marginTop="50dp" />
+    <EditText
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="80dp"
+        android:scrollbars="vertical"
+        android:hint="\n \n Enter Query"
+        android:textDirection="firstStrong"
+        android:ems="10"
+
+        android:layout_below="@id/subject"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:lines="10"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:background="@drawable/verifying_textview"/>
 
     <TextView
+        android:id="@+id/add_ticket"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/button_border"
-        android:layout_below="@id/large_textview"
+        android:layout_below="@id/description"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:text="Add"

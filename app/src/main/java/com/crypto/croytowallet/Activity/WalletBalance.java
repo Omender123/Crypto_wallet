@@ -109,7 +109,7 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
 
                 try {
                     JSONObject object=new JSONObject(response);
-                    String   checkBalance=object.getString("airDrop");
+                    String  checkBalance=object.getString("airDrop");
 
 
                     textView.setText("$"+checkBalance+".00");
