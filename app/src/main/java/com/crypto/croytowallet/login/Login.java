@@ -538,6 +538,8 @@ TextInputLayout layout_otp;
             @Override
             public void onErrorResponse(VolleyError error) {
 
+                Toast.makeText(Login.this, ""+error.toString(), Toast.LENGTH_SHORT).show();
+
             }
         });
 

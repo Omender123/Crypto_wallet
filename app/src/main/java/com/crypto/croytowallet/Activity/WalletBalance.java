@@ -53,6 +53,7 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
     ArrayList<TransactionHistoryModel> transactionHistoryModels;
     Transaaction_history_adapter transaaction_history_adapter;
     KProgressHUD progressDialog;
+    TextView history_Empty;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +63,7 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
         textView=findViewById(R.id.wallet_balance);
         more=findViewById(R.id.moretransactions);
         recyclerView=findViewById(R.id.recyclerViewAddBalance);
-
+        history_Empty =findViewById(R.id.txt_list_is_empty);
         transactionHistoryModels =new ArrayList<TransactionHistoryModel>();
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -167,11 +168,18 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                transaaction_history_adapter = new Transaaction_history_adapter(transactionHistoryModels,getApplicationContext(), WalletBalance.this);
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL,false);
-                recyclerView.setLayoutManager(mLayoutManager);
-                recyclerView.setItemAnimator(new DefaultItemAnimator());
-                recyclerView.setAdapter(transaaction_history_adapter);
+                if(transactionHistoryModels!=null && transactionHistoryModels.size()>0){
+                    transaaction_history_adapter = new Transaaction_history_adapter(transactionHistoryModels,getApplicationContext(),WalletBalance.this);
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL,false);
+                    recyclerView.setLayoutManager(mLayoutManager);
+                    recyclerView.setItemAnimator(new DefaultItemAnimator());
+                    recyclerView.setAdapter(transaaction_history_adapter);
+                }else{
+
+                    history_Empty.setVisibility(View.VISIBLE);
+
+                }
+
 
                // Toast.makeText(WalletBalance.this, ""+response, Toast.LENGTH_SHORT).show();
             }

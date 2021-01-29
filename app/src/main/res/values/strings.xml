@@ -151,7 +151,7 @@
     <string name="contact_website">Website</string>
 
 
-     <string name="wallettext">Type your secrete Phases to restore existing wallet</string>
+    <string name="wallettext">Type your secrete Phases to restore existing wallet</string>
     <string name="restorewallet">Restore Wallet </string>
     <string name="selectcurrency">Select Currency</string>
     <string name="secretephases">Secrete Phases</string>
@@ -160,5 +160,6 @@
     <string name="scanqr">Scan QR Code</string>
     <string name="passcode_text">Enter phone screen lock pattern, PIN, password or Fingerprint</string>
     <string name="passcode_detail">Unlock Crypto Wallet</string>
-
+    <string name="transaction_text">No Transaction History</string>
+    <string name="ticket_text">No Old Ticket History</string>
 </resources>

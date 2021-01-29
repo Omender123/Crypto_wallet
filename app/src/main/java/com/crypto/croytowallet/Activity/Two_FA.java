@@ -45,40 +45,60 @@ public class Two_FA extends AppCompatActivity {
     KProgressHUD progressDialog;
     UserData userData;
     SharedPreferences sharedPreferences = null;
+    String email2fa1,google2fa1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_two__f);
         imageView =findViewById(R.id.back);
 
-       // google_to_fa=findViewById(R.id.toogle1);
+       google_to_fa=findViewById(R.id.toogle1);
         email_to_fa=findViewById(R.id.toogle2);
         userData= SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
-       String email = userData.getEMAIL2FA();
 
-       if (email.equals("true")){
-           email_to_fa.setToggleOn(true);
-       }else {
-           email_to_fa.setToggleOff(true);
-       }
-      /*  google_to_fa.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
-            @Override
-            public void onToggle(boolean on) {
-                if (on){
-                    google_2FA_Enable();
-                }
-                else{
-                    Disable_2FA();
-                }
-            }
-        });*/
 
         sharedPreferences = getSharedPreferences("night",0);
+
+        // for email2fa
         Boolean booleanValue = sharedPreferences.getBoolean("email2fa",false);
         if (booleanValue){
             email_to_fa.setToggleOn(true);
         }
+
+        // for google2fa
+        Boolean booleanValue1 = sharedPreferences.getBoolean("google2fa",false);
+        if (booleanValue1){
+            google_to_fa.setToggleOn(true);
+        }
+      /*  if (google2fa1.equals("true")){
+            google_to_fa.setToggleOn(true);
+        }else {
+            google_to_fa.setToggleOff(true);
+        }*/
+
+      google_to_fa.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
+            @Override
+            public void onToggle(boolean on) {
+                if (on){
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean("google2fa",true);
+                    editor.commit();
+                    google_to_fa.setToggleOn(true);
+
+                 google_2FA_Enable();
+                }
+                else{
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean("google2fa",false);
+                    editor.commit();
+                    google_to_fa.setToggleOff(true);
+                 Disable_2FA();
+                }
+            }
+        });
+
+
 
         email_to_fa.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
             @Override
@@ -102,6 +122,9 @@ public class Two_FA extends AppCompatActivity {
         });
 
         back();
+        get2fa();
+
+
     }
     public void google_2FA_Enable(){
 
@@ -283,6 +306,64 @@ public class Two_FA extends AppCompatActivity {
 
 
     }
+
+    public void get2fa(){
+
+        String token = userData.getToken();
+        StringRequest request=new StringRequest(Request.Method.GET, URLs.URL_GET_2FA, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject object =new JSONObject(response);
+                    String result =  object.getString("result");
+                    JSONObject object1 = new JSONObject(result);
+
+                    email2fa1 = object1.getString("email2fa");
+                    google2fa1 = object1.getString("google2fa");
+
+
+                    if (email2fa1.equals("true")){
+                        email_to_fa.setToggleOn(true);
+                    }if (google2fa1.equals("true")){
+                        google_to_fa.setToggleOn(true);
+                    }else {
+                        email_to_fa.setToggleOff(true);
+                        google_to_fa.setToggleOff(true);
+                    }
+                  // Toast.makeText(Two_FA.this, ""+email2fa1+google2fa1, Toast.LENGTH_SHORT).show();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                // Toast.makeText(Two_FA.this, ""+response, Toast.LENGTH_SHORT).show();
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                hidepDialog();
+                parseVolleyError(error);
+
+            }
+        }){
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+
+               headers.put("Authorization", token);
+
+                return headers;
+            }
+
+        };
+        VolleySingleton.getInstance(this).addToRequestQueue(request);
+
+
+    }
+
+
     public void parseVolleyError(VolleyError error) {
         try {
             String responseBody = new String(error.networkResponse.data, "utf-8");

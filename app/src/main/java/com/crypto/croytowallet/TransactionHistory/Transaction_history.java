@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -46,6 +47,7 @@ public class Transaction_history extends AppCompatActivity implements HistoryCli
     Transaaction_history_adapter transaaction_history_adapter;
     KProgressHUD progressDialog;
     SharedPreferences sharedPreferences;
+    TextView history_Empty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,7 @@ public class Transaction_history extends AppCompatActivity implements HistoryCli
         back();
         recyclerView=findViewById(R.id.recyclerTransation);
 
+        history_Empty =findViewById(R.id.txt_list_is_empty);
         transactionHistoryModels =new ArrayList<TransactionHistoryModel>();
 
         sharedPreferences=getSharedPreferences("transaction", Context.MODE_PRIVATE);
@@ -112,11 +115,17 @@ public class Transaction_history extends AppCompatActivity implements HistoryCli
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                transaaction_history_adapter = new Transaaction_history_adapter(transactionHistoryModels,getApplicationContext(),Transaction_history.this);
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL,false);
-                recyclerView.setLayoutManager(mLayoutManager);
-                recyclerView.setItemAnimator(new DefaultItemAnimator());
-                recyclerView.setAdapter(transaaction_history_adapter);
+                if(transactionHistoryModels!=null && transactionHistoryModels.size()>0){
+                    transaaction_history_adapter = new Transaaction_history_adapter(transactionHistoryModels,getApplicationContext(),Transaction_history.this);
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL,false);
+                    recyclerView.setLayoutManager(mLayoutManager);
+                    recyclerView.setItemAnimator(new DefaultItemAnimator());
+                    recyclerView.setAdapter(transaaction_history_adapter);
+                }else{
+
+                    history_Empty.setVisibility(View.VISIBLE);
+
+                }
 
                 //  Toast.makeText(WalletBalance.this, ""+response, Toast.LENGTH_SHORT).show();
             }

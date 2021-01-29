@@ -44,6 +44,9 @@ public class URLs {
     //GET TICKET
     public static final String URL_GET_TIKECT= ROOT_URL + "ticket/myTickets";
 
+    //GET TICKET
+    public static final String URL_GET_2FA= ROOT_URL + "user/getTwoFaEnableOrDisable";
+
 
 
 }

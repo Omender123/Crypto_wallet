@@ -42,7 +42,7 @@ import java.util.Map;
 
 public class Ticket extends AppCompatActivity {
 RecyclerView recyclerView;
-TextView add_ticket_btn;
+TextView add_ticket_btn,ticket_history;
 ImageView imageView;
     KProgressHUD progressDialog;
     UserData userData;
@@ -56,7 +56,7 @@ ImageView imageView;
         recyclerView = findViewById(R.id.Recycler_Add_Ticket);
         imageView =findViewById(R.id.back);
         add_ticket_btn=findViewById(R.id.add_more_ticket);
-
+        ticket_history =findViewById(R.id.txt_list_is_empty);
         ticketModels =new ArrayList<TicketModel>();
             userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
@@ -116,11 +116,16 @@ ImageView imageView;
                     e.printStackTrace();
                 }
 
-                ticket_adapter =new Ticket_Adapter(ticketModels,getApplicationContext());
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL,false);
-                recyclerView.setLayoutManager(mLayoutManager);
-                recyclerView.setItemAnimator(new DefaultItemAnimator());
-                recyclerView.setAdapter(ticket_adapter);
+                if(ticketModels!=null && ticketModels.size()>0){
+                    ticket_adapter =new Ticket_Adapter(ticketModels,getApplicationContext());
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL,false);
+                    recyclerView.setLayoutManager(mLayoutManager);
+                    recyclerView.setItemAnimator(new DefaultItemAnimator());
+                    recyclerView.setAdapter(ticket_adapter);
+                }else{
+                    ticket_history.setVisibility(View.VISIBLE);
+                }
+
                 // Toast.makeText(Ticket.this, ""+response, Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
