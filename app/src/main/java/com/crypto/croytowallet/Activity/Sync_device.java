@@ -66,14 +66,14 @@ public class Sync_device extends AppCompatActivity {
     KProgressHUD progressDialog;
     ActiveDeviceAdapter activeDeviceAdapter;
 
-    TextView balance;
+    TextView balance ,textView1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sync_device);
         imageView = findViewById(R.id.back);
         balance = findViewById(R.id.balance);
-
+        textView1  =findViewById(R.id.balance1);
         modelArrayList = new ArrayList<ActiveDeviceModel>();
 
         recyclerView = findViewById(R.id.active_device_recyclerView);
@@ -197,9 +197,15 @@ public class Sync_device extends AppCompatActivity {
 
                 try {
                     JSONObject object=new JSONObject(response);
-                    String   checkBalance=object.getString("airDrop");
+                    int   checkBalance=object.getInt("airDrop");
 
-                    balance.setText("$"+checkBalance+".00");
+
+
+                    balance.setText(checkBalance+".00");
+                    Double balance = checkBalance*0.09;
+                    textView1.setText("$"+balance);
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

@@ -62,7 +62,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
     Crypto_currencyInfo crypto_currencyInfo;
     LinearLayout lytscan,lytPay,lytWalletBalance,lytaddMoney;
     SharedPreferences sharedPreferences;
-    TextView textView;
+    TextView textView,textView1;
     public Deshboard() {
         // Required empty public constructor
     }
@@ -87,6 +87,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
         crptoInfoModels=new ArrayList<CrptoInfoModel>();
 
         textView  =view.findViewById(R.id.balance);
+        textView1  =view.findViewById(R.id.balance1);
 
         sharedPreferences=getActivity().getSharedPreferences("symbols", Context.MODE_PRIVATE);
 
@@ -169,11 +170,13 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
 
              try {
                  JSONObject object=new JSONObject(response);
-                 String   checkBalance=object.getString("airDrop");
+                int   checkBalance=object.getInt("airDrop");
 
-               //  TextView textView=getActivity().findViewById(R.id.balance);
 
-              textView.setText("$"+checkBalance+".00");
+                textView.setText(checkBalance+".00");
+
+                Double balance = checkBalance*0.09;
+                 textView1.setText("$"+balance);
               //   Toast.makeText(getContext(), ""+checkBalance, Toast.LENGTH_SHORT).show();
              } catch (JSONException e) {
                  e.printStackTrace();

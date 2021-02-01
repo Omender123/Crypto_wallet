@@ -17,7 +17,6 @@ import android.widget.Toast;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -32,6 +31,7 @@ import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.TransactionPin.EnterConfirmMnemonic;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
+import com.crypto.croytowallet.database.RetrofitClient;
 import com.crypto.croytowallet.login.Login;
 import com.google.android.material.snackbar.Snackbar;
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -39,11 +39,17 @@ import com.kaopiz.kprogresshud.KProgressHUD;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
 import de.mateware.snacky.Snacky;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class Enter_transaction_pin extends AppCompatActivity {
 PinView pinView;
@@ -95,6 +101,9 @@ CardView pay_money;
             }
         });
 
+
+    //    Toast.makeText(this, ""+Amount, Toast.LENGTH_SHORT).show();
+
         back();
     }
 
@@ -114,105 +123,95 @@ CardView pay_money;
         String userAddressID=userData.getId();
         String cryptoCurrency="airDropIMT";
         Bundle bundle = getIntent().getExtras();
-        String Amount = bundle.getString("amount12");
+        Integer  Amount = bundle.getInt("amount12");
+      //  int amout = Integer.parseInt(Amount);
+
         String enterPin=pinView.getText().toString();
         String username = preferences.getString("username","");
         String to_addressID=preferences.getString("id","");
         String token=userData.getToken();
 
 
+       // Toast.makeText(this, ""+amout, Toast.LENGTH_SHORT).show();
 
-        StringRequest request=new StringRequest(Request.Method.POST, URLs.URL_PEER_TO_PEER, new Response.Listener<String>() {
+
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().P2P(token,Amount,enterPin,userAddressID,username);
+
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(String response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String s =null;
                 hidepDialog();
-                try {
-                    JSONObject object=new JSONObject(response);
-                    String result=object.getString("result");
-                    JSONObject object1=new JSONObject(result);
-                    String id=object1.getString("_id");
-                    String status=object1.getString("status");
-                    String amtOfCrypto=object1.getString("amount");
+                if (response.code()==200){
 
-                  /*  PearToPearModel pearToPearModel=new PearToPearModel(id,status,amtOfCrypto);
-                    PearToPearSharedPrefManager.getInstance(getApplicationContext()).pearToPearData(pearToPearModel);
-                  */
+                    try {
+                        s=response.body().string();
+                        JSONObject object=new JSONObject(s);
+                        String result=object.getString("result");
+                        JSONObject object1=new JSONObject(result);
+                        String id=object1.getString("_id");
+                        String status=object1.getString("status");
+                        String amtOfCrypto=object1.getString("amount");
 
-                   // Toast.makeText(Enter_transaction_pin.this, ""+id+"\n"+status+"\n"+amtOfCrypto, Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(Enter_transaction_pin.this, Complate_payment.class);
-                    intent.putExtra("status",status);
-                    intent.putExtra("amt",amtOfCrypto);
-                    startActivity(intent);
+                        Intent intent = new Intent(Enter_transaction_pin.this, Complate_payment.class);
+                        intent.putExtra("status",status);
+                        intent.putExtra("amt",amtOfCrypto);
+                        startActivity(intent);
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                        pinView.setLineColor(getResources().getColor(R.color.light_gray));
+                        // Toast.makeText(Enter_transaction_pin.this, ""+s, Toast.LENGTH_SHORT).show();
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+                 }else if (response.code()==400){
+                    try {
+                        s=response.errorBody().string();
+                        JSONObject jsonObject1=new JSONObject(s);
+                        String error =jsonObject1.getString("error");
+
+
+                        Snacky.builder()
+                                .setActivity(Enter_transaction_pin.this)
+                                .setText(error)
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
+                        pinView.setLineColor(getResources().getColor(R.color.light_gray));
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if (response.code()==401){
+                    Snacky.builder()
+                            .setActivity(Enter_transaction_pin.this)
+                            .setText("unAuthorization Request")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+                    pinView.setLineColor(getResources().getColor(R.color.light_gray));
                 }
 
-            //  Toast.makeText(Enter_transaction_pin.this, ""+response, Toast.LENGTH_SHORT).show();
-                pinView.setLineColor(getResources().getColor(R.color.light_gray));
+
             }
 
-        }, new Response.ErrorListener() {
             @Override
-            public void onErrorResponse(VolleyError error) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 hidepDialog();
-               try {
-                   parseVolleyError(error);
-               }catch (Exception e){
-                   Toast.makeText(Enter_transaction_pin.this, ""+error, Toast.LENGTH_SHORT).show();
-               }
-
-                pinView.setLineColor(getResources().getColor(R.color.light_gray));
+                Snacky.builder()
+                        .setActivity(Enter_transaction_pin.this)
+                        .setText("Please Check Your Internet Connection")
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
             }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("amount",Amount);
-                params.put("transactionPin",enterPin);
-                params.put("toUserId",to_addressID);
-                params.put("toUsername",username);
+        });
 
+}
 
-
-                return params;
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<String, String>();
-
-                headers.put("Authorization", token);
-
-                return headers;
-            }
-
-        };
-        VolleySingleton.getInstance(this).addToRequestQueue(request);
-     /*   RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        queue.add(request);*/
-
-    }
-
-    public void parseVolleyError(VolleyError error) {
-        try {
-            String responseBody = new String(error.networkResponse.data, "utf-8");
-            JSONObject data = new JSONObject(responseBody);
-
-            String message=data.getString("error");
-
-            Snackbar warningSnackBar = Snacky.builder()
-                    .setActivity(Enter_transaction_pin.this)
-                    .setText(message)
-                    .setTextColor(getResources().getColor(R.color.white))
-                    .setDuration(Snacky.LENGTH_SHORT)
-                    .error();
-            warningSnackBar.show();
-          //  Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-        } catch (JSONException e) {
-        } catch (UnsupportedEncodingException errorr) {
-        }
-    }
 
 
 
@@ -244,4 +243,7 @@ CardView pay_money;
         });
 
     }
-}
+
+
+
+    }

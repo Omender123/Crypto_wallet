@@ -1,8 +1,11 @@
 package com.crypto.croytowallet;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
+
+
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -10,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class AppUtils {
+
 
     public static void showMessageOKCancel(String message, Activity activity, DialogInterface.OnClickListener okListener) {
         new android.app.AlertDialog.Builder(activity)

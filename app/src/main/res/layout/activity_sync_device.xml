@@ -70,14 +70,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="70dp"
-                android:fontFamily="sans-serif-black"
-                android:text="$00.00"
+                android:fontFamily="@font/montserrat"
+                android:text="00.00"
                 android:textAlignment="center"
                 android:textColor="#000"
                 android:textSize="20dp"
                 android:textStyle="bold" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/balance1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="$00.00"
+            android:textSize="15dp"
+            android:textColor="#242424"
+            android:fontFamily="@font/montserrat"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:layout_marginBottom="50dp"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"/>/>
+
+    </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"

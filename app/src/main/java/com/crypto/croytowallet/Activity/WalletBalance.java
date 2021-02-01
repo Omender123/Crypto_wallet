@@ -47,7 +47,7 @@ import java.util.Map;
 
 public class WalletBalance extends AppCompatActivity implements HistoryClickLister {
     ImageView imageView;
-    TextView textView,more;
+    TextView textView,textView1,more;
     RequestQueue requestQueue;
     RecyclerView recyclerView;
     ArrayList<TransactionHistoryModel> transactionHistoryModels;
@@ -60,7 +60,9 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
         setContentView(R.layout.activity_wallet_balance);
         imageView =findViewById(R.id.back);
         back();
-        textView=findViewById(R.id.wallet_balance);
+        textView  =findViewById(R.id.balance);
+        textView1  =findViewById(R.id.balance1);
+
         more=findViewById(R.id.moretransactions);
         recyclerView=findViewById(R.id.recyclerViewAddBalance);
         history_Empty =findViewById(R.id.txt_list_is_empty);
@@ -110,10 +112,14 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
 
                 try {
                     JSONObject object=new JSONObject(response);
-                    String  checkBalance=object.getString("airDrop");
+                     int   checkBalance=object.getInt("airDrop");
 
 
-                    textView.setText("$"+checkBalance+".00");
+                    textView.setText(checkBalance+".00");
+
+                    Double balance = checkBalance*0.09;
+                    textView1.setText("$"+balance);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -123,7 +129,7 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
             public void onErrorResponse(VolleyError error) {
                 hidepDialog();
 
-                Toast.makeText(WalletBalance.this, ""+error.toString(), Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(WalletBalance.this, ""+error.toString(), Toast.LENGTH_SHORT).show();
             }
         });
 

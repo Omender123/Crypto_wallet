@@ -5,6 +5,7 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 
@@ -81,10 +82,13 @@ Api {
     );
 
     @FormUrlEncoded
-    @PUT("ticket/generateTicket")
-    Call<ResponseBody>AddTicket(
+
+    @POST("transaction/peerToPeer")
+    Call<ResponseBody>P2P(
             @Header("Authorization")String token,
-            @Field("subject") String subject,
-            @Field("description") String description
+            @Field("amount") Integer amount,
+            @Field("transactionPin") String transactionPin,
+            @Field("toUserId") String userId,
+            @Field("toUsername") String username
     );
 }

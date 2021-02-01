@@ -45,7 +45,7 @@ public class Two_FA extends AppCompatActivity {
     KProgressHUD progressDialog;
     UserData userData;
     SharedPreferences sharedPreferences = null;
-    String email2fa1,google2fa1;
+    String  email2fa1,google2fa1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,11 +71,7 @@ public class Two_FA extends AppCompatActivity {
         if (booleanValue1){
             google_to_fa.setToggleOn(true);
         }
-      /*  if (google2fa1.equals("true")){
-            google_to_fa.setToggleOn(true);
-        }else {
-            google_to_fa.setToggleOff(true);
-        }*/
+
 
       google_to_fa.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
             @Override
@@ -323,14 +319,19 @@ public class Two_FA extends AppCompatActivity {
                     google2fa1 = object1.getString("google2fa");
 
 
-                    if (email2fa1.equals("true")){
+                   /* if (email2fa1.equals("true")){
                         email_to_fa.setToggleOn(true);
-                    }if (google2fa1.equals("true")){
-                        google_to_fa.setToggleOn(true);
                     }else {
                         email_to_fa.setToggleOff(true);
-                        google_to_fa.setToggleOff(true);
                     }
+
+                    if (google2fa1.equals("true")){
+                        google_to_fa.setToggleOn(true);
+                    }else {
+                        google_to_fa.setToggleOff(true);
+
+
+                    }*/
                   // Toast.makeText(Two_FA.this, ""+email2fa1+google2fa1, Toast.LENGTH_SHORT).show();
 
                 } catch (JSONException e) {

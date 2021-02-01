@@ -7,10 +7,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
@@ -21,6 +24,7 @@ public class Pay_money extends AppCompatActivity {
     EditText pay_enter_amount;
     TextView go_top_up,payUsername,payname,payEmail;
     SharedPreferences preferences;
+    TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +34,7 @@ public class Pay_money extends AppCompatActivity {
         go_top_up=findViewById(R.id.go_top_up);
         pay=findViewById(R.id.pay);
 
+        textView  = findViewById(R.id.balance);
         payUsername=findViewById(R.id.payUsername);
         payname=findViewById(R.id.name);
         payEmail=findViewById(R.id.email);
@@ -48,17 +53,52 @@ public class Pay_money extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String enter_amount=pay_enter_amount.getText().toString().trim();
-                if (enter_amount.isEmpty()){
+
+              //  Toast.makeText(Pay_money.this, ""+enter_amount, Toast.LENGTH_SHORT).show();
+               if (enter_amount.isEmpty()){
                     pay_enter_amount.setError("Please enter Amount to Pay");
                     pay_enter_amount.requestFocus();
                 }else{
-                    startActivity(new Intent(getApplicationContext(),Enter_transaction_pin.class).putExtra("amount12",enter_amount));
-                    finish();
+
+                   Intent intent =new Intent(getApplicationContext(),Enter_transaction_pin.class);
+                   Integer amount = Integer.parseInt(enter_amount);
+                   intent.putExtra("amount12",amount);
+                   startActivity(intent);
                 }
 
             }
         });
 //add money
+       pay_enter_amount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String amount = s.toString();
+
+                if (amount.isEmpty()){
+                    textView.setText("$ 0 ");
+                }else{
+                    int a = Integer.parseInt(s.toString());
+                    double result = a*0.09;
+
+                    textView.setText("$ " +result );
+
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
         go_top_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
