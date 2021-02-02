@@ -319,7 +319,7 @@ public class Two_FA extends AppCompatActivity {
                     google2fa1 = object1.getString("google2fa");
 
 
-                   /* if (email2fa1.equals("true")){
+                  if (email2fa1.equals("true")){
                         email_to_fa.setToggleOn(true);
                     }else {
                         email_to_fa.setToggleOff(true);
@@ -331,7 +331,7 @@ public class Two_FA extends AppCompatActivity {
                         google_to_fa.setToggleOff(true);
 
 
-                    }*/
+                    }
                   // Toast.makeText(Two_FA.this, ""+email2fa1+google2fa1, Toast.LENGTH_SHORT).show();
 
                 } catch (JSONException e) {
@@ -343,7 +343,7 @@ public class Two_FA extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                hidepDialog();
+
                 parseVolleyError(error);
 
             }

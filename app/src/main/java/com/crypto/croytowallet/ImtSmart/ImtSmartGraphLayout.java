@@ -1,24 +1,21 @@
-package com.crypto.croytowallet.Activity;
+package com.crypto.croytowallet.ImtSmart;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.crypto.croytowallet.Activity.Graph_layout;
 import com.crypto.croytowallet.CoinTransfer.CoinScan;
 import com.crypto.croytowallet.CoinTransfer.Received_Coin;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
-import com.crypto.croytowallet.fragement.Exchange;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -30,36 +27,24 @@ import com.github.mikephil.charting.utils.Utils;
 
 import java.util.ArrayList;
 
-
-public class Graph_layout extends AppCompatActivity implements View.OnClickListener {
-
-    TextView swap;
-    private Exchange exchange;
-    int position;
+public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnClickListener {
     ImageView back,received,send;
-
-    SharedPreferences preferences;
     private LineChart chart;
+    TextView swap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_graph_layout);
+        setContentView(R.layout.activity_imt_smart_graph_layout);
         chart =  findViewById(R.id.cubiclinechart);
-         swap =findViewById(R.id.swap_btc_btn);
-         back =findViewById(R.id.back);
-          received =findViewById(R.id.receive_coin);
+        swap =findViewById(R.id.swap_btc_btn);
+        back =findViewById(R.id.back);
+        received =findViewById(R.id.receive_coin);
 
-          send=findViewById(R.id.send_coin);
-         swap.setOnClickListener(this);
-         back.setOnClickListener(this);
+        send=findViewById(R.id.send_coin);
+        swap.setOnClickListener(this);
+        back.setOnClickListener(this);
         received.setOnClickListener(this);
         send.setOnClickListener(this);
-
-        preferences=getApplicationContext().getSharedPreferences("symbols", Context.MODE_PRIVATE);
-        position = preferences.getInt("position", -1);
-
-
-
 
 
         chart.setDragEnabled(true);
@@ -110,17 +95,9 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         }
         set1.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         set1.setLineWidth(2f);
-//        set1.setFormLineDashEffect(new DashPathEffect(new float[]{1f, 3f}, 1f));
-//        set1.setHighlightLineWidth(2);
-        //  set1.enableDashedHighlightLine(10f, 5f, 0f);
         set1.setColor(Color.WHITE);
         set1.setDrawFilled(true);
         chart.setBackgroundColor(Color.rgb(243, 193, 24));
-
-
-
-
-
 
     }
 
@@ -128,24 +105,21 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.back:
-                startActivity(new Intent(Graph_layout.this, MainActivity.class));
+                startActivity(new Intent(ImtSmartGraphLayout.this, MainActivity.class));
                 break;
 
             case R.id.receive_coin:
-               Intent intent=new Intent(getApplicationContext(), Received_Coin.class);
-              // intent.putExtra("position",position);
-               startActivity(intent);
+                Intent intent=new Intent(getApplicationContext(), ImtSmartRecevied.class);
+
+                startActivity(intent);
                 break;
 
             case R.id.send_coin:
-                Intent intent1=new Intent(getApplicationContext(), CoinScan.class);
-              //  intent1.putExtra("position",position);
+                Intent intent1=new Intent(getApplicationContext(), ImtSmartCoinScan.class);
                 startActivity(intent1);
                 break;
-
-        }
     }
-
+}
     @Override
     public void onBackPressed() {
         super.onBackPressed();

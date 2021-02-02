@@ -1,13 +1,10 @@
 package com.crypto.croytowallet.CoinTransfer;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -19,33 +16,24 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.chaos.view.PinView;
-import com.crypto.croytowallet.Activity.Two_FA;
 import com.crypto.croytowallet.MainActivity;
-import com.crypto.croytowallet.Model.CrptoInfoModel;
 import com.crypto.croytowallet.Payment.Complate_payment;
 import com.crypto.croytowallet.Payment.Enter_transaction_pin;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
-
 import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
 import com.crypto.croytowallet.database.RetrofitClient;
-import com.crypto.croytowallet.login.ForgetPassword;
-import com.crypto.croytowallet.login.OTP_Activity;
-import com.google.android.material.textfield.TextInputLayout;
 import com.kaopiz.kprogresshud.KProgressHUD;
-
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,161 +41,111 @@ import de.mateware.snacky.Snacky;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
-public class Pay_Coin extends AppCompatActivity {
-    int position;
-    String result,Amount,cryptoCurrency, email2fa1,google2fa1;
-    TextView toolbar_title;
-    ImageView imageView;
-    EditText enterAmount,token;
-    TextInputLayout enterAmount1,token1;
-    Button next;
-    UserData userData;
-    KProgressHUD progressDialog;
+public class Payout_verification extends AppCompatActivity {
+    String result,Amount,Token,enterPin,cryptoCurrency,otp,AuthToken,email2fa,google2fa;
     SharedPreferences preferences;
-
-
-    private AppCompatActivity activity;
+    KProgressHUD progressDialog;
+    UserData userData;
+    TextView next;
+    PinView pinView;
+    EditText ed_token,ed_otp;
+    ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pay__coin);
+        setContentView(R.layout.activity_payout_verification2);
+
+        next = findViewById(R.id.Next_btn);
+        ed_otp = findViewById(R.id.enter_otp);
+        ed_token = findViewById(R.id.enter_GoogleToken);
+        pinView = findViewById(R.id.enter_pin);
         imageView =findViewById(R.id.back);
-        toolbar_title=findViewById(R.id.toolbar_title);
-        enterAmount=findViewById(R.id.ed_enter_amount);
-      //  token =findViewById(R.id.ed_token);
-        enterAmount1=findViewById(R.id.user);
 
-        next=findViewById(R.id.next);
 
-        Bundle bundle = getIntent().getExtras();
-       // position=bundle.getInt("position");
-        result=bundle.getString("result");
+        userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
         preferences=getApplicationContext().getSharedPreferences("symbols", Context.MODE_PRIVATE);
         cryptoCurrency = preferences.getString("symbol1","");
-
-          position = preferences.getInt("position", -1);
-
-        toolbar_title.setText("Send "+cryptoCurrency);
-
-        userData= SharedPrefManager.getInstance(getApplicationContext()).getUser();
-
+        Bundle bundle = getIntent().getExtras();
+        // position=bundle.getInt("position");
+        result=bundle.getString("result1");
+        Amount = bundle.getString("amount1");
 
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Amount = enterAmount.getText().toString().trim();
-                if (Amount.isEmpty()){
-                    enterAmount.setError("Please enter amount");
-                    enterAmount.requestFocus();
-                }else {
+                enterPin = pinView.getText().toString();
+                Token = ed_token.getText().toString().trim();
+                otp = ed_otp.getText().toString().trim();
 
-                    Intent intent =new Intent(getApplicationContext(),Payout_verification.class);
-                   intent.putExtra("result1",result);
-                    intent.putExtra("amount1",Amount);
+                String trans = userData.getTransaction_Pin();
 
-                   startActivity(intent);
-
-
-                }
-
-
-            }
-        });
-
-
-
-
-
-      /*  send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                enterPin=pinView.getText().toString();
-
-                String trans =userData.getTransaction_Pin();
-
-
-                if (enterPin.isEmpty()){
+                if (enterPin.isEmpty()) {
                     pinView.setError("Please enter transaction pin");
                     pinView.requestFocus();
-                }else if (enterPin.equals(trans)){
+                } else if (enterPin.equals(trans)) {
                     pinView.setLineColor(getResources().getColor(R.color.green));
-
-            //   Toast.makeText(Pay_Coin.this, ""+Amount+cryptoCurrency+Token+result+enterPin, Toast.LENGTH_SHORT).show();
-
-                 done();
-
-                }else{
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            // This method will be executed once the timer is over
-                            pinView.setLineColor(getResources().getColor(R.color.light_gray));
-                        }
-                    }, 200);
-                    pinView.setLineColor(getResources().getColor(R.color.red));
+                    Toast.makeText(Payout_verification.this, ""+enterPin, Toast.LENGTH_SHORT).show();
+                   sendcoin();
                 }
 
             }
         });
-     */ //  Toast.makeText(this, ""+position+result, Toast.LENGTH_SHORT).show();
+
+    //   Toast.makeText(this, ""+result+Amount+cryptoCurrency, Toast.LENGTH_SHORT).show();
+        get2fa();
         back();
-       get2fa();
     }
 
     public void get2fa(){
 
         String token = userData.getToken();
-        progressDialog = KProgressHUD.create(Pay_Coin.this)
-                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                .setLabel("Please wait.....")
-                .setCancellable(false)
-                .setAnimationSpeed(2)
-                .setDimAmount(0.5f)
-                .show();
-
-        showpDialog();
-
-        StringRequest request=new StringRequest(Request.Method.GET, URLs.URL_GET_2FA, new Response.Listener<String>() {
+        StringRequest request=new StringRequest(Request.Method.GET, URLs.URL_GET_2FA, new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                hidepDialog();
+
                 try {
                     JSONObject object =new JSONObject(response);
                     String result =  object.getString("result");
                     JSONObject object1 = new JSONObject(result);
 
-                    email2fa1 = object1.getString("email2fa");
-                    google2fa1 = object1.getString("google2fa");
+                    String    email2fa1 = object1.getString("email2fa");
+                    String  google2fa1 = object1.getString("google2fa");
 
 
-                   if (email2fa1.equals("true")){
-                       sendOTP();
+                    if (email2fa1.equals("true")){
+
+                        ed_otp.setError("Please enter Email Otp");
+                        ed_otp.requestFocus();
+
                     }else {
-                       Toast.makeText(Pay_Coin.this, "Your Email 2FA OFF", Toast.LENGTH_SHORT).show();
+
+                        Toast.makeText(Payout_verification.this, "Your Email 2FA OFF", Toast.LENGTH_SHORT).show();
                     }
 
                     if (google2fa1.equals("true")){
-                        Toast.makeText(Pay_Coin.this, "Your Google 2FA ON", Toast.LENGTH_SHORT).show();
 
+                        ed_otp.setError("Please enter Google Token");
+                        ed_otp.requestFocus();
                     }else {
-                        Toast.makeText(Pay_Coin.this, "Your Email 2FA OFF", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Payout_verification.this, "Your Google 2FA OFF", Toast.LENGTH_SHORT).show();
                     }
-                 //   Toast.makeText(Pay_Coin.this, ""+email2fa1+google2fa1, Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(Two_FA.this, ""+email2fa1+google2fa1, Toast.LENGTH_SHORT).show();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
+                // Toast.makeText(Two_FA.this, ""+response, Toast.LENGTH_SHORT).show();
             }
 
-        }, new Response.ErrorListener() {
+        }, new com.android.volley.Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                hidepDialog();
-//                parseVolleyError(error);
+
+
 
             }
         }){
@@ -227,29 +165,95 @@ public class Pay_Coin extends AppCompatActivity {
 
     }
 
+    public void sendcoin(){
+        progressDialog = KProgressHUD.create(Payout_verification.this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Please wait.....")
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
 
-    public void parseVolleyError(VolleyError error) {
-        try {
-            String responseBody = new String(error.networkResponse.data, "utf-8");
-            JSONObject data = new JSONObject(responseBody);
-            String message=data.getString("error");
-            Snacky.builder()
-                    .setActivity(Pay_Coin.this)
-                    .setText(message)
-                    .setDuration(Snacky.LENGTH_SHORT)
-                    .setActionText(android.R.string.ok)
-                    .error()
-                    .show();
-            //      Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-        } catch (JSONException e) {
-        } catch (UnsupportedEncodingException errorr) {
-        }
+        showpDialog();
+
+        AuthToken =userData.getToken();
+
+        Call<ResponseBody>call = RetrofitClient.getInstance().getApi().coinTransfer(AuthToken,cryptoCurrency,"0",Token,otp,Amount,enterPin,result);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String s =null;
+                hidepDialog();
+                if (response.code()==200){
+
+                    try {
+                        s=response.body().string();
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        Toast.makeText(Payout_verification.this, "Coin send Successfully", Toast.LENGTH_SHORT).show();
+
+                        pinView.setLineColor(getResources().getColor(R.color.light_gray));
+                      // Toast.makeText(Payout_verification.this, ""+s, Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }else if (response.code()==400){
+                    try {
+                        s=response.errorBody().string();
+                        JSONObject jsonObject1=new JSONObject(s);
+                        String error =jsonObject1.getString("error");
+
+
+                        Snacky.builder()
+                                .setActivity(Payout_verification.this)
+                                .setText(error)
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
+                        pinView.setLineColor(getResources().getColor(R.color.light_gray));
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if (response.code()==401){
+                    Snacky.builder()
+                            .setActivity(Payout_verification.this)
+                            .setText("unAuthorization Request")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+                    pinView.setLineColor(getResources().getColor(R.color.light_gray));
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                hidepDialog();
+
+                pinView.setLineColor(getResources().getColor(R.color.light_gray));
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                Toast.makeText(Payout_verification.this, "Your Transaction is Pending. And Please Check your Status in Coin Transaction History  ", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+    private void showpDialog() {
+        if (!progressDialog.isShowing())
+            progressDialog.show();
     }
 
+    private void hidepDialog() {
+        if (progressDialog.isShowing())
+            progressDialog.dismiss();
+    }
 
-    public void sendOTP(){
+    public void sendOtpAgain(View view) {
         String username = userData.getUsername();
-        progressDialog = KProgressHUD.create(Pay_Coin.this)
+        progressDialog = KProgressHUD.create(Payout_verification.this)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel("Please wait.....")
                 .setCancellable(false)
@@ -271,15 +275,14 @@ public class Pay_Coin extends AppCompatActivity {
                 String s=null;
                 if (response.code()==200){
 
-                  /*  Snacky.builder()
+
+                    OTPexpire();
+                    Snacky.builder()
                             .setView(view)
-                            .setText("Otp send in your register Email")
+                            .setText("Otp resend in your register Email")
                             .setDuration(Snacky.LENGTH_SHORT)
                             .success()
-                            .show();*/
-                       OTPexpire();
-                    Toast.makeText(Pay_Coin.this, "Otp send in your registered Email", Toast.LENGTH_SHORT).show();
-
+                            .show();
                 }else if(response.code()==400){
                     try {
 
@@ -288,7 +291,7 @@ public class Pay_Coin extends AppCompatActivity {
                         String error =jsonObject1.getString("error");
 
                         Snacky.builder()
-                                .setActivity(Pay_Coin.this)
+                                .setActivity(Payout_verification.this)
                                 .setText(" Oops Username Not Found !!!!!")
                                 .setDuration(Snacky.LENGTH_SHORT)
                                 .setActionText(android.R.string.ok)
@@ -309,7 +312,7 @@ public class Pay_Coin extends AppCompatActivity {
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 hidepDialog();
                 Snacky.builder()
-                        .setActivity(Pay_Coin.this)
+                        .setActivity(Payout_verification.this)
                         .setText("Please Check Your Internet Connection")
                         .setDuration(Snacky.LENGTH_SHORT)
                         .setActionText(android.R.string.ok)
@@ -318,15 +321,6 @@ public class Pay_Coin extends AppCompatActivity {
             }
         });
 
-    }
-    private void showpDialog() {
-        if (!progressDialog.isShowing())
-            progressDialog.show();
-    }
-
-    private void hidepDialog() {
-        if (progressDialog.isShowing())
-            progressDialog.dismiss();
     }
     public void OTPexpire(){
         new Handler().postDelayed(new Runnable() {
@@ -355,7 +349,7 @@ public class Pay_Coin extends AppCompatActivity {
 
                 String s=null;
                 if (response.code()==200){
-                    Toast.makeText(Pay_Coin.this, "Your Otp is expire", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Payout_verification.this, "Your Otp is expire", Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -367,11 +361,10 @@ public class Pay_Coin extends AppCompatActivity {
         });
 
     }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-       onSaveInstanceState(new Bundle());
+        onSaveInstanceState(new Bundle());
 
 
     }
@@ -387,8 +380,4 @@ public class Pay_Coin extends AppCompatActivity {
     }
 
 
-
-    }
-
-
-
+}

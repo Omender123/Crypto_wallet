@@ -140,7 +140,7 @@
                     android:textColor="#000"
                     android:layout_gravity="center"
                     android:textStyle="bold"
-                    android:text="24H"/>
+                    android:text="7D"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="0dp"
@@ -154,22 +154,7 @@
                     android:textColor="#000"
                     android:layout_gravity="center"
                     android:textStyle="bold"
-                    android:text="24H"/>
-            </LinearLayout>
-            <LinearLayout
-
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000"
-                    android:layout_gravity="center"
-                    android:textStyle="bold"
-                    android:text="24H"/>
+                    android:text="1M"/>
             </LinearLayout>
             <LinearLayout
 
@@ -184,7 +169,7 @@
                     android:textColor="#000"
                     android:layout_gravity="center"
                     android:textStyle="bold"
-                    android:text="24H"/>
+                    android:text="3M"/>
             </LinearLayout>
             <LinearLayout
 
@@ -199,7 +184,22 @@
                     android:textColor="#000"
                     android:layout_gravity="center"
                     android:textStyle="bold"
-                    android:text="24H"/>
+                    android:text="6M"/>
+            </LinearLayout>
+            <LinearLayout
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:text="1Y"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -308,96 +308,96 @@
             android:orientation="horizontal">
 
 
-            <LinearLayout
+            <!-- <LinearLayout
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_gravity="center"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:gravity="center"
+                 android:layout_gravity="center"
 
-                android:layout_weight="2"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:gravity="center"
+                 android:layout_weight="2"
+                 android:orientation="vertical">
+                 <LinearLayout
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_weight="2"
+                     android:gravity="center"
 
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="#FFF"
-                        android:text="$2.00"
-                        android:textSize="25dp"
-                        android:fontFamily="@font/montserrat"
-                        android:layout_marginTop="5dp"
-                        android:textColor="#000"
-                        android:textStyle="bold"
-                       />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Price"
-                        android:layout_marginTop="-5dp"
-                        android:textAlignment="center"
-                        android:textStyle="normal"
-                        android:textColor="#000"
-                        android:textSize="15dp"
+                     android:orientation="vertical">
+                     <TextView
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:background="#FFF"
+                         android:text="$2.00"
+                         android:textSize="25dp"
+                         android:fontFamily="@font/montserrat"
+                         android:layout_marginTop="5dp"
+                         android:textColor="#000"
+                         android:textStyle="bold"
                         />
-                </LinearLayout>
+                     <TextView
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="Price"
+                         android:layout_marginTop="-5dp"
+                         android:textAlignment="center"
+                         android:textStyle="normal"
+                         android:textColor="#000"
+                         android:textSize="15dp"
+                         />
+                 </LinearLayout>
 
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="center"
-                android:layout_marginLeft="50dp"
+             </LinearLayout>
+             <LinearLayout
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:layout_gravity="center"
+                 android:layout_marginLeft="50dp"
 
-                android:gravity="center"
-                android:orientation="horizontal">
+                 android:gravity="center"
+                 android:orientation="horizontal">
 
-                <View
-                    android:layout_width="2dp"
-                    android:layout_height="70dp"
+                 <View
+                     android:layout_width="2dp"
+                     android:layout_height="70dp"
 
-                    android:background="#c3c3c3"
+                     android:background="#c3c3c3"
 
+                     />
+             </LinearLayout>
+             <LinearLayout
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="2"
+                 android:gravity="center"
+                 android:layout_marginLeft="50dp"
+                 android:layout_gravity="center"
+                 android:orientation="vertical">
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:background="#FFF"
+                     android:text="$2.00"
+                     android:textSize="25dp"
+                     android:fontFamily="@font/montserrat"
+                     android:layout_marginTop="5dp"
+                     android:textAlignment="center"
+                     android:textColor="#000"
+                     android:textStyle="bold"
                     />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:gravity="center"
-                android:layout_marginLeft="50dp"
-                android:layout_gravity="center"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#FFF"
-                    android:text="$2.00"
-                    android:textSize="25dp"
-                    android:fontFamily="@font/montserrat"
-                    android:layout_marginTop="5dp"
-                    android:textAlignment="center"
-                    android:textColor="#000"
-                    android:textStyle="bold"
-                   />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="-5dp"
-                    android:text="Balance"
-                    android:textAlignment="center"
-                    android:textStyle="normal"
-                    android:textColor="#000"
-                    android:textSize="15dp"
-                    />
-            </LinearLayout>
-        </LinearLayout>
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginTop="-5dp"
+                     android:text="Balance"
+                     android:textAlignment="center"
+                     android:textStyle="normal"
+                     android:textColor="#000"
+                     android:textSize="15dp"
+                     />
+             </LinearLayout>
+        --> </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 

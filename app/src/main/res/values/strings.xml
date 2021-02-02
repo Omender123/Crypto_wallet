@@ -136,7 +136,7 @@
     <string name="light">Light Mode</string>
     <string name="dark">Dark Mode</string>
     <string name="payout_text1">Enter Email OTP</string>
-    <string name="payout_text2">Enter Gmail OTP</string>
+    <string name="payout_text2">Enter Google Token </string>
     <string name="knwoledge_Text_heading">This sd dfask msadj msad mads poad wdt</string>
     <string name="knowlege_Description_Demo">Hello I am Demo Text that show thew implementation of the layout.Now Its show the the Demo of this layout</string>
     <string name="add_ticket">Add Ticket</string>
@@ -162,4 +162,5 @@
     <string name="passcode_detail">Unlock Crypto Wallet</string>
     <string name="transaction_text">No Transaction History</string>
     <string name="ticket_text">No Old Ticket History</string>
+    <string name="add_currency">Add Currency</string>
 </resources>

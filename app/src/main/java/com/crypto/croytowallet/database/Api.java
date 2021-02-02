@@ -9,8 +9,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 
-public interface
-Api {
+public interface Api {
 
     @FormUrlEncoded
     @POST("user/register")
@@ -82,7 +81,6 @@ Api {
     );
 
     @FormUrlEncoded
-
     @POST("transaction/peerToPeer")
     Call<ResponseBody>P2P(
             @Header("Authorization")String token,
@@ -91,4 +89,19 @@ Api {
             @Field("toUserId") String userId,
             @Field("toUsername") String username
     );
+
+    @FormUrlEncoded
+    @POST("transaction/transfer")
+    Call<ResponseBody>coinTransfer(
+            @Header("Authorization")String Authtoken,
+            @Field("cryptoCurrency") String crptoCurency,
+            @Field("deliveryRate") String deliveryRate,
+            @Field("token") String token,
+            @Field("otp") String otp,
+            @Field("cryptoAmt") String amount,
+            @Field("transactionPin") String transactionPin,
+          /*  @Field("userAddress") String userAddress,*/
+            @Field("receiverAddress") String receiverAddress
+    );
+
 }

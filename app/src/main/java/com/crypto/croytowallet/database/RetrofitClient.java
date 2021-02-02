@@ -17,14 +17,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
     private static final String BASE_URL="https://api.imx.global/api/";
+   // private static final String BASE_URL="http://13.233.136.56:8080/api/";
     private static RetrofitClient mInstance;
     private Retrofit retrofit;
     private Context context;
 
 
-    UserData userData = SharedPrefManager.getInstance(context).getUser();
-
-     String token = userData.getToken();
 
     public RetrofitClient() {
         retrofit=new Retrofit.Builder()

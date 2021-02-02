@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,11 +26,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.crypto.croytowallet.Activity.Add_Currency;
 import com.crypto.croytowallet.Activity.Graph_layout;
 import com.crypto.croytowallet.Activity.WalletBalance;
 import com.crypto.croytowallet.Activity.WalletReceive;
 import com.crypto.croytowallet.Activity.WalletScan;
 import com.crypto.croytowallet.Adapter.Crypto_currencyInfo;
+import com.crypto.croytowallet.ImtSmart.ImtSmartGraphLayout;
 import com.crypto.croytowallet.Interface.CryptoClickListner;
 import com.crypto.croytowallet.Model.CrptoInfoModel;
 import com.crypto.croytowallet.Payment.Complate_payment;
@@ -63,6 +66,8 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
     LinearLayout lytscan,lytPay,lytWalletBalance,lytaddMoney;
     SharedPreferences sharedPreferences;
     TextView textView,textView1;
+    CardView imtsmart;
+    TextView add_currency;
     public Deshboard() {
         // Required empty public constructor
     }
@@ -79,6 +84,8 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
         lytPay=view.findViewById(R.id.lytPay);
         lytWalletBalance=view.findViewById(R.id.lytwallet);
         lytaddMoney=view.findViewById(R.id.lytaddMoney);
+        imtsmart = view.findViewById(R.id.ImtSmart);
+        add_currency = view.findViewById(R.id.Add_more_Currency);
         lytscan.setOnClickListener(this);
         lytPay.setOnClickListener(this);
         lytWalletBalance.setOnClickListener(this);
@@ -95,7 +102,24 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
         CryptoInfoRecyclerView();
      checkBalance();
 
-    return view;
+        imtsmart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ImtSmartGraphLayout.class);
+              
+                startActivity(intent);
+            }
+        });
+
+        add_currency.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), Add_Currency.class));
+                getActivity().finish();
+            }
+        });
+
+        return view;
     }
 
     public void CryptoInfoRecyclerView(){
@@ -171,6 +195,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
              try {
                  JSONObject object=new JSONObject(response);
                 int   checkBalance=object.getInt("airDrop");
+
 
 
                 textView.setText(checkBalance+".00");

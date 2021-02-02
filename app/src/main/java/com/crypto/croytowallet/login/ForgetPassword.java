@@ -132,19 +132,7 @@ public class ForgetPassword extends AppCompatActivity {
                             .setDuration(Snacky.LENGTH_SHORT)
                             .success()
                             .show();*/
-/*
-                    Snackbar snackbar = Snackbar.make(view,"",Snackbar.LENGTH_SHORT);
-                    snackbar.show();
-
-                    Snackbar snackbar;
-                    snackbar = Snackbar.make(view, "Otp send in your register Email", Snackbar.LENGTH_SHORT);
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(getResources().getColor(R.color.green));
-                    TextView textView = (TextView) snackBarView.findViewById(com.google.android.material.R.id.snackbar_text);
-                    textView.setTextColor(getResources().getColor(R.color.white));
-                    snackbar.show();
- */
-                    Intent intent= new Intent(getApplicationContext(), OTP_Activity.class);
+                Intent intent= new Intent(getApplicationContext(), OTP_Activity.class);
                     intent.putExtra("username",usernames);
                     startActivity(intent);
                     finish();
