@@ -127,7 +127,7 @@
             android:gravity="center"
             android:layout_toStartOf="@+id/receive_coin"
             android:layout_toEndOf="@+id/send_coin">
-            <TextView
+          <!--  <TextView
                 android:id="@+id/sync"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -136,7 +136,7 @@
                 android:fontFamily="@font/montserrat"
                 android:textColor="@color/white"
                 android:textSize="15dp" />
-
+-->
             <TextView
                 android:id="@+id/increaseRate"
                 android:layout_width="wrap_content"

@@ -76,7 +76,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         coinsymbols= findViewById(R.id.coinsymbols);
         coinprice= findViewById(R.id.coinPrice);
         circleImageView = findViewById(R.id.coinImage);
-         sync = findViewById(R.id.sync);
+        // sync = findViewById(R.id.sync);
         increaseRate  =findViewById(R.id.increaseRate);
         null1  = findViewById(R.id.null1);
 
@@ -161,7 +161,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         price.setText("$ "+price1);
         coinname.setText(coinName);
         coinsymbols.setText("("+symbol+")");
-        sync.setText(symbol+" Price");
+     //   sync.setText(symbol+" Price");
         increaseRate.setText(change);
         increaseRate.setTextColor(change.contains("-")?
                 getApplicationContext().getResources().getColor(R.color.red): getApplicationContext().getResources().getColor(R.color.green)  );
