@@ -1,418 +1,494 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".ImtSmart.ImtSmartGraphLayout"
-android:background="@color/background">
-<com.github.mikephil.charting.charts.LineChart
-    android:id="@+id/cubiclinechart"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="300dp"
-    android:layout_alignParentStart="true"
-    android:layout_alignParentTop="true"
-    android:layout_alignParentEnd="true"
-    android:layout_marginTop="0dp"
-    android:layout_marginEnd="0dp" />
+    android:layout_height="match_parent"
+    tools:context=".ImtSmart.ImtSmartGraphLayout"
+    android:background="@color/background">
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentStart="true"
-    android:layout_alignParentEnd="true"
-    android:layout_marginStart="0dp"
-    android:layout_marginEnd="0dp">
 
-    <ImageView
-        android:id="@+id/back"
-        style="bold"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/real"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_baseline_arrow_back_24"
-        app:tint="#000" />
-
-    <ImageView
-        android:id="@+id/graphcoinImage"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginTop="5dp"
-        android:src="@mipmap/imt"
-        />
-    <TextView
-        android:id="@+id/text_bitcoin"
-        android:layout_width="match_parent"
-        android:layout_below="@+id/graphcoinImage"
-        android:layout_height="20dp"
-        android:gravity="center"
-        android:text="ImSmart(IMT)"
-        android:textAlignment="center"
-        android:textSize="15dp"
-        />
-
-    <ImageView
-        android:id="@+id/receive_coin"
-        android:layout_width="70dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="-10dp"
-        android:layout_below="@+id/text_bitcoin"
-        android:layout_alignParentEnd="true"
-        android:scaleType="fitXY"
-        android:src="@mipmap/right_icon_arrow" />
-
-
-    <ImageView
-        android:id="@+id/send_coin"
-        android:layout_width="70dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="-10dp"
-        android:layout_below="@id/text_bitcoin"
-        android:scaleType="fitXY"
-        android:src="@mipmap/left_icon_arrow" />
-
-
-    <TextView
-        android:id="@+id/time_bitcoin"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_below="@id/text_bitcoin"
-        android:layout_marginTop="-5dp"
-        android:textStyle="bold"
         android:layout_alignParentStart="true"
+        android:background="@color/purple_500"
+        android:layout_alignParentEnd="true"
         android:layout_marginStart="0dp"
-        android:text="$2.00"
-        android:fontFamily="@font/montserrat"
-        android:textAlignment="center"
-        android:textColor="#000"
-        android:textSize="25dp" />
-    <TextView
+        android:layout_marginEnd="0dp"
+        >
+
+        <ImageView
+            android:id="@+id/back"
+            style="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            app:tint="#000" />
+
+        <LinearLayout
+            android:id="@+id/linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/back"
+            android:layout_alignParentEnd="true"
+            >
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/coinImage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@mipmap/imt"
+                android:layout_marginRight="30dp"/>
+        </LinearLayout>
+        <!-- <ImageView
+             android:id="@+id/graphcoinImage"
+             android:layout_width="30dp"
+             android:layout_height="30dp"
+
+             android:layout_marginTop="5dp"
+             android:layout_marginEnd="0dp"
+
+             android:src="@mipmap/bitcoin_image" />-->
+
+
+        <LinearLayout
+            android:id="@+id/linear1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linear"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/coinName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="imSmart"
+                android:textAlignment="center"
+                android:textSize="15dp"
+                />
+
+            <TextView
+                android:id="@+id/coinsymbols"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linear"
+                android:layout_alignParentRight="true"
+                android:layout_toEndOf="@+id/text_bitcoin"
+                android:gravity="center"
+                android:text="(IMT)"
+                android:textAlignment="center"
+                android:textSize="15dp"
+                android:textAllCaps="true"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/receive_coin"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/linear1"
+            android:layout_alignParentEnd="true"
+            android:scaleType="fitXY"
+            android:src="@mipmap/right_icon_arrow" />
+
+
+        <ImageView
+            android:id="@+id/send_coin"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/linear1"
+            android:scaleType="fitXY"
+            android:src="@mipmap/left_icon_arrow" />
+
+        <TextView
+            android:id="@+id/coinPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/linear1"
+            android:layout_marginTop="3dp"
+            android:layout_toStartOf="@+id/receive_coin"
+            android:layout_toEndOf="@+id/send_coin"
+            android:fontFamily="@font/montserrat"
+            android:textAlignment="center"
+            android:textColor="#000"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/coinPrice"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_toStartOf="@+id/receive_coin"
+            android:layout_toEndOf="@+id/send_coin">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="IMT Price "
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:fontFamily="@font/montserrat"
+                android:textColor="@color/white"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/increaseRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="+0.01"
+                android:maxLength="5"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/green"
+                android:textSize="13dp" />
+            <TextView
+                android:id="@+id/null1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="%"
+                android:drawablePadding="1dp"
+                android:textSize="13dp"
+                android:textColor="@color/green"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:layout_marginRight="10dp"/>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/cubiclinechart"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:textAlignment="center"
-        android:layout_below="@id/time_bitcoin"
-        android:text="10:00 AM"
-        android:textStyle="bold"
+        android:layout_height="200dp"
+        android:layout_below="@id/real"
+        android:layout_marginLeft="-10dp"
+        android:layout_marginRight="-10dp"
+        android:layout_alignParentStart="true"
         />
-</RelativeLayout>
 
-
-
-<LinearLayout
-    android:id="@+id/label_chart"
-    android:layout_below="@id/cubiclinechart"
-    android:background="#FFFFFF"
-    android:layout_width="match_parent"
-    android:layout_height="50dp">
     <LinearLayout
-        android:id="@+id/label_chartB"
-        android:layout_below="@id/chart"
+        android:id="@+id/label_chart"
+        android:layout_below="@id/cubiclinechart"
         android:background="#FFFFFF"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="40dp"
-        android:gravity="center"
-        android:weightSum="6">
+        android:layout_height="50dp">
+        <LinearLayout
+            android:id="@+id/label_chartB"
+            android:layout_below="@id/chart"
+            android:background="#FFFFFF"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:weightSum="6">
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textColor="#000"
-                android:layout_gravity="center"
-                android:textStyle="bold"
-                android:text="24H"/>
-        </LinearLayout>
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:text="24H"/>
+            </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textColor="#000"
-                android:layout_gravity="center"
-                android:textStyle="bold"
-                android:text="7D"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:text="7D"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textColor="#000"
-                android:layout_gravity="center"
-                android:textStyle="bold"
-                android:text="1M"/>
-        </LinearLayout>
-        <LinearLayout
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:text="1M"/>
+            </LinearLayout>
+            <LinearLayout
 
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textColor="#000"
-                android:layout_gravity="center"
-                android:textStyle="bold"
-                android:text="3M"/>
-        </LinearLayout>
-        <LinearLayout
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:text="3M"/>
+            </LinearLayout>
+            <LinearLayout
 
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textColor="#000"
-                android:layout_gravity="center"
-                android:textStyle="bold"
-                android:text="6M"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#000"
-                android:layout_gravity="center"
-                android:textStyle="bold"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:text="6M"/>
+            </LinearLayout>
+            <LinearLayout
 
-                android:text="1Y"/>
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:text="1Y"/>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
-<LinearLayout
-    android:id="@+id/button_layout"
-    android:layout_width="match_parent"
-    android:layout_height="80dp"
-    android:background="@color/white"
-    android:weightSum="2"
-    android:layout_below="@id/label_chart"
-    android:orientation="horizontal">
     <LinearLayout
+        android:id="@+id/button_layout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/white"
+        android:weightSum="2"
+        android:layout_below="@id/label_chart"
+        android:orientation="horizontal">
+        <LinearLayout
 
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/price_graph"
-            android:layout_width="150dp"
-            android:layout_height="35dp"
-
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/custom_graph_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
-            android:text="Price"
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cubiclinechart" />
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/price_graph"
+                android:layout_width="150dp"
+                android:layout_height="35dp"
 
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/custom_graph_button"
+                android:gravity="center"
+                android:text="Price"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cubiclinechart" />
+
+        </LinearLayout>
+
+        <LinearLayout
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/balance_graph"
+                android:layout_width="150dp"
+                android:layout_height="35dp"
+
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/custom_graph_button"
+                android:gravity="center"
+                android:text="Balance"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cubiclinechart" />
+
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/balance_graph"
-            android:layout_width="150dp"
-            android:layout_height="35dp"
-
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/custom_graph_button"
-            android:gravity="center"
-            android:text="Balance"
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cubiclinechart" />
-
-    </LinearLayout>
-</LinearLayout>
-
-<LinearLayout
-    android:id="@+id/overview"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="#EFEFEF"
-    app:layout_constraintBottom_toBottomOf="parent"
-    android:layout_below="@id/button_layout"
-    app:layout_constraintVertical_bias="0.031"
-    tools:layout_editor_absoluteX="5dp">
-
-    <TextView
+        android:id="@+id/overview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:orientation="vertical"
+        android:background="#EFEFEF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_below="@id/button_layout"
+        app:layout_constraintVertical_bias="0.031"
+        tools:layout_editor_absoluteX="5dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="12dp"
+            android:text="Overview"
+
+            android:textAlignment="textStart"
+            android:textColor="#9a9a9a"
+            android:textSize="15dp"
+            android:textStyle="bold"
+
+            tools:layout_editor_absoluteX="5dp" />
+    </LinearLayout>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardviewvali"
+        app:cardCornerRadius="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="12dp"
-        android:text="Overview"
+        android:layout_marginRight="10dp"
+        android:layout_below="@id/overview"
+        >
+        <LinearLayout
 
-        android:textAlignment="textStart"
-        android:textColor="#9a9a9a"
-        android:textSize="15dp"
-        android:textStyle="bold"
-
-        tools:layout_editor_absoluteX="5dp" />
-</LinearLayout>
-<androidx.cardview.widget.CardView
-    android:id="@+id/cardviewvali"
-    app:cardCornerRadius="5dp"
-    android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:layout_below="@id/overview"
-    >
-    <LinearLayout
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="3"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
 
 
-        <!--  <LinearLayout
-
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:gravity="center"
-             android:layout_gravity="center"
-
-             android:layout_weight="2"
-             android:orientation="vertical">
             <LinearLayout
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_weight="2"
-                 android:gravity="center"
 
-                 android:orientation="vertical">
-                 <TextView
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:background="#FFF"
-                     android:text="$2.00"
-                     android:textSize="25dp"
-                     android:fontFamily="@font/montserrat"
-                     android:layout_marginTop="5dp"
-                     android:textColor="#000"
-                     android:textStyle="bold"
-                     />
-                 <TextView
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:text="Price"
-                     android:layout_marginTop="-5dp"
-                     android:textAlignment="center"
-                     android:textStyle="normal"
-                     android:textColor="#000"
-                     android:textSize="15dp"
-                     />
-             </LinearLayout>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
 
-         </LinearLayout>
-         <LinearLayout
-             android:layout_width="0dp"
-             android:layout_height="wrap_content"
-             android:layout_weight="1"
-             android:layout_gravity="center"
-             android:layout_marginLeft="50dp"
+                android:layout_weight="2"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center"
 
-             android:gravity="center"
-             android:orientation="horizontal">
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#FFF"
+                        android:textSize="25dp"
+                        android:fontFamily="@font/montserrat"
+                        android:layout_marginTop="5dp"
+                        android:maxLength="6"
+                        android:textColor="#000"
+                        android:textStyle="bold"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Price"
+                        android:layout_marginTop="-5dp"
+                        android:textAlignment="center"
+                        android:textStyle="normal"
+                        android:textColor="#000"
+                        android:textSize="15dp"
+                        />
+                </LinearLayout>
 
-             <View
-                 android:layout_width="2dp"
-                 android:layout_height="70dp"
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:layout_marginLeft="50dp"
 
-                 android:background="#c3c3c3"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-                 />
-         </LinearLayout>
-         <LinearLayout
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_weight="2"
-             android:gravity="center"
-             android:layout_marginLeft="50dp"
-             android:layout_gravity="center"
-             android:orientation="vertical">
-             <TextView
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:background="#FFF"
-                 android:text="$2.00"
-                 android:textSize="25dp"
-                 android:fontFamily="@font/montserrat"
-                 android:layout_marginTop="5dp"
-                 android:textAlignment="center"
-                 android:textColor="#000"
-                 android:textStyle="bold"
-                 />
-             <TextView
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_marginTop="-5dp"
-                 android:text="Balance"
-                 android:textAlignment="center"
-                 android:textStyle="normal"
-                 android:textColor="#000"
-                 android:textSize="15dp"
-                 />
-         </LinearLayout>
-     --></LinearLayout>
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="70dp"
 
-</androidx.cardview.widget.CardView>
+                    android:background="#c3c3c3"
+
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:layout_marginLeft="50dp"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#FFF"
+
+                    android:textSize="25dp"
+                    android:fontFamily="@font/montserrat"
+                    android:layout_marginTop="5dp"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textStyle="bold"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-5dp"
+                    android:text="Balance"
+                    android:textAlignment="center"
+                    android:textStyle="normal"
+                    android:textColor="#000"
+                    android:textSize="15dp"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
 
-<TextView
-    android:id="@+id/swap_btc_btn"
-    android:layout_width="match_parent"
-    android:text="Swap BTC"
-    android:layout_height="40dp"
-    android:layout_marginTop="40dp"
-    android:gravity="center"
-    android:layout_below="@id/cardviewvali"
-    android:textSize="15dp"
-    android:layout_marginLeft="50dp"
-    android:layout_marginRight="50dp"
-    android:layout_gravity="center"
-    android:background="@drawable/button_border" />
+    <TextView
+        android:id="@+id/swap_btc_btn"
+        android:layout_width="match_parent"
+        android:text="Swap BTC"
+        android:layout_height="40dp"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:layout_below="@id/cardviewvali"
+        android:textSize="15dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_gravity="center"
+        android:background="@drawable/button_border" />
 </RelativeLayout>

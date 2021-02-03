@@ -52,5 +52,8 @@ public class URLs {
  //GET ALL COIN
  public static final String URL_GET_COIN= ROOT_URL + "currency";
 
+ //GET ALL COIN
+ public static final String URL_GET_COIN_IMT= ROOT_URL + "currency/IMT";
+
 
 }

@@ -16,6 +16,9 @@ import com.crypto.croytowallet.CoinTransfer.CoinScan;
 import com.crypto.croytowallet.CoinTransfer.Received_Coin;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
+import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.UserData;
+import com.crypto.croytowallet.database.RetrofitClient;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -24,13 +27,28 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.Utils;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
+
+import de.mateware.snacky.Snacky;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnClickListener {
     ImageView back,received,send;
+    TextView price,balance,coinprice,increaseRate,null1;
+    KProgressHUD progressDialog;
+    UserData userData;
     private LineChart chart;
     TextView swap;
+    String balance1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,12 +57,22 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
         swap =findViewById(R.id.swap_btc_btn);
         back =findViewById(R.id.back);
         received =findViewById(R.id.receive_coin);
+        price = findViewById(R.id.price);
+        balance =findViewById(R.id.balance);
+        coinprice= findViewById(R.id.coinPrice);
+
+        increaseRate  =findViewById(R.id.increaseRate);
+         null1  = findViewById(R.id.null1);
+
+
 
         send=findViewById(R.id.send_coin);
         swap.setOnClickListener(this);
         back.setOnClickListener(this);
         received.setOnClickListener(this);
         send.setOnClickListener(this);
+
+        userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
 
         chart.setDragEnabled(true);
@@ -97,7 +125,27 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
         set1.setLineWidth(2f);
         set1.setColor(Color.WHITE);
         set1.setDrawFilled(true);
-        chart.setBackgroundColor(Color.rgb(243, 193, 24));
+        chart.setBackgroundColor(getResources().getColor(R.color.purple_500));
+
+        Bundle bundle = getIntent().getExtras();
+        String price1 = bundle.getString("price");
+        String increaseRate1 = bundle.getString("chanage");
+
+        increaseRate.setText(increaseRate1);
+        price.setText("$"+price1);
+
+        increaseRate.setTextColor(increaseRate1.contains("-")?
+                getApplicationContext().getResources().getColor(R.color.red): getApplicationContext().getResources().getColor(R.color.green)  );
+
+        null1.setTextColor(increaseRate1.contains("-")?
+                getApplicationContext().getResources().getColor(R.color.red): getApplicationContext().getResources().getColor(R.color.green)  );
+
+        if(increaseRate1.contains("-")){
+          increaseRate.setText(increaseRate1);
+        }else{
+            increaseRate.setText("+"+increaseRate1);
+        }
+        getBalance();
 
     }
 
@@ -125,5 +173,99 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
         super.onBackPressed();
 
         onSaveInstanceState(new Bundle());
+    }
+
+    public void getBalance(){
+
+        String token = userData.getToken();
+
+        progressDialog = KProgressHUD.create(ImtSmartGraphLayout.this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Please wait.....")
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
+
+        showpDialog();
+
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().Balance(token,"imt");
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String s =null;
+                hidepDialog();
+
+                if (response.code()==200){
+                    try {
+                        s=response.body().string();
+
+                        JSONObject jsonObject = new JSONObject(s);
+                        balance1 = jsonObject.getString("balance");
+
+                        balance.setText("$ "+balance1);
+                        coinprice.setText(balance1);
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if(response.code()==400){
+                    try {
+                        s=response.errorBody().string();
+                        JSONObject jsonObject1=new JSONObject(s);
+                        String error =jsonObject1.getString("error");
+
+
+                        Snacky.builder()
+                                .setActivity(ImtSmartGraphLayout.this)
+                                .setText(error)
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
+
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if(response.code()==401){
+
+                    Snacky.builder()
+                            .setActivity(ImtSmartGraphLayout.this)
+                            .setText("unAuthorization Request")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                hidepDialog();
+                Snacky.builder()
+                        .setActivity(ImtSmartGraphLayout.this)
+                        .setText("Internet Problem ")
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+            }
+        });
+    }
+
+    private void showpDialog() {
+        if (!progressDialog.isShowing())
+            progressDialog.show();
+    }
+
+    private void hidepDialog() {
+        if (progressDialog.isShowing())
+            progressDialog.dismiss();
     }
 }

@@ -44,6 +44,8 @@ import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.TransactionHistory.Full_Transaction_History;
 import com.crypto.croytowallet.TransactionHistory.Transaction_history;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
+import com.crypto.croytowallet.login.Login;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -67,7 +69,9 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
     SharedPreferences sharedPreferences;
     TextView textView,textView1;
     CardView imtsmart;
-    TextView add_currency;
+    TextView add_currency,increaseRate,null1,imtPrice;
+    String imtPrices,increaseRate1;
+    KProgressHUD progressDialog;
     public Deshboard() {
         // Required empty public constructor
     }
@@ -95,6 +99,9 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
 
         textView  =view.findViewById(R.id.balance);
         textView1  =view.findViewById(R.id.balance1);
+        increaseRate  =view.findViewById(R.id.increaseRate);
+        null1  =view.findViewById(R.id.null1);
+        imtPrice  =view.findViewById(R.id.coinrate);
 
         sharedPreferences=getActivity().getSharedPreferences("symbols", Context.MODE_PRIVATE);
 
@@ -106,7 +113,9 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ImtSmartGraphLayout.class);
-              
+                intent.putExtra("price",imtPrices);
+                intent.putExtra("chanage",increaseRate1);
+
                 startActivity(intent);
             }
         });
@@ -118,7 +127,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
                 getActivity().finish();
             }
         });
-
+        getImtDetails();
         return view;
     }
 
@@ -303,11 +312,86 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
         startActivity(intent);
 
         String result=crptoInfoModels.get(position).getSymbol();
+        String price=crptoInfoModels.get(position).getCurrentPrice();
+        String image=crptoInfoModels.get(position).getImage();
+        String coinName=crptoInfoModels.get(position).getName();
+        String change=crptoInfoModels.get(position).getCurrencyRate();
+
         SharedPreferences.Editor editor=sharedPreferences.edit();
         editor.putString("symbol1",result);
         editor.putInt("position",position);
+        editor.putString("price",price);
+        editor.putString("image",image);
+        editor.putString("coinName",coinName);
+        editor.putString("change",change);
+
         editor.commit();
 
+    }
+
+
+    public  void getImtDetails(){
+        progressDialog = KProgressHUD.create(getContext())
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Please wait.....")
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
+
+        showpDialog();
+        StringRequest stringRequest=new StringRequest(Request.Method.GET, URLs.URL_GET_COIN_IMT, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                hidepDialog();
+
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    for (int i=0; i<=jsonArray.length();i++){
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        imtPrices =object.getString("price");
+                        increaseRate1=object.getString("percent_change_24h");
+
+                      imtPrice.setText("$"+imtPrices);
+                      increaseRate.setText(increaseRate1);
+
+                      increaseRate.setTextColor(increaseRate1.contains("-")?
+                                getContext().getResources().getColor(R.color.red): getContext().getResources().getColor(R.color.green)  );
+
+                        null1.setTextColor(increaseRate1.contains("-")?
+                                getContext().getResources().getColor(R.color.red): getContext().getResources().getColor(R.color.green)  );
+                        if(increaseRate1.contains("-")){
+                            increaseRate.setText(increaseRate1);
+                        }else{
+                            increaseRate.setText("+"+increaseRate1);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                // Toast.makeText(getContext(), ""+response, Toast.LENGTH_SHORT).show();
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                hidepDialog();
+               // Toast.makeText(getContext(), ""+error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+
+    }
+
+    private void showpDialog() {
+        if (!progressDialog.isShowing())
+            progressDialog.show();
+    }
+
+    private void hidepDialog() {
+        if (progressDialog.isShowing())
+            progressDialog.dismiss();
     }
 }
 

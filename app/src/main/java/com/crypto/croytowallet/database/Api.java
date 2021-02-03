@@ -104,4 +104,10 @@ public interface Api {
             @Field("receiverAddress") String receiverAddress
     );
 
+    @FormUrlEncoded
+    @POST("user/balance")
+    Call<ResponseBody>Balance(
+            @Header("Authorization")String Authtoken,
+            @Field("type") String type
+    );
 }
