@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.crypto.croytowallet.Activity.Graph_layout;
 import com.crypto.croytowallet.CoinTransfer.CoinScan;
@@ -48,7 +49,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
     UserData userData;
     private LineChart chart;
     TextView swap;
-    String balance1;
+    String balance1,  price1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,7 +129,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
         chart.setBackgroundColor(getResources().getColor(R.color.purple_500));
 
         Bundle bundle = getIntent().getExtras();
-        String price1 = bundle.getString("price");
+        price1 = bundle.getString("price");
         String increaseRate1 = bundle.getString("chanage");
 
         increaseRate.setText(increaseRate1);
@@ -204,8 +205,14 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                         JSONObject jsonObject = new JSONObject(s);
                         balance1 = jsonObject.getString("balance");
 
-                        balance.setText("$ "+balance1);
-                        coinprice.setText(balance1);
+
+                        double balance2 = Double.parseDouble(balance1);
+                        double price = Double.parseDouble(price1);
+
+                        double total = balance2*price;
+                      //  Toast.makeText(ImtSmartGraphLayout.this, ""+total, Toast.LENGTH_SHORT).show();
+                        balance.setText("$ "+total);
+                        coinprice.setText(""+total);
 
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();

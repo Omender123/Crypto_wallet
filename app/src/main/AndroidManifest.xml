@@ -16,12 +16,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CroytoWallet"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ImtSmart.ImtSmartVerification"
+        <activity android:name=".Activity.SelectCurrency"
             android:theme="@style/Theme.CroytoWallet.NoActionBar"></activity>
-        <activity android:name=".ImtSmart.ImtSmartEnterAmout"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar"/>
-        <activity android:name=".ImtSmart.ImtSmartCoinScan"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar"/>
+        <activity
+            android:name=".ImtSmart.ImSmartSendManual"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+        <activity
+            android:name=".CoinTransfer.EnterCoinAddressManual"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+        <activity
+            android:name=".ImtSmart.ImtSmartVerification"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+        <activity
+            android:name=".ImtSmart.ImtSmartEnterAmout"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+        <activity
+            android:name=".ImtSmart.ImtSmartCoinScan"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
         <activity
             android:name=".ImtSmart.ImtSmartRecevied"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />
@@ -62,9 +73,6 @@
             android:name=".Activity.StoryView"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />
         <activity
-            android:name=".Activity.DarkMode"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
-        <activity
             android:name=".Activity.ManualEnterUserName"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />
         <activity
@@ -94,7 +102,8 @@
         <activity
             android:name=".Activity.Graph_layout"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />
-        <activity android:name=".Activity.Add_Currency"
+        <activity
+            android:name=".Activity.Add_Currency"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />
         <activity
             android:name=".Security.EnterPasscode"

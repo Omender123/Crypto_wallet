@@ -80,10 +80,10 @@ public class Pay_Coin extends AppCompatActivity {
 
         next=findViewById(R.id.next);
 
-        Bundle bundle = getIntent().getExtras();
+       /* Bundle bundle = getIntent().getExtras();
        // position=bundle.getInt("position");
         result=bundle.getString("result");
-
+*/
         preferences=getApplicationContext().getSharedPreferences("symbols", Context.MODE_PRIVATE);
         cryptoCurrency = preferences.getString("symbol1","");
 
@@ -105,7 +105,7 @@ public class Pay_Coin extends AppCompatActivity {
                 }else {
 
                     Intent intent =new Intent(getApplicationContext(),Payout_verification.class);
-                   intent.putExtra("result1",result);
+                 //  intent.putExtra("result1",result);
                     intent.putExtra("amount1",Amount);
 
                    startActivity(intent);
@@ -189,13 +189,6 @@ public class Pay_Coin extends AppCompatActivity {
                        Toast.makeText(Pay_Coin.this, "Your Email 2FA OFF", Toast.LENGTH_SHORT).show();
                     }
 
-                    if (google2fa1.equals("true")){
-                        Toast.makeText(Pay_Coin.this, "Your Google 2FA ON", Toast.LENGTH_SHORT).show();
-
-                    }else {
-                        Toast.makeText(Pay_Coin.this, "Your Email 2FA OFF", Toast.LENGTH_SHORT).show();
-                    }
-                 //   Toast.makeText(Pay_Coin.this, ""+email2fa1+google2fa1, Toast.LENGTH_SHORT).show();
 
                 } catch (JSONException e) {
                     e.printStackTrace();

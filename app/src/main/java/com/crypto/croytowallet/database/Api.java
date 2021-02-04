@@ -110,4 +110,6 @@ public interface Api {
             @Header("Authorization")String Authtoken,
             @Field("type") String type
     );
+
+
 }

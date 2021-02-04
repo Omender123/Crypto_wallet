@@ -1,44 +1,22 @@
 package com.crypto.croytowallet.Model;
 
 public class CrptoInfoModel {
-    String id,Name,Image,CurrentPrice,currencyRate,high_price,low_price,symbol;
+    String id,Name,Image,currencyRate,high_price,low_price,symbol;
 
-    public CrptoInfoModel(String id, String name, String image, String currentPrice, String currencyRate,String high_price,String low_price,String symbol) {
+    int CurrentPrice;
+
+    public CrptoInfoModel(String id, String name, String image, String currencyRate, String high_price, String low_price, String symbol, int currentPrice) {
         this.id = id;
-        this.Name = name;
-        this.Image = image;
-        this.CurrentPrice = currentPrice;
+        Name = name;
+        Image = image;
         this.currencyRate = currencyRate;
-        this.high_price=high_price;
-        this.low_price=low_price;
-        this.symbol=symbol;
+        this.high_price = high_price;
+        this.low_price = low_price;
+        this.symbol = symbol;
+        CurrentPrice = currentPrice;
     }
 
     public CrptoInfoModel() {
-    }
-
-    public String getSymbol() {
-        return symbol;
-    }
-
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
-    }
-
-    public String getHigh_price() {
-        return high_price;
-    }
-
-    public void setHigh_price(String high_price) {
-        this.high_price = high_price;
-    }
-
-    public String getLow_price() {
-        return low_price;
-    }
-
-    public void setLow_price(String low_price) {
-        this.low_price = low_price;
     }
 
     public String getId() {
@@ -65,19 +43,43 @@ public class CrptoInfoModel {
         Image = image;
     }
 
-    public String getCurrentPrice() {
-        return CurrentPrice;
-    }
-
-    public void setCurrentPrice(String currentPrice) {
-        CurrentPrice = currentPrice;
-    }
-
     public String getCurrencyRate() {
         return currencyRate;
     }
 
     public void setCurrencyRate(String currencyRate) {
         this.currencyRate = currencyRate;
+    }
+
+    public String getHigh_price() {
+        return high_price;
+    }
+
+    public void setHigh_price(String high_price) {
+        this.high_price = high_price;
+    }
+
+    public String getLow_price() {
+        return low_price;
+    }
+
+    public void setLow_price(String low_price) {
+        this.low_price = low_price;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
+
+    public int getCurrentPrice() {
+        return CurrentPrice;
+    }
+
+    public void setCurrentPrice(int currentPrice) {
+        CurrentPrice = currentPrice;
     }
 }

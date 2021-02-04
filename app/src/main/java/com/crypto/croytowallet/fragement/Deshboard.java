@@ -132,10 +132,21 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
     }
 
     public void CryptoInfoRecyclerView(){
+       /* progressDialog = KProgressHUD.create(getContext())
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Please wait.....")
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
+
+        showpDialog();
+*/
         String url="https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin%2Cethereum%2Ctether%2Cripple%2Clitecoin%2Cusd-coin&order=market_cap_desc&sparkline=false&price_change_percentage=24h";
         StringRequest stringRequest=new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+             //   hidepDialog();
                 try {
                     JSONArray jsonArray=new JSONArray(response);
                     for (int i=0;i<=jsonArray.length();i++){
@@ -146,7 +157,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
                         String image=jsonObject1.getString("image");
                         String name=jsonObject1.getString("name");
                         String rate=jsonObject1.getString("price_change_percentage_24h");
-                        String price=jsonObject1.getString("current_price");
+                        int price=jsonObject1.getInt("current_price");
                         String high_price=jsonObject1.getString("high_24h");
                         String low_price=jsonObject1.getString("low_24h");
 
@@ -180,7 +191,8 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-              Toast.makeText(getContext(), ""+error.toString(), Toast.LENGTH_SHORT).show();
+               // hidepDialog();
+             // Toast.makeText(getContext(), ""+error.toString(), Toast.LENGTH_SHORT).show();
             }
         });
         requestQueue = Volley.newRequestQueue(getContext());
@@ -196,10 +208,13 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
 
 //     balance=getView().findViewById(R.id.balance);
 
+
+
      StringRequest stringRequest =new StringRequest(Request.Method.GET, url1, new Response.Listener<String>() {
          @Override
          public void onResponse(String response) {
           //   Toast.makeText(getContext(), ""+response, Toast.LENGTH_SHORT).show();
+
 
              try {
                  JSONObject object=new JSONObject(response);
@@ -219,6 +234,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
      }, new Response.ErrorListener() {
          @Override
          public void onErrorResponse(VolleyError error) {
+
 
          }
      }) {
@@ -312,7 +328,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
         startActivity(intent);
 
         String result=crptoInfoModels.get(position).getSymbol();
-        String price=crptoInfoModels.get(position).getCurrentPrice();
+        int price=crptoInfoModels.get(position).getCurrentPrice();
         String image=crptoInfoModels.get(position).getImage();
         String coinName=crptoInfoModels.get(position).getName();
         String change=crptoInfoModels.get(position).getCurrencyRate();
@@ -320,7 +336,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
         SharedPreferences.Editor editor=sharedPreferences.edit();
         editor.putString("symbol1",result);
         editor.putInt("position",position);
-        editor.putString("price",price);
+        editor.putInt("price",price);
         editor.putString("image",image);
         editor.putString("coinName",coinName);
         editor.putString("change",change);
@@ -331,19 +347,11 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
 
 
     public  void getImtDetails(){
-        progressDialog = KProgressHUD.create(getContext())
-                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                .setLabel("Please wait.....")
-                .setCancellable(false)
-                .setAnimationSpeed(2)
-                .setDimAmount(0.5f)
-                .show();
 
-        showpDialog();
-        StringRequest stringRequest=new StringRequest(Request.Method.GET, URLs.URL_GET_COIN_IMT, new Response.Listener<String>() {
+      StringRequest stringRequest=new StringRequest(Request.Method.GET, URLs.URL_GET_COIN_IMT, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                hidepDialog();
+
 
                 try {
                     JSONArray jsonArray = new JSONArray(response);
@@ -357,27 +365,32 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
                       imtPrice.setText("$"+imtPrices);
                       increaseRate.setText(increaseRate1);
 
-                      increaseRate.setTextColor(increaseRate1.contains("-")?
-                                getContext().getResources().getColor(R.color.red): getContext().getResources().getColor(R.color.green)  );
+                     try {
+                         increaseRate.setTextColor(increaseRate1.contains("-")?
+                                 getContext().getResources().getColor(R.color.red): getContext().getResources().getColor(R.color.green)  );
 
-                        null1.setTextColor(increaseRate1.contains("-")?
-                                getContext().getResources().getColor(R.color.red): getContext().getResources().getColor(R.color.green)  );
-                        if(increaseRate1.contains("-")){
-                            increaseRate.setText(increaseRate1);
-                        }else{
-                            increaseRate.setText("+"+increaseRate1);
-                        }
+                         null1.setTextColor(increaseRate1.contains("-")?
+                                 getContext().getResources().getColor(R.color.red): getContext().getResources().getColor(R.color.green)  );
+                         if(increaseRate1.contains("-")){
+                             increaseRate.setText(increaseRate1);
+                         }else{
+                             increaseRate.setText("+"+increaseRate1);
+                         }
+                     }catch (Exception e){
+
+                     }
                     }
                 } catch (JSONException e) {
+
                     e.printStackTrace();
                 }
-                // Toast.makeText(getContext(), ""+response, Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(getContext(), ""+response, Toast.LENGTH_SHORT).show();
             }
 
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                hidepDialog();
+              //  hidepDialog();
                // Toast.makeText(getContext(), ""+error.toString(), Toast.LENGTH_SHORT).show();
             }
         });

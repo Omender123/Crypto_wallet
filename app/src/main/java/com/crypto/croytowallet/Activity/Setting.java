@@ -103,13 +103,14 @@ public class Setting extends AppCompatActivity implements View.OnClickListener {
                         .show();
                 break;
             case R.id.currency:
-                Snacky.builder()
+                startActivity(new Intent(getApplicationContext(),SelectCurrency.class));
+              /*  Snacky.builder()
                         .setActivity(Setting.this)
                         .setText("Coming Up Features")
                         .setTextColor(getResources().getColor(R.color.white))
                         .setDuration(Snacky.LENGTH_SHORT)
                         .success()
-                        .show();
+                        .show();*/
                 break;
 
         }

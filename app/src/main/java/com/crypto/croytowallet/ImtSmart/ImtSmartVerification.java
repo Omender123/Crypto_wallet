@@ -2,7 +2,9 @@ package com.crypto.croytowallet.ImtSmart;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -47,7 +49,7 @@ public class ImtSmartVerification extends AppCompatActivity {
     PinView pinView;
     EditText ed_token,ed_otp;
     ImageView imageView;
-
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,10 +63,17 @@ public class ImtSmartVerification extends AppCompatActivity {
 
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
+
+        sharedPreferences=getSharedPreferences("ImtScan", Context.MODE_PRIVATE);
+
         Bundle bundle = getIntent().getExtras();
         // position=bundle.getInt("position");
-        result=bundle.getString("result2");
+       // result=bundle.getString("result2");
+
+        result =sharedPreferences.getString("Imtaddress","");
         Amount = bundle.getString("amount2");
+
+       // Toast.makeText(this, ""+result, Toast.LENGTH_SHORT).show();
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override

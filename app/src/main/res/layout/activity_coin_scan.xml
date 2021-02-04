@@ -41,18 +41,43 @@
 
     <TextView
         android:id="@+id/resultsOfQr"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/manualEnter"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="16dp"
         android:textAlignment="center"
         android:textColor="#FFEE58"
+        android:layout_marginBottom="10dp"
         android:textSize="18sp"
-        android:textStyle="bold"
+        android:textStyle="bold" />
+
+
+
+    <LinearLayout
+        android:id="@+id/manualEnter"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="50dp"
-        />
+        android:gravity="center"
+        android:background="@drawable/linearborder">
+
+        <TextView
+            android:id="@+id/click"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:padding="8dp"
+            android:onClick="next1"
+            android:background="@drawable/border"
+            android:text="Enter Coin Address"
+            android:drawableLeft="@drawable/ic_baseline_mail_outline_24"
+            android:drawablePadding="10dp"
+            android:drawableTint="@android:color/darker_gray"/>
+    </LinearLayout>
+
 
 </RelativeLayout>

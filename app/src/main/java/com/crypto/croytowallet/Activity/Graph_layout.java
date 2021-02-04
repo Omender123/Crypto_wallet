@@ -54,8 +54,8 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
 
     TextView swap,price,balance,coinname,coinsymbols,coinprice,sync,increaseRate,null1;
     private Exchange exchange;
-    int position;
-    String price1,symbol,balance1,image,coinName,change;
+    int position,balance1,price1;
+    String symbol,image,coinName,change;
     ImageView back,received,send;
     KProgressHUD progressDialog;
     SharedPreferences preferences;
@@ -89,7 +89,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
 
         preferences=getApplicationContext().getSharedPreferences("symbols", Context.MODE_PRIVATE);
         position = preferences.getInt("position", -1);
-        price1 = preferences.getString("price", null);
+        price1 = preferences.getInt("price", -1);
         symbol = preferences.getString("symbol1", null);
         image = preferences.getString("image", null);
         coinName = preferences.getString("coinName", null);
@@ -236,10 +236,13 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                         s=response.body().string();
 
                         JSONObject jsonObject = new JSONObject(s);
-                        balance1 = jsonObject.getString("balance");
+                        balance1 = jsonObject.getInt("balance");
 
-                        balance.setText("$ "+balance1);
-                        coinprice.setText(balance1);
+                      //  int price2 = Integer.parseInt(price1);
+                        Double balance2 = Double.valueOf(balance1*price1);
+
+                        balance.setText("$ "+balance2);
+                        coinprice.setText(""+balance2);
 
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();

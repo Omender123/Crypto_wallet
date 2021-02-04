@@ -25,6 +25,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,9 +64,9 @@ public class MainActivity extends AppCompatActivity {
     TextView username,usergmail;
     Toolbar toolbar;
     KProgressHUD progressDialog;
-    SharedPreferences preferences;
+    SharedPreferences sharedPreferences;
     CircleImageView status_img;
-
+    Switch drawerSwitch;
 
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -126,8 +128,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        sharedPreferences = getSharedPreferences("night",0);
+        Boolean booleanValue = sharedPreferences.getBoolean("night_mode",false);
+        if (booleanValue){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            drawerSwitch.setChecked(true);
 
-        preferences = getSharedPreferences("night",0);
+
+
+        }else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            drawerSwitch.setChecked(false);
+        }
+
+      /*  preferences = getSharedPreferences("night",0);
         Boolean booleanValue = preferences.getBoolean("night_mode",false);
         if (booleanValue){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -137,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         }
-
+*/
         status_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -153,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
         Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_support, getApplicationContext().getTheme());
 
         navController = Navigation.findNavController(this,R.id.main);
-        appBarConfiguration = new AppBarConfiguration.Builder(new int[]{R.id.deshboard,R.id.myWallet,R.id.exchange,R.id.profile,R.id.security,R.id.support,R.id.setting,R.id.pay_history,R.id.dark_mode})
+        appBarConfiguration = new AppBarConfiguration.Builder(new int[]{R.id.deshboard,R.id.myWallet,R.id.exchange,R.id.profile,R.id.security,R.id.support,R.id.setting,R.id.pay_history/*,R.id.dark_mode*/})
                 .setDrawerLayout(drawer)
                 .build();
 
@@ -220,6 +234,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        MenuItem theme = menu.findItem(R.id.dark_mode);
+         drawerSwitch = (Switch) theme.getActionView().findViewById(R.id.drawer_switch);
+        drawerSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    drawerSwitch.setChecked(true);
+                     SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean("night_mode",true);
+                    editor.commit();
+                   // Toast.makeText(MainActivity.this, "Switch turned on", Toast.LENGTH_SHORT).show();
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    drawerSwitch.setChecked(false);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean("night_mode",false);
+                    editor.commit();
+
+                    //Toast.makeText(MainActivity.this, "Switch turned off", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     public void AlertDialogBox(){

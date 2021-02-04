@@ -67,10 +67,15 @@ public class Payout_verification extends AppCompatActivity {
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
         preferences=getApplicationContext().getSharedPreferences("symbols", Context.MODE_PRIVATE);
+        preferences=getSharedPreferences("coinScan", Context.MODE_PRIVATE);
         cryptoCurrency = preferences.getString("symbol1","");
+        result = preferences.getString("address","");
+
+    //    Toast.makeText(this, ""+result, Toast.LENGTH_SHORT).show();
+
         Bundle bundle = getIntent().getExtras();
         // position=bundle.getInt("position");
-        result=bundle.getString("result1");
+       // result=bundle.getString("result1");
         Amount = bundle.getString("amount1");
 
 

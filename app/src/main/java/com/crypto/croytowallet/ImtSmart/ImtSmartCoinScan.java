@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -28,7 +30,7 @@ public class ImtSmartCoinScan extends AppCompatActivity {
     CodeScanner codeScanner;
     CodeScannerView scannView;
     TextView resultData,back;
-
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +38,7 @@ public class ImtSmartCoinScan extends AppCompatActivity {
         scannView = findViewById(R.id.scannerView);
         codeScanner = new CodeScanner(this,scannView);
         resultData = findViewById(R.id.resultsOfQr);
-
+        sharedPreferences=getSharedPreferences("ImtScan", Context.MODE_PRIVATE);
         back=findViewById(R.id.back1);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +59,11 @@ public class ImtSmartCoinScan extends AppCompatActivity {
                         String s= result.getText();
                         Intent intent =  new Intent(ImtSmartCoinScan.this, ImtSmartEnterAmout.class);
                         //  intent.putExtra("position",position);
-                        intent.putExtra("result1",s);
+                     //   intent.putExtra("result1",s);
+
+                        SharedPreferences.Editor editor=sharedPreferences.edit();
+                        editor.putString("Imtaddress",s);
+                        editor.commit();
                         startActivity(intent);
                         finish();
                     }
@@ -112,5 +118,10 @@ public class ImtSmartCoinScan extends AppCompatActivity {
         finish();*/
         onSaveInstanceState(new Bundle());
 
+    }
+
+    public void next1(View view) {
+
+        startActivity(new Intent(getApplicationContext(),ImSmartSendManual.class));
     }
 }

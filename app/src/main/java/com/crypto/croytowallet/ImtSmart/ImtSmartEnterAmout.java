@@ -58,9 +58,9 @@ public class ImtSmartEnterAmout extends AppCompatActivity {
         imageView =findViewById(R.id.back);
         enterAmount=findViewById(R.id.ed_enter_amount);
         next=findViewById(R.id.next);
-        Bundle bundle = getIntent().getExtras();
+     //   Bundle bundle = getIntent().getExtras();
         // position=bundle.getInt("position");
-        result=bundle.getString("result1");
+      //  result=bundle.getString("result1");
 
         userData= SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
@@ -74,7 +74,7 @@ public class ImtSmartEnterAmout extends AppCompatActivity {
                 }else {
 
                     Intent intent =new Intent(getApplicationContext(), ImtSmartVerification.class);
-                    intent.putExtra("result2",result);
+                  //  intent.putExtra("result2",result);
                     intent.putExtra("amount2",Amount);
 
                     startActivity(intent);
@@ -123,18 +123,13 @@ public class ImtSmartEnterAmout extends AppCompatActivity {
                         Toast.makeText(ImtSmartEnterAmout.this, "Your Email 2FA OFF", Toast.LENGTH_SHORT).show();
                     }
 
-                    if (google2fa1.equals("true")){
-                        Toast.makeText(ImtSmartEnterAmout.this, "Your Google 2FA ON", Toast.LENGTH_SHORT).show();
 
-                    }else {
-                        Toast.makeText(ImtSmartEnterAmout.this, "Your Email 2FA OFF", Toast.LENGTH_SHORT).show();
-                    }
                     //   Toast.makeText(Pay_Coin.this, ""+email2fa1+google2fa1, Toast.LENGTH_SHORT).show();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Toast.makeText(ImtSmartEnterAmout.this, ""+response, Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(ImtSmartEnterAmout.this, ""+response, Toast.LENGTH_SHORT).show();
             }
 
         }, new Response.ErrorListener() {

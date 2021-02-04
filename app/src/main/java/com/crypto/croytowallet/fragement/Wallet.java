@@ -27,6 +27,7 @@ import com.crypto.croytowallet.Adapter.Crypto_currencyInfo;
 import com.crypto.croytowallet.Interface.CryptoClickListner;
 import com.crypto.croytowallet.Model.CrptoInfoModel;
 import com.crypto.croytowallet.R;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,7 +45,7 @@ public class Wallet extends Fragment implements  CryptoClickListner{
     RequestQueue requestQueue;
     Crypto_currencyInfo crypto_currencyInfo;
     SharedPreferences sharedPreferences;
-
+    KProgressHUD progressDialog;
     public Wallet() {
         // Required empty public constructor
     }
@@ -65,26 +66,38 @@ public class Wallet extends Fragment implements  CryptoClickListner{
     return view;
     }
     public void CryptoInfoRecyclerView(){
+        progressDialog = KProgressHUD.create(getContext())
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Please wait.....")
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
+
+        showpDialog();
         String url="https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin%2Cethereum%2Ctether%2Cripple%2Clitecoin&order=market_cap_desc&sparkline=false&price_change_percentage=24h";
         StringRequest stringRequest=new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                hidepDialog();
                 try {
                     JSONArray jsonArray=new JSONArray(response);
                     for (int i=0;i<=jsonArray.length();i++){
                         CrptoInfoModel  crptoInfoModel1= new CrptoInfoModel();
                         JSONObject jsonObject1=jsonArray.getJSONObject(i);
                         String id=jsonObject1.getString("id");
+                        String symbol =jsonObject1.getString("symbol");
                         String image=jsonObject1.getString("image");
                         String name=jsonObject1.getString("name");
                         String rate=jsonObject1.getString("price_change_percentage_24h");
-                        String price=jsonObject1.getString("current_price");
+                        int price=jsonObject1.getInt("current_price");
 
                         crptoInfoModel1.setId(id);
                         crptoInfoModel1.setImage(image);
                         crptoInfoModel1.setName(name);
                         crptoInfoModel1.setCurrencyRate(rate);
                         crptoInfoModel1.setCurrentPrice(price);
+                        crptoInfoModel1.setSymbol(symbol);
                         crptoInfoModels.add(crptoInfoModel1);
 
 
@@ -105,8 +118,11 @@ public class Wallet extends Fragment implements  CryptoClickListner{
             }
 
         }, new Response.ErrorListener() {
+
             @Override
             public void onErrorResponse(VolleyError error) {
+
+                hidepDialog();
                 Toast.makeText(getContext(), ""+error.toString(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -118,12 +134,32 @@ public class Wallet extends Fragment implements  CryptoClickListner{
     @Override
     public void onCryptoItemClickListener(int position) {
         Intent intent = new Intent(getContext(), Graph_layout.class);
-        intent.putExtra("position",position);
+      //  intent.putExtra("position",position);
         startActivity(intent);
-
         String result=crptoInfoModels.get(position).getSymbol();
+        int price=crptoInfoModels.get(position).getCurrentPrice();
+        String image=crptoInfoModels.get(position).getImage();
+        String coinName=crptoInfoModels.get(position).getName();
+        String change=crptoInfoModels.get(position).getCurrencyRate();
+
         SharedPreferences.Editor editor=sharedPreferences.edit();
         editor.putString("symbol1",result);
+        editor.putInt("position",position);
+        editor.putInt("price",price);
+        editor.putString("image",image);
+        editor.putString("coinName",coinName);
+        editor.putString("change",change);
+
         editor.commit();
+
+    }
+    private void showpDialog() {
+        if (!progressDialog.isShowing())
+            progressDialog.show();
+    }
+
+    private void hidepDialog() {
+        if (progressDialog.isShowing())
+            progressDialog.dismiss();
     }
 }

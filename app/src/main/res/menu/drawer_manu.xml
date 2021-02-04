@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <group
@@ -37,7 +38,9 @@
         <item
             android:id="@+id/dark_mode"
             android:icon="@drawable/ic_dark_mode"
-            android:title="@string/dark_mode" />
+            android:title="@string/dark_mode"
+            app:actionLayout="@layout/customswitchbutton"
+            />
         <item
             android:id="@+id/pay_history"
             android:icon="@drawable/ic_history"
