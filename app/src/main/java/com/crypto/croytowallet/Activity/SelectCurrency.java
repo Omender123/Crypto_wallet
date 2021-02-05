@@ -5,7 +5,9 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.crypto.croytowallet.Adapter.SelectCurrencyAdapter;
 import com.crypto.croytowallet.Adapter.Transaaction_history_adapter;
+import com.crypto.croytowallet.Interface.HistoryClickLister;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.Model.CurrencyModel;
 import com.crypto.croytowallet.Model.TransactionHistoryModel;
@@ -37,14 +40,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SelectCurrency extends AppCompatActivity {
+public class SelectCurrency extends AppCompatActivity implements HistoryClickLister {
     ImageView imageView;
     RecyclerView recyclerView;
     KProgressHUD progressDialog;
     UserData userData;
     ArrayList<CurrencyModel> currencyModels;
     SelectCurrencyAdapter selectCurrencyAdapter;
-
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +56,7 @@ public class SelectCurrency extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerCurrency);
         currencyModels =new ArrayList<CurrencyModel>();
+        sharedPreferences=getSharedPreferences("currency", Context.MODE_PRIVATE);
 
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
         back();
@@ -80,7 +84,7 @@ public class SelectCurrency extends AppCompatActivity {
 
                 try {
                     JSONObject object =new JSONObject(response);
-                    String result = object.getString("result");
+                    String result = object.getString("currency");
                     JSONArray jsonArray = new JSONArray(result);
 
                     for (int i=0;i<=jsonArray.length();i++){
@@ -104,7 +108,7 @@ public class SelectCurrency extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                selectCurrencyAdapter = new SelectCurrencyAdapter(currencyModels,getApplicationContext());
+                selectCurrencyAdapter = new SelectCurrencyAdapter(currencyModels,getApplicationContext(),SelectCurrency.this);
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL,false);
                 recyclerView.setLayoutManager(mLayoutManager);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -168,6 +172,20 @@ public class SelectCurrency extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+    }
+
+    @Override
+    public void onHistoryItemClickListener(int position) {
+        Intent intent = new Intent(getApplicationContext(), Setting.class);
+        startActivity(intent);
+        String currency = currencyModels.get(position).getCurrency();
+        String symbols = currencyModels.get(position).getSymbols();
+
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putString("currency1",currency);
+        editor.putString("Currency_Symbols",symbols);
+        editor.commit();
 
     }
 }

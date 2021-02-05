@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,7 @@ import com.crypto.croytowallet.Payment.Enter_transaction_pin;
 import com.crypto.croytowallet.Payment.Top_up_Money;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.Updated_data;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.TransactionHistory.Full_Transaction_History;
 import com.crypto.croytowallet.TransactionHistory.Transaction_history;
@@ -66,12 +68,13 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
     RequestQueue requestQueue;
     Crypto_currencyInfo crypto_currencyInfo;
     LinearLayout lytscan,lytPay,lytWalletBalance,lytaddMoney;
-    SharedPreferences sharedPreferences;
+    SharedPreferences sharedPreferences,sharedPreferences1;
     TextView textView,textView1;
     CardView imtsmart;
     TextView add_currency,increaseRate,null1,imtPrice;
     String imtPrices,increaseRate1;
     KProgressHUD progressDialog;
+    String currency2,CurrencySymbols;
     public Deshboard() {
         // Required empty public constructor
     }
@@ -104,6 +107,11 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
         imtPrice  =view.findViewById(R.id.coinrate);
 
         sharedPreferences=getActivity().getSharedPreferences("symbols", Context.MODE_PRIVATE);
+        sharedPreferences1=getActivity().getSharedPreferences("imtInfo", Context.MODE_PRIVATE);
+
+       sharedPreferences =getActivity().getSharedPreferences("currency",0);
+         currency2 =sharedPreferences.getString("currency1","usd");
+         CurrencySymbols =sharedPreferences.getString("Currency_Symbols","$");
 
 
         CryptoInfoRecyclerView();
@@ -113,10 +121,16 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ImtSmartGraphLayout.class);
-                intent.putExtra("price",imtPrices);
-                intent.putExtra("chanage",increaseRate1);
 
+               /* intent.putExtra("price",imtPrices);
+                intent.putExtra("chanage",increaseRate1);
+*/
                 startActivity(intent);
+
+                SharedPreferences.Editor editor=sharedPreferences1.edit();
+                editor.putString("price",imtPrices);
+                editor.putString("chanage",increaseRate1);
+                editor.commit();
             }
         });
 
@@ -142,7 +156,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
 
         showpDialog();
 */
-        String url="https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin%2Cethereum%2Ctether%2Cripple%2Clitecoin%2Cusd-coin&order=market_cap_desc&sparkline=false&price_change_percentage=24h";
+        String url="https://api.coingecko.com/api/v3/coins/markets?vs_currency="+currency2+"&ids=bitcoin%2Cethereum%2Ctether%2Cripple%2Clitecoin%2Cusd-coin&order=market_cap_desc&sparkline=false&price_change_percentage=24h";
         StringRequest stringRequest=new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -160,6 +174,8 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
                         int price=jsonObject1.getInt("current_price");
                         String high_price=jsonObject1.getString("high_24h");
                         String low_price=jsonObject1.getString("low_24h");
+
+                        Log.d("data",id+symbol+image+name+rate+price);
 
                         crptoInfoModel1.setId(id);
                         crptoInfoModel1.setImage(image);
@@ -323,16 +339,15 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
 
     @Override
     public void onCryptoItemClickListener(int position) {
-        Intent intent = new Intent(getContext(), Graph_layout.class);
-       // intent.putExtra("position",position);
-        startActivity(intent);
 
         String result=crptoInfoModels.get(position).getSymbol();
         int price=crptoInfoModels.get(position).getCurrentPrice();
         String image=crptoInfoModels.get(position).getImage();
         String coinName=crptoInfoModels.get(position).getName();
         String change=crptoInfoModels.get(position).getCurrencyRate();
+        Updated_data.getInstans(getContext()).userLogin(position,coinName,result,image,change,price);
 
+        Log.d("data2",price+change+coinName+result);
         SharedPreferences.Editor editor=sharedPreferences.edit();
         editor.putString("symbol1",result);
         editor.putInt("position",position);
@@ -341,7 +356,15 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
         editor.putString("coinName",coinName);
         editor.putString("change",change);
 
-        editor.commit();
+        //  editor.commit();
+
+        editor.apply();
+        Intent intent = new Intent(getContext(), Graph_layout.class);
+       // intent.putExtra("position",position);
+        startActivity(intent);
+
+
+
 
     }
 

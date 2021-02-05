@@ -244,13 +244,14 @@
                     />
 
                 <TextView
+                    android:id="@+id/currency1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/text2"
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="10dp"
-                    android:text="@string/usd"
+                    android:textAllCaps="true"
                     android:textColor="@color/toolbar_text_color"
                     android:textSize="18dp"
                     android:textStyle="bold"

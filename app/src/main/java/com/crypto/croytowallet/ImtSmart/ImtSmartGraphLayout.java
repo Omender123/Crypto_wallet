@@ -3,7 +3,9 @@ package com.crypto.croytowallet.ImtSmart;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -50,6 +52,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
     private LineChart chart;
     TextView swap;
     String balance1,  price1;
+    SharedPreferences sharedPreferences1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +77,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
         send.setOnClickListener(this);
 
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
-
+        sharedPreferences1=getSharedPreferences("imtInfo", Context.MODE_PRIVATE);
 
         chart.setDragEnabled(true);
         chart.setScaleEnabled(true);
@@ -128,14 +131,18 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
         set1.setDrawFilled(true);
         chart.setBackgroundColor(getResources().getColor(R.color.purple_500));
 
-        Bundle bundle = getIntent().getExtras();
+     /*   Bundle bundle = getIntent().getExtras();
         price1 = bundle.getString("price");
         String increaseRate1 = bundle.getString("chanage");
+*/
 
+        price1 = sharedPreferences1.getString("price",null);
+        String increaseRate1 = sharedPreferences1.getString("chanage",null);
         increaseRate.setText(increaseRate1);
         price.setText("$"+price1);
 
-        increaseRate.setTextColor(increaseRate1.contains("-")?
+        try {
+            increaseRate.setTextColor(increaseRate1.contains("-")?
                 getApplicationContext().getResources().getColor(R.color.red): getApplicationContext().getResources().getColor(R.color.green)  );
 
         null1.setTextColor(increaseRate1.contains("-")?
@@ -145,6 +152,9 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
           increaseRate.setText(increaseRate1);
         }else{
             increaseRate.setText("+"+increaseRate1);
+        }
+        }catch (Exception e){
+
         }
         getBalance();
 
@@ -166,6 +176,11 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
             case R.id.send_coin:
                 Intent intent1=new Intent(getApplicationContext(), ImtSmartCoinScan.class);
                 startActivity(intent1);
+                break;
+
+            case R.id.swap_btc_btn:
+                Intent intent2=new Intent(getApplicationContext(), imtSwap.class);
+                startActivity(intent2);
                 break;
     }
 }
@@ -212,7 +227,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                         double total = balance2*price;
                       //  Toast.makeText(ImtSmartGraphLayout.this, ""+total, Toast.LENGTH_SHORT).show();
                         balance.setText("$ "+total);
-                        coinprice.setText(""+total);
+                        coinprice.setText(""+balance1);
 
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();

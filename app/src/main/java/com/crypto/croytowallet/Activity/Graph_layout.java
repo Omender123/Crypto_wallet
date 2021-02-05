@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.Model.CrptoInfoModel;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.Updated_data;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.database.RetrofitClient;
 import com.crypto.croytowallet.fragement.Exchange;
@@ -87,14 +89,24 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         send.setOnClickListener(this);
 
 
-        preferences=getApplicationContext().getSharedPreferences("symbols", Context.MODE_PRIVATE);
+       /* preferences=getApplicationContext().getSharedPreferences("symbols", Context.MODE_PRIVATE);
         position = preferences.getInt("position", -1);
+        Updated_data.getInstans(getApplicationContext()).getUserId();
         price1 = preferences.getInt("price", -1);
         symbol = preferences.getString("symbol1", null);
         image = preferences.getString("image", null);
         coinName = preferences.getString("coinName", null);
-        change = preferences.getString("change", null);
-
+        change = preferences.getString("change", null);*/
+        preferences=getApplicationContext().getSharedPreferences("symbols", Context.MODE_PRIVATE);
+        position = Updated_data.getInstans(getApplicationContext()).getUserId();
+        price1 =Updated_data.getInstans(getApplicationContext()).getprice();
+        symbol = Updated_data.getInstans(getApplicationContext()).getmobile();
+        image = Updated_data.getInstans(getApplicationContext()).getImage();
+        coinName =Updated_data.getInstans(getApplicationContext()).getUsername();
+        change =Updated_data.getInstans(getApplicationContext()).getChange();
+     //   Log.d("price",getString(price1));
+        System.out.println("p"+price1);
+        Toast.makeText(this, ""+price1, Toast.LENGTH_SHORT).show();
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
 
@@ -213,7 +225,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
 
         String token = userData.getToken();
 
-        progressDialog = KProgressHUD.create(Graph_layout.this)
+      /*  progressDialog = KProgressHUD.create(Graph_layout.this)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel("Please wait.....")
                 .setCancellable(false)
@@ -222,14 +234,14 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                 .show();
 
         showpDialog();
-
+*/
         Call<ResponseBody> call = RetrofitClient.getInstance().getApi().Balance(token,symbol);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 String s =null;
-                hidepDialog();
+             //   hidepDialog();
 
                 if (response.code()==200){
                     try {
@@ -242,7 +254,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                         Double balance2 = Double.valueOf(balance1*price1);
 
                         balance.setText("$ "+balance2);
-                        coinprice.setText(""+balance2);
+                        coinprice.setText(""+balance1);
 
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
@@ -284,7 +296,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                hidepDialog();
+            //    hidepDialog();
                 Snacky.builder()
                         .setActivity(Graph_layout.this)
                         .setText("Internet Problem ")

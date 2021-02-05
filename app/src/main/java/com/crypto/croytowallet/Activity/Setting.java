@@ -7,6 +7,7 @@ import androidx.cardview.widget.CardView;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -15,6 +16,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
@@ -27,7 +30,9 @@ import de.mateware.snacky.Snacky;
 public class Setting extends AppCompatActivity implements View.OnClickListener {
     ImageView imageView;
     CardView Scan_devices,restore_wallet,notification,sound,currency;
+    SharedPreferences sharedPreferences;
 
+    TextView currencyType;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +48,14 @@ public class Setting extends AppCompatActivity implements View.OnClickListener {
         notification.setOnClickListener(this);
         sound.setOnClickListener(this);
         currency.setOnClickListener(this);
+
+        currencyType = findViewById(R.id.currency1);
+
+        sharedPreferences =getSharedPreferences("currency",0);
+        String currency2 =sharedPreferences.getString("currency1","usd");
+
+        currencyType.setText(currency2);
+       // Toast.makeText(this, ""+currency, Toast.LENGTH_SHORT).show();
 
         back();
     }

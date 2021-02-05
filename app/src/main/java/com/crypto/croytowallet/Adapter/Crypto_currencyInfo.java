@@ -1,6 +1,7 @@
 package com.crypto.croytowallet.Adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ public class Crypto_currencyInfo extends RecyclerView.Adapter<Crypto_currencyInf
 ArrayList<CrptoInfoModel>crptoInfoModels;
 Context context;
 private CryptoClickListner cryptoClickListner;
+    SharedPreferences sharedPreferences;
     public Crypto_currencyInfo(ArrayList<CrptoInfoModel> crptoInfoModels, Context context, CryptoClickListner cryptoClickListner) {
         this.crptoInfoModels = crptoInfoModels;
         this.context = context;
@@ -49,6 +51,10 @@ private CryptoClickListner cryptoClickListner;
         String highRate= crptoInfoModels.get(position).getCurrencyRate();
         String lowRate= crptoInfoModels.get(position).getCurrencyRate();
         String id=crptoInfoModels.get(position).getId();
+        sharedPreferences =context.getSharedPreferences("currency",0);
+
+      String   CurrencySymbols =sharedPreferences.getString("Currency_Symbols","$");
+
 
       /*  String[] axisData = {"Jan", "Feb", "Mar", "Apr", "May"};
         int[] yAxisData = {30, 10, 30, 10, 50};
@@ -78,7 +84,7 @@ private CryptoClickListner cryptoClickListner;
 */
         Picasso.get().load(image).into(holder.imageView);
         holder.name.setText(iconname);
-        holder.currencyPrice.setText("$"+CurrentPrice);
+        holder.currencyPrice.setText(CurrencySymbols+CurrentPrice);
         holder.increaseRate.setText(currencyRate);
 
         holder.increaseRate.setTextColor(crptoInfoModels.get(position).getCurrencyRate().contains("-")?

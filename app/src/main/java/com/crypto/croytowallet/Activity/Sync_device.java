@@ -105,6 +105,7 @@ public class Sync_device extends AppCompatActivity {
                 try {
                     JSONObject object = new JSONObject(response);
                     String result = object.getString("result");
+
                     JSONArray jsonArray =new JSONArray(result);
 
                     for (int i=0;i<=jsonArray.length();i++){

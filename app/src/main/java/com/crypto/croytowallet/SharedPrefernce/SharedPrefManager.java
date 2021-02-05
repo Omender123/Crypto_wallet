@@ -23,6 +23,7 @@ public class SharedPrefManager {
     private static final String KEY_XRPADDRESS = "key_XRP";
     private static final String KEY_EMAIL2FA = "key_EMAIL_2FA";
     private static SharedPrefManager mInstance;
+
     private static Context mCtx;
 
     private SharedPrefManager(Context context) {

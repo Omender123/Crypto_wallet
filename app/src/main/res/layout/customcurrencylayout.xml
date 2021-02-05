@@ -69,15 +69,16 @@
                 android:layout_marginRight="3dp" />-->
             <RadioGroup
                 android:id="@+id/radio"
-                android:layout_width="wrap_content"
+                android:layout_width="30dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true">
-                <RadioButton
+                android:layout_alignParentRight="true"/>
+           <!--     <RadioButton
+                    android:id="@+id/clickRadio"
                     android:layout_marginTop="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
-            </RadioGroup>
+           -->
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
