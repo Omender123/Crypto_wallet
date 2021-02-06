@@ -5,7 +5,9 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -54,6 +56,9 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
     Transaaction_history_adapter transaaction_history_adapter;
     KProgressHUD progressDialog;
     TextView history_Empty;
+   SharedPreferences sharedPreferences;
+   String CurrencySymbols;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +71,14 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
         more=findViewById(R.id.moretransactions);
         recyclerView=findViewById(R.id.recyclerViewAddBalance);
         history_Empty =findViewById(R.id.txt_list_is_empty);
+
+
+
+        sharedPreferences =getApplicationContext().getSharedPreferences("currency",0);
+     //   currency2 =sharedPreferences.getString("currency1","usd");
+        CurrencySymbols =sharedPreferences.getString("Currency_Symbols","$");
+
+
         transactionHistoryModels =new ArrayList<TransactionHistoryModel>();
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -118,7 +131,7 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
                     textView.setText(checkBalance+".00");
 
                     Double balance = checkBalance*0.09;
-                    textView1.setText("$"+balance);
+                    textView1.setText(CurrencySymbols+balance);
 
                 } catch (JSONException e) {
                     e.printStackTrace();

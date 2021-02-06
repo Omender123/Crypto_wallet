@@ -106,7 +106,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
         null1  =view.findViewById(R.id.null1);
         imtPrice  =view.findViewById(R.id.coinrate);
 
-        sharedPreferences=getActivity().getSharedPreferences("symbols", Context.MODE_PRIVATE);
+      //  sharedPreferences=getActivity().getSharedPreferences("symbols", Context.MODE_PRIVATE);
         sharedPreferences1=getActivity().getSharedPreferences("imtInfo", Context.MODE_PRIVATE);
 
        sharedPreferences =getActivity().getSharedPreferences("currency",0);
@@ -241,7 +241,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
                 textView.setText(checkBalance+".00");
 
                 Double balance = checkBalance*0.09;
-                 textView1.setText("$"+balance);
+                 textView1.setText(CurrencySymbols+balance);
               //   Toast.makeText(getContext(), ""+checkBalance, Toast.LENGTH_SHORT).show();
              } catch (JSONException e) {
                  e.printStackTrace();
@@ -347,7 +347,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
         String change=crptoInfoModels.get(position).getCurrencyRate();
         Updated_data.getInstans(getContext()).userLogin(position,coinName,result,image,change,price);
 
-        Log.d("data2",price+change+coinName+result);
+       /* Log.d("data2",price+change+coinName+result);
         SharedPreferences.Editor editor=sharedPreferences.edit();
         editor.putString("symbol1",result);
         editor.putInt("position",position);
@@ -358,7 +358,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
 
         //  editor.commit();
 
-        editor.apply();
+        editor.apply();*/
         Intent intent = new Intent(getContext(), Graph_layout.class);
        // intent.putExtra("position",position);
         startActivity(intent);

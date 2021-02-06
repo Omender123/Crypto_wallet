@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -65,8 +66,9 @@ public class Sync_device extends AppCompatActivity {
     ArrayList<ActiveDeviceModel> modelArrayList;
     KProgressHUD progressDialog;
     ActiveDeviceAdapter activeDeviceAdapter;
-
     TextView balance ,textView1;
+    SharedPreferences sharedPreferences;
+    String CurrencySymbols;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +80,10 @@ public class Sync_device extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.active_device_recyclerView);
         back();
+
+        sharedPreferences =getApplicationContext().getSharedPreferences("currency",0);
+        CurrencySymbols =sharedPreferences.getString("Currency_Symbols","$");
+
 
         checkBalance();
         getActiveDeviceDetails();
@@ -204,7 +210,7 @@ public class Sync_device extends AppCompatActivity {
 
                     balance.setText(checkBalance+".00");
                     Double balance = checkBalance*0.09;
-                    textView1.setText("$"+balance);
+                    textView1.setText(CurrencySymbols+balance);
 
 
                 } catch (JSONException e) {

@@ -27,6 +27,7 @@ import com.crypto.croytowallet.Adapter.Crypto_currencyInfo;
 import com.crypto.croytowallet.Interface.CryptoClickListner;
 import com.crypto.croytowallet.Model.CrptoInfoModel;
 import com.crypto.croytowallet.R;
+import com.crypto.croytowallet.SharedPrefernce.Updated_data;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONArray;
@@ -60,7 +61,7 @@ public class Wallet extends Fragment implements  CryptoClickListner{
         WalletRecyclerView =view.findViewById(R.id.walletRecyclerView);
         crptoInfoModels=new ArrayList<CrptoInfoModel>();
 
-        sharedPreferences=getActivity().getSharedPreferences("symbols", Context.MODE_PRIVATE);
+      //  sharedPreferences=getActivity().getSharedPreferences("symbols", Context.MODE_PRIVATE);
 
         CryptoInfoRecyclerView();
     return view;
@@ -142,7 +143,9 @@ public class Wallet extends Fragment implements  CryptoClickListner{
         String coinName=crptoInfoModels.get(position).getName();
         String change=crptoInfoModels.get(position).getCurrencyRate();
 
-        SharedPreferences.Editor editor=sharedPreferences.edit();
+        Updated_data.getInstans(getContext()).userLogin(position,coinName,result,image,change,price);
+
+       /* SharedPreferences.Editor editor=sharedPreferences.edit();
         editor.putString("symbol1",result);
         editor.putInt("position",position);
         editor.putInt("price",price);
@@ -150,7 +153,7 @@ public class Wallet extends Fragment implements  CryptoClickListner{
         editor.putString("coinName",coinName);
         editor.putString("change",change);
 
-        editor.commit();
+        editor.commit();*/
 
     }
     private void showpDialog() {

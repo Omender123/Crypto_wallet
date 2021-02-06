@@ -19,6 +19,7 @@ import com.crypto.croytowallet.Activity.WalletReceive;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.Updated_data;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.google.zxing.WriterException;
 
@@ -43,9 +44,11 @@ public class Received_Coin extends AppCompatActivity {
         toolbar_title=findViewById(R.id.toolbar_title);
 
 
-        preferences=getApplicationContext().getSharedPreferences("symbols", Context.MODE_PRIVATE);
+      /*  preferences=getApplicationContext().getSharedPreferences("symbols", Context.MODE_PRIVATE);
         position = preferences.getInt("position", -1);
+*/
 
+        position = Updated_data.getInstans(getApplicationContext()).getUserId();
 
         back();
 

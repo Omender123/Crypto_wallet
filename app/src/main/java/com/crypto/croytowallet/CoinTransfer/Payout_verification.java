@@ -24,6 +24,7 @@ import com.crypto.croytowallet.Payment.Complate_payment;
 import com.crypto.croytowallet.Payment.Enter_transaction_pin;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.Updated_data;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
@@ -66,9 +67,12 @@ public class Payout_verification extends AppCompatActivity {
 
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
-        preferences=getApplicationContext().getSharedPreferences("symbols", Context.MODE_PRIVATE);
+      //  preferences=getApplicationContext().getSharedPreferences("symbols", Context.MODE_PRIVATE);
         preferences=getSharedPreferences("coinScan", Context.MODE_PRIVATE);
-        cryptoCurrency = preferences.getString("symbol1","");
+       // cryptoCurrency = preferences.getString("symbol1","");
+        cryptoCurrency = Updated_data.getInstans(getApplicationContext()).getmobile();
+
+        Toast.makeText(this, ""+cryptoCurrency, Toast.LENGTH_SHORT).show();
         result = preferences.getString("address","");
 
     //    Toast.makeText(this, ""+result, Toast.LENGTH_SHORT).show();

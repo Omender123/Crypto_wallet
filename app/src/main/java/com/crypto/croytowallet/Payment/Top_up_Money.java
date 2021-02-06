@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -34,6 +35,7 @@ import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.Model.RozerPayModelData;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.Updated_data;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
@@ -60,10 +62,11 @@ public class Top_up_Money extends AppCompatActivity implements PaymentResultWith
     CheckBox checkBox;
     EditText enter_amount;
     KProgressHUD progressDialog;
-    String orderId,dbID,payedAmount,status;
+    String orderId,dbID,payedAmount,status,currency2;
     UserData userData;
     RozerPayModelData rozerPayModelData1;
     private PaymentData paymentData1;
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +76,12 @@ public class Top_up_Money extends AppCompatActivity implements PaymentResultWith
         checkBox=findViewById(R.id.checkbox);
         enter_amount=findViewById(R.id.enter_add_money_amont);
         userData= SharedPrefManager.getInstance(getApplicationContext()).getUser();
+
+
+        sharedPreferences =getSharedPreferences("currency",0);
+        currency2 =sharedPreferences.getString("currency1","usd");
+
+        Toast.makeText(this, ""+currency2, Toast.LENGTH_SHORT).show();
         rozerPayModelData1=new RozerPayModelData();
         add_money.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -233,7 +242,7 @@ public class Top_up_Money extends AppCompatActivity implements PaymentResultWith
             options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png");
             options.put("order_id", orderId);
         //    options.put("amount", amount+"00");//pass amount in currency subunits
-            options.put("currency", "INR");
+            options.put("currency", currency2);
             options.put("prefill.email", email);
             options.put("prefill.contact",no);
             /**

@@ -30,6 +30,7 @@ import com.crypto.croytowallet.Payment.Complate_payment;
 import com.crypto.croytowallet.Payment.Enter_transaction_pin;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.Updated_data;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 
 import com.crypto.croytowallet.VolleyDatabase.URLs;
@@ -84,13 +85,14 @@ public class Pay_Coin extends AppCompatActivity {
        // position=bundle.getInt("position");
         result=bundle.getString("result");
 */
-        preferences=getApplicationContext().getSharedPreferences("symbols", Context.MODE_PRIVATE);
+       /* preferences=getApplicationContext().getSharedPreferences("symbols", Context.MODE_PRIVATE);
         cryptoCurrency = preferences.getString("symbol1","");
 
           position = preferences.getInt("position", -1);
-
+*/
         toolbar_title.setText("Send "+cryptoCurrency);
 
+        cryptoCurrency = Updated_data.getInstans(getApplicationContext()).getmobile();
         userData= SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
 

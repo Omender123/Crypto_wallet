@@ -111,5 +111,14 @@ public interface Api {
             @Field("type") String type
     );
 
-
+    @FormUrlEncoded
+    @POST("transaction/swapCurrency")
+    Call<ResponseBody>IMT_SWAP(
+            @Header("Authorization")String Authtoken,
+            @Field("sendCurrency") String sendCurrency,
+            @Field("receiveCurrency") String receiveCurrency,
+            @Field("sendAmount") String sendAmount,
+            @Field("transactionPin") String transactionPin,
+            @Field("userAddress") String userAddress
+    );
 }

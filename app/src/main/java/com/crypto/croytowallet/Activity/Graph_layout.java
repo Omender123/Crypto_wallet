@@ -57,10 +57,10 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
     TextView swap,price,balance,coinname,coinsymbols,coinprice,sync,increaseRate,null1;
     private Exchange exchange;
     int position,balance1,price1;
-    String symbol,image,coinName,change;
+    String symbol,image,coinName,change,CurrencySymbols;
     ImageView back,received,send;
     KProgressHUD progressDialog;
-    SharedPreferences preferences;
+    SharedPreferences preferences,sharedPreferences;;
     private LineChart chart;
     UserData userData;
     CircleImageView circleImageView;
@@ -104,7 +104,12 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         image = Updated_data.getInstans(getApplicationContext()).getImage();
         coinName =Updated_data.getInstans(getApplicationContext()).getUsername();
         change =Updated_data.getInstans(getApplicationContext()).getChange();
-     //   Log.d("price",getString(price1));
+
+        sharedPreferences =getApplicationContext().getSharedPreferences("currency",0);
+
+        CurrencySymbols =sharedPreferences.getString("Currency_Symbols","$");
+
+        //   Log.d("price",getString(price1));
         System.out.println("p"+price1);
         Toast.makeText(this, ""+price1, Toast.LENGTH_SHORT).show();
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
@@ -170,7 +175,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
 
 
         Picasso.get().load(image).into(circleImageView);
-        price.setText("$ "+price1);
+        price.setText(CurrencySymbols+price1);
         coinname.setText(coinName);
         coinsymbols.setText("("+symbol+")");
      //   sync.setText(symbol+" Price");
@@ -225,7 +230,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
 
         String token = userData.getToken();
 
-      /*  progressDialog = KProgressHUD.create(Graph_layout.this)
+        progressDialog = KProgressHUD.create(Graph_layout.this)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel("Please wait.....")
                 .setCancellable(false)
@@ -234,14 +239,13 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                 .show();
 
         showpDialog();
-*/
         Call<ResponseBody> call = RetrofitClient.getInstance().getApi().Balance(token,symbol);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 String s =null;
-             //   hidepDialog();
+              hidepDialog();
 
                 if (response.code()==200){
                     try {
@@ -253,7 +257,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                       //  int price2 = Integer.parseInt(price1);
                         Double balance2 = Double.valueOf(balance1*price1);
 
-                        balance.setText("$ "+balance2);
+                        balance.setText(CurrencySymbols+balance2);
                         coinprice.setText(""+balance1);
 
                     } catch (IOException | JSONException e) {
@@ -296,7 +300,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-            //    hidepDialog();
+                hidepDialog();
                 Snacky.builder()
                         .setActivity(Graph_layout.this)
                         .setText("Internet Problem ")
