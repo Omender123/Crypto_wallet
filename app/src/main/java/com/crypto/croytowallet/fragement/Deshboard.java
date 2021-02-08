@@ -33,9 +33,11 @@ import com.crypto.croytowallet.Activity.WalletBalance;
 import com.crypto.croytowallet.Activity.WalletReceive;
 import com.crypto.croytowallet.Activity.WalletScan;
 import com.crypto.croytowallet.Adapter.Crypto_currencyInfo;
+import com.crypto.croytowallet.Adapter.OverViewAdapter;
 import com.crypto.croytowallet.ImtSmart.ImtSmartGraphLayout;
 import com.crypto.croytowallet.Interface.CryptoClickListner;
 import com.crypto.croytowallet.Model.CrptoInfoModel;
+import com.crypto.croytowallet.Model.OverViewModel;
 import com.crypto.croytowallet.Payment.Complate_payment;
 import com.crypto.croytowallet.Payment.Enter_transaction_pin;
 import com.crypto.croytowallet.Payment.Top_up_Money;
@@ -64,9 +66,11 @@ import java.util.Map;
 public class
 Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
     ArrayList<CrptoInfoModel> crptoInfoModels;
-    RecyclerView cryptoInfoRecyclerView;
+    ArrayList<OverViewModel> overViewModels;
+    RecyclerView cryptoInfoRecyclerView,overviewRecycler;
     RequestQueue requestQueue;
     Crypto_currencyInfo crypto_currencyInfo;
+    OverViewAdapter overViewAdapter;
     LinearLayout lytscan,lytPay,lytWalletBalance,lytaddMoney;
     SharedPreferences sharedPreferences,sharedPreferences1;
     TextView textView,textView1;
@@ -75,6 +79,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
     String imtPrices,increaseRate1;
     KProgressHUD progressDialog;
     String currency2,CurrencySymbols;
+
     public Deshboard() {
         // Required empty public constructor
     }
@@ -93,12 +98,14 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
         lytaddMoney=view.findViewById(R.id.lytaddMoney);
         imtsmart = view.findViewById(R.id.ImtSmart);
         add_currency = view.findViewById(R.id.Add_more_Currency);
+        overviewRecycler = view.findViewById(R.id.overviewRecycler);
         lytscan.setOnClickListener(this);
         lytPay.setOnClickListener(this);
         lytWalletBalance.setOnClickListener(this);
         lytaddMoney.setOnClickListener(this);
 
         crptoInfoModels=new ArrayList<CrptoInfoModel>();
+        overViewModels=new ArrayList<OverViewModel>();
 
         textView  =view.findViewById(R.id.balance);
         textView1  =view.findViewById(R.id.balance1);
@@ -142,6 +149,9 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
             }
         });
         getImtDetails();
+
+        overViewData();
+
         return view;
     }
 
@@ -171,11 +181,11 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
                         String image=jsonObject1.getString("image");
                         String name=jsonObject1.getString("name");
                         String rate=jsonObject1.getString("price_change_percentage_24h");
-                        int price=jsonObject1.getInt("current_price");
+                       String price=jsonObject1.getString("current_price");
                         String high_price=jsonObject1.getString("high_24h");
                         String low_price=jsonObject1.getString("low_24h");
 
-                        Log.d("data",id+symbol+image+name+rate+price);
+
 
                         crptoInfoModel1.setId(id);
                         crptoInfoModel1.setImage(image);
@@ -341,26 +351,13 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
     public void onCryptoItemClickListener(int position) {
 
         String result=crptoInfoModels.get(position).getSymbol();
-        int price=crptoInfoModels.get(position).getCurrentPrice();
+        String  price=crptoInfoModels.get(position).getCurrentPrice();
         String image=crptoInfoModels.get(position).getImage();
         String coinName=crptoInfoModels.get(position).getName();
         String change=crptoInfoModels.get(position).getCurrencyRate();
         Updated_data.getInstans(getContext()).userLogin(position,coinName,result,image,change,price);
 
-       /* Log.d("data2",price+change+coinName+result);
-        SharedPreferences.Editor editor=sharedPreferences.edit();
-        editor.putString("symbol1",result);
-        editor.putInt("position",position);
-        editor.putInt("price",price);
-        editor.putString("image",image);
-        editor.putString("coinName",coinName);
-        editor.putString("change",change);
-
-        //  editor.commit();
-
-        editor.apply();*/
         Intent intent = new Intent(getContext(), Graph_layout.class);
-       // intent.putExtra("position",position);
         startActivity(intent);
 
 
@@ -430,6 +427,67 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
     private void hidepDialog() {
         if (progressDialog.isShowing())
             progressDialog.dismiss();
+    }
+
+    public void overViewData(){
+        String url="https://api.coingecko.com/api/v3/coins/markets?vs_currency="+currency2+"&ids=bitcoin%2Cethereum&order=market_cap_desc&sparkline=false&price_change_percentage=24h";
+        StringRequest stringRequest=new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //   hidepDialog();
+                try {
+                    JSONArray jsonArray=new JSONArray(response);
+                    for (int i=0;i<=jsonArray.length();i++){
+                        OverViewModel  overViewModel1= new OverViewModel();
+                        JSONObject jsonObject1=jsonArray.getJSONObject(i);
+                        String id=jsonObject1.getString("id");
+                        String symbol =jsonObject1.getString("symbol");
+                        String image=jsonObject1.getString("image");
+                        String name=jsonObject1.getString("name");
+                        String rate=jsonObject1.getString("price_change_percentage_24h");
+                        String price=jsonObject1.getString("current_price");
+                        String high_price=jsonObject1.getString("high_24h");
+                        String low_price=jsonObject1.getString("low_24h");
+
+                       // Log.d("data",id+symbol+image+name+rate+price);
+
+                        overViewModel1.setId(id);
+                        overViewModel1.setImage(image);
+                        overViewModel1.setName(name);
+                        overViewModel1.setCurrencyRate(rate);
+                        overViewModel1.setCurrentPrice(price);
+                        overViewModel1.setHigh_price(high_price);
+                        overViewModel1.setLow_price(low_price);
+                        overViewModel1.setSymbol(symbol);
+                        overViewModels.add(overViewModel1);
+
+
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                overViewAdapter = new OverViewAdapter(overViewModels,getContext());
+                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false);
+                overviewRecycler.setLayoutManager(mLayoutManager);
+                overviewRecycler.setItemAnimator(new DefaultItemAnimator());
+                overviewRecycler.setAdapter(overViewAdapter);
+                //  Toast.makeText(getContext(), ""+response.toString(), Toast.LENGTH_SHORT).show();
+
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // hidepDialog();
+                // Toast.makeText(getContext(), ""+error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+
     }
 }
 

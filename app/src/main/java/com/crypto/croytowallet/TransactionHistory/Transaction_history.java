@@ -26,6 +26,8 @@ import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.Model.TransactionHistoryModel;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.TransactionHistorySharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.Transaction_HistoryModel;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
@@ -97,13 +99,16 @@ public class Transaction_history extends AppCompatActivity implements HistoryCli
                         String sendername=object1.getString("senderName");
                         String receviername=object1.getString("receiverName");
                         String amount=object1.getString("amount");
+                        String status =object1.getString("status");
                         String time=object1.getString("updatedAt");
 
                         transactionHistoryModel1.setId(id);
-                        transactionHistoryModel1.setStatus(receviername);
+                        transactionHistoryModel1.setStatus(status);
+                        transactionHistoryModel1.setRecivedName(receviername);
                         transactionHistoryModel1.setUsername(sendername);
                         transactionHistoryModel1.setAmountTrans(amount);
                         transactionHistoryModel1.setDate(time);
+
 
 
                         transactionHistoryModels.add(transactionHistoryModel1);
@@ -133,7 +138,7 @@ public class Transaction_history extends AppCompatActivity implements HistoryCli
             @Override
             public void onErrorResponse(VolleyError error) {
                 hidepDialog();
-                Toast.makeText(Transaction_history.this, ""+error.toString(), Toast.LENGTH_SHORT).show();
+               // Toast.makeText(Transaction_history.this, ""+error.toString(), Toast.LENGTH_SHORT).show();
             }
         }){
             @Override
@@ -197,10 +202,20 @@ public class Transaction_history extends AppCompatActivity implements HistoryCli
     public void onHistoryItemClickListener(int position) {
 
         Intent intent = new Intent(Transaction_history.this,Full_Transaction_History.class);
-     //   String result=transactionHistoryModels.get(position).getSymbol();
-       /* SharedPreferences.Editor editor=sharedPreferences.edit();
-        editor.putString("symbol1",result);
-        editor.commit();
-       */ startActivity(intent);
+        startActivity(intent);
+
+        String id = transactionHistoryModels.get(position).getId();
+        String sendername=transactionHistoryModels.get(position).getUsername();
+        String receviername=transactionHistoryModels.get(position).getRecivedName();
+        String amount=transactionHistoryModels.get(position).getAmountTrans();
+        String status =transactionHistoryModels.get(position).getStatus();
+        String time=transactionHistoryModels.get(position).getDate();
+
+       Transaction_HistoryModel historyModel=new Transaction_HistoryModel(id,status,amount,sendername,receviername,time);
+
+        //storing the user in shared preferences
+        TransactionHistorySharedPrefManager.getInstance(getApplicationContext()).Transaction_History_Data(historyModel);
+
+
     }
 }

@@ -36,8 +36,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.crypto.croytowallet.Activity.StoryView;
-import com.crypto.croytowallet.SharedPrefernce.PearToPearSharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.TransactionHistorySharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     CircleImageView status_img;
     Switch drawerSwitch;
-
+    SharedPreferences sharedPreferences1;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         usergmail= (TextView) navHeader.findViewById(R.id.nav_usergmail);
 
 
-
+        sharedPreferences1 =getApplicationContext().getSharedPreferences("currency",0);
         //getting the current user
         UserData user = SharedPrefManager.getInstance(this).getUser();
 
@@ -245,6 +245,7 @@ public class MainActivity extends AppCompatActivity {
                      SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean("night_mode",true);
                     editor.commit();
+
                    // Toast.makeText(MainActivity.this, "Switch turned on", Toast.LENGTH_SHORT).show();
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -311,7 +312,8 @@ public void logout(){
         public void onResponse(String response) {
             hidepDialog();
             SharedPrefManager.getInstance(getApplicationContext()).logout();
-            PearToPearSharedPrefManager.getInstance(getApplicationContext()).clearPearData();
+            TransactionHistorySharedPrefManager.getInstance(getApplicationContext()).clearPearData();
+            sharedPreferences1.edit().clear().commit();
             Toast.makeText(MainActivity.this, "Logout Successfully", Toast.LENGTH_SHORT).show();
 
          //   Toast.makeText(MainActivity.this, ""+response, Toast.LENGTH_SHORT).show();

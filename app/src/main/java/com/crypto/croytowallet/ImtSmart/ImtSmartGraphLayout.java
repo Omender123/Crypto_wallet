@@ -1,5 +1,6 @@
 package com.crypto.croytowallet.ImtSmart;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -8,6 +9,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.icu.text.DecimalFormat;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -208,6 +211,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
         Call<ResponseBody> call = RetrofitClient.getInstance().getApi().Balance(token,"imt");
 
         call.enqueue(new Callback<ResponseBody>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 String s =null;
@@ -225,9 +229,12 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                         double price = Double.parseDouble(price1);
 
                         double total = balance2*price;
+                        DecimalFormat df = new DecimalFormat();
+                        df.setMaximumFractionDigits(2);
+
                       //  Toast.makeText(ImtSmartGraphLayout.this, ""+total, Toast.LENGTH_SHORT).show();
-                        balance.setText("$ "+total);
-                        coinprice.setText(""+balance1);
+                        balance.setText("$"+df.format(total));
+                        coinprice.setText(""+df.format(balance2));
 
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();

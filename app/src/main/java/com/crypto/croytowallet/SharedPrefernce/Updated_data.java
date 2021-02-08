@@ -47,7 +47,7 @@ public class Updated_data {
     }
 
 
-    public boolean userLogin(int id, String coinname, String symbol,String image,String change,int price){
+    public boolean userLogin(int id, String coinname, String symbol,String image,String change,String  price){
 
         SharedPreferences sharedPreferences=mct.getSharedPreferences(SHARD_PERFNAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferences.edit();
@@ -56,7 +56,7 @@ public class Updated_data {
         editor.putString(KEY_MOBILE,symbol);
         editor.putString(IMAGE,image);
         editor.putString(CHANGE,change);
-        editor.putInt(PRICE,price);
+        editor.putString(PRICE,price);
 
 
 
@@ -223,9 +223,9 @@ public class Updated_data {
 
     }
 
-    public int getprice(){
+    public String  getprice(){
         SharedPreferences sharedPreferences=mct.getSharedPreferences(SHARD_PERFNAME, Context.MODE_PRIVATE);
-        return sharedPreferences.getInt(PRICE,-1);
+        return sharedPreferences.getString(PRICE,"");
 
     }
     public String getChange(){

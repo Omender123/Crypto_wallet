@@ -113,6 +113,7 @@
             android:layout_toStartOf="@+id/receive_coin"
             android:layout_toEndOf="@+id/send_coin"
             android:fontFamily="@font/montserrat"
+
             android:textAlignment="center"
             android:textColor="#000"
             android:textSize="15dp"

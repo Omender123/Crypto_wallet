@@ -433,7 +433,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="#FFF"
-
                     android:textSize="25dp"
                     android:fontFamily="@font/montserrat"
                     android:layout_marginTop="5dp"
@@ -460,7 +459,7 @@
     <TextView
         android:id="@+id/swap_btc_btn"
         android:layout_width="match_parent"
-        android:text="Swap BTC"
+        android:text="SWAP P2P"
         android:layout_height="40dp"
         android:layout_marginTop="40dp"
         android:gravity="center"

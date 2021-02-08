@@ -86,10 +86,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/pay_history"
-            android:textSize="20sp"
+            android:text="Recent Transaction History"
+            android:textSize="18sp"
             android:textColor="@android:color/darker_gray"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:fontFamily="@font/montserrat"/>
         <TextView
             android:id="@+id/moretransactions"
             android:layout_width="match_parent"

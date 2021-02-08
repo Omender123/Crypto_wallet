@@ -11,38 +11,18 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.chaos.view.PinView;
-import com.crypto.croytowallet.Activity.ManualEnterUserName;
-import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
-import com.crypto.croytowallet.SharedPrefernce.PearToPearModel;
-import com.crypto.croytowallet.SharedPrefernce.PearToPearSharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
-import com.crypto.croytowallet.TransactionPin.EnterConfirmMnemonic;
-import com.crypto.croytowallet.VolleyDatabase.URLs;
-import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
 import com.crypto.croytowallet.database.RetrofitClient;
-import com.crypto.croytowallet.login.Login;
-import com.google.android.material.snackbar.Snackbar;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
 
 import de.mateware.snacky.Snacky;
 import okhttp3.ResponseBody;

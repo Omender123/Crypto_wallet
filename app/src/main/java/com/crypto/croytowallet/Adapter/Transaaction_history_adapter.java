@@ -1,6 +1,7 @@
 package com.crypto.croytowallet.Adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,7 @@ public class Transaaction_history_adapter extends RecyclerView.Adapter<Transaact
 ArrayList<TransactionHistoryModel>transactionHistoryModels;
 Context context;
 private HistoryClickLister historyClickLister;
-
+    SharedPreferences sharedPreferences;
     public Transaaction_history_adapter(ArrayList<TransactionHistoryModel> transactionHistoryModels, Context context,HistoryClickLister historyClickLister) {
         this.transactionHistoryModels = transactionHistoryModels;
         this.context = context;
@@ -41,10 +42,16 @@ private HistoryClickLister historyClickLister;
 
     @Override
     public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
-      holder.transaction_status.setText("Paid To "+transactionHistoryModels.get(position).getStatus());
-        holder.transaction_amount.setText(transactionHistoryModels.get(position).getAmountTrans());
-        holder.transaction_username.setText("Paid From "+transactionHistoryModels.get(position).getUsername());
 
+        sharedPreferences =context.getSharedPreferences("currency",0);
+
+        String   CurrencySymbols =sharedPreferences.getString("Currency_Symbols","$");
+
+
+
+        holder.transaction_status.setText("Paid To "+transactionHistoryModels.get(position).getRecivedName());
+        holder.transaction_amount.setText(CurrencySymbols+transactionHistoryModels.get(position).getAmountTrans());
+        holder.transaction_username.setText("Paid From "+transactionHistoryModels.get(position).getUsername());
 
         String dateAndTime = transactionHistoryModels.get(position).getDate();
         String[] s= dateAndTime.split("T");

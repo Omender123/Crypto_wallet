@@ -142,7 +142,7 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
             public void onErrorResponse(VolleyError error) {
                 hidepDialog();
 
-              //  Toast.makeText(WalletBalance.this, ""+error.toString(), Toast.LENGTH_SHORT).show();
+               Toast.makeText(WalletBalance.this, ""+error.toString(), Toast.LENGTH_SHORT).show();
             }
         });
 

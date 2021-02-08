@@ -15,15 +15,12 @@ import android.widget.Toast;
 import com.airbnb.lottie.LottieAnimationView;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
-import com.crypto.croytowallet.SharedPrefernce.PearToPearModel;
-import com.crypto.croytowallet.SharedPrefernce.PearToPearSharedPrefManager;
 
 public class Complate_payment extends AppCompatActivity {
 LottieAnimationView lottieAnimationView;
     ImageView imageView;
     CardView done;
     TextView success;
-    PearToPearModel pearToPearModel;
     SharedPreferences preferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +29,6 @@ LottieAnimationView lottieAnimationView;
         imageView =findViewById(R.id.back);
         lottieAnimationView = findViewById(R.id.animationView);
 
-        pearToPearModel= PearToPearSharedPrefManager.getInstance(getApplicationContext()).getPearToPear();
         preferences=getApplicationContext().getSharedPreferences("walletScan", Context.MODE_PRIVATE);
         String username = preferences.getString("username","");
 

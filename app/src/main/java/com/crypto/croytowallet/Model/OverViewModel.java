@@ -1,11 +1,11 @@
 package com.crypto.croytowallet.Model;
 
-public class CrptoInfoModel {
+public class OverViewModel {
     String id,Name,Image,currencyRate,high_price,low_price,symbol;
 
-   String CurrentPrice;
+    String CurrentPrice;
 
-    public CrptoInfoModel(String id, String name, String image, String currencyRate, String high_price, String low_price, String symbol, String currentPrice) {
+    public OverViewModel(String id, String name, String image, String currencyRate, String high_price, String low_price, String symbol, String currentPrice) {
         this.id = id;
         Name = name;
         Image = image;
@@ -16,7 +16,8 @@ public class CrptoInfoModel {
         CurrentPrice = currentPrice;
     }
 
-    public CrptoInfoModel() {
+    public OverViewModel() {
+
     }
 
     public String getId() {
@@ -83,3 +84,5 @@ public class CrptoInfoModel {
         CurrentPrice = currentPrice;
     }
 }
+
+

@@ -41,9 +41,9 @@ public class imtSwap extends AppCompatActivity  {
     ImageView imageView;
     TextView swapBtn;
     EditText enter_Swap_Amount;
-    String[] currency1 = {"select Currency ","IMT","Airdrop"};
+    String[] currency1 = {"select Currency ","imt","airdrop"};
 
-    String[] currency2 = {"select Currency ","IMT","Airdrop"};
+    String[] currency2 = {"select Currency ","imt","airdrop"};
     KProgressHUD progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,11 +143,18 @@ public class imtSwap extends AppCompatActivity  {
 
                     try {
                         s=response.body().string();
-                        startActivity(new Intent(getApplicationContext(), ImtSmartGraphLayout.class));
-                        Toast.makeText(imtSwap.this, " Successfully "+sendData+"to"+receviedData, Toast.LENGTH_SHORT).show();
+
+                        if (s==null){
+                            startActivity(new Intent(getApplicationContext(), ImtSmartGraphLayout.class));
+                          //  Toast.makeText(imtSwap.this, "Error  occurred in Transaction", Toast.LENGTH_SHORT).show();
+                        }else {
+                            startActivity(new Intent(getApplicationContext(), ImtSmartGraphLayout.class));
+                            Toast.makeText(imtSwap.this, " Successfully "+sendData+"to"+receviedData, Toast.LENGTH_SHORT).show();
+                        }
 
 
-                        // Toast.makeText(ImtSmartVerification.this, ""+s, Toast.LENGTH_SHORT).show();
+
+                        Toast.makeText(imtSwap.this, ""+s, Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -179,20 +186,32 @@ public class imtSwap extends AppCompatActivity  {
                             .setActionText(android.R.string.ok)
                             .error()
                             .show();
+                }else if (response.code()==504){
+                    Snacky.builder()
+                            .setActivity(imtSwap.this)
+                            .setText("Gate Way Time Down")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
                 }
+
 
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 hidepDialog();
-                Snacky.builder()
+              Snacky.builder()
                         .setActivity(imtSwap.this)
                         .setText("Please Check Your Internet Connection")
                         .setDuration(Snacky.LENGTH_SHORT)
                         .setActionText(android.R.string.ok)
                         .error()
                         .show();
+
+              /*  startActivity(new Intent(getApplicationContext(), ImtSmartGraphLayout.class));
+                Toast.makeText(imtSwap.this, "Your Amount is Not detected ", Toast.LENGTH_SHORT).show();*/
             }
         });
 

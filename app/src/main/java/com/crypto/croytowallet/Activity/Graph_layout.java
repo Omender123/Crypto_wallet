@@ -1,5 +1,6 @@
 package com.crypto.croytowallet.Activity;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -8,6 +9,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.icu.text.DecimalFormat;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -56,7 +59,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
 
     TextView swap,price,balance,coinname,coinsymbols,coinprice,sync,increaseRate,null1;
     private Exchange exchange;
-    int position,balance1,price1;
+    int position;
     String symbol,image,coinName,change,CurrencySymbols;
     ImageView back,received,send;
     KProgressHUD progressDialog;
@@ -64,6 +67,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
     private LineChart chart;
     UserData userData;
     CircleImageView circleImageView;
+    String balance1,  price1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,7 +101,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         image = preferences.getString("image", null);
         coinName = preferences.getString("coinName", null);
         change = preferences.getString("change", null);*/
-        preferences=getApplicationContext().getSharedPreferences("symbols", Context.MODE_PRIVATE);
+       // preferences=getApplicationContext().getSharedPreferences("symbols", Context.MODE_PRIVATE);
         position = Updated_data.getInstans(getApplicationContext()).getUserId();
         price1 =Updated_data.getInstans(getApplicationContext()).getprice();
         symbol = Updated_data.getInstans(getApplicationContext()).getmobile();
@@ -105,13 +109,14 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         coinName =Updated_data.getInstans(getApplicationContext()).getUsername();
         change =Updated_data.getInstans(getApplicationContext()).getChange();
 
+      //  Toast.makeText(this, ""+symbol, Toast.LENGTH_SHORT).show();
+
         sharedPreferences =getApplicationContext().getSharedPreferences("currency",0);
 
         CurrencySymbols =sharedPreferences.getString("Currency_Symbols","$");
 
         //   Log.d("price",getString(price1));
-        System.out.println("p"+price1);
-        Toast.makeText(this, ""+price1, Toast.LENGTH_SHORT).show();
+
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
 
@@ -229,7 +234,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
     public void getBalance(){
 
         String token = userData.getToken();
-
+       String  symbols = Updated_data.getInstans(getApplicationContext()).getmobile();
         progressDialog = KProgressHUD.create(Graph_layout.this)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel("Please wait.....")
@@ -239,9 +244,10 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                 .show();
 
         showpDialog();
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().Balance(token,symbol);
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().Balance(token,symbols);
 
         call.enqueue(new Callback<ResponseBody>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 String s =null;
@@ -250,15 +256,32 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                 if (response.code()==200){
                     try {
                         s=response.body().string();
-
+/*
                         JSONObject jsonObject = new JSONObject(s);
                         balance1 = jsonObject.getInt("balance");
 
+                        String bal =jsonObject.getString("balance");
+                        Toast.makeText(Graph_layout.this, ""+bal, Toast.LENGTH_SHORT).show();
                       //  int price2 = Integer.parseInt(price1);
                         Double balance2 = Double.valueOf(balance1*price1);
 
-                        balance.setText(CurrencySymbols+balance2);
-                        coinprice.setText(""+balance1);
+                     //   balance.setText(CurrencySymbols+balance2);
+                       coinprice.setText(""+bal);*/
+
+                        JSONObject jsonObject = new JSONObject(s);
+                        balance1 = jsonObject.getString("balance");
+
+
+                        double balance2 = Double.parseDouble(balance1);
+                        double price = Double.parseDouble(price1);
+                        double total = balance2*price;
+                        DecimalFormat df = new DecimalFormat();
+                        df.setMaximumFractionDigits(2);
+
+                        balance.setText(CurrencySymbols+df.format(total));
+                        coinprice.setText(""+df.format(balance2));
+
+                       // Log.d("bal",df.format(total));
 
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();

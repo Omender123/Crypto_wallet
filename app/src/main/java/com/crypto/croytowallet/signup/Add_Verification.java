@@ -191,7 +191,7 @@ Button skip;
                 // This method will be executed once the timer is over
                 expire();
             }
-        }, 300000);
+        }, 60000);
     }
 
     public void expire(){

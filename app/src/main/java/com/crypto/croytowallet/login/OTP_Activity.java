@@ -111,6 +111,7 @@ Button next2;
                             .setDuration(Snacky.LENGTH_SHORT)
                             .success()
                             .show();
+                    OTPexpire();
                 }else if(response.code()==400){
                     hideKeyboard(view);
                     try {
@@ -127,7 +128,7 @@ Button next2;
                                 .error()
                                 .show();
 
-                        OTPexpire();
+
                         // Toast.makeText(SignUp.this, jsonObject1.getString("error")+"", Toast.LENGTH_SHORT).show();
 
 
@@ -196,7 +197,7 @@ Button next2;
                 // This method will be executed once the timer is over
                 expire();
             }
-        }, 300000);
+        }, 60000);
     }
 
     public void expire(){

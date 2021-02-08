@@ -46,7 +46,7 @@ private CryptoClickListner cryptoClickListner;
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
         String image=crptoInfoModels.get(position).getImage();
         String iconname= crptoInfoModels.get(position).getName();
-       int CurrentPrice= crptoInfoModels.get(position).getCurrentPrice();
+       String  CurrentPrice= crptoInfoModels.get(position).getCurrentPrice();
         String currencyRate= crptoInfoModels.get(position).getCurrencyRate();
         String highRate= crptoInfoModels.get(position).getCurrencyRate();
         String lowRate= crptoInfoModels.get(position).getCurrencyRate();

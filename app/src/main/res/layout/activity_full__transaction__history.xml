@@ -51,16 +51,35 @@ tools:context=".TransactionHistory.Full_Transaction_History">
         android:textAlignment="center"
         android:textColor="@color/toolbar_text_color"
         android:textSize="15dp" />
-    <TextView
-        android:id="@+id/dateTime"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:text="date and time"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@color/toolbar_text_color"
-        android:textSize="15dp" />
+        android:orientation="horizontal"
+        android:layout_marginTop="3dp"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/transaction_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/toolbar_text_color"
+
+            android:fontFamily="@font/montserrat"/>
+        <TextView
+            android:id="@+id/transaction_Time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:maxLength="8"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/toolbar_text_color"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:fontFamily="@font/montserrat"/>
+    </LinearLayout>
+
 
     <RelativeLayout
         android:id="@+id/relat"
@@ -73,7 +92,7 @@ tools:context=".TransactionHistory.Full_Transaction_History">
         app:layout_constraintTop_toBottomOf="@+id/textView2">
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/history_share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -95,14 +114,14 @@ tools:context=".TransactionHistory.Full_Transaction_History">
             android:layout_alignParentEnd="true"
             android:layout_marginTop="45dp"
             android:gravity="center"
-            android:text="Money Paid"
+            android:text="Total Amount"
             android:textColor="@color/black" />
 
         <TextView
+            android:id="@+id/amount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/monenypaid"
-            android:text="$200000"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="25dp"
@@ -157,26 +176,26 @@ tools:context=".TransactionHistory.Full_Transaction_History">
 
 
             <TextView
+                android:id="@+id/trans_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/text"
                 android:layout_toEndOf="@+id/view"
                 android:layout_marginLeft="20dp"
-                android:fontFamily="sans-serif-black"
-                android:justificationMode="inter_word"
-                android:text="P82458187644"
+                android:fontFamily="@font/montserrat"
                 android:textColor="#000"
-                android:textSize="17dp" />
+                android:textSize="15dp" />
 
             <TextView
-                android:id="@+id/textView20"
+                android:id="@+id/btn_copy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginRight="20dp"
                 android:layout_alignParentRight="true"
                 android:text="Copy"
                 android:textStyle="bold"
+                android:fontFamily="@font/montserrat"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/purple_500"/>
 
@@ -201,6 +220,7 @@ tools:context=".TransactionHistory.Full_Transaction_History">
         android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
+        android:visibility="gone"
         app:cardBackgroundColor="@color/card_background">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -223,15 +243,14 @@ tools:context=".TransactionHistory.Full_Transaction_History">
 
 
             <TextView
-                android:id="@+id/transUsername"
+                android:id="@+id/receiver_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/paidto"
                 android:layout_toEndOf="@+id/view1"
                 android:layout_marginLeft="20dp"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="@font/montserrat"
                 android:justificationMode="inter_word"
-                android:text="Username"
                 android:textColor="#000"
                 android:textSize="17dp" />
 
@@ -249,10 +268,10 @@ tools:context=".TransactionHistory.Full_Transaction_History">
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
         android:id="@+id/card3"
-
         android:layout_width="match_parent"
         android:layout_height="70dp"
         app:cardElevation="5dp"
+        android:visibility="gone"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
@@ -282,7 +301,7 @@ tools:context=".TransactionHistory.Full_Transaction_History">
                 android:layout_below="@id/transstatus"
                 android:layout_toEndOf="@+id/view3"
                 android:layout_marginLeft="20dp"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="@font/montserrat"
                 android:justificationMode="inter_word"
                 android:text="Done"
                 android:textColor="#000"
@@ -329,6 +348,7 @@ tools:context=".TransactionHistory.Full_Transaction_History">
         android:layout_marginLeft="100dp"
         android:layout_marginTop="20dp"
         android:layout_gravity="center"
+        android:visibility="gone"
         android:background="@drawable/border"
         android:text="Hide Details"
         android:textAllCaps="false"
