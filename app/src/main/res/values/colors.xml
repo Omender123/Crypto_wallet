@@ -24,4 +24,7 @@
     <color name="green">#00E676</color>
     <color name="red">#FF1100</color>
     <color name="light_gray">@android:color/darker_gray</color>
+    <color name="border_color">#F1BB0E</color>
+    <color name="txt_hide">#DAD8D8</color>
+
 </resources>

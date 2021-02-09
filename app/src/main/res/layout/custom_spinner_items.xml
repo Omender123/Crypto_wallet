@@ -6,17 +6,39 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:padding="5dp"
         android:src="@mipmap/imt" /><!--Make sure image is present in Drawable folder-->
 
-    <TextView
-        android:id="@+id/textView"
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="8dp"
-        android:text="Demo"
-        android:textColor="#000" />
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/coinName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="3dp"
+            android:text="ImSmart"
+            android:textColor="@color/toolbar_text_color"
+            android:fontFamily="@font/montserrat"
+            android:textSize="17dp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/coinsymbols"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="imt"
+            android:textColor="@color/toolbar_text_color"
+            android:fontFamily="@font/montserrat"
+            android:textSize="17dp"
+            android:layout_marginBottom="3dp"/>
+    </LinearLayout>
+
 </LinearLayout>

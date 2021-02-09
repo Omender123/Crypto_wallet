@@ -2,6 +2,7 @@ package com.crypto.croytowallet.ImtSmart;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,12 +10,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crypto.croytowallet.Activity.Setting;
+import com.crypto.croytowallet.Adapter.CustomSpinnerAdapter;
+import com.crypto.croytowallet.AppUtils;
 import com.crypto.croytowallet.MainActivity;
+import com.crypto.croytowallet.Payment.Top_up_Money;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
@@ -35,15 +40,21 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class imtSwap extends AppCompatActivity  {
+public class imtSwap extends AppCompatActivity implements View.OnClickListener {
     Spinner sendSpinner, reciveSpinner;
     String sendData, receviedData,SwapAmount;
-    ImageView imageView;
-    TextView swapBtn;
+    ImageView imageView,img_low,img_average,img_high;
+    TextView swapBtn,txt_low,txt_average,txt_high,gwei_low,gwei_average,gwei_high,min_low,min_average,min_high;
+    LinearLayout lyt_low,lyt_average,lyt_high;
     EditText enter_Swap_Amount;
-    String[] currency1 = {"select Currency ","imt","airdrop"};
+    String [] coinName ={"ImSmart","Airdrop"};
+    String [] coinSymbols ={"imt","airdrop"};
+    int [] coinImage = {R.mipmap.imt,R.mipmap.airdrop};
 
-    String[] currency2 = {"select Currency ","imt","airdrop"};
+    String [] coinName1 ={"Airdrop","ImSmart"};
+    String [] coinSymbols1 ={"airdrop","imt"};
+    int [] coinImage1 = {R.mipmap.airdrop,R.mipmap.imt};
+
     KProgressHUD progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,20 +63,37 @@ public class imtSwap extends AppCompatActivity  {
         sendSpinner = findViewById(R.id.sendSpinner);
         reciveSpinner = findViewById(R.id.recivedSpiner);
         imageView = findViewById(R.id.back);
-
         enter_Swap_Amount = findViewById(R.id.enter_swap);
-        swapBtn = findViewById(R.id.swap_btn);
+         swapBtn = findViewById(R.id.swap_btn);
+         lyt_low = findViewById(R.id.lyt_low);
+         lyt_average = findViewById(R.id.lyt_average);
+         lyt_high = findViewById(R.id.lyt_high);
+         txt_low = findViewById(R.id.txt_low);
+         txt_average = findViewById(R.id.txt_average);
+         txt_high = findViewById(R.id.txt_high);
+        img_low = findViewById(R.id.img_low);
+        img_average = findViewById(R.id.img_average);
+        img_high = findViewById(R.id.img_high);
+        gwei_low = findViewById(R.id.gwei_low);
+        gwei_average = findViewById(R.id.gwei_average);
+        gwei_high = findViewById(R.id.gwei_high);
+        min_low = findViewById(R.id.min_low);
+        min_average = findViewById(R.id.min_average);
+        min_high = findViewById(R.id.min_high);
+
+         lyt_low.setOnClickListener(this);
+         lyt_average.setOnClickListener(this);
+        lyt_high.setOnClickListener(this);
 
 
-
-        ArrayAdapter<String> aa = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, currency1);
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sendSpinner.setAdapter(aa);
+        CustomSpinnerAdapter customAdapter=new CustomSpinnerAdapter(getApplicationContext(),coinImage,coinName,coinSymbols);
+        sendSpinner.setAdapter(customAdapter);
         sendSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                sendData=currency1[position];
-                Toast.makeText(view.getContext(), sendData,Toast.LENGTH_SHORT).show();
+                sendData=coinSymbols[position];
+              //  Toast.makeText(view.getContext(), sendData,Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
@@ -74,16 +102,15 @@ public class imtSwap extends AppCompatActivity  {
             }
         });
 
+        CustomSpinnerAdapter customAdapter1=new CustomSpinnerAdapter(getApplicationContext(),coinImage1,coinName1,coinSymbols1);
 
-        ArrayAdapter<String> bb = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, currency2);
-        bb.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        reciveSpinner.setAdapter(bb);
+        reciveSpinner.setAdapter(customAdapter1);
         reciveSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                receviedData=coinSymbols[position];
+               // Toast.makeText(view.getContext(), receviedData,Toast.LENGTH_SHORT).show();
 
-                receviedData=currency2[position];
-              Toast.makeText(view.getContext(), receviedData,Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -92,7 +119,8 @@ public class imtSwap extends AppCompatActivity  {
             }
         });
 
-            back();
+
+      back();
 
             swapBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -146,15 +174,15 @@ public class imtSwap extends AppCompatActivity  {
 
                         if (s==null){
                             startActivity(new Intent(getApplicationContext(), ImtSmartGraphLayout.class));
-                          //  Toast.makeText(imtSwap.this, "Error  occurred in Transaction", Toast.LENGTH_SHORT).show();
+                          Toast.makeText(imtSwap.this, "Error  occurred in Transaction", Toast.LENGTH_SHORT).show();
                         }else {
                             startActivity(new Intent(getApplicationContext(), ImtSmartGraphLayout.class));
-                            Toast.makeText(imtSwap.this, " Successfully "+sendData+"to"+receviedData, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(imtSwap.this, " Successfully \t"+sendData+"\t to \t"+receviedData, Toast.LENGTH_SHORT).show();
                         }
 
 
 
-                        Toast.makeText(imtSwap.this, ""+s, Toast.LENGTH_SHORT).show();
+                  //      Toast.makeText(imtSwap.this, ""+s, Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -202,16 +230,26 @@ public class imtSwap extends AppCompatActivity  {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 hidepDialog();
-              Snacky.builder()
+            /*  Snacky.builder()
                         .setActivity(imtSwap.this)
                         .setText("Please Check Your Internet Connection")
                         .setDuration(Snacky.LENGTH_SHORT)
                         .setActionText(android.R.string.ok)
                         .error()
-                        .show();
+                        .show();*/
 
               /*  startActivity(new Intent(getApplicationContext(), ImtSmartGraphLayout.class));
                 Toast.makeText(imtSwap.this, "Your Amount is Not detected ", Toast.LENGTH_SHORT).show();*/
+
+                AppUtils.showMessageOKCancel("Your transaction is in process. Kindly check again for the confirmation.", imtSwap.this, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(imtSwap.this, ImtSmartGraphLayout.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+
             }
         });
 
@@ -248,4 +286,68 @@ public class imtSwap extends AppCompatActivity  {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+
+            case R.id.lyt_low:
+                lyt_average.setBackground(null);
+                lyt_low.setBackground(getResources().getDrawable(R.drawable.backgorund_border1));
+                lyt_high.setBackground(null);
+                txt_average.setTextColor(getResources().getColor(R.color.black));
+                txt_low.setTextColor(getResources().getColor(R.color.white));
+                txt_high.setTextColor(getResources().getColor(R.color.black));
+                img_high.setVisibility(View.GONE);
+                img_low.setVisibility(View.VISIBLE);
+                img_average.setVisibility(View.GONE);
+                gwei_low.setTextColor(getResources().getColor(R.color.toolbar_text_color));
+                gwei_average.setTextColor(getResources().getColor(R.color.txt_hide));
+                gwei_high.setTextColor(getResources().getColor(R.color.txt_hide));
+                min_low.setTextColor(getResources().getColor(R.color.light_gray));
+                min_average.setTextColor(getResources().getColor(R.color.txt_hide));
+                min_high.setTextColor(getResources().getColor(R.color.txt_hide));
+
+                break;
+
+            case R.id.lyt_average:
+                lyt_average.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                lyt_low.setBackground(null);
+                lyt_high.setBackground(null);
+                txt_average.setTextColor(getResources().getColor(R.color.white));
+                txt_low.setTextColor(getResources().getColor(R.color.black));
+                txt_high.setTextColor(getResources().getColor(R.color.black));
+                img_high.setVisibility(View.GONE);
+                img_low.setVisibility(View.GONE);
+                img_average.setVisibility(View.VISIBLE);
+                gwei_low.setTextColor(getResources().getColor(R.color.txt_hide));
+                gwei_average.setTextColor(getResources().getColor(R.color.toolbar_text_color));
+                gwei_high.setTextColor(getResources().getColor(R.color.txt_hide));
+                min_low.setTextColor(getResources().getColor(R.color.txt_hide));
+                min_average.setTextColor(getResources().getColor(R.color.light_gray));
+                min_high.setTextColor(getResources().getColor(R.color.txt_hide));
+
+                break;
+
+            case R.id.lyt_high:
+                lyt_low.setBackground(null);
+                lyt_average.setBackground(null);
+                lyt_high.setBackground(getResources().getDrawable(R.drawable.background_border2));
+                txt_high.setTextColor(getResources().getColor(R.color.white));
+                txt_average.setTextColor(getResources().getColor(R.color.black));
+                txt_low.setTextColor(getResources().getColor(R.color.black));
+                img_high.setVisibility(View.VISIBLE);
+                img_low.setVisibility(View.GONE);
+                img_average.setVisibility(View.GONE);
+
+                gwei_low.setTextColor(getResources().getColor(R.color.txt_hide));
+                gwei_average.setTextColor(getResources().getColor(R.color.txt_hide));
+                gwei_high.setTextColor(getResources().getColor(R.color.toolbar_text_color));
+                min_low.setTextColor(getResources().getColor(R.color.txt_hide));
+                min_average.setTextColor(getResources().getColor(R.color.txt_hide));
+                min_high.setTextColor(getResources().getColor(R.color.light_gray));
+
+                break;
+
+        }
+    }
 }

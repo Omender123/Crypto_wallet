@@ -1,5 +1,6 @@
 package com.crypto.croytowallet.Activity;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.icu.text.DecimalFormat;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -118,6 +121,7 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
         showpDialog();
 
         StringRequest stringRequest =new StringRequest(Request.Method.GET, url1, new Response.Listener<String>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onResponse(String response) {
                 hidepDialog();
@@ -131,7 +135,11 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
                     textView.setText(checkBalance+".00");
 
                     Double balance = checkBalance*0.09;
-                    textView1.setText(CurrencySymbols+balance);
+                    DecimalFormat df = new DecimalFormat();
+                    df.setMaximumFractionDigits(2);
+                    textView1.setText(CurrencySymbols+df.format(balance));
+
+                  //  textView1.setText(CurrencySymbols+balance);
 
                 } catch (JSONException e) {
                     e.printStackTrace();

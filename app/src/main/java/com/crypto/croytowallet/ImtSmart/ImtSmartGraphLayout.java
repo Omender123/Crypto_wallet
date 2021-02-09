@@ -191,7 +191,10 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
     public void onBackPressed() {
         super.onBackPressed();
 
-        onSaveInstanceState(new Bundle());
+     //   onSaveInstanceState(new Bundle());
+        Intent intent = new Intent(ImtSmartGraphLayout.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     public void getBalance(){

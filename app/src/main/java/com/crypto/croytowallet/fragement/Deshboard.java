@@ -4,6 +4,8 @@ package com.crypto.croytowallet.fragement;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.icu.text.DecimalFormat;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -237,6 +240,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
 
 
      StringRequest stringRequest =new StringRequest(Request.Method.GET, url1, new Response.Listener<String>() {
+         @RequiresApi(api = Build.VERSION_CODES.N)
          @Override
          public void onResponse(String response) {
           //   Toast.makeText(getContext(), ""+response, Toast.LENGTH_SHORT).show();
@@ -251,7 +255,9 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
                 textView.setText(checkBalance+".00");
 
                 Double balance = checkBalance*0.09;
-                 textView1.setText(CurrencySymbols+balance);
+                 DecimalFormat df = new DecimalFormat();
+                 df.setMaximumFractionDigits(2);
+                 textView1.setText(CurrencySymbols+df.format(balance));
               //   Toast.makeText(getContext(), ""+checkBalance, Toast.LENGTH_SHORT).show();
              } catch (JSONException e) {
                  e.printStackTrace();
