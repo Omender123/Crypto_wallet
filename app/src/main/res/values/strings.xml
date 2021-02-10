@@ -164,4 +164,6 @@
     <string name="transaction_text">No Transaction History</string>
     <string name="ticket_text">No Old Ticket History</string>
     <string name="add_currency">Add Currency</string>
+
+    <string name="txt_pin">Kindly enter your transaction PIN.  Which you created while sign up.</string>
 </resources>
