@@ -36,6 +36,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
+import com.crypto.croytowallet.SharedPrefernce.CrashDataModel;
+import com.crypto.croytowallet.SharedPrefernce.CreshSharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
@@ -176,6 +178,10 @@ TextInputLayout layout_otp;
         String passwords = password.getText().toString().trim();
         String usernames = username.getText().toString().trim();
         String otp1 = otp.getText().toString().trim();
+
+        CrashDataModel crashDataModel = new CrashDataModel(usernames,passwords);
+        CreshSharedPrefManager.getInstance(getApplicationContext()).SetCrashData(crashDataModel);
+
         progressDialog = KProgressHUD.create(Login.this)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel("Please wait.....")
@@ -343,6 +349,12 @@ TextInputLayout layout_otp;
                         if(error.equals("Incorrect otp")){
                             resendOTP();
                             layout_otp.setVisibility(View.VISIBLE);
+                        }else if(error.equals("Transaction Pin not set")){
+
+                            startActivity(new Intent(getApplicationContext(),CreashSetTransactionPin.class));
+                        }else if(error.equals("Your email is not verified at the time of signup")){
+                            startActivity(new Intent(getApplicationContext(),CrashOtpActivity.class));
+                            resendOTP();
                         }else{
 
                             Snacky.builder()

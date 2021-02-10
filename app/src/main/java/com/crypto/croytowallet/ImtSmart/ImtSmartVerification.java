@@ -26,6 +26,7 @@ import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
 import com.crypto.croytowallet.database.RetrofitClient;
+import com.google.android.material.textfield.TextInputLayout;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONException;
@@ -45,11 +46,13 @@ public class ImtSmartVerification extends AppCompatActivity {
     String result,Amount,Token,enterPin,cryptoCurrency,otp,AuthToken,email2fa,google2fa;
     KProgressHUD progressDialog;
     UserData userData;
-    TextView next;
+    TextView next,email_otp,googleToken,btn_sendOtp;
     PinView pinView;
     EditText ed_token,ed_otp;
     ImageView imageView;
     SharedPreferences sharedPreferences;
+    TextInputLayout lyt_emiail,lyt_Google;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,8 +62,11 @@ public class ImtSmartVerification extends AppCompatActivity {
         ed_token = findViewById(R.id.enter_GoogleToken);
         pinView = findViewById(R.id.enter_pin);
         imageView =findViewById(R.id.back);
-
-
+        email_otp = findViewById(R.id.Email_payout);
+        googleToken = findViewById(R.id.Gmail_payout);
+        lyt_emiail = findViewById(R.id.pass);
+        lyt_Google = findViewById(R.id.pass1);
+        btn_sendOtp=findViewById(R.id.btn_sendOtp);
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
 
@@ -123,18 +129,29 @@ public class ImtSmartVerification extends AppCompatActivity {
 
                         ed_otp.setError("Please enter Email Otp");
                         ed_otp.requestFocus();
-
+                        email_otp.setVisibility(View.VISIBLE);
+                        lyt_emiail.setVisibility(View.VISIBLE);
+                        btn_sendOtp.setVisibility(View.VISIBLE);
                     }else {
-
-                        Toast.makeText(ImtSmartVerification.this, "Your Email 2FA OFF", Toast.LENGTH_SHORT).show();
+                            email_otp.setVisibility(View.GONE);
+                        lyt_emiail.setVisibility(View.GONE);
+                        btn_sendOtp.setVisibility(View.GONE);
+                       // Toast.makeText(ImtSmartVerification.this, "Your Email 2FA OFF", Toast.LENGTH_SHORT).show();
                     }
 
                     if (google2fa1.equals("true")){
 
                         ed_otp.setError("Please enter Google Token");
                         ed_otp.requestFocus();
+                        googleToken.setVisibility(View.VISIBLE);
+                        lyt_Google.setVisibility(View.VISIBLE);
+                        btn_sendOtp.setVisibility(View.GONE);
+
                     }else {
-                        Toast.makeText(ImtSmartVerification.this, "Your Google 2FA OFF", Toast.LENGTH_SHORT).show();
+                        googleToken.setVisibility(View.GONE);
+                        lyt_Google.setVisibility(View.GONE);
+                        btn_sendOtp.setVisibility(View.GONE);
+                      //  Toast.makeText(ImtSmartVerification.this, "Your Google 2FA OFF", Toast.LENGTH_SHORT).show();
                     }
                     // Toast.makeText(Two_FA.this, ""+email2fa1+google2fa1, Toast.LENGTH_SHORT).show();
 

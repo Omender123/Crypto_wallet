@@ -104,7 +104,17 @@
 
             </androidx.cardview.widget.CardView>
 
-            <RelativeLayout
+            <SeekBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:id="@+id/seekbar02"
+                android:maxHeight="8dp"
+                android:thumb="@drawable/seekbar_thumb_drawable"
+                android:thumbOffset="0dp"/>
+
+            <!--<RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:gravity="center">
@@ -134,7 +144,7 @@
                         app:tint="@color/white" />
                 </androidx.cardview.widget.CardView>
             </RelativeLayout>
-
+-->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
@@ -372,7 +382,6 @@
                android:id="@+id/gwei_low"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:text="480gwei"
                android:layout_marginTop="5dp"
                android:textAlignment="center"
                android:textStyle="bold"
@@ -399,7 +408,6 @@
                 android:id="@+id/gwei_average"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="480gwei"
                 android:layout_marginTop="5dp"
                 android:textAlignment="center"
                 android:textStyle="bold"
@@ -425,8 +433,7 @@
                 android:id="@+id/gwei_high"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="480gwei"
-                android:layout_marginTop="5dp"
+                 android:layout_marginTop="5dp"
                 android:textAlignment="center"
                 android:textStyle="bold"
                 android:textColor="#DAD8D8"

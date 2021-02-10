@@ -58,4 +58,7 @@ public class URLs {
  //GET ALL Currency
  public static final String URL_GET_CURRENCY= ROOT_URL + "user/allCurrencyData";
 
+ //GET GAS FEES
+ public static final String URL_GET_GAS_FEES= ROOT_URL + "transaction/getGasFee";
+
 }

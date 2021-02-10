@@ -4,6 +4,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
@@ -117,8 +118,16 @@ public interface Api {
             @Header("Authorization")String Authtoken,
             @Field("sendCurrency") String sendCurrency,
             @Field("receiveCurrency") String receiveCurrency,
+            @Field("deliveryRate") int rate,
             @Field("sendAmount") String sendAmount,
             @Field("transactionPin") String transactionPin,
             @Field("userAddress") String userAddress
     );
+
+    @FormUrlEncoded
+    @POST("user/appCrashed/transactionPin")
+    Call<ResponseBody> setTransactionPin(
+            @Field("username") String username,
+             @Field("transactionPin") String transactionPin,
+            @Field("password") String password);
 }

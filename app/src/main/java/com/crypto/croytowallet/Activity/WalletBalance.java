@@ -176,15 +176,19 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
                        JSONObject  object1=new JSONObject(data);
                         TransactionHistoryModel transactionHistoryModel1=new TransactionHistoryModel();
 
+                        String id = object1.getString("_id");
                         String sendername=object1.getString("senderName");
                         String receviername=object1.getString("receiverName");
                         String amount=object1.getString("amount");
+                        String status =object1.getString("status");
                         String time=object1.getString("updatedAt");
 
-                      transactionHistoryModel1.setStatus(receviername);
-                      transactionHistoryModel1.setUsername(sendername);
-                      transactionHistoryModel1.setAmountTrans(amount);
-                      transactionHistoryModel1.setDate(time);
+                        transactionHistoryModel1.setId(id);
+                        transactionHistoryModel1.setStatus(status);
+                        transactionHistoryModel1.setRecivedName(receviername);
+                        transactionHistoryModel1.setUsername(sendername);
+                        transactionHistoryModel1.setAmountTrans(amount);
+                        transactionHistoryModel1.setDate(time);
 
 
                         transactionHistoryModels.add(transactionHistoryModel1);

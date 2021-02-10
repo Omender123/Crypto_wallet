@@ -473,20 +473,20 @@ public void savedataInDb(){
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        /*Intent intent = new Intent(Top_up_Money.this, MainActivity.class);
+        Intent intent = new Intent(Top_up_Money.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);*/
-        onSaveInstanceState(new Bundle());
+        startActivity(intent);
+      //  onSaveInstanceState(new Bundle());
     }
 
     public void back(){
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              /*  Intent intent = new Intent(Top_up_Money.this, MainActivity.class);
+                Intent intent = new Intent(Top_up_Money.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);*/
-                onBackPressed();
+                startActivity(intent);
+               // onBackPressed();
             }
         });
 
