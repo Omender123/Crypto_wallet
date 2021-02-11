@@ -130,4 +130,28 @@ public interface Api {
             @Field("username") String username,
              @Field("transactionPin") String transactionPin,
             @Field("password") String password);
+
+    @FormUrlEncoded
+    @POST("user/removeCurrentlyActiveDevices")
+    Call<ResponseBody>remove_JWT(
+            @Header("Authorization")String Authtoken,
+            @Field("username") String username,
+            @Field("jwt") String jwt
+    );
+
+    @FormUrlEncoded
+    @POST("user/sendEmailAfterLogin")
+    Call<ResponseBody>Send_Email(
+            @Field("userId") String userId
+    );
+
+    @FormUrlEncoded
+    @POST("user/viewMnemonic")
+    Call<ResponseBody>get_Mnenonic(
+            @Header("Authorization")String Authtoken,
+            @Field("userId") String userId,
+            @Field("transactionPin") String transactionPin,
+            @Field("otp") String otp
+    );
+
 }

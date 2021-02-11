@@ -1,6 +1,7 @@
 package com.crypto.croytowallet.Activity;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.icu.text.DecimalFormat;
@@ -16,6 +18,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,6 +38,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.crypto.croytowallet.Adapter.ActiveDeviceAdapter;
 import com.crypto.croytowallet.Adapter.Ticket_Adapter;
+import com.crypto.croytowallet.ImtSmart.ImtSmartGraphLayout;
+import com.crypto.croytowallet.ImtSmart.imtSwap;
+import com.crypto.croytowallet.Interface.HistoryClickLister;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.Model.ActiveDeviceModel;
 import com.crypto.croytowallet.Model.TicketModel;
@@ -42,6 +49,7 @@ import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
+import com.crypto.croytowallet.database.RetrofitClient;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.apache.http.conn.ConnectTimeoutException;
@@ -51,6 +59,7 @@ import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParserException;
 
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.ConnectException;
 import java.net.MalformedURLException;
@@ -62,8 +71,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.mateware.snacky.Snacky;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
 
-public class Sync_device extends AppCompatActivity {
+public class Sync_device extends AppCompatActivity implements HistoryClickLister {
     ImageView imageView;
     RecyclerView recyclerView;
     ArrayList<ActiveDeviceModel> modelArrayList;
@@ -72,6 +84,7 @@ public class Sync_device extends AppCompatActivity {
     TextView balance ,textView1;
     SharedPreferences sharedPreferences;
     String CurrencySymbols;
+    String jwt_token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,6 +124,8 @@ public class Sync_device extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 hidepDialog();
+
+              //  Log.d("respon",response);
                 try {
                     JSONObject object = new JSONObject(response);
                     String result = object.getString("result");
@@ -125,11 +140,12 @@ public class Sync_device extends AppCompatActivity {
                         String location =jsonObject.getString("location");
                         String osName =jsonObject.getString("osName");
                         String iP_address =jsonObject.getString("ipV4");
+                        String jwt =jsonObject.getString("jwt");
 
                        activeDeviceModel1.setIP_Address(iP_address);
                         activeDeviceModel1.setOS_Name(osName);
                         activeDeviceModel1.setLocation(location);
-
+                        activeDeviceModel1.setJwt(jwt);
                         modelArrayList.add(activeDeviceModel1);
 
                         Collections.reverse(modelArrayList);
@@ -138,7 +154,7 @@ public class Sync_device extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                activeDeviceAdapter =new ActiveDeviceAdapter(modelArrayList,getApplicationContext());
+                activeDeviceAdapter =new ActiveDeviceAdapter(modelArrayList,getApplicationContext(),Sync_device.this);
                 RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(),2);
                 recyclerView.setLayoutManager(mLayoutManager);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -283,4 +299,140 @@ public class Sync_device extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    public void onHistoryItemClickListener(int position) {
+
+        jwt_token =modelArrayList.get(position).getJwt();
+        AlertDialogBox();
+       // Log.d("jwt",modelArrayList.get(position).getJwt());
+      //  Toast.makeText(this, ""+position, Toast.LENGTH_SHORT).show();
+    }
+    public void AlertDialogBox(){
+
+        //Logout
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Sync_device.this);
+
+        // set title
+        alertDialogBuilder.setTitle("Crypto Wallet");
+
+        // set dialog message
+        alertDialogBuilder.setIcon(R.mipmap.ic_launcher_round);
+        alertDialogBuilder
+                .setMessage("Are you sure to Logout !!!!!")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Remove_Jwt();
+                    }
+                })
+                .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Toast.makeText(Sync_device.this, "Logout Failed", Toast.LENGTH_SHORT).show();
+                        dialog.cancel();
+
+                    }
+                });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+    }
+
+    private void Remove_Jwt() {
+        UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
+        String username=user.getUsername();
+        String token = user.getToken();
+
+        progressDialog = KProgressHUD.create(Sync_device.this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Loading.........")
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
+
+        showpDialog();
+
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().remove_JWT(token,username,jwt_token);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                hidepDialog();
+                String s =null;
+                hidepDialog();
+                if (response.code()==200){
+
+                    try {
+                        s=response.body().string();
+
+                        Snacky.builder()
+                                .setActivity(Sync_device.this)
+                                .setText("Successfully remove")
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setTextColor(getResources().getColor(R.color.white))
+                                .setActionText(android.R.string.ok)
+                                .success()
+                                .show();
+                        getActiveDeviceDetails();
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }else if (response.code()==400){
+                    try {
+                        s=response.errorBody().string();
+                        JSONObject jsonObject1=new JSONObject(s);
+                        String error =jsonObject1.getString("error");
+
+
+                        Snacky.builder()
+                                .setActivity(Sync_device.this)
+                                .setText(error)
+                                .setTextColor(getResources().getColor(R.color.white))
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
+
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if (response.code()==401){
+                    Snacky.builder()
+                            .setActivity(Sync_device.this)
+                            .setText("unAuthorization Request")
+                            .setTextColor(getResources().getColor(R.color.white))
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                hidepDialog();
+
+                Snacky.builder()
+                        .setActivity(Sync_device.this)
+                        .setText("Internet Problem")
+                        .setTextColor(getResources().getColor(R.color.white))
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+            }
+        });
+
+    }
+
+
+
+
 }

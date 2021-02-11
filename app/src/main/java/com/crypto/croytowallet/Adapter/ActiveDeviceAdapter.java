@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.crypto.croytowallet.Interface.HistoryClickLister;
 import com.crypto.croytowallet.Model.ActiveDeviceModel;
 import com.crypto.croytowallet.R;
 
@@ -17,10 +18,11 @@ import java.util.ArrayList;
 public class ActiveDeviceAdapter extends RecyclerView.Adapter<ActiveDeviceAdapter.myViewHolder> {
 ArrayList<ActiveDeviceModel> modelArrayList;
 Context context;
-
-    public ActiveDeviceAdapter(ArrayList<ActiveDeviceModel> modelArrayList, Context context) {
+    private HistoryClickLister historyClickLister;
+    public ActiveDeviceAdapter(ArrayList<ActiveDeviceModel> modelArrayList, Context context ,HistoryClickLister historyClickLister) {
         this.modelArrayList = modelArrayList;
         this.context = context;
+        this.historyClickLister=historyClickLister;
     }
 
     public ActiveDeviceAdapter() {
@@ -56,6 +58,13 @@ Context context;
             Os_Name=itemView.findViewById(R.id.osname);
             IP_Address=itemView.findViewById(R.id.ip_address);
             Location=itemView.findViewById(R.id.location);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    historyClickLister.onHistoryItemClickListener(getAdapterPosition());
+                }
+            });
 
         }
     }

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -45,7 +46,7 @@ public class Two_FA extends AppCompatActivity {
     KProgressHUD progressDialog;
     UserData userData;
     SharedPreferences sharedPreferences = null;
-    String  email2fa1,google2fa1;
+    Boolean booleanValue,booleanValue1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,13 +62,13 @@ public class Two_FA extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("night",0);
 
         // for email2fa
-        Boolean booleanValue = sharedPreferences.getBoolean("email2fa",false);
+         booleanValue = sharedPreferences.getBoolean("email2fa",false);
         if (booleanValue){
             email_to_fa.setToggleOn(true);
         }
 
         // for google2fa
-        Boolean booleanValue1 = sharedPreferences.getBoolean("google2fa",false);
+        booleanValue1 = sharedPreferences.getBoolean("google2fa",false);
         if (booleanValue1){
             google_to_fa.setToggleOn(true);
         }
@@ -119,6 +120,8 @@ public class Two_FA extends AppCompatActivity {
 
         back();
         get2fa();
+
+
 
 
     }
@@ -315,29 +318,14 @@ public class Two_FA extends AppCompatActivity {
                     String result =  object.getString("result");
                     JSONObject object1 = new JSONObject(result);
 
-                    email2fa1 = object1.getString("email2fa");
-                    google2fa1 = object1.getString("google2fa");
+                    booleanValue = object1.getBoolean("email2fa");
+                    booleanValue1 = object1.getBoolean("google2fa");
 
-
-                  if (email2fa1.equals("true")){
-                        email_to_fa.setToggleOn(true);
-                    }else {
-                        email_to_fa.setToggleOff(true);
-                    }
-
-                    if (google2fa1.equals("true")){
-                        google_to_fa.setToggleOn(true);
-                    }else {
-                        google_to_fa.setToggleOff(true);
-
-
-                    }
-                  // Toast.makeText(Two_FA.this, ""+email2fa1+google2fa1, Toast.LENGTH_SHORT).show();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                // Toast.makeText(Two_FA.this, ""+response, Toast.LENGTH_SHORT).show();
+
             }
 
         }, new Response.ErrorListener() {
@@ -353,7 +341,7 @@ public class Two_FA extends AppCompatActivity {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<String, String>();
 
-               headers.put("Authorization", token);
+                headers.put("Authorization", token);
 
                 return headers;
             }

@@ -94,7 +94,7 @@ public class Setting extends AppCompatActivity implements View.OnClickListener {
                 startActivity(new Intent(getApplicationContext(),Sync_device.class));
                 break;
             case R.id.restore_wallet:
-                startActivity(new Intent(getApplicationContext(),Scretephases.class));
+
                 break;
             case R.id.notification:
                 Snacky.builder()

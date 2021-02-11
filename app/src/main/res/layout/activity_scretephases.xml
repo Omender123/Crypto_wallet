@@ -59,13 +59,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginBottom="20dp"
+                android:gravity="center"
                 android:weightSum="3">
                 <ImageView
                     android:id="@+id/imageView2"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginTop="5dp"
-                 android:layout_gravity="center"
+                    android:layout_gravity="center"
                     android:textAlignment="center"
                     app:srcCompat="@drawable/ic_baseline_dashboard_24_yellow"
                     tools:ignore="VectorDrawableCompat" />
@@ -73,7 +74,9 @@
                     android:id="@+id/textView4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Press and hold to reveal"
+                    android:text="Click to DownloadButton"
+                    android:textColor="#000"
+                    android:textStyle="bold"
                     android:textAlignment="center" />
 
                 <TextView
@@ -82,306 +85,135 @@
                     android:layout_height="wrap_content"
 
                     android:fontFamily="@font/montserrat"
-                    android:text="Scroll down and"
+                    android:text="For Download Mnemonic"
                     android:textAlignment="center"
                     android:textColor="#000"
                     android:textStyle="bold" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:id="@+id/text1"
+                    android:text="1. Apple"
+                    android:textAlignment="center"
+                    android:layout_marginTop="10dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/toolbar_text_color"
+                    android:fontFamily="@font/montserrat"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:id="@+id/text2"
+                    android:text="1. Apple"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/toolbar_text_color"
+                    android:fontFamily="@font/montserrat"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:id="@+id/text3"
+                    android:text="1. Apple"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/toolbar_text_color"
+                    android:fontFamily="@font/montserrat"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:id="@+id/text4"
+                    android:text="1. Apple"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/toolbar_text_color"
+                    android:fontFamily="@font/montserrat"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:id="@+id/text5"
+                    android:text="1. Apple"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/toolbar_text_color"
+                    android:fontFamily="@font/montserrat"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:id="@+id/text6"
+                    android:text="1. Apple"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/toolbar_text_color"
+                    android:fontFamily="@font/montserrat"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:id="@+id/text7"
+                    android:text="1. Apple"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/toolbar_text_color"
+                    android:fontFamily="@font/montserrat"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:id="@+id/text8"
+                    android:text="1. Apple"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/toolbar_text_color"
+                    android:fontFamily="@font/montserrat"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:id="@+id/text9"
+                    android:text="1. Apple"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/toolbar_text_color"
+                    android:fontFamily="@font/montserrat"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:id="@+id/text10"
+                    android:text="1. Apple"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/toolbar_text_color"
+                    android:fontFamily="@font/montserrat"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:id="@+id/text11"
+                    android:text="1. Apple"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/toolbar_text_color"
+                    android:fontFamily="@font/montserrat"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:id="@+id/text12"
+                    android:text="1. Apple"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/toolbar_text_color"
+                    android:fontFamily="@font/montserrat"
+                    android:textSize="20dp"/>
+
             </LinearLayout>
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:weightSum="10"
-    android:orientation="vertical"
-    android:gravity="center">
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:weightSum="2"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
-        <TextView
-                android:id="@+id/T1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-        android:layout_marginRight="2dp"
-                android:fontFamily="@font/montserrat"
-                android:text="1"
-                android:textAlignment="center"
-                android:textColor="#000"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textA"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat"
-                android:text="  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _"
-                android:textAlignment="center"
-                android:textColor="#000"
-                android:textStyle="bold" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:weightSum="2"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/T2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="2dp"
-            android:fontFamily="@font/montserrat"
-            android:text="2"
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat"
-            android:text="  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _"
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:weightSum="2"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/T3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="2dp"
-            android:fontFamily="@font/montserrat"
-            android:text="3"
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textD"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat"
-            android:text="  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _"
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:weightSum="2"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/T4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="2dp"
-            android:fontFamily="@font/montserrat"
-            android:text="4"
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textC"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat"
-            android:text="  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _"
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:weightSum="2"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/T5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="2dp"
-            android:fontFamily="@font/montserrat"
-            android:text="5"
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textE"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat"
-            android:text="  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _"
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:weightSum="2"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/T6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="2dp"
-            android:fontFamily="@font/montserrat"
-            android:text="6"
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textF"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat"
-            android:text="  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _"
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:weightSum="2"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/T7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="2dp"
-            android:fontFamily="@font/montserrat"
-            android:text="7"
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textG"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat"
-            android:text="  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _"
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:weightSum="2"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/T8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="2dp"
-            android:fontFamily="@font/montserrat"
-            android:text="8"
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textH"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat"
-            android:text="  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _"
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:weightSum="2"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/T9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="2dp"
-            android:fontFamily="@font/montserrat"
-            android:text="9"
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textI"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat"
-            android:text="  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _"
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:weightSum="2"
-        android:layout_marginBottom="50dp"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/T10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="2dp"
-            android:fontFamily="@font/montserrat"
-            android:text="10"
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textJ"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat"
-            android:text="  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _"
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-</LinearLayout>
 
         </RelativeLayout>
         </androidx.cardview.widget.CardView>
@@ -393,7 +225,7 @@
         android:layout_below="@+id/cardView"
         android:layout_marginTop="-30dp"
         android:layout_marginBottom="-20dp"
-        android:text="Hellow dasadad ad asdad a dasda d asd as "
+        android:text="Please save this  Mnemonic for Life time"
         android:textAlignment="center" />
 
     <Button
@@ -405,8 +237,8 @@
         android:layout_below="@id/text_about"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-android:background="@drawable/rounded_button"
+        android:background="@drawable/rounded_button"
         android:layout_marginTop="42dp"
-        android:text="Press and Hold to Reveal" />
+        android:text="Download" />
 
 </LinearLayout>

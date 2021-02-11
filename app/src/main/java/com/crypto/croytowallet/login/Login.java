@@ -16,6 +16,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -84,7 +85,7 @@ TextInputLayout layout_otp;
     ConstraintLayout linearLayout;
     Animation fade_in,blink;
     FusedLocationProviderClient fusedLocationProviderClient;
-    String locations,ipAddress,os;
+    String locations,ipAddress,os,id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -192,105 +193,6 @@ TextInputLayout layout_otp;
 
         showpDialog();
 
-/*
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                hidepDialog();
-
-
-                try {
-                    JSONObject object= new JSONObject(response);
-                    String result =object.getString("result");
-                    String token =object.getString("token");
-
-                    JSONObject  object1 = new JSONObject(result);
-                    String id= object1.getString("_id");
-                    String name = object1.getString("name");
-                    String email = object1.getString("email");
-                    String phone = object1.getString("phone");
-                    String username = object1.getString("username");
-                    String mnemonic = object1.getString("mnemonic");
-                    String Referral_code = object1.getString("myReferalcode");
-                    String transaction_Pin = object1.getString("transactionPin");
-                    String ETH = object1.getString("ethAddress");
-                    String BTC = object1.getString("bitcoinAddress");
-                    String LITE = object1.getString("litecoinAddress");
-                    String XRP = object1.getString("xrpAddress");
-
-                    String security=object1.getString("securityEnable");
-                    JSONObject object2=new JSONObject(security);
-                    String EMAIL2FA = object2.getString("email2fa");
-
-
-                    UserData userData=new UserData(id,name,email,phone,username,mnemonic,Referral_code,transaction_Pin,token
-                            ,ETH,BTC,LITE,XRP,EMAIL2FA);
-
-                    //storing the user in shared preferences
-                    SharedPrefManager.getInstance(getApplicationContext()).userLogin(userData);
-                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                    finish();
-
-                    Toast.makeText(Login.this, "Login Successfully", Toast.LENGTH_SHORT).show();
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                hidepDialog();
-
-                try {
-                    parseVolleyError(error);
-                } catch (Exception e) {
-                    Snacky.builder()
-                            .setActivity(Login.this)
-                            .setText("Please wait sever not response and try again")
-                            .setDuration(Snacky.LENGTH_SHORT)
-                            .setActionText(android.R.string.ok)
-                            .error()
-                            .show();
-                  //  Toast.makeText(Login.this, "Please wait sever not response", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("username", usernames);
-                params.put("password", passwords);
-                params.put("otp",otp1);
-
-*//*  params.put("ip",ipAddress);
-                params.put("os",os);
-                params.put("location",locations);
-*//*
-
-                return params;
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<String, String>();
-
-                // headers.put("Authorization", "Bearer "+Token);
-
-                return headers;
-            }
-
-        };
-
-        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        queue.add(request);
-
-
-        }*/
-
-
         Call<ResponseBody> call =RetrofitClient.getInstance().getApi()
                 .Login(usernames,passwords,otp1,locations,os,ipAddress);
 
@@ -308,7 +210,7 @@ TextInputLayout layout_otp;
                         String token =object.getString("token");
 
                         JSONObject  object1 = new JSONObject(result);
-                        String id= object1.getString("_id");
+                        id= object1.getString("_id");
                         String name = object1.getString("name");
                         String email = object1.getString("email");
                         String phone = object1.getString("phone");
@@ -335,6 +237,16 @@ TextInputLayout layout_otp;
                         finish();
 
                         Toast.makeText(Login.this, "Login Successfully", Toast.LENGTH_SHORT).show();
+
+                        new Handler().postDelayed(new Runnable() {
+
+
+                            @Override
+                            public void run() {
+                                // This method will be executed once the timer is over
+                                sendEmail();
+                            }
+                        }, 1000);
 
                        // Toast.makeText(Login.this, ""+s, Toast.LENGTH_SHORT).show();
                     } catch (IOException | JSONException e) {
@@ -388,31 +300,44 @@ TextInputLayout layout_otp;
             }
         });
     }
-/* public void parseVolleyError(VolleyError error) {
-        try {
-            String responseBody = new String(error.networkResponse.data, "utf-8");
-            JSONObject data = new JSONObject(responseBody);
-            String message=data.getString("error");
 
-            if(message.equals("Incorrect otp")){
-                resendOTP();
-                layout_otp.setVisibility(View.VISIBLE);
-            }else{
+    public void sendEmail(){
 
-                Snacky.builder()
-                        .setActivity(Login.this)
-                        .setText(message)
-                        .setDuration(Snacky.LENGTH_SHORT)
-                        .setActionText(android.R.string.ok)
-                        .error()
-                        .show();
+        Call<ResponseBody>call =RetrofitClient.getInstance().getApi().Send_Email(id);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String s=null;
+                if (response.code()==200){
+
+                    Log.d("res","send");
+                }else if(response.code()==400){
+                    try {
+
+                        s=response.errorBody().string();
+                        JSONObject jsonObject1=new JSONObject(s);
+                        String error =jsonObject1.getString("error");
+
+
+                        Log.d("error1",error);
+
+
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
             }
 
-      //      Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-        } catch (JSONException e) {
-        } catch (UnsupportedEncodingException errorr) {
-        }
-    }*/
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("error",t.getMessage());
+            }
+        });
+    }
 
     public void resendOTP() {
 

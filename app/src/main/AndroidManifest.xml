@@ -16,11 +16,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CroytoWallet"
         android:usesCleartextTraffic="true">
-        <activity android:name=".login.CrashOtpActivity"
+        <activity android:name=".Activity.BackVerification"
             android:theme="@style/Theme.CroytoWallet.NoActionBar"></activity>
         <activity
+            android:name=".login.CrashOtpActivity"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+        <activity
             android:name=".login.CreashSetTransactionPin"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar"></activity>
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
         <activity
             android:name=".ImtSmart.imtSwap"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />
