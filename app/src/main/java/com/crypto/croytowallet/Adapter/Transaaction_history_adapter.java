@@ -50,7 +50,7 @@ private HistoryClickLister historyClickLister;
 
 
         holder.transaction_status.setText("Paid To "+transactionHistoryModels.get(position).getRecivedName());
-        holder.transaction_amount.setText(CurrencySymbols+transactionHistoryModels.get(position).getAmountTrans());
+        holder.transaction_amount.setText(transactionHistoryModels.get(position).getAmountTrans());
         holder.transaction_username.setText("Paid From "+transactionHistoryModels.get(position).getUsername());
 
         String dateAndTime = transactionHistoryModels.get(position).getDate();
