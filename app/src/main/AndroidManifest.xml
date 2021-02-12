@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="com.samsung.android.providers.context.permission.WRITE_USE_APP_FEATURE_SURVEY"/>
 
     <application
         android:allowBackup="true"
@@ -16,8 +17,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CroytoWallet"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.BackVerification"
+        <activity android:name=".TransactionHistory.CoinHistory"
             android:theme="@style/Theme.CroytoWallet.NoActionBar"></activity>
+        <activity
+            android:name=".Activity.BackVerification"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
         <activity
             android:name=".login.CrashOtpActivity"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />

@@ -46,6 +46,9 @@
         tools:layout="@layout/activity_transaction_history" />
 
 
-
+    <activity
+        android:id="@+id/coin_history"
+        android:name="com.crypto.croytowallet.TransactionHistory.CoinHistory"
+        tools:layout="@layout/activity_coin_history" />
 
 </navigation>
