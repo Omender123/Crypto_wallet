@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -188,7 +189,10 @@ public class SignUp extends AppCompatActivity {
         String mobile = phoneno1.getText().toString();
         String password = pass1.getText().toString();
         Bundle bundle = getIntent().getExtras();
-        String refercode = bundle.getString("referral");
+        String refercode = bundle.getString("referral_code");
+
+        Log.d("referral_Code",refercode);
+
         Call<ResponseBody> call= RetrofitClient
                 .getInstance()
                 .getApi().register(name,email,username,password,refercode,mobile);
