@@ -85,7 +85,7 @@ public interface Api {
     @POST("transaction/peerToPeer")
     Call<ResponseBody>P2P(
             @Header("Authorization")String token,
-            @Field("amount") Integer amount,
+            @Field("amount") String amount,
             @Field("transactionPin") String transactionPin,
             @Field("toUserId") String userId,
             @Field("toUsername") String username
@@ -152,6 +152,13 @@ public interface Api {
             @Field("userId") String userId,
             @Field("transactionPin") String transactionPin,
             @Field("otp") String otp
+    );
+
+    @FormUrlEncoded
+    @POST("transaction/send/user")
+    Call<ResponseBody>get_SendHistory(
+            @Header("Authorization")String Authtoken,
+            @Field("crypto") String type
     );
 
 }

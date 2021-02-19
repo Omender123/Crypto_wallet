@@ -61,8 +61,8 @@ public class Pay_money extends AppCompatActivity {
                 }else{
 
                    Intent intent =new Intent(getApplicationContext(),Enter_transaction_pin.class);
-                   Integer amount = Integer.parseInt(enter_amount);
-                   intent.putExtra("amount12",amount);
+                 //  Double amount = Double.valueOf(enter_amount);
+                   intent.putExtra("amount12",enter_amount);
                    startActivity(intent);
                 }
 
@@ -83,7 +83,7 @@ public class Pay_money extends AppCompatActivity {
                 if (amount.isEmpty()){
                     textView.setText("$ 0 ");
                 }else{
-                    int a = Integer.parseInt(s.toString());
+                    Double a = Double.valueOf(s.toString());
                     double result = a*0.09;
 
                     textView.setText("$ " +result );

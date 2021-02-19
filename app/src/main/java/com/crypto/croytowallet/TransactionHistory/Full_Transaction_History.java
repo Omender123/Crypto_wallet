@@ -63,7 +63,7 @@ SharedPreferences sharedPreferences;
         String[] s= date1.split("T");
          time1 = s[1];
          time.setText(time1);
-         amount.setText(CurrencySymbols+amount1);
+         amount.setText(amount1);
          trans_id.setText(id);
          receiverName.setText(receiverName1);
 

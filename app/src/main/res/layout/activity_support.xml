@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/background"
     android:orientation="vertical"
     tools:context=".Activity.Support">
       <LinearLayout
@@ -110,7 +110,7 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="2dp"
                     android:textSize="10dp"
-                    android:text="@string/text3"
+                    android:text="@string/mobile_text"
                     android:justificationMode="inter_word"
                     />
                 <ImageView
@@ -188,7 +188,7 @@
                     android:layout_toLeftOf="@+id/checkbox"
                     android:justificationMode="inter_word"
                     android:textSize="11dp"
-                    android:text="@string/text3"
+                    android:text="@string/knowledge_text"
                     />
             </RelativeLayout>
 
@@ -255,7 +255,7 @@
                     android:layout_marginRight="20dp"
                     android:layout_toLeftOf="@+id/checkbox1"
                     android:justificationMode="inter_word"
-                    android:text="@string/text3"
+                    android:text="@string/tickets_text"
                     />
             </RelativeLayout>
 
@@ -321,7 +321,7 @@
                     android:layout_marginRight="20dp"
                     android:layout_toLeftOf="@+id/checkbox1"
                     android:justificationMode="inter_word"
-                    android:text="@string/text3"
+                    android:text="@string/contact_text"
                     />
 
             </RelativeLayout>

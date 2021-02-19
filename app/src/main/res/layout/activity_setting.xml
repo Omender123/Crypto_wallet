@@ -95,7 +95,7 @@
                     android:layout_marginRight="60dp"
                     android:layout_marginTop="2dp"
                     android:textSize="10dp"
-                    android:text="@string/below_text"
+                    android:text="@string/noti_text"
                     android:justificationMode="inter_word"
                     />
                 <ImageView
@@ -173,7 +173,7 @@
                     android:layout_toLeftOf="@+id/checkbox"
                     android:justificationMode="inter_word"
                     android:textSize="10dp"
-                    android:text="@string/below_text"
+                    android:text="@string/sound_text"
                     />
             </RelativeLayout>
 
@@ -240,7 +240,7 @@
                     android:layout_marginRight="60dp"
                     android:layout_toLeftOf="@+id/checkbox1"
                     android:justificationMode="inter_word"
-                    android:text="@string/below_text"
+                    android:text="@string/currency_text"
                     />
 
                 <TextView
@@ -327,7 +327,7 @@
                     android:layout_marginRight="60dp"
                     android:layout_toLeftOf="@+id/checkbox1"
                     android:justificationMode="inter_word"
-                    android:text="@string/below_text"
+                    android:text="@string/active_text"
                     />
 
             </RelativeLayout>
@@ -396,7 +396,7 @@
                     android:layout_toEndOf="@+id/restore"
                     android:layout_toRightOf="@+id/restore"
                     android:justificationMode="inter_word"
-                    android:text="@string/below_text"
+                    android:text="@string/cryto_text"
                     android:textSize="10dp" />
 
             </RelativeLayout>

@@ -103,7 +103,7 @@ CardView pay_money;
         String userAddressID=userData.getId();
         String cryptoCurrency="airDropIMT";
         Bundle bundle = getIntent().getExtras();
-        Integer  Amount = bundle.getInt("amount12");
+        String  Amount = bundle.getString("amount12");
       //  int amout = Integer.parseInt(Amount);
 
         String enterPin=pinView.getText().toString();

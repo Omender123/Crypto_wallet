@@ -100,7 +100,7 @@ public class Transaction_history extends AppCompatActivity implements HistoryCli
                         String receviername=object1.getString("receiverName");
                         String amount=object1.getString("amount");
                         String status =object1.getString("status");
-                        String time=object1.getString("updatedAt");
+                        String time=object1.getString("createdAt");
 
                         transactionHistoryModel1.setId(id);
                         transactionHistoryModel1.setStatus(status);

@@ -166,4 +166,18 @@
     <string name="add_currency">Add Currency</string>
 
     <string name="txt_pin">Kindly enter your transaction PIN.  Which you created while sign up.</string>
+
+    <!-- Setting content text-->
+   <string name="noti_text"> We want to keep you in touch on the latest events related iMX.</string>
+    <string name="sound_text"> We are coming up with new features.</string>
+    <string name="currency_text"> You can track the live crypto prices in your prefer stripe currency.</string>
+    <string name="active_text"> Track your account login activity.</string>
+    <string name="cryto_text"> Enjoy the latest features on iMX platform, to get the best from the application.</string>
+
+    <!-- Support content text-->
+    <string name="mobile_text"> You can chat with us on your issues.</string>
+    <string name="knowledge_text"> Resolve your issues with frequently asked questions.</string>
+    <string name="tickets_text"> Raise your issue and we will get back to you with your solution.</string>
+    <string name="contact_text"> Reach us to us directly.</string>
+
 </resources>

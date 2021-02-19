@@ -248,15 +248,20 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
 
              try {
                  JSONObject object=new JSONObject(response);
-                int   checkBalance=object.getInt("airDrop");
+                String   checkBalance=object.getString("airDrop");
 
 
 
-                textView.setText(checkBalance+".00");
+               // textView.setText(checkBalance+".00");
+                 double balance2 = Double.parseDouble(checkBalance);
 
-                Double balance = checkBalance*0.09;
+              //   String s = "";
+                 double balance1 = Double.parseDouble("0.09");
+
+                Double balance = balance2*balance1;
                  DecimalFormat df = new DecimalFormat();
                  df.setMaximumFractionDigits(2);
+                 textView.setText(""+df.format(balance2));
                  textView1.setText(CurrencySymbols+df.format(balance));
               //   Toast.makeText(getContext(), ""+checkBalance, Toast.LENGTH_SHORT).show();
              } catch (JSONException e) {
@@ -374,6 +379,10 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
 
     public  void getImtDetails(){
 
+        UserData userData = SharedPrefManager.getInstance(getContext()).getUser();
+
+        String Token =userData.getToken();
+
       StringRequest stringRequest=new StringRequest(Request.Method.GET, URLs.URL_GET_COIN_IMT, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -419,7 +428,17 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
               //  hidepDialog();
                // Toast.makeText(getContext(), ""+error.toString(), Toast.LENGTH_SHORT).show();
             }
-        });
+        }){
+          @Override
+          public Map<String, String> getHeaders() throws AuthFailureError {
+              Map<String, String> headers = new HashMap<String, String>();
+
+               headers.put("Authorization", Token);
+
+              return headers;
+          }
+      };
+
         requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);
 
@@ -480,7 +499,6 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
                 overviewRecycler.setLayoutManager(mLayoutManager);
                 overviewRecycler.setItemAnimator(new DefaultItemAnimator());
                 overviewRecycler.setAdapter(overViewAdapter);
-                //  Toast.makeText(getContext(), ""+response.toString(), Toast.LENGTH_SHORT).show();
 
             }
 
