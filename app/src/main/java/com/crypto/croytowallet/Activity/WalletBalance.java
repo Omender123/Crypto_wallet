@@ -36,6 +36,7 @@ import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.TransactionHistory.Transaction_history;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
+import com.crypto.croytowallet.database.RetrofitClient;
 import com.crypto.croytowallet.fragement.Wallet;
 import com.crypto.croytowallet.login.Login;
 import com.google.gson.JsonObject;
@@ -45,10 +46,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
+import de.mateware.snacky.Snacky;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class WalletBalance extends AppCompatActivity implements HistoryClickLister {
     ImageView imageView;
@@ -60,7 +67,7 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
     KProgressHUD progressDialog;
     TextView history_Empty;
    SharedPreferences sharedPreferences;
-   String CurrencySymbols;
+   String CurrencySymbols,currency2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +85,7 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
 
 
         sharedPreferences =getApplicationContext().getSharedPreferences("currency",0);
-     //   currency2 =sharedPreferences.getString("currency1","usd");
+       currency2 =sharedPreferences.getString("currency1","usd");
         CurrencySymbols =sharedPreferences.getString("Currency_Symbols","$");
 
 
@@ -87,7 +94,8 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
             @Override
             public void run() {
                 // This method will be executed once the timer is over
-               checkBalance();
+            //   checkBalance();
+                AirDropBalance();
                 getHistory();
             }
         }, 50);
@@ -103,6 +111,100 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
         });
     }
 
+    public void AirDropBalance(){
+        UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
+        String token = user.getToken();
+
+        String currency = currency2.toUpperCase();
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().AirDropBalance(token,"airdrop",currency);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                String s =null;
+
+
+                if (response.code()==200){
+                    try {
+                        s=response.body().string();
+
+                        JSONObject object = new JSONObject(s);
+                        String balance = object.getString("balance");
+                        String cal = object.getString("calculationPrice");
+                        JSONObject object1 = new JSONObject(cal);
+                        String calBalance = object1.getString("calculation");
+
+                        DecimalFormat df = new DecimalFormat();
+                        df.setMaximumFractionDigits(2);
+
+                        if (calBalance.equals("null")){
+                            double balance2 = Double.parseDouble(balance);
+                            textView.setText(""+df.format(balance2));
+                            textView1.setText(CurrencySymbols+"0");
+                        }else{
+
+                            double balance2 = Double.parseDouble(balance);
+                            double calBalance2 = Double.parseDouble(calBalance);
+
+                            textView.setText(""+df.format(balance2));
+                            textView1.setText(CurrencySymbols+df.format(calBalance2));
+                        }
+
+
+                        //  Log.d("airDrop",s);
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if(response.code()==400){
+                    try {
+                        s=response.errorBody().string();
+                        JSONObject jsonObject1=new JSONObject(s);
+                        String error =jsonObject1.getString("error");
+
+
+                        Snacky.builder()
+                                .setActivity(WalletBalance.this)
+                                .setText(error)
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
+
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if(response.code()==401){
+
+                    Snacky.builder()
+                            .setActivity(WalletBalance.this)
+                            .setText("unAuthorization Request")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                Snacky.builder()
+                        .setActivity(WalletBalance.this)
+                        .setText("Internet Problem ")
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+            }
+        });
+    }
 
 
     public void checkBalance(){

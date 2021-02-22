@@ -13,10 +13,12 @@
     <string name="security">Security</string>
     <string name="send">Send</string>
     <string name="setting">Setting</string>
+    <string name="offer">Offer</string>
     <string name="support">Support</string>
     <string name="dark_mode">Dark Mode </string>
     <string name="pay_history">Transaction History</string>
     <string name="coin_history">Coin History</string>
+    <string name="our_offer">Our Offer</string>
     <string name="select_currency">Select Currency</string>
     <string name="customer_support">Customer Support</string>
     <string name="share">Share</string>
@@ -168,7 +170,7 @@
     <string name="txt_pin">Kindly enter your transaction PIN.  Which you created while sign up.</string>
 
     <!-- Setting content text-->
-   <string name="noti_text"> We want to keep you in touch on the latest events related iMX.</string>
+    <string name="noti_text"> We want to keep you in touch on the latest events related iMX.</string>
     <string name="sound_text"> We are coming up with new features.</string>
     <string name="currency_text"> You can track the live crypto prices in your prefer stripe currency.</string>
     <string name="active_text"> Track your account login activity.</string>

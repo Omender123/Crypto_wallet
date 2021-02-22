@@ -47,8 +47,12 @@
             android:title="@string/pay_history" />
         <item
             android:id="@+id/coin_history"
-            android:icon="@drawable/ic_history"
+            android:icon="@drawable/ic_cryptocurrency"
             android:title="@string/coin_history" />
+        <item
+            android:id="@+id/our_Offer"
+            android:icon="@drawable/ic_icon_feather_percent"
+            android:title="@string/our_offer" />
     </group>
     <item
         android:title="@string/other">

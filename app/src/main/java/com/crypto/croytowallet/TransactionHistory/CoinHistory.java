@@ -114,7 +114,7 @@ public class CoinHistory extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                getSendCoinHistory();
+              //  getSendCoinHistory();
             }
         });
 
@@ -157,8 +157,13 @@ public class CoinHistory extends AppCompatActivity {
                             String id = object1.getString("_id");
                             String date = object1.getString("createdAt");
                             String userData = object1.getString("userId");
+                          //  String receiver = object1.getString("receiver");
+
+
+
                             JSONObject object2 = new JSONObject(userData);
                             String username =object2.getString("username");
+
 
 
                             modal.setUsername(username);

@@ -51,4 +51,9 @@
         android:name="com.crypto.croytowallet.TransactionHistory.CoinHistory"
         tools:layout="@layout/activity_coin_history" />
 
+    <activity
+        android:id="@+id/our_Offer"
+        android:name="com.crypto.croytowallet.Offer.Offer"
+        tools:layout="@layout/activity_offer" />
+
 </navigation>

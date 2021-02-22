@@ -113,6 +113,14 @@ public interface Api {
     );
 
     @FormUrlEncoded
+    @POST("user/balance")
+    Call<ResponseBody>AirDropBalance(
+            @Header("Authorization")String Authtoken,
+            @Field("type") String type,
+            @Field("currency") String currency
+    );
+
+    @FormUrlEncoded
     @POST("transaction/swapCurrency")
     Call<ResponseBody>IMT_SWAP(
             @Header("Authorization")String Authtoken,

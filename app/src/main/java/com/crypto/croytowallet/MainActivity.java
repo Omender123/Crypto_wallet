@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
         Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_support, getApplicationContext().getTheme());
 
         navController = Navigation.findNavController(this,R.id.main);
-        appBarConfiguration = new AppBarConfiguration.Builder(new int[]{R.id.deshboard,R.id.myWallet,R.id.exchange,R.id.profile,R.id.security,R.id.support,R.id.setting,R.id.pay_history,R.id.coin_history})
+        appBarConfiguration = new AppBarConfiguration.Builder(new int[]{R.id.deshboard,R.id.myWallet,R.id.exchange,R.id.profile,R.id.security,R.id.support,R.id.setting,R.id.pay_history,R.id.coin_history,R.id.our_Offer})
                 .setDrawerLayout(drawer)
                 .build();
 
