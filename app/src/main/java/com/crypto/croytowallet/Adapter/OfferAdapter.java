@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.crypto.croytowallet.AppUtils;
 import com.crypto.croytowallet.Interface.HistoryClickLister;
 import com.crypto.croytowallet.Model.OfferModel;
 import com.crypto.croytowallet.R;
@@ -43,10 +44,14 @@ Context context;
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        holder.offerDate.setText(offerModels.get(position).getDate());
+        holder.offerDate.setText("Date : "+AppUtils.getDate(offerModels.get(position).getDate()));
         holder.offerName.setText(offerModels.get(position).getOffer_name());
-        holder.offerShortDes.setText(offerModels.get(position).getShortDescription());
-        Picasso.get().load(offerModels.get(position).getImageUrl()).into(holder.image);
+        holder.offerShortDes.setText(offerModels.get(position).getOffer_tittle());
+        if(offerModels.get(position).getImageUrl().equals("https://imsmart.s3.ap-south-1.amazonaws.com/logo.png")){
+            holder.image.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_artboard___5));
+        }else {
+            Picasso.get().load(offerModels.get(position).getImageUrl()).into(holder.image);
+        }
     }
 
     @Override

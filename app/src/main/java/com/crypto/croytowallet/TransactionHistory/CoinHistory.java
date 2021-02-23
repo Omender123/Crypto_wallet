@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,16 +51,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CoinHistory extends AppCompatActivity {
+public class CoinHistory extends AppCompatActivity implements View.OnClickListener {
     RecyclerView recyclerView;
     ArrayList<CoinModal> coinModals;
     Coin_History_Adapter coin_history_adapter;
     KProgressHUD progressDialog;
+    Boolean sendActive=true;
     SharedPreferences sharedPreferences;
     TextView history_Empty;
     Spinner coinSpinner;
     String sendData;
-
     String [] coinName ={"ImSmart","Bitcoin","Ethereum","Tether","XRP","Litecoin","USD Coin","ERC20"};
     String [] coinSymbols ={"imt","btc","eth","usdt","xrp","ltc","usdc","erc20"};
     String [] coinImage ={"https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579",
@@ -71,15 +72,24 @@ public class CoinHistory extends AppCompatActivity {
             "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042389",
             "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579"};
 
+    TextView sendTxt,receivedTxt;
+    LinearLayout lyt_send,lyt_received;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coin_history);
         recyclerView=findViewById(R.id.recyclerCoin);
         coinSpinner = findViewById(R.id.coinSpinner);
-
         history_Empty =findViewById(R.id.txt_list_is_empty);
 
+        sendTxt = findViewById(R.id.textSend);
+        receivedTxt  = findViewById(R.id.textReceived);
+        lyt_received = findViewById(R.id.received);
+        lyt_send = findViewById(R.id.send);
+
+        lyt_send.setOnClickListener(this);
+        lyt_received.setOnClickListener(this);
         coinModals =new ArrayList<CoinModal>();
 
         CoinSpinnerAdapter coinSpinnerAdapter =new CoinSpinnerAdapter(getApplicationContext(),coinImage,coinName,coinSymbols);
@@ -117,8 +127,82 @@ public class CoinHistory extends AppCompatActivity {
               //  getSendCoinHistory();
             }
         });
-
+       // getReceivedCoinHistory();
           }
+    public void getReceivedCoinHistory() {
+
+        UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
+        String token=user.getToken();
+
+        progressDialog = KProgressHUD.create(CoinHistory.this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Loading.........")
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
+
+        showpDialog();
+
+        Call<ResponseBody> call= RetrofitClient.getInstance().getApi().get_ReceivedHistory(token,"btc");
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                hidepDialog();
+                String s=null;
+                if (response.code()==200){
+
+                    try {
+                        s=response.body().string();
+
+
+                        Log.d("received",s);
+
+                    } catch (IOException  e) {
+                        e.printStackTrace();
+                    }
+
+                }else if (response.code()==400){
+                    try {
+                        s=response.errorBody().string();
+                        JSONObject jsonObject1=new JSONObject(s);
+                        String error =jsonObject1.getString("error");
+
+
+                        Snacky.builder()
+                                .setActivity(CoinHistory.this)
+                                .setText(error)
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
+
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if (response.code()==401){
+                    Snacky.builder()
+                            .setActivity(CoinHistory.this)
+                            .setText("unAuthorization Request")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                hidepDialog();
+            }
+        });
+    }
+
     public void getSendCoinHistory() {
 
         UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
@@ -157,7 +241,7 @@ public class CoinHistory extends AppCompatActivity {
                             String id = object1.getString("_id");
                             String date = object1.getString("createdAt");
                             String userData = object1.getString("userId");
-                          //  String receiver = object1.getString("receiver");
+                            //  String receiver = object1.getString("receiver");
 
 
 
@@ -236,7 +320,6 @@ public class CoinHistory extends AppCompatActivity {
 
 
 
-
     private void showpDialog() {
         if (!progressDialog.isShowing())
             progressDialog.show();
@@ -263,11 +346,7 @@ public class CoinHistory extends AppCompatActivity {
     }
 
 
-    public void onClick(View view) {
-        Intent intent = new Intent(CoinHistory.this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -275,5 +354,32 @@ public class CoinHistory extends AppCompatActivity {
         Intent intent = new Intent(CoinHistory.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+    }
+
+
+    public void back(View view) {
+        Intent intent = new Intent(CoinHistory.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.send:
+                lyt_received.setBackground(getResources().getDrawable(R.drawable.background_broder));
+                receivedTxt.setTextColor(getResources().getColor(R.color.purple_500));
+                sendTxt.setTextColor(getResources().getColor(R.color.black));
+                lyt_send.setBackground(getResources().getDrawable(R.drawable.background_border3));
+                break;
+            case R.id.received:
+
+                    lyt_received.setBackground(getResources().getDrawable(R.drawable.background_border3));
+                    receivedTxt.setTextColor(getResources().getColor(R.color.black));
+                    sendTxt.setTextColor(getResources().getColor(R.color.purple_500));
+                    lyt_send.setBackground(getResources().getDrawable(R.drawable.background_broder));
+                //getReceivedCoinHistory();
+                break;
+        }
     }
 }

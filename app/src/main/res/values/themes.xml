@@ -48,4 +48,9 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <item name="pinViewStyle">@style/PinWidget.PinView</item>
     </style>
+
+
+
+
+
 </resources>

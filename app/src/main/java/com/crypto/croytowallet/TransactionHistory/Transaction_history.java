@@ -168,16 +168,16 @@ public class Transaction_history extends AppCompatActivity implements HistoryCli
 
 
     private void showpDialog() {
-            if (!progressDialog.isShowing())
-                progressDialog.show();
-        }
+        if (!progressDialog.isShowing())
+            progressDialog.show();
+    }
 
-        private void hidepDialog() {
-            if (progressDialog.isShowing())
-                progressDialog.dismiss();
-        }
+    private void hidepDialog() {
+        if (progressDialog.isShowing())
+            progressDialog.dismiss();
+    }
 
-        @Override
+    @Override
         public void onBackPressed() {
             super.onBackPressed();
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);

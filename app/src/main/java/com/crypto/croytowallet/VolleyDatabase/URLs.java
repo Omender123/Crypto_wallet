@@ -64,4 +64,6 @@ public class URLs {
  //GET GAS FEES
  public static final String URL_GET_COIN_HISTORY= ROOT_URL + "transaction/history/user";
 
+ //GET GAS FEES
+ public static final String URL_GET_OFFER= ROOT_URL + "offers";
 }

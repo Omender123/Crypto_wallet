@@ -1,5 +1,10 @@
 package com.crypto.croytowallet.database;
 
+import android.content.Context;
+
+import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.UserData;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -168,5 +173,13 @@ public interface Api {
             @Header("Authorization")String Authtoken,
             @Field("crypto") String type
     );
+
+    @FormUrlEncoded
+    @POST("transaction/receive/user")
+    Call<ResponseBody>get_ReceivedHistory(
+            @Header("Authorization")String Authtoken,
+            @Field("crypto") String type
+    );
+
 
 }

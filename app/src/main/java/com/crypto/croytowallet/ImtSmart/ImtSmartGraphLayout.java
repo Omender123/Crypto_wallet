@@ -49,13 +49,14 @@ import retrofit2.Response;
 
 public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnClickListener {
     ImageView back,received,send;
-    TextView price,balance,coinprice,increaseRate,null1;
+    TextView price,balances,coinprice,increaseRate,null1;
     KProgressHUD progressDialog;
     UserData userData;
     private LineChart chart;
     TextView swap;
     String balance1,  price1;
-    SharedPreferences sharedPreferences1;
+    SharedPreferences sharedPreferences1,sharedPreferences;
+    String currency2,CurrencySymbols;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +66,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
         back =findViewById(R.id.back);
         received =findViewById(R.id.receive_coin);
         price = findViewById(R.id.price);
-        balance =findViewById(R.id.balance);
+        balances =findViewById(R.id.balance);
         coinprice= findViewById(R.id.coinPrice);
 
         increaseRate  =findViewById(R.id.increaseRate);
@@ -81,6 +82,10 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
 
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
         sharedPreferences1=getSharedPreferences("imtInfo", Context.MODE_PRIVATE);
+
+        sharedPreferences =getApplicationContext().getSharedPreferences("currency",0);
+        currency2 =sharedPreferences.getString("currency1","usd");
+        CurrencySymbols =sharedPreferences.getString("Currency_Symbols","$");
 
         chart.setDragEnabled(true);
         chart.setScaleEnabled(true);
@@ -211,7 +216,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
 
         showpDialog();
 
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().Balance(token,"imt");
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().AirDropBalance(token,"imt",currency2);
 
         call.enqueue(new Callback<ResponseBody>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -222,22 +227,30 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
 
                 if (response.code()==200){
                     try {
-                        s=response.body().string();
+                       s=response.body().string();
 
-                        JSONObject jsonObject = new JSONObject(s);
-                        balance1 = jsonObject.getString("balance");
+                         JSONObject object = new JSONObject(s);
+                        String balance = object.getString("balance");
+                        String cal = object.getString("calculationPrice");
+                        JSONObject object1 = new JSONObject(cal);
+                        String calBalance = object1.getString("calculation");
 
-
-                        double balance2 = Double.parseDouble(balance1);
-                        double price = Double.parseDouble(price1);
-
-                        double total = balance2*price;
                         DecimalFormat df = new DecimalFormat();
                         df.setMaximumFractionDigits(2);
 
-                      //  Toast.makeText(ImtSmartGraphLayout.this, ""+total, Toast.LENGTH_SHORT).show();
-                        balance.setText("$"+df.format(total));
-                        coinprice.setText(""+df.format(balance2));
+                        if (calBalance.equals("null")){
+                            double balance2 = Double.parseDouble(balance);
+                            coinprice.setText(""+df.format(balance2));
+                            balances.setText(CurrencySymbols+"0");
+                        }else{
+
+                            double balance2 = Double.parseDouble(balance);
+                            double calBalance2 = Double.parseDouble(calBalance);
+
+                            coinprice.setText(""+df.format(balance2));
+                            balances.setText(CurrencySymbols+df.format(calBalance2));
+                        }
+
 
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
