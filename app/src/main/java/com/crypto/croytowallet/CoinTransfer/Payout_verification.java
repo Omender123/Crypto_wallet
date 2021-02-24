@@ -207,7 +207,7 @@ public class Payout_verification extends AppCompatActivity {
 
         AuthToken =userData.getToken();
 
-        Call<ResponseBody>call = RetrofitClient.getInstance().getApi().coinTransfer(AuthToken,cryptoCurrency,"0",Token,otp,Amount,enterPin,result);
+        Call<ResponseBody>call = RetrofitClient.getInstance().getApi().coinTransfer(AuthToken,cryptoCurrency,"1",Token,otp,Amount,enterPin,result);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override

@@ -211,7 +211,7 @@ public class Transaction_history extends AppCompatActivity implements HistoryCli
         String status =transactionHistoryModels.get(position).getStatus();
         String time=transactionHistoryModels.get(position).getDate();
 
-       Transaction_HistoryModel historyModel=new Transaction_HistoryModel(id,status,amount,sendername,receviername,time);
+       Transaction_HistoryModel historyModel=new Transaction_HistoryModel(id,"Done",amount,sendername,receviername,time);
 
         //storing the user in shared preferences
         TransactionHistorySharedPrefManager.getInstance(getApplicationContext()).Transaction_History_Data(historyModel);

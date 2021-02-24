@@ -61,22 +61,23 @@ import retrofit2.Response;
 
 public class imtSwap extends AppCompatActivity implements View.OnClickListener {
     Spinner sendSpinner, reciveSpinner;
-    String sendData, receviedData,SwapAmount,low_gasFees,average_gasFees,high_gasFees;
-    ImageView imageView,img_low,img_average,img_high;
-    TextView swapBtn,txt_low,txt_average,txt_high,gwei_low,gwei_average,gwei_high,min_low,min_average,min_high;
-    LinearLayout lyt_low,lyt_average,lyt_high;
+    String sendData, receviedData, SwapAmount, low_gasFees, average_gasFees, high_gasFees, min_amount, half_amount, max_amount;
+    ImageView imageView, img_low, img_average, img_high;
+    TextView swapBtn, txt_low, txt_average, txt_high, gwei_low, gwei_average, gwei_high, min_low, min_average, min_high, min_rate, half_rate, max_rate;
+    LinearLayout lyt_low, lyt_average, lyt_high;
     EditText enter_Swap_Amount;
-    String [] coinName ={"ImSmart","Airdrop"};
-    String [] coinSymbols ={"imt","airdrop"};
-    int [] coinImage = {R.mipmap.imt,R.mipmap.airdrop};
+    String[] coinName = {"ImSmart", "Airdrop"};
+    String[] coinSymbols = {"imt", "airdrop"};
+    int[] coinImage = {R.mipmap.imt, R.mipmap.airdrop};
 
-    String [] coinName1 ={"Airdrop","ImSmart"};
-    String [] coinSymbols1 ={"airdrop","imt"};
-    int [] coinImage1 = {R.mipmap.airdrop,R.mipmap.imt};
-    int value ;
+    String[] coinName1 = {"Airdrop", "ImSmart"};
+    String[] coinSymbols1 = {"airdrop", "imt"};
+    int[] coinImage1 = {R.mipmap.airdrop, R.mipmap.imt};
+    int value;
     SeekBar seekBar;
 
     KProgressHUD progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,13 +86,13 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
         reciveSpinner = findViewById(R.id.recivedSpiner);
         imageView = findViewById(R.id.back);
         enter_Swap_Amount = findViewById(R.id.enter_swap);
-         swapBtn = findViewById(R.id.swap_btn);
-         lyt_low = findViewById(R.id.lyt_low);
-         lyt_average = findViewById(R.id.lyt_average);
-         lyt_high = findViewById(R.id.lyt_high);
-         txt_low = findViewById(R.id.txt_low);
-         txt_average = findViewById(R.id.txt_average);
-         txt_high = findViewById(R.id.txt_high);
+        swapBtn = findViewById(R.id.swap_btn);
+        lyt_low = findViewById(R.id.lyt_low);
+        lyt_average = findViewById(R.id.lyt_average);
+        lyt_high = findViewById(R.id.lyt_high);
+        txt_low = findViewById(R.id.txt_low);
+        txt_average = findViewById(R.id.txt_average);
+        txt_high = findViewById(R.id.txt_high);
         img_low = findViewById(R.id.img_low);
         img_average = findViewById(R.id.img_average);
         img_high = findViewById(R.id.img_high);
@@ -102,18 +103,25 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
         min_average = findViewById(R.id.min_average);
         min_high = findViewById(R.id.min_high);
         seekBar = findViewById(R.id.seekbar02);
-         lyt_low.setOnClickListener(this);
-         lyt_average.setOnClickListener(this);
+        min_rate = findViewById(R.id.min);
+        half_rate = findViewById(R.id.half);
+        max_rate = findViewById(R.id.max);
+        min_rate.setOnClickListener(this);
+        half_rate.setOnClickListener(this);
+        max_rate.setOnClickListener(this);
+
+        lyt_low.setOnClickListener(this);
+        lyt_average.setOnClickListener(this);
         lyt_high.setOnClickListener(this);
 
 
-        CustomSpinnerAdapter customAdapter=new CustomSpinnerAdapter(getApplicationContext(),coinImage,coinName,coinSymbols);
+        CustomSpinnerAdapter customAdapter = new CustomSpinnerAdapter(getApplicationContext(), coinImage, coinName, coinSymbols);
         sendSpinner.setAdapter(customAdapter);
         sendSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                sendData=coinSymbols[position];
-              //  Toast.makeText(view.getContext(), sendData,Toast.LENGTH_SHORT).show();
+                sendData = coinSymbols[position];
+                //  Toast.makeText(view.getContext(), sendData,Toast.LENGTH_SHORT).show();
 
             }
 
@@ -123,14 +131,14 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
             }
         });
 
-        CustomSpinnerAdapter customAdapter1=new CustomSpinnerAdapter(getApplicationContext(),coinImage1,coinName1,coinSymbols1);
+        CustomSpinnerAdapter customAdapter1 = new CustomSpinnerAdapter(getApplicationContext(), coinImage1, coinName1, coinSymbols1);
 
         reciveSpinner.setAdapter(customAdapter1);
         reciveSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                receviedData=coinSymbols1[position];
-               // Toast.makeText(view.getContext(), receviedData,Toast.LENGTH_SHORT).show();
+                receviedData = coinSymbols1[position];
+                // Toast.makeText(view.getContext(), receviedData,Toast.LENGTH_SHORT).show();
 
             }
 
@@ -141,58 +149,60 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
         });
 
 
-      back();
+        back();
         GET_GAS();
-            swapBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    SwapAmount = enter_Swap_Amount.getText().toString().trim();
+        swapBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SwapAmount = enter_Swap_Amount.getText().toString().trim();
 
-                    if (SwapAmount.isEmpty()){
-                        Snacky.builder()
-                                .setActivity(imtSwap.this)
-                                 .setText("Please enter Swap Amount")
-                                .setDuration(Snacky.LENGTH_SHORT)
-                                .setActionText(android.R.string.ok)
-                                .error()
-                                .show();
-                    }else{
+                if (SwapAmount.isEmpty()) {
+                    Snacky.builder()
+                            .setActivity(imtSwap.this)
+                            .setText("Please enter Swap Amount")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+                } else {
 
-                        SwapApi();
-                      // Log.d("datat",sendData+receviedData+String.valueOf(value)+SwapAmount);
-                    }
+                    SwapApi();
+                    //Log.d("datat",sendData+receviedData+String.valueOf(value)+SwapAmount);
                 }
-            });
+            }
+        });
 
-            if(txt_low.getText().toString().equals("Low")){
-                value =1;
-            }else if(txt_low.getText().toString().equals("Average")){
-                value =2;
-            }else if(txt_low.getText().toString().equals("High")){
-                value =3;
+        if (txt_low.getText().toString().equals("Low")) {
+            value = 1;
+        } else if (txt_low.getText().toString().equals("Average")) {
+            value = 2;
+        } else if (txt_low.getText().toString().equals("High")) {
+            value = 3;
+        }
+
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                double balance2 = Double.parseDouble(String.valueOf(progress));
+                double total = balance2 * 100;
+                enter_Swap_Amount.setText(String.valueOf(total));
             }
 
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
 
-            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    double balance2 = Double.parseDouble(String.valueOf(progress));
-                    double total = balance2*100;
-                    enter_Swap_Amount.setText(String.valueOf(total));
-                }
+            }
 
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
 
-                }
+            }
+        });
 
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {
+        GET_AMOUNT();
 
-                }
-            });
-
-   // Toast.makeText(this, ""+value, Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, ""+value, Toast.LENGTH_SHORT).show();
     }
 
     public void SwapApi() {
@@ -202,7 +212,7 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
         String Token = userData.getToken();
         String eth_Address = userData.getETH();
         progressDialog = KProgressHUD.create(imtSwap.this)
-                   .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel("Please wait.....")
                 .setCancellable(false)
                 .setAnimationSpeed(2)
@@ -211,39 +221,38 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
 
         showpDialog();
 
-        Call<ResponseBody>call = RetrofitClient.getInstance().getApi().IMT_SWAP(Token,sendData,receviedData,value,SwapAmount,"",eth_Address);
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().IMT_SWAP(Token, sendData, receviedData, value, SwapAmount, "", eth_Address);
 
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                String s =null;
+                String s = null;
                 hidepDialog();
-                if (response.code()==200){
+                if (response.code() == 200) {
 
                     try {
-                        s=response.body().string();
+                        s = response.body().string();
 
-                        if (s==null){
+                        if (s == null) {
                             startActivity(new Intent(getApplicationContext(), ImtSmartGraphLayout.class));
-                          Toast.makeText(imtSwap.this, "Error  occurred in Transaction", Toast.LENGTH_SHORT).show();
-                        }else {
+                            Toast.makeText(imtSwap.this, "Error  occurred in Transaction", Toast.LENGTH_SHORT).show();
+                        } else {
                             startActivity(new Intent(getApplicationContext(), ImtSmartGraphLayout.class));
-                            Toast.makeText(imtSwap.this, " Successfully \t"+sendData+"\t to \t"+receviedData, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(imtSwap.this, " Successfully \t" + sendData + "\t to \t" + receviedData, Toast.LENGTH_SHORT).show();
                         }
 
 
-
-                    // Toast.makeText(imtSwap.this, ""+s, Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(imtSwap.this, ""+s, Toast.LENGTH_SHORT).show();
 
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }else if (response.code()==400){
+                } else if (response.code() == 400) {
                     try {
-                        s=response.errorBody().string();
-                        JSONObject jsonObject1=new JSONObject(s);
-                        String error =jsonObject1.getString("error");
+                        s = response.errorBody().string();
+                        JSONObject jsonObject1 = new JSONObject(s);
+                        String error = jsonObject1.getString("error");
 
 
                         Snacky.builder()
@@ -259,7 +268,7 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
                         e.printStackTrace();
                     }
 
-                } else if (response.code()==401){
+                } else if (response.code() == 401) {
                     Snacky.builder()
                             .setActivity(imtSwap.this)
                             .setText("unAuthorization Request")
@@ -267,7 +276,7 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
                             .setActionText(android.R.string.ok)
                             .error()
                             .show();
-                }else if (response.code()==504){
+                } else if (response.code() == 504) {
                     Snacky.builder()
                             .setActivity(imtSwap.this)
                             .setText("Gate Way Time Down")
@@ -307,8 +316,8 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
         });
 
 
-
     }
+
     private void showpDialog() {
         if (!progressDialog.isShowing())
             progressDialog.show();
@@ -341,7 +350,7 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
 
             case R.id.lyt_low:
                 lyt_average.setBackground(null);
@@ -359,9 +368,9 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
                 min_low.setTextColor(getResources().getColor(R.color.light_gray));
                 min_average.setTextColor(getResources().getColor(R.color.txt_hide));
                 min_high.setTextColor(getResources().getColor(R.color.txt_hide));
-                value =1;
-              //  Toast.makeText(this, ""+value, Toast.LENGTH_SHORT).show();
-               break;
+                value = 1;
+                //  Toast.makeText(this, ""+value, Toast.LENGTH_SHORT).show();
+                break;
 
             case R.id.lyt_average:
                 lyt_average.setBackgroundColor(getResources().getColor(R.color.purple_500));
@@ -379,8 +388,8 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
                 min_low.setTextColor(getResources().getColor(R.color.txt_hide));
                 min_average.setTextColor(getResources().getColor(R.color.light_gray));
                 min_high.setTextColor(getResources().getColor(R.color.txt_hide));
-                value =2;
-            //   Toast.makeText(this, ""+value, Toast.LENGTH_SHORT).show();
+                value = 2;
+                //   Toast.makeText(this, ""+value, Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.lyt_high:
@@ -401,78 +410,169 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
                 min_average.setTextColor(getResources().getColor(R.color.txt_hide));
                 min_high.setTextColor(getResources().getColor(R.color.light_gray));
                 value = 3;
-         //      Toast.makeText(this, ""+value, Toast.LENGTH_SHORT).show();
+                //      Toast.makeText(this, ""+value, Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.min:
+                min_rate.setBackground(getResources().getDrawable(R.drawable.round_background));
+                half_rate.setBackground(null);
+                max_rate.setBackground(null);
+                min_rate.setTextColor(getResources().getColor(R.color.white));
+                half_rate.setTextColor(getResources().getColor(R.color.black));
+                max_rate.setTextColor(getResources().getColor(R.color.black));
+                enter_Swap_Amount.setText(min_amount);
+                break;
+
+            case R.id.half:
+                min_rate.setBackground(null);
+                half_rate.setBackground(getResources().getDrawable(R.drawable.round_background));
+                max_rate.setBackground(null);
+                min_rate.setTextColor(getResources().getColor(R.color.black));
+                half_rate.setTextColor(getResources().getColor(R.color.white));
+                max_rate.setTextColor(getResources().getColor(R.color.black));
+                enter_Swap_Amount.setText(half_amount);
+                break;
+
+            case R.id.max:
+                min_rate.setBackground(null);
+                half_rate.setBackground(null);
+                max_rate.setBackground(getResources().getDrawable(R.drawable.round_background));
+                min_rate.setTextColor(getResources().getColor(R.color.black));
+                half_rate.setTextColor(getResources().getColor(R.color.black));
+                max_rate.setTextColor(getResources().getColor(R.color.white));
+                enter_Swap_Amount.setText(max_amount);
                 break;
 
         }
     }
-public void GET_GAS(){
-    UserData userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
-    String Token = userData.getToken();
+    public void GET_GAS() {
+        UserData userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
-    StringRequest stringRequest=new StringRequest(Request.Method.GET, URLs.URL_GET_GAS_FEES ,new com.android.volley.Response.Listener<String>() {
-        @Override
-        public void onResponse(String response) {
+        String Token = userData.getToken();
 
-            try {
-                JSONObject object = new JSONObject(response);
-                String response1 = object.getString("GASFEE");
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_GET_GAS_FEES, new com.android.volley.Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-                JSONObject object1 = new JSONObject(response1);
-                low_gasFees = object1.getString("SafeGasPrice");
-                average_gasFees = object1.getString("ProposeGasPrice");
-                high_gasFees = object1.getString("FastGasPrice");
+                try {
+                    JSONObject object = new JSONObject(response);
+                    String response1 = object.getString("GASFEE");
 
-                gwei_low.setText(low_gasFees+" gwei");
-                gwei_average.setText(average_gasFees+" gwei");
-                gwei_high.setText(high_gasFees+" gwei");
-            } catch (JSONException e) {
-                e.printStackTrace();
+                    JSONObject object1 = new JSONObject(response1);
+                    low_gasFees = object1.getString("SafeGasPrice");
+                    average_gasFees = object1.getString("ProposeGasPrice");
+                    high_gasFees = object1.getString("FastGasPrice");
+
+                    gwei_low.setText(low_gasFees + " gwei");
+                    gwei_average.setText(average_gasFees + " gwei");
+                    gwei_high.setText(high_gasFees + " gwei");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+                //  Toast.makeText(getApplicationContext(), ""+response, Toast.LENGTH_SHORT).show();
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error == null || error.networkResponse == null) {
+                    return;
+                }
+
+                String body;
+                //get status code here
+                final String statusCode = String.valueOf(error.networkResponse.statusCode);
+                //get response body and parse with appropriate encoding
+                try {
+                    body = new String(error.networkResponse.data, "UTF-8");
+
+                    Toast.makeText(getApplicationContext(), "" + body, Toast.LENGTH_SHORT).show();
+                } catch (UnsupportedEncodingException e) {
+
+                }
+
+
+                //  Toast.makeText(getApplicationContext(), ""+error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+
+                headers.put("Authorization", Token);
+
+                return headers;
             }
 
 
+        };
 
-        //  Toast.makeText(getApplicationContext(), ""+response, Toast.LENGTH_SHORT).show();
-        }
-    }, new com.android.volley.Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            if (error == null || error.networkResponse == null) {
-                return;
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+
+    }
+
+    public void GET_AMOUNT() {
+        UserData userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
+
+        String Token = userData.getToken();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_GET_AMOUNT, new com.android.volley.Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject object = new JSONObject(response);
+
+                    min_amount = object.getString("min");
+                    half_amount = object.getString("half");
+                    max_amount = object.getString("max");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error == null || error.networkResponse == null) {
+                    return;
+                }
+
+                String body;
+                //get status code here
+                final String statusCode = String.valueOf(error.networkResponse.statusCode);
+                //get response body and parse with appropriate encoding
+                try {
+                    body = new String(error.networkResponse.data, "UTF-8");
+
+                    Toast.makeText(getApplicationContext(), "" + body, Toast.LENGTH_SHORT).show();
+                } catch (UnsupportedEncodingException e) {
+
+                }
+
+
+                //  Toast.makeText(getApplicationContext(), ""+error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+
+                headers.put("Authorization", Token);
+
+                return headers;
             }
 
-            String body;
-            //get status code here
-            final String statusCode = String.valueOf(error.networkResponse.statusCode);
-            //get response body and parse with appropriate encoding
-            try {
-                body = new String(error.networkResponse.data,"UTF-8");
 
-                Toast.makeText(getApplicationContext(), ""+body, Toast.LENGTH_SHORT).show();
-            } catch (UnsupportedEncodingException e) {
+        };
 
-            }
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
 
-
-          //  Toast.makeText(getApplicationContext(), ""+error.toString(), Toast.LENGTH_SHORT).show();
-        }
-    }){
-
-        @Override
-        public Map<String, String> getHeaders() throws AuthFailureError {
-            Map<String, String> headers = new HashMap<String, String>();
-
-            headers.put("Authorization", Token);
-
-            return headers;
-        }
-
-
-    };
-
-    VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
-
-   }
+    }
 
 }

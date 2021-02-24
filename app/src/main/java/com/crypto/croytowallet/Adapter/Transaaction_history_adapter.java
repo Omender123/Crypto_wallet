@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -60,12 +62,20 @@ private HistoryClickLister historyClickLister;
         holder.transaction_date.setText(AppUtils.getDate(dateAndTime));
         holder.transaction_time.setText(time);
        // holder.event_time.setText(AppUtils.getDate(data.get(position).getStartDate()));
+
+        setAnimation(holder.itemView);
     
     }
 
     @Override
     public int getItemCount() {
         return transactionHistoryModels.size();
+    }
+
+    private void setAnimation(View view){
+
+        Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+        view.setAnimation(animation);
     }
 
     public class myViewHolder extends RecyclerView.ViewHolder{

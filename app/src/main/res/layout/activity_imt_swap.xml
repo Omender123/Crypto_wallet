@@ -191,6 +191,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center">
                     <TextView
+                        android:id="@+id/min"
                         android:layout_width="75dp"
                         android:layout_height="25dp"
                         android:layout_marginRight="20dp"
@@ -202,6 +203,7 @@
                         android:gravity="center" />
 
                     <TextView
+                        android:id="@+id/half"
                         android:layout_width="75dp"
                         android:layout_height="25dp"
                         android:text="HALF"
@@ -212,6 +214,7 @@
                         android:gravity="center" />
 
                     <TextView
+                        android:id="@+id/max"
                         android:layout_width="75dp"
                         android:layout_height="25dp"
                         android:text="MAX"

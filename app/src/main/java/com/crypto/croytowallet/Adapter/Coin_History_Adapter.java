@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.crypto.croytowallet.AppUtils;
+import com.crypto.croytowallet.Interface.HistoryClickLister;
 import com.crypto.croytowallet.Model.CoinModal;
 import com.crypto.croytowallet.R;
 
@@ -18,10 +19,11 @@ import java.util.ArrayList;
 public class Coin_History_Adapter extends RecyclerView.Adapter<Coin_History_Adapter.myViewHolder> {
     ArrayList<CoinModal> coinModals;
     Context context;
-
-    public Coin_History_Adapter(ArrayList<CoinModal> coinModals, Context context) {
+    private HistoryClickLister historyClickLister;
+    public Coin_History_Adapter(ArrayList<CoinModal> coinModals, Context context,HistoryClickLister historyClickLister) {
         this.coinModals = coinModals;
         this.context = context;
+        this.historyClickLister=historyClickLister;
     }
 
     public Coin_History_Adapter() {
@@ -66,6 +68,12 @@ public class Coin_History_Adapter extends RecyclerView.Adapter<Coin_History_Adap
             transaction_date=itemView.findViewById(R.id.transaction_date);
             transaction_time = itemView.findViewById(R.id.transaction_Time);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    historyClickLister.onHistoryItemClickListener(getAdapterPosition());
+                }
+            });
 
 
         }

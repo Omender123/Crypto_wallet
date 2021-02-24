@@ -149,7 +149,7 @@ tools:context=".TransactionHistory.Full_Transaction_History">
     <androidx.cardview.widget.CardView
 
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         app:cardElevation="5dp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
@@ -177,11 +177,13 @@ tools:context=".TransactionHistory.Full_Transaction_History">
 
             <TextView
                 android:id="@+id/trans_id"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/text"
-                android:layout_toEndOf="@+id/view"
                 android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_toStartOf="@+id/btn_copy"
+                android:layout_toEndOf="@+id/view"
                 android:fontFamily="@font/montserrat"
                 android:textColor="#000"
                 android:textSize="15dp" />
@@ -244,11 +246,13 @@ tools:context=".TransactionHistory.Full_Transaction_History">
 
             <TextView
                 android:id="@+id/receiver_name"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/paidto"
-                android:layout_toEndOf="@+id/view1"
+                android:layout_alignParentEnd="true"
                 android:layout_marginLeft="20dp"
+                android:layout_marginRight="15dp"
+                android:layout_toEndOf="@+id/view1"
                 android:fontFamily="@font/montserrat"
                 android:justificationMode="inter_word"
                 android:textColor="#000"

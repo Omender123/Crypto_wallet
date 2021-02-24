@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crypto.croytowallet.Activity.WalletBalance;
 import com.crypto.croytowallet.AppUtils;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.TransactionHistorySharedPrefManager;
@@ -26,6 +27,7 @@ String date1,time1,amount1,id,receiverName1;
 Transaction_HistoryModel transaction_historyModel;
 ImageView imageView;
 CardView card2,card3;
+String back;
 SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,8 @@ SharedPreferences sharedPreferences;
         receiverName1 = transaction_historyModel.getReciverName();
         id = transaction_historyModel.getId();
 
+        back = transaction_historyModel.getStatus();
+
         date.setText(AppUtils.getDate(date1));
         String[] s= date1.split("T");
          time1 = s[1];
@@ -90,7 +94,14 @@ SharedPreferences sharedPreferences;
          imageView.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 startActivity(new Intent(getApplicationContext(),Transaction_history.class));
+                 if (back.equals("Done")){
+                     startActivity(new Intent(getApplicationContext(),Transaction_history.class));
+                 }else if(back.equals("OK")){
+                     startActivity(new Intent(getApplicationContext(), WalletBalance.class));
+                 }else{
+                     startActivity(new Intent(getApplicationContext(), CoinHistory.class));
+                 }
+
              }
          });
 
@@ -124,6 +135,15 @@ SharedPreferences sharedPreferences;
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(getApplicationContext(),Transaction_history.class));
+
+        if (back.equals("Done")){
+            startActivity(new Intent(getApplicationContext(),Transaction_history.class));
+        }else if(back.equals("OK")){
+            startActivity(new Intent(getApplicationContext(), WalletBalance.class));
+        }else{
+            startActivity(new Intent(getApplicationContext(), CoinHistory.class));
+        }
+
+
     }
 }

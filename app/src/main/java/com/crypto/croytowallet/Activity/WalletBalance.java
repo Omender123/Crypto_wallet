@@ -32,7 +32,10 @@ import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.Model.TransactionHistoryModel;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.TransactionHistorySharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.Transaction_HistoryModel;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
+import com.crypto.croytowallet.TransactionHistory.Full_Transaction_History;
 import com.crypto.croytowallet.TransactionHistory.Transaction_history;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
@@ -380,6 +383,21 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
 
     @Override
     public void onHistoryItemClickListener(int position) {
-        Toast.makeText(this, ""+position, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(WalletBalance.this, Full_Transaction_History.class);
+        startActivity(intent);
+
+        String id = transactionHistoryModels.get(position).getId();
+        String sendername=transactionHistoryModels.get(position).getUsername();
+        String receviername=transactionHistoryModels.get(position).getRecivedName();
+        String amount=transactionHistoryModels.get(position).getAmountTrans();
+        String status =transactionHistoryModels.get(position).getStatus();
+        String time=transactionHistoryModels.get(position).getDate();
+
+        Transaction_HistoryModel historyModel=new Transaction_HistoryModel(id,"OK",amount,sendername,receviername,time);
+
+        //storing the user in shared preferences
+        TransactionHistorySharedPrefManager.getInstance(getApplicationContext()).Transaction_History_Data(historyModel);
+
+
     }
 }

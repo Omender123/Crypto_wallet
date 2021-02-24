@@ -25,16 +25,20 @@ import com.crypto.croytowallet.Adapter.Coin_History_Adapter;
 import com.crypto.croytowallet.Adapter.Transaaction_history_adapter;
 import com.crypto.croytowallet.ImtSmart.ImtSmartGraphLayout;
 import com.crypto.croytowallet.ImtSmart.imtSwap;
+import com.crypto.croytowallet.Interface.HistoryClickLister;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.Model.CoinModal;
 import com.crypto.croytowallet.Model.TransactionHistoryModel;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.TransactionHistorySharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.Transaction_HistoryModel;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.Splash_Screen;
 import com.crypto.croytowallet.database.RetrofitClient;
 import com.crypto.croytowallet.login.Login;
 import com.kaopiz.kprogresshud.KProgressHUD;
+import com.zcw.togglebutton.ToggleButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,29 +55,36 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CoinHistory extends AppCompatActivity implements View.OnClickListener {
+public class CoinHistory extends AppCompatActivity implements HistoryClickLister {
     RecyclerView recyclerView;
     ArrayList<CoinModal> coinModals;
     Coin_History_Adapter coin_history_adapter;
     KProgressHUD progressDialog;
-    Boolean sendActive=true;
-    SharedPreferences sharedPreferences;
     TextView history_Empty;
-    Spinner coinSpinner;
-    String sendData;
-    String [] coinName ={"ImSmart","Bitcoin","Ethereum","Tether","XRP","Litecoin","USD Coin","ERC20"};
-    String [] coinSymbols ={"imt","btc","eth","usdt","xrp","ltc","usdc","erc20"};
-    String [] coinImage ={"https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579",
+    Spinner coinSpinner,coinReceived;
+    String sendData,receivedData;
+    String [] coinName ={"ImSmart","Bitcoin","Ethereum","Tether","XRP","Litecoin","USD Coin"};
+    String [] coinSymbols ={"imt","btc","eth","usdt","xrp","ltc","usdc"};
+    String [] coinImage ={"https://imtradeonline.com/wp-content/uploads/2019/09/imt.png",
             "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579",
             "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
             "https://assets.coingecko.com/coins/images/325/large/Tether-logo.png?1598003707",
             "https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png?1605778731",
             "https://assets.coingecko.com/coins/images/2/large/litecoin.png?1547033580",
-            "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042389",
-            "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579"};
+            "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042389"};
+
+    String [] coinName1 ={"Bitcoin","Ethereum","XRP","Litecoin","ERC20"};
+    String [] coinSymbols1 ={"btc","eth","xrp","ltc","erc20"};
+    String [] coinImage1 ={"https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579",
+            "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+            "https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png?1605778731",
+            "https://assets.coingecko.com/coins/images/2/large/litecoin.png?1547033580",
+           "https://ethereumico.io/wp-content/uploads/2018/04/ERC20.png"};
 
     TextView sendTxt,receivedTxt;
     LinearLayout lyt_send,lyt_received;
+
+    ToggleButton toggleButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +92,7 @@ public class CoinHistory extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.activity_coin_history);
         recyclerView=findViewById(R.id.recyclerCoin);
         coinSpinner = findViewById(R.id.coinSpinner);
+        coinReceived= findViewById(R.id.coinReceived);
         history_Empty =findViewById(R.id.txt_list_is_empty);
 
         sendTxt = findViewById(R.id.textSend);
@@ -88,8 +100,7 @@ public class CoinHistory extends AppCompatActivity implements View.OnClickListen
         lyt_received = findViewById(R.id.received);
         lyt_send = findViewById(R.id.send);
 
-        lyt_send.setOnClickListener(this);
-        lyt_received.setOnClickListener(this);
+        toggleButton = findViewById(R.id.toogle);
         coinModals =new ArrayList<CoinModal>();
 
         CoinSpinnerAdapter coinSpinnerAdapter =new CoinSpinnerAdapter(getApplicationContext(),coinImage,coinName,coinSymbols);
@@ -108,12 +119,60 @@ public class CoinHistory extends AppCompatActivity implements View.OnClickListen
                       public void run() {
                         //  getSendCoinHistory();
                           if (coinModals!=null && coinModals.size()>0){
-                              history_Empty.setVisibility(View.GONE);
+                           //   history_Empty.setVisibility(View.GONE);
                           }else {
-                              history_Empty.setVisibility(View.VISIBLE);
+                                         Snacky.builder()
+                                                  .setActivity(CoinHistory.this)
+                                                  .setText("No Transaction History Available")
+                                                  .setDuration(Snacky.LENGTH_SHORT)
+                                                  .setActionText(android.R.string.ok)
+                                                  .success()
+                                                  .show();
+                                      }
+                      }
+                  },500);
+
+              }catch (Exception e){
+
+              }
+
+
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+              //  getSendCoinHistory();
+            }
+        });
+
+        CoinSpinnerAdapter coinSpinnerAdapter1 =new CoinSpinnerAdapter(getApplicationContext(),coinImage1,coinName1,coinSymbols1);
+        coinReceived.setAdapter(coinSpinnerAdapter1);
+         coinReceived.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                receivedData=coinSymbols1[position];
+
+              try {
+                  getReceivedCoinHistory();
+                  coinModals.clear();
+                  coin_history_adapter.notifyDataSetChanged();
+
+                  new Handler().postDelayed(new Runnable() {
+                      @Override
+                      public void run() {
+                          if (coinModals!=null && coinModals.size()>0){
+                              //  history_Empty.setVisibility(View.GONE);
+                          }else {
+                              //   history_Empty.setVisibility(View.VISIBLE);
+                              Snacky.builder()
+                                      .setActivity(CoinHistory.this)
+                                      .setText("No Transaction History Available")
+                                      .setDuration(Snacky.LENGTH_SHORT)
+                                      .setActionText(android.R.string.ok)
+                                      .success()
+                                      .show();
                           }
                       }
-                  },1000);
+                  },500);
 
               }catch (Exception e){
 
@@ -127,40 +186,154 @@ public class CoinHistory extends AppCompatActivity implements View.OnClickListen
               //  getSendCoinHistory();
             }
         });
-       // getReceivedCoinHistory();
+
+
+        toggleButton.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
+            @Override
+            public void onToggle(boolean on) {
+                if (on){
+
+                    lyt_received.setBackground(getResources().getDrawable(R.drawable.background_border3));
+                    receivedTxt.setTextColor(getResources().getColor(R.color.black));
+                    sendTxt.setTextColor(getResources().getColor(R.color.purple_500));
+                    lyt_send.setBackground(getResources().getDrawable(R.drawable.background_broder));
+                    coinSpinner.setVisibility(View.GONE);
+                    coinReceived.setVisibility(View.VISIBLE);
+
+                    try {
+                      //  getSendCoinHistory();
+                        getReceivedCoinHistory();
+                        coinModals.clear();
+                        coin_history_adapter.notifyDataSetChanged();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (coinModals!=null && coinModals.size()>0){
+                                    //  history_Empty.setVisibility(View.GONE);
+                                }else {
+                                    //   history_Empty.setVisibility(View.VISIBLE);
+                                    Snacky.builder()
+                                            .setActivity(CoinHistory.this)
+                                            .setText("No Transaction History Available")
+                                            .setDuration(Snacky.LENGTH_SHORT)
+                                            .setActionText(android.R.string.ok)
+                                            .success()
+                                            .show();
+                                }
+                            }
+                        },500);
+
+                    }catch (Exception e){
+
+                    }
+
+
+
+                }else{
+
+                    lyt_received.setBackground(getResources().getDrawable(R.drawable.background_broder));
+                    receivedTxt.setTextColor(getResources().getColor(R.color.purple_500));
+                    sendTxt.setTextColor(getResources().getColor(R.color.black));
+                    lyt_send.setBackground(getResources().getDrawable(R.drawable.background_border3));
+                    coinSpinner.setVisibility(View.VISIBLE);
+                    coinReceived.setVisibility(View.GONE);
+
+                    // getSendCoinHistory();
+                    try {
+                        getSendCoinHistory();
+                        coinModals.clear();
+                        coin_history_adapter.notifyDataSetChanged();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (coinModals!=null && coinModals.size()>0){
+                                  //  history_Empty.setVisibility(View.GONE);
+                                }else {
+                                 //   history_Empty.setVisibility(View.VISIBLE);
+                                    Snacky.builder()
+                                            .setActivity(CoinHistory.this)
+                                            .setText("No Transaction History Available")
+                                            .setDuration(Snacky.LENGTH_SHORT)
+                                            .setActionText(android.R.string.ok)
+                                            .success()
+                                            .show();
+                                }
+                            }
+                        },500);
+
+                    }catch (Exception e){
+
+                    }
+
+
+                }
+
+            }
+        });
+
           }
     public void getReceivedCoinHistory() {
 
         UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
         String token=user.getToken();
 
-        progressDialog = KProgressHUD.create(CoinHistory.this)
+       /* progressDialog = KProgressHUD.create(CoinHistory.this)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel("Loading.........")
                 .setCancellable(false)
                 .setAnimationSpeed(2)
                 .setDimAmount(0.5f)
                 .show();
+*/
+       // showpDialog();
 
-        showpDialog();
-
-        Call<ResponseBody> call= RetrofitClient.getInstance().getApi().get_ReceivedHistory(token,"btc");
+        Call<ResponseBody> call= RetrofitClient.getInstance().getApi().get_ReceivedHistory(token,receivedData);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                hidepDialog();
+               // hidepDialog();
                 String s=null;
                 if (response.code()==200){
 
                     try {
                         s=response.body().string();
 
+                        JSONArray jsonArray = new JSONArray(s);
+                        for (int i=0;i<=jsonArray.length();i++){
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            CoinModal modal = new CoinModal();
+                            String transactionHash= object.getString("hash");
+                            String form= object.getString("from");
+                            String date= object.getString("timeStamp");
+                            String value= object.getString("value");
 
-                        Log.d("received",s);
+                            modal.setUsername(form);
+                            modal.setTime(date);
+                            modal.setAmount(value);
+                            modal.setType("Received");
+                            modal.setId(transactionHash);
+                            coinModals.add(modal);
+                        }
 
-                    } catch (IOException  e) {
+                    } catch (IOException | JSONException e) {
                         e.printStackTrace();
+                    }
+                    if(coinModals!=null && coinModals.size()>0) {
+                        coin_history_adapter = new Coin_History_Adapter(coinModals, getApplicationContext(),CoinHistory.this);
+                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+                        recyclerView.setLayoutManager(mLayoutManager);
+                        recyclerView.setItemAnimator(new DefaultItemAnimator());
+                        recyclerView.setAdapter(coin_history_adapter);
+
+                    } else{
+                        Snacky.builder()
+                                .setActivity(CoinHistory.this)
+                                .setText("No Transaction History Available")
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .success()
+                                .show();
                     }
 
                 }else if (response.code()==400){
@@ -198,7 +371,7 @@ public class CoinHistory extends AppCompatActivity implements View.OnClickListen
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                hidepDialog();
+               // hidepDialog();
             }
         });
     }
@@ -267,14 +440,23 @@ public class CoinHistory extends AppCompatActivity implements View.OnClickListen
                         e.printStackTrace();
                     }
                     if(coinModals!=null && coinModals.size()>0){
-                        coin_history_adapter = new Coin_History_Adapter(coinModals,getApplicationContext());
+                        coin_history_adapter = new Coin_History_Adapter(coinModals,getApplicationContext(),CoinHistory.this);
                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL,false);
                         recyclerView.setLayoutManager(mLayoutManager);
                         recyclerView.setItemAnimator(new DefaultItemAnimator());
                         recyclerView.setAdapter(coin_history_adapter);
                     }else{
 
-                        history_Empty.setVisibility(View.VISIBLE);
+                        Snacky.builder()
+                                .setActivity(CoinHistory.this)
+                                .setText("No Transaction History Available")
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .success()
+                                .show();
+
+
+                        // history_Empty.setVisibility(View.VISIBLE);
 
                     }
 
@@ -363,23 +545,24 @@ public class CoinHistory extends AppCompatActivity implements View.OnClickListen
         startActivity(intent);
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.send:
-                lyt_received.setBackground(getResources().getDrawable(R.drawable.background_broder));
-                receivedTxt.setTextColor(getResources().getColor(R.color.purple_500));
-                sendTxt.setTextColor(getResources().getColor(R.color.black));
-                lyt_send.setBackground(getResources().getDrawable(R.drawable.background_border3));
-                break;
-            case R.id.received:
 
-                    lyt_received.setBackground(getResources().getDrawable(R.drawable.background_border3));
-                    receivedTxt.setTextColor(getResources().getColor(R.color.black));
-                    sendTxt.setTextColor(getResources().getColor(R.color.purple_500));
-                    lyt_send.setBackground(getResources().getDrawable(R.drawable.background_broder));
-                //getReceivedCoinHistory();
-                break;
-        }
+    @Override
+    public void onHistoryItemClickListener(int position) {
+        String username =coinModals.get(position).getUsername();
+        String transaction =coinModals.get(position).getId();
+        String type =coinModals.get(position).getType();
+        String date =coinModals.get(position).getTime();
+        String amount =coinModals.get(position).getAmount();
+
+        Transaction_HistoryModel historyModel=new Transaction_HistoryModel(transaction,"Success",amount,type,username,date);
+
+        //storing the user in shared preferences
+        TransactionHistorySharedPrefManager.getInstance(getApplicationContext()).Transaction_History_Data(historyModel);
+
+
+        Intent intent = new Intent(CoinHistory.this,Full_Transaction_History.class);
+        startActivity(intent);
+
+
     }
 }

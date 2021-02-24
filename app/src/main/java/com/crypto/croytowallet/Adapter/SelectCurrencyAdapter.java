@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -52,8 +54,14 @@ Context context;
         holder.CountryName.setText(currencyModels.get(position).getCountryName());
         // holder.radioButton.setChecked(lastSelectedPosition == position);
 
+        setAnimation(holder.itemView);
     }
 
+    private void setAnimation(View view){
+
+        Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+        view.setAnimation(animation);
+    }
     @Override
     public int getItemCount() {
         return currencyModels.size();

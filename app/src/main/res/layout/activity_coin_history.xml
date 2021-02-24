@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-android:background="@color/background"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:toggle="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/background"
 
-tools:context=".TransactionHistory.CoinHistory">
+    tools:context=".TransactionHistory.CoinHistory">
 
 <LinearLayout
     android:id="@+id/linear"
@@ -60,6 +61,15 @@ tools:context=".TransactionHistory.CoinHistory">
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:text="Bitcoin"/>
+            <Spinner
+                android:id="@+id/coinReceived"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:visibility="gone"
+               />
+
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
@@ -70,14 +80,12 @@ tools:context=".TransactionHistory.CoinHistory">
         android:gravity="center"
         android:orientation="horizontal">
 
-
         <LinearLayout
             android:id="@+id/send"
-            android:layout_width="150dp"
+            android:layout_width="120dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="20dp"
             android:background="@drawable/background_border3"
             android:gravity="center">
             <TextView
@@ -91,12 +99,19 @@ tools:context=".TransactionHistory.CoinHistory">
                 />
 
         </LinearLayout>
+
+        <com.zcw.togglebutton.ToggleButton
+            android:id="@+id/toogle"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
         <LinearLayout
             android:id="@+id/received"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:layout_marginRight="30dp"
+            android:layout_marginRight="20dp"
             android:background="@drawable/background_broder"
             android:gravity="center">
             <TextView
