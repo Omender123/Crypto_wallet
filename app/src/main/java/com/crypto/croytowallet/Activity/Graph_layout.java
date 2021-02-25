@@ -22,6 +22,7 @@ import com.crypto.croytowallet.Adapter.Crypto_currencyInfo;
 import com.crypto.croytowallet.CoinTransfer.CoinScan;
 import com.crypto.croytowallet.CoinTransfer.Received_Coin;
 import com.crypto.croytowallet.ImtSmart.ImtSmartVerification;
+import com.crypto.croytowallet.ImtSmart.imtSwap;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.Model.CrptoInfoModel;
 import com.crypto.croytowallet.R;
@@ -220,6 +221,11 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
               //  intent1.putExtra("position",position);
                 startActivity(intent1);
                 break;
+            case R.id.swap_btc_btn:
+                Intent intent2=new Intent(getApplicationContext(), imtSwap.class);
+                startActivity(intent2);
+                break;
+
 
         }
     }

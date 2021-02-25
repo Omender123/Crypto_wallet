@@ -462,14 +462,14 @@
     <TextView
         android:id="@+id/swap_btc_btn"
         android:layout_width="match_parent"
-        android:text="Swap BTC"
         android:layout_height="40dp"
-        android:layout_marginTop="40dp"
-        android:gravity="center"
         android:layout_below="@id/cardviewvali"
-        android:textSize="15dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
         android:layout_gravity="center"
-        android:background="@drawable/button_border" />
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="50dp"
+        android:background="@drawable/button_border"
+        android:gravity="center"
+        android:text="SWAP P2P"
+        android:textSize="15dp" />
 </RelativeLayout>

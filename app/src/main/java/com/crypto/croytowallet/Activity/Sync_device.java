@@ -200,7 +200,7 @@ public class Sync_device extends AppCompatActivity implements HistoryClickLister
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<String, String>();
 
-                headers.put("Authorization", token);
+               // headers.put("Authorization", token);
 
                 return headers;
             }

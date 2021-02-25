@@ -196,10 +196,9 @@
                         android:layout_height="25dp"
                         android:layout_marginRight="20dp"
                         android:text="MIN"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textAlignment="center"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                        android:background="@drawable/round_background"
                         android:gravity="center" />
 
                     <TextView

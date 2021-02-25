@@ -54,14 +54,10 @@ Context context;
         holder.CountryName.setText(currencyModels.get(position).getCountryName());
         // holder.radioButton.setChecked(lastSelectedPosition == position);
 
-        setAnimation(holder.itemView);
+
     }
 
-    private void setAnimation(View view){
 
-        Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
-        view.setAnimation(animation);
-    }
     @Override
     public int getItemCount() {
         return currencyModels.size();

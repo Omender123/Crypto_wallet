@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     Intent i = new Intent(Intent.ACTION_SEND);
                     i.setType("text/plain");
-                    String sAux = "Hey,\n Its amazing install Crypto Wallet app and use this\n Referral code : "+code +"\n Download "+ getResources().getString(R.string.app_name) + "\n";
+                    String sAux = "Hey,\n \n" + "Its amazing install iMX which offer 0% transaction fees on crypto Assets \n Referral code : "+code +"\n Download "+ getResources().getString(R.string.app_name) + "\n";
                     sAux = sAux + "https://play.google.com/store/apps/details?id=" + getPackageName() + "\n";
                     i.putExtra(Intent.EXTRA_TEXT, sAux);
                    startActivity(Intent.createChooser(i, "choose one"));

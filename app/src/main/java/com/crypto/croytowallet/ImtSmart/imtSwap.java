@@ -66,18 +66,16 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
     TextView swapBtn, txt_low, txt_average, txt_high, gwei_low, gwei_average, gwei_high, min_low, min_average, min_high, min_rate, half_rate, max_rate;
     LinearLayout lyt_low, lyt_average, lyt_high;
     EditText enter_Swap_Amount;
-    String[] coinName = {"ImSmart", "Airdrop"};
-    String[] coinSymbols = {"imt", "airdrop"};
-    int[] coinImage = {R.mipmap.imt, R.mipmap.airdrop};
+    String[] coinName = {"ImSmart", "Airdrop","Bitcoin","Ethereum","Tether","XRP","Litcoin","USD Coin"};
+    String[] coinSymbols = {"imt", "airdrop","btc","eth","usdt","xrp","ltc","usdc"};
+    int[] coinImage = {R.mipmap.imt, R.mipmap.airdrop,R.mipmap.bitcoin_image,R.mipmap.group_blue,R.mipmap.usdt,R.mipmap.xrp,R.mipmap.ltc,R.mipmap.usdc};
 
     String[] coinName1 = {"Airdrop", "ImSmart"};
     String[] coinSymbols1 = {"airdrop", "imt"};
     int[] coinImage1 = {R.mipmap.airdrop, R.mipmap.imt};
     int value;
     SeekBar seekBar;
-
     KProgressHUD progressDialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -185,7 +183,7 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 double balance2 = Double.parseDouble(String.valueOf(progress));
-                double total = balance2 * 100;
+                double total = balance2 * 10;
                 enter_Swap_Amount.setText(String.valueOf(total));
             }
 
@@ -332,8 +330,9 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(imtSwap.this, ImtSmartGraphLayout.class);
-                startActivity(intent);
+               // onSaveInstanceState(new Bundle());
+                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                finish();
             }
         });
 
@@ -343,8 +342,8 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
     public void onBackPressed() {
         super.onBackPressed();
 
-        Intent intent = new Intent(imtSwap.this, ImtSmartGraphLayout.class);
-        startActivity(intent);
+        onSaveInstanceState(new Bundle());
+
     }
 
 
@@ -421,6 +420,9 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
                 half_rate.setTextColor(getResources().getColor(R.color.black));
                 max_rate.setTextColor(getResources().getColor(R.color.black));
                 enter_Swap_Amount.setText(min_amount);
+                Integer min=Integer.parseInt(min_amount);
+                int min1=min/10;
+                seekBar.setProgress(min1);
                 break;
 
             case R.id.half:
@@ -431,6 +433,10 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
                 half_rate.setTextColor(getResources().getColor(R.color.white));
                 max_rate.setTextColor(getResources().getColor(R.color.black));
                 enter_Swap_Amount.setText(half_amount);
+                Integer min2=Integer.parseInt(half_amount);
+                int min3=min2/10;
+                seekBar.setProgress(min3);
+               // seekBar.setProgress(Integer.parseInt(half_amount));
                 break;
 
             case R.id.max:
@@ -441,6 +447,11 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
                 half_rate.setTextColor(getResources().getColor(R.color.black));
                 max_rate.setTextColor(getResources().getColor(R.color.white));
                 enter_Swap_Amount.setText(max_amount);
+                Integer min4=Integer.parseInt(max_amount);
+                int min5=min4/10;
+                seekBar.setProgress(min5);
+
+                // seekBar.setProgress(Integer.parseInt(max_amount));
                 break;
 
         }
