@@ -59,6 +59,7 @@
                         android:id="@+id/qrPlaceHolder"
                         android:layout_width="170dp"
                         android:layout_height="170dp"
+                        android:background="@color/white"
                         android:src="@android:drawable/screen_background_dark_transparent"/>
                 </androidx.cardview.widget.CardView>
 

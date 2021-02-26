@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/background"
     tools:context=".Activity.ManualEnterUserName">
 
     <LinearLayout
@@ -47,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:textColor="@color/toolbar"
+            android:textColor="@color/toolbar_text_color"
             android:inputType="text"
             android:drawableLeft="@drawable/ic_user_name"
             android:drawableStart="@drawable/ic_user_name"

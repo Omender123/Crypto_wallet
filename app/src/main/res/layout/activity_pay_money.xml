@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     android:orientation="vertical"
     tools:context=".Payment.Pay_money">
     <LinearLayout
@@ -43,7 +44,7 @@
         android:textSize="18dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textStyle="bold"
-        android:textColor="@color/black"/>
+        android:textColor="@color/toolbar_text_color"/>
     <TextView
         android:id="@+id/paytransactionId"
         android:layout_width="match_parent"
@@ -52,7 +53,7 @@
         android:textAlignment="center"
         android:textSize="16dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@color/black"/>
+        android:textColor="@color/toolbar_text_color"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -78,7 +79,7 @@
                 android:textStyle="bold"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/black"/>
+                android:textColor="@color/toolbar_text_color"/>
 
             <EditText
                 android:id="@+id/pay_enter_amount"
@@ -89,10 +90,10 @@
                 android:inputType="numberDecimal"
                 android:textStyle="bold"
                 android:textSize="25dp"
-                android:textColorHint="@color/black"
+                android:textColorHint="@color/toolbar_text_color"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/black"/>
+                android:textColor="@color/toolbar_text_color"/>
 
             <TextView
                 android:id="@+id/balance"
@@ -110,7 +111,7 @@
             android:layout_gravity="bottom"
             android:text="@string/add_money"
             android:layout_marginLeft="20dp"
-            android:textColor="@color/black"
+            android:textColor="@color/toolbar_text_color"
             android:textStyle="bold"
             android:drawableLeft="@drawable/ic_add_money"
             android:drawablePadding="10dp"
@@ -132,7 +133,7 @@
         android:layout_marginBottom="10dp"
         android:drawablePadding="10dp"
         android:text="@string/name"
-        android:textColor="@color/black"
+        android:textColor="@color/toolbar_text_color"
         android:textSize="15dp"
         android:textStyle="bold" />
 
@@ -151,7 +152,7 @@
         android:layout_toEndOf="@+id/name"
         android:text="@string/email"
         android:textAlignment="textEnd"
-        android:textColor="@color/black"
+        android:textColor="@color/toolbar_text_color"
         android:textSize="15dp"
         android:textStyle="bold" />
 

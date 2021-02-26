@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.crypto.croytowallet.Chat.TicketChat;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
 
@@ -42,13 +43,16 @@ ActionBar actionBar;
         Mobile_support.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snacky.builder()
+               /* Snacky.builder()
                         .setActivity(Support.this)
                         .setText("Coming Up Features")
                         .setTextColor(getResources().getColor(R.color.white))
                         .setDuration(Snacky.LENGTH_SHORT)
                         .success()
-                        .show();
+                        .show();*/
+
+                Intent i = new Intent(Support.this, TicketChat.class);
+                startActivity(i);
             }
         });
 
@@ -91,11 +95,12 @@ ActionBar actionBar;
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
+        onSaveInstanceState(new Bundle());
+/*
         Intent intent = new Intent(Support.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        finish();
+        finish();*/
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -129,6 +134,7 @@ ActionBar actionBar;
                 Intent intent = new Intent(Support.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
+               // onSaveInstanceState(new Bundle());
             }
         });
 

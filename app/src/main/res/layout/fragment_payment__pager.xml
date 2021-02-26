@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f4f6fb"
+    android:background="@color/background"
     tools:context=".Payment_Pager">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/Recyclerview_payment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#f4f6fb"
+        android:background="@color/background"
         android:layout_marginBottom="40dp"/>
     <TextView
         android:id="@+id/Pager_Payment_Button"

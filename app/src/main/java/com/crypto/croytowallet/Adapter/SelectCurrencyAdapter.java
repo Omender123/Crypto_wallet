@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.CompoundButton;
+import android.widget.Filter;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,12 +21,13 @@ import com.crypto.croytowallet.Model.CurrencyModel;
 import com.crypto.croytowallet.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SelectCurrencyAdapter extends RecyclerView.Adapter<SelectCurrencyAdapter.Myviewholder> {
 ArrayList<CurrencyModel>currencyModels;
 Context context;
     private HistoryClickLister historyClickLister;
-    private int lastSelectedPosition = -1;
+    List<CurrencyModel> mDataFiltered ;
 
     SharedPreferences sharedPreferences = null;
 
@@ -33,6 +35,7 @@ Context context;
         this.currencyModels = currencyModels;
         this.context = context;
         this.historyClickLister=historyClickLister;
+        this.mDataFiltered = currencyModels;
     }
 
     public SelectCurrencyAdapter() {
@@ -55,6 +58,7 @@ Context context;
         // holder.radioButton.setChecked(lastSelectedPosition == position);
 
 
+
     }
 
 
@@ -62,6 +66,47 @@ Context context;
     public int getItemCount() {
         return currencyModels.size();
     }
+
+   /* @Override
+    public Filter getFilter() {
+
+        return  new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String Key = constraint.toString();
+                if (Key.isEmpty()) {
+                    mDataFiltered = currencyModels ;
+                }
+                else {
+                    List<CurrencyModel> lstFiltered = new ArrayList<>();
+                    for (CurrencyModel row : currencyModels) {
+
+                        if (row.getCurrency().toLowerCase().contains(Key.toLowerCase()) || row.getCountryName().toLowerCase().contains(Key.toLowerCase())){
+
+                            lstFiltered.add(row);
+                        }
+
+                    }
+
+                    mDataFiltered = lstFiltered;
+
+                }
+
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values= mDataFiltered;
+                return filterResults;
+
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                mDataFiltered = (List<CurrencyModel>) results.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+    */
 
     public class Myviewholder extends RecyclerView.ViewHolder {
         TextView currency, CountryName;

@@ -3,18 +3,41 @@ package com.crypto.croytowallet.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.icu.text.DecimalFormat;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
+import com.bumptech.glide.Glide;
 import com.crypto.croytowallet.Interface.BannerResponeDone;
 import com.crypto.croytowallet.MainActivity;
+import com.crypto.croytowallet.Offer.Offer;
 import com.crypto.croytowallet.R;
+import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.UserData;
+import com.crypto.croytowallet.database.RetrofitClient;
+import com.kaopiz.kprogresshud.KProgressHUD;
+import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import de.mateware.snacky.Snacky;
 import jp.shts.android.storiesprogressview.StoriesProgressView;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class StoryView extends AppCompatActivity implements StoriesProgressView.StoriesListener {
     private static final int PROGRESS_COUNT = 4;
@@ -23,18 +46,11 @@ public class StoryView extends AppCompatActivity implements StoriesProgressView.
     private ImageView image,back;
 
     private int counter = 0;
-    private final int[] resources = new int[]{
-            R.drawable.sample1,
-            R.drawable.sample2,
-            R.drawable.sample3,
-            R.drawable.sample4
-
-    };
-
     long pressTime = 0L;
     long limit = 500L;
 
-
+    KProgressHUD progressDialog;
+    List<String> images;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,19 +58,10 @@ public class StoryView extends AppCompatActivity implements StoriesProgressView.
         setContentView(R.layout.activity_story_view);
 
         storiesProgressView = (StoriesProgressView) findViewById(R.id.stories);
-        storiesProgressView.setStoriesCount(PROGRESS_COUNT);
-        storiesProgressView.setStoryDuration(3000L);
-        // or
-        // storiesProgressView.setStoriesCountWithDurations(durations);
-        storiesProgressView.setStoriesListener(this);
-//        storiesProgressView.startStories();
-
-        storiesProgressView.startStories(counter);
-
         image = (ImageView) findViewById(R.id.image);
         back = findViewById(R.id.back);
-        image.setImageResource(resources[counter]);
 
+        getStory();
         // bind reverse view
         View reverse = findViewById(R.id.reverse);
         reverse.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +81,8 @@ public class StoryView extends AppCompatActivity implements StoriesProgressView.
             }
         });
         skip.setOnTouchListener(onTouchListener);
+
+
     }
     private View.OnTouchListener onTouchListener = new View.OnTouchListener() {
         @Override
@@ -93,13 +102,13 @@ public class StoryView extends AppCompatActivity implements StoriesProgressView.
     };
     @Override
     public void onNext() {
-        image.setImageResource(resources[++counter]);
+        Picasso.get().load(images.get(++counter)).into(image);
     }
 
     @Override
     public void onPrev() {
         if ((counter - 1) < 0) return;
-        image.setImageResource(resources[--counter]);
+        Picasso.get().load(images.get(--counter)).into(image);
 
     }
 
@@ -109,6 +118,17 @@ public class StoryView extends AppCompatActivity implements StoriesProgressView.
         finish();
     }
 
+    @Override
+    protected void onPause() {
+        storiesProgressView.pause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        storiesProgressView.resume();
+        super.onResume();
+    }
     @Override
     protected void onDestroy() {
         // Very important !
@@ -126,46 +146,118 @@ public class StoryView extends AppCompatActivity implements StoriesProgressView.
             });
 
         }
-    }
 
-   /*
-    StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_BANNER, new Response.Listener<String>() {
-        @Override
-        public void onResponse(String response) {
-            try {
-                JSONArray jsonArray = new JSONArray(response);
-                for (int i = 0; i <= jsonArray.length(); i++) {
-                    JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                    String images = jsonObject1.getString("images");
+    public void getStory(){
+        images = new ArrayList<>();
+        UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
+        String token=user.getToken();
 
-                    JSONArray jsonArray1 = new JSONArray(images);
-                    for (int j = 0; j <= jsonArray1.length(); j++) {
+        progressDialog = KProgressHUD.create(StoryView.this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Loading.........")
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
 
-                        JSONObject jsonObjec2 = jsonArray1.getJSONObject(j);
-                        imageUrl = jsonObjec2.getString("url");
+        showpDialog();
 
-                        //   Picasso.get().load(imageUrl).into(imageView);
+        Call<ResponseBody> call = RetrofitClient
+                .getInstance()
+                .getApi().getStory(token);
 
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                hidepDialog();
+                String s = null;
+                if (response.code()==200){
+                    try {
+                        s=response.body().string();
+                        images.clear();
+                        JSONArray jsonArray = new JSONArray(s);
+                        for (int i = 0; i <= jsonArray.length(); i++) {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                            String imagess = jsonObject1.getString("images");
+
+                            JSONArray jsonArray1 = new JSONArray(imagess);
+                            for (int j = 0; j <= jsonArray1.length(); j++) {
+
+                                JSONObject jsonObjec2 = jsonArray1.getJSONObject(j);
+                               String  imageUrl = jsonObjec2.getString("url");
+
+                                images.add(imageUrl);
+
+                            }
+                        }
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
                     }
+                    storiesProgressView.setStoriesCount(images.size()); // <- set stories
+                    storiesProgressView.setStoryDuration(5000L); // <- set a story duration
+                    storiesProgressView.setStoriesListener(StoryView.this); // <- set listener
+                    storiesProgressView.startStories(counter); // <- start progress
+
+
+                    Picasso.get().load(images.get(counter)).into(image);
+
+                } else if(response.code()==400){
+                    try {
+                        s=response.errorBody().string();
+                        JSONObject jsonObject1=new JSONObject(s);
+                        String error =jsonObject1.getString("error");
+
+
+                        Snacky.builder()
+                                .setActivity(StoryView.this)
+                                .setText(error)
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
+
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if(response.code()==401){
+
+                    Snacky.builder()
+                            .setActivity(StoryView.this)
+                            .setText("unAuthorization Request")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+
                 }
 
-
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
 
-        }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            hidepDialog();
 
-    }, new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            // Toast.makeText(getContext(), ""+error.toString(), Toast.LENGTH_SHORT).show();
-        }
-    });
-        requestQueue = Volley.newRequestQueue(getApplicationContext());
-                requestQueue.add(stringRequest);
+                Snacky.builder()
+                        .setActivity(StoryView.this)
+                        .setText("Internet Problem ")
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+            }
+        });
+    }
 
+    private void showpDialog() {
+        if (!progressDialog.isShowing())
+            progressDialog.show();
+    }
 
-*/
-
-
+    private void hidepDialog() {
+        if (progressDialog.isShowing())
+            progressDialog.dismiss();
+    }
+}

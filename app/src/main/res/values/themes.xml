@@ -35,7 +35,7 @@
     </style>
 
     <style name="OutlineBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-        <item name="boxStrokeColor">#707070</item>
+        <item name="boxStrokeColor">@color/stoke_color</item>
         <item name="hintTextColor">#707070</item>
         <item name="boxCornerRadiusBottomEnd">7dp</item>
         <item name="boxCornerRadiusBottomStart">7dp</item>

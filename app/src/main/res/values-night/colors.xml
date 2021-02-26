@@ -21,4 +21,6 @@
     <color name="pink">#EA485C</color>
     <color name="green">#00E676</color>
     <color name="red">#FF1100</color>
+    <color name="stoke_color">#FFFFFF</color>
+    <color name="layout_color">#363F61</color>
 </resources>

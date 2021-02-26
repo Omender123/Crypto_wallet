@@ -34,7 +34,7 @@
     <string name="privacy">Privacy Policy</string>
 
 
-    <string name="mobile_support">Mobile Support</string>
+    <string name="mobile_support">Chat Support</string>
     <string name="knowledge">Knowledge Base</string>
     <string name="ticket">Ticket</string>
     <string name="contact_us">Contact Us</string>
@@ -182,4 +182,5 @@
     <string name="tickets_text"> Raise your issue and we will get back to you with your solution.</string>
     <string name="contact_text"> Reach us to us directly.</string>
 
+    <string name="prefs_theme_key">theme</string>
 </resources>

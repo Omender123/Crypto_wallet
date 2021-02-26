@@ -73,7 +73,7 @@
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:text="@string/enter_pin"
-                android:textColor="@color/toolbar" />
+                android:textColor="@color/toolbar_text_color" />
 
             <com.chaos.view.PinView
                 android:id="@+id/enter_pin"
@@ -112,7 +112,7 @@
                 android:layout_marginLeft="20dp"
                 android:text="@string/payout_text1"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/toolbar"
+                android:textColor="@color/toolbar_text_color"
                 android:textSize="20dp"
                 android:textStyle="bold" />
             <com.google.android.material.textfield.TextInputLayout
@@ -148,7 +148,7 @@
                 android:layout_marginTop="20dp"
                 android:text="@string/payout_text2"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/toolbar"
+                android:textColor="@color/toolbar_text_color"
                 android:textSize="20dp"
                 android:textStyle="bold" />
             <com.google.android.material.textfield.TextInputLayout

@@ -3,7 +3,7 @@
     <color name="purple_200">#000000</color>
     <color name="purple_500">#F1BB0E</color>
     <color name="purple_700">#000000</color>
-   <color name="teal_200">#F1BB0E</color>
+    <color name="teal_200">#F1BB0E</color>
     <color name="teal_700">#FF018786</color>
 
     <color name="black">#4C4C4C</color>
@@ -16,7 +16,7 @@
     <color name="toolbar">#272a30</color>
     <color name="toolbar_text_color">#242424</color>
     <color name="Orange">#ED8A4C</color>
-   <color name="drawer_background">#F8F8F8</color>
+    <color name="drawer_background">#F8F8F8</color>
     <color name="drawer_icon">#1F2641</color>
     <color name="drawer_tittle">#1F2641</color>
     <color name="card_background">#FFFFFFFF</color>
@@ -26,5 +26,13 @@
     <color name="light_gray">@android:color/darker_gray</color>
     <color name="border_color">#F1BB0E</color>
     <color name="txt_hide">#DAD8D8</color>
+    <color name="stoke_color">#707070</color>
+    <color name="layout_color">#F1F1F1</color>
+    <!--bottom section color-->
+    <color name="select">#F7CE2B</color>
+    <color name="un_select">#aaa</color>
+    <!--gradent color Header-->
+    <color name="end_color">#F7CE2B</color>
+    <color name="start_color">#F1BB0E</color>
 
 </resources>

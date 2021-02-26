@@ -181,5 +181,8 @@ public interface Api {
             @Field("crypto") String type
     );
 
-
+    @GET("banner")
+    Call<ResponseBody> getStory(
+            @Header("Authorization") String token
+    );
 }

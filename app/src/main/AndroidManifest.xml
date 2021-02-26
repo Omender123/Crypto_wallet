@@ -25,13 +25,16 @@
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />
         <activity
             android:name=".Activity.BackVerification"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+            android:theme="@style/Theme.CroytoWallet.NoActionBar"
+            />
         <activity
             android:name=".login.CrashOtpActivity"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+            android:theme="@style/Theme.CroytoWallet.NoActionBar"
+            android:configChanges="uiMode"/>
         <activity
             android:name=".login.CreashSetTransactionPin"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+            android:theme="@style/Theme.CroytoWallet.NoActionBar"
+            android:configChanges="uiMode"/>
         <activity
             android:name=".ImtSmart.imtSwap"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />
@@ -97,10 +100,12 @@
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />
         <activity
             android:name=".signup.Add_Verification1"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+            android:theme="@style/Theme.CroytoWallet.NoActionBar"
+            android:configChanges="uiMode"/>
         <activity
             android:name=".signup.GmailVerfiyOtp"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+            android:theme="@style/Theme.CroytoWallet.NoActionBar"
+            android:configChanges="uiMode"/>
         <activity
             android:name=".Splash_Screen"
             android:theme="@style/Theme.CroytoWallet.NoActionBar">
@@ -160,40 +165,51 @@
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />
         <activity
             android:name=".TransactionPin.EnterConfirmMnemonic"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+            android:theme="@style/Theme.CroytoWallet.NoActionBar"
+            android:configChanges="uiMode"/>
         <activity
             android:name=".TransactionPin.ShowMnemonic"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+            android:theme="@style/Theme.CroytoWallet.NoActionBar"
+            android:configChanges="uiMode"/>
         <activity
             android:name=".TransactionPin.TransactionPin"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />
         <activity
             android:name=".signup.SignUp"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+            android:theme="@style/Theme.CroytoWallet.NoActionBar"
+            android:configChanges="uiMode"/>
         <activity
             android:name=".signup.Add_Verification"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+            android:theme="@style/Theme.CroytoWallet.NoActionBar"
+            android:configChanges="uiMode"/>
         <activity
             android:name=".signup.Google_auth"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+            android:theme="@style/Theme.CroytoWallet.NoActionBar"
+            android:configChanges="uiMode"/>
         <activity
             android:name=".signup.sucessfullverification"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+            android:theme="@style/Theme.CroytoWallet.NoActionBar"
+            android:configChanges="uiMode"/>
         <activity
             android:name=".signup.Referral_code"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+            android:theme="@style/Theme.CroytoWallet.NoActionBar"
+            android:configChanges="uiMode"/>
         <activity
             android:name=".login.Change_Password"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+            android:theme="@style/Theme.CroytoWallet.NoActionBar"
+            android:configChanges="uiMode"/>
         <activity
             android:name=".login.OTP_Activity"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+            android:theme="@style/Theme.CroytoWallet.NoActionBar"
+            android:configChanges="uiMode"/>
         <activity
             android:name=".login.ForgetPassword"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+            android:theme="@style/Theme.CroytoWallet.NoActionBar"
+            android:configChanges="uiMode"/>
         <activity
             android:name=".login.Login"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+            android:theme="@style/Theme.CroytoWallet.NoActionBar"
+            android:configChanges="uiMode"/>
         <activity
             android:name=".Activity.Setting"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />

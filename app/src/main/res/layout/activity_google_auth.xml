@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".signup.Google_auth">
     <ImageView
         android:layout_width="match_parent"
@@ -68,6 +69,7 @@
             android:layout_below="@id/login"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="55dp"
+            android:textColor="#242424"
             android:text="@string/Nice" />
 
         <TextView
@@ -109,8 +111,10 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:background="@drawable/verifying_textview"
+                        android:backgroundTint="#F3F3F3"
                         android:gravity="center"
                         android:padding="10dp"
+                        android:textColor="#242424"
                         android:text="ADadadfasfafdaa"
                         android:textAlignment="center" />
 
@@ -150,6 +154,7 @@
                                 android:id="@+id/qrPlaceHolder"
                                 android:layout_width="170dp"
                                 android:layout_height="170dp"
+                                android:background="@color/white"
                                 android:src="@android:drawable/screen_background_dark_transparent" />
                         </androidx.cardview.widget.CardView>
 
@@ -173,6 +178,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawablePadding="10dp"
+                        android:textColor="#242424"
                         android:drawableTint="@android:color/darker_gray"
                         android:ems="10"
                         android:inputType="numberPassword" />

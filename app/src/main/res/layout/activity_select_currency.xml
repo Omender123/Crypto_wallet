@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/background"
-
     tools:context=".Activity.SelectCurrency">
 
     <LinearLayout
@@ -42,6 +41,8 @@
         android:layout_below="@+id/layout_title"
         android:layout_margin="10dp"
         android:hint="Search"
+        android:textColorHint="@color/toolbar_text_color"
+        android:textColor="@color/toolbar_text_color"
         android:drawableLeft="@drawable/ic_baseline_search_24"
         android:drawablePadding="10dp"
         android:paddingLeft="10dp"

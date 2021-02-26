@@ -23,6 +23,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:scaleType="fitXY"
+            android:onClick="back"
             android:layout_marginLeft="13dp"
             android:src="@drawable/ic_baseline_chevron_left_24" />
 
@@ -93,14 +94,14 @@
         android:layout_width="match_parent"
         android:padding="5dp"
         android:id="@+id/bottom"
-        android:background="#F1F1F1"
+        android:background="@color/layout_color"
         android:layout_alignParentBottom="true"
         android:layout_height="wrap_content">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            app:cardBackgroundColor="@color/white"
+            app:cardBackgroundColor="@color/card_background"
             app:cardCornerRadius="20dp"
             android:layout_margin="10dp"
             android:elevation="3dp"
@@ -118,6 +119,8 @@
             android:id="@+id/text_send"
             android:background="@android:color/transparent"
             android:hint="Type a message..."
+            android:textColorHint="@color/toolbar_text_color"
+            android:textColor="@color/toolbar_text_color"
 
            />
         </androidx.cardview.widget.CardView>

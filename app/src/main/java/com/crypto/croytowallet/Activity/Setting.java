@@ -81,6 +81,8 @@ public class Setting extends AppCompatActivity implements View.OnClickListener {
                 Intent intent = new Intent(Setting.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
+
+               // onSaveInstanceState(new Bundle());
             }
         });
 
@@ -133,8 +135,9 @@ public class Setting extends AppCompatActivity implements View.OnClickListener {
     public void onBackPressed() {
         super.onBackPressed();
 
-        Intent intent = new Intent(Setting.this, MainActivity.class);
+        onSaveInstanceState(new Bundle());
+      /*  Intent intent = new Intent(Setting.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        startActivity(intent);*/
     }
 }

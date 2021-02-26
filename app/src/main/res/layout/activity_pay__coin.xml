@@ -48,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:textColor="@color/toolbar"
+            android:textColor="@color/toolbar_text_color"
             android:inputType="number|numberDecimal"
             android:textCursorDrawable="@null"
             android:drawablePadding="10dp"

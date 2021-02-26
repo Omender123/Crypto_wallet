@@ -64,6 +64,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawablePadding="10dp"
+                    android:textColor="@color/toolbar_text_color"
                     android:background="@drawable/verifying_textview"
                     android:drawableTint="@android:color/darker_gray"
                     android:ems="10"
@@ -279,7 +280,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Average"
-                        android:textColor="@color/black"
+                        android:textColor="@color/toolbar_text_color"
                         android:textStyle="bold"
                         android:fontFamily="@font/montserrat"
                         />
@@ -302,7 +303,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="High"
-                        android:textColor="@color/black"
+                        android:textColor="@color/toolbar_text_color"
                         android:textStyle="bold"
                         android:fontFamily="@font/montserrat"
                         />

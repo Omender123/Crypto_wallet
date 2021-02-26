@@ -101,11 +101,11 @@ UserData userData;
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-        Intent intent = new Intent(Security.this, MainActivity.class);
+        onSaveInstanceState(new Bundle());
+       /* Intent intent = new Intent(Security.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        finish();
+        finish();*/
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -136,6 +136,7 @@ UserData userData;
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+               // onSaveInstanceState(new Bundle());
                 Intent intent = new Intent(Security.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);

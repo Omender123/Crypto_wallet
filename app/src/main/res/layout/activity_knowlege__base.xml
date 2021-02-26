@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f7f9fe"
+    android:background="@color/background"
     tools:context=".Activity.knowlege_Base">
 
     <LinearLayout
@@ -39,7 +39,8 @@
      android:id="@+id/tablayout"
      android:layout_width="match_parent"
      android:layout_height="wrap_content"
-     app:tabTextColor="@color/black"
+     android:background="@color/background1"
+     app:tabTextColor="@color/toolbar_text_color"
 
      android:layout_below="@id/toolbar"
      >
@@ -67,6 +68,7 @@
 <androidx.viewpager.widget.ViewPager
     android:id="@+id/pager"
     android:layout_marginTop="5dp"
+    android:background="@color/background"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:layout_below="@id/tablayout"/>

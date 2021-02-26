@@ -9,7 +9,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -48,12 +51,15 @@ public class SelectCurrency extends AppCompatActivity implements HistoryClickLis
     ArrayList<CurrencyModel> currencyModels;
     SelectCurrencyAdapter selectCurrencyAdapter;
     SharedPreferences sharedPreferences;
+    EditText search_input;
+
+    CharSequence search = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_currency);
         imageView = findViewById(R.id.back);
-
+        search_input = findViewById(R.id.search_currency);
         recyclerView = findViewById(R.id.recyclerCurrency);
         currencyModels =new ArrayList<CurrencyModel>();
         sharedPreferences=getSharedPreferences("currency", Context.MODE_PRIVATE);
@@ -104,15 +110,40 @@ public class SelectCurrency extends AppCompatActivity implements HistoryClickLis
 
                     }
 
+/*
+
+                    */
+/*------------------Searching Filter---------------------
+                     *//*
+
+                    search_input.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            SelectCurrencyAdapter.getFilter().filter(s);
+                            search = s;
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+
+                        }
+                    });
+*/
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
                 selectCurrencyAdapter = new SelectCurrencyAdapter(currencyModels,getApplicationContext(),SelectCurrency.this);
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL,false);
                 recyclerView.setLayoutManager(mLayoutManager);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
                 recyclerView.setAdapter(selectCurrencyAdapter);
+
 
                 //  Toast.makeText(getApplicationContext(), ""+response, Toast.LENGTH_SHORT).show();
             }

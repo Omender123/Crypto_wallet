@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context="signup.sucessfullverification">
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,6 +29,7 @@
             android:textSize="30dp"
             android:layout_marginTop="20dp"
             android:layout_below="@id/sucess"
+            android:textColor="#000000"
             />
         <TextView
             android:id="@+id/successfully"

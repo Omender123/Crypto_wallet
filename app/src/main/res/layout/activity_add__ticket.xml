@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f7f9fe"
+    android:background="@color/background"
     tools:context=".Activity.Add_Ticket">
 
     <LinearLayout
@@ -58,7 +58,7 @@
                android:layout_marginRight="20dp"
                android:hint="  Subject"
                android:textSize="15dp"
-               android:textColor="@color/black"
+               android:textColor="@color/toolbar_text_color"
                android:textAlignment="textStart"
                android:layout_marginLeft="20dp"
                android:background="@drawable/verifying_textview"
@@ -81,7 +81,7 @@
                android:inputType="textMultiLine"
                android:lines="10"
                android:textSize="16sp"
-               android:textColor="@color/black"
+               android:textColor="@color/toolbar_text_color"
                android:background="@drawable/verifying_textview"/>
 
            <TextView

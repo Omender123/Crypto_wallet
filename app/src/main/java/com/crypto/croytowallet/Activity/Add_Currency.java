@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -25,6 +26,8 @@ import com.crypto.croytowallet.Adapter.Add_Currency_Adapter;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.Model.Model_Class_Add_Currency;
 import com.crypto.croytowallet.R;
+import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
 
 import org.json.JSONArray;
@@ -32,6 +35,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Add_Currency extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -53,6 +58,10 @@ public class Add_Currency extends AppCompatActivity {
 
     public void Coin_setdata() {
         String url = "http://13.233.136.56:8080/api/currency/";
+        UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
+       // String username=user.getUsername();
+        String token = user.getToken();
+
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_GET_COIN, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -109,7 +118,17 @@ public class Add_Currency extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(Add_Currency.this, "" + error.toString(), Toast.LENGTH_SHORT).show();
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+
+                 headers.put("Authorization", token);
+
+                return headers;
+            }
+
+        };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
 

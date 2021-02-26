@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".signup.Add_Verification">
     <ImageView
         android:layout_width="match_parent"
@@ -62,6 +63,7 @@
             android:layout_below="@id/login"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="100dp"
+            android:textColor="#242424"
             android:text="@string/Nice"
            />
 
@@ -74,7 +76,7 @@
             android:layout_marginBottom="20dp"
             android:text="@string/Addverification"
             android:fontFamily="@font/montserrat"
-            android:textColor="@color/toolbar"
+            android:textColor="#242424"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -96,6 +98,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:background="@drawable/verifying_textview"
+                    android:backgroundTint="#EDEDED"
                     android:layout_gravity="center"
                     android:paddingBottom="15dp">
 
@@ -110,7 +113,7 @@
                         android:textStyle="bold"
                         android:text="@string/Emailtext"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                        android:textColor="@color/toolbar_text_color"
+                        android:textColor="#242424"
                         android:textSize="17dp" />
 
                     <ImageView
@@ -142,6 +145,7 @@
                     android:layout_height="70dp"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/verifying_textview"
+                    android:backgroundTint="#EDEDED"
                     android:layout_gravity="center"
                     android:alpha="0.6"
                     android:paddingBottom="15dp">
@@ -157,7 +161,7 @@
                         android:textStyle="bold"
                         android:text="@string/Gmail_Text"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                        android:textColor="@color/toolbar_text_color"
+                        android:textColor="#242424"
                         android:textSize="17dp" />
 
                     <ImageView
