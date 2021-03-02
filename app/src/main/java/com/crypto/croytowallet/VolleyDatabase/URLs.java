@@ -3,6 +3,7 @@ package com.crypto.croytowallet.VolleyDatabase;
 public class URLs {
     //  http://13.233.136.56:8080/api
 
+    public static final String CHAT_SERVER_URL = "https://api.imx.global";
     private static final String ROOT_URL = "https://api.imx.global/api/";
 
     //private static final String ROOT_URL = " http://13.233.136.56:8080/api";
