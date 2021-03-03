@@ -1,17 +1,15 @@
 package com.crypto.croytowallet.database;
 
-import android.content.Context;
-
-import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
-import com.crypto.croytowallet.SharedPrefernce.UserData;
+import com.google.gson.JsonObject;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 
@@ -183,6 +181,28 @@ public interface Api {
 
     @GET("banner")
     Call<ResponseBody> getStory(
+            @Header("Authorization") String token
+    );
+
+   // @FormUrlEncoded
+   // @Multipart
+    @POST("chat/chatToAdmin")
+    Call<ResponseBody> SendMessageApi( @Header("Authorization") String auth_token,
+                              @Body JsonObject object);
+
+
+  //  @FormUrlEncoded
+    @POST("chat/insertUser")
+    Call<ResponseBody>ChatActive(
+            @Header("Authorization")String Authtoken
+    );
+
+    @POST("chat/ejectUser")
+    Call<ResponseBody>Chat_Un_Active(
+            @Header("Authorization")String Authtoken
+    );
+    @GET("chat/getMessages")
+    Call<ResponseBody> getChat(
             @Header("Authorization") String token
     );
 }

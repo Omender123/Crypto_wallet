@@ -2,9 +2,13 @@ package com.crypto.croytowallet.Chat;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -14,22 +18,46 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crypto.croytowallet.Activity.Support;
+import com.crypto.croytowallet.Adapter.TickectChatAdapter;
+import com.crypto.croytowallet.Model.TicketChatModel;
 import com.crypto.croytowallet.R;
+import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.UserData;
+import com.crypto.croytowallet.database.RetrofitClient;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
+import de.mateware.snacky.Snacky;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class TicketChat extends AppCompatActivity {
 CardView send;
 EditText text_message;
-TextView textView_Send;
-String message;
+TextView textView_Send,first_textUsername,fullName;
+String message,sendername;
+    KProgressHUD progressDialog;
+    UserData userData;
+    RecyclerView chatRecyclerView;
+    TickectChatAdapter tickectChatAdapter;
+    ArrayList<TicketChatModel>ticketChatModels;
+
+
 
     private Socket mSocket;
     {
@@ -46,6 +74,23 @@ String message;
         send= findViewById(R.id.btn_send);
         text_message = findViewById(R.id.text_send);
         textView_Send = findViewById(R.id.textView_send);
+        first_textUsername = findViewById(R.id.userFirsttext);
+        fullName = findViewById(R.id.username);
+
+        chatRecyclerView = findViewById(R.id.recycler_view);
+
+        userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
+
+       /* if (sendername!=null){
+            first_textUsername.setText(sendername);
+            fullName.setText(sendername);
+        }else {
+            first_textUsername.setText(userData.getUsername());
+            fullName.setText(userData.getName());
+        }*/
+
+
+        ticketChatModels = new ArrayList<TicketChatModel>();
 
         send.setAlpha(0.4f);
         textView_Send.setAlpha(0.4f);
@@ -95,9 +140,81 @@ String message;
 
 
         mSocket.connect();
-        mSocket.on("hello", onNewMessage);
+    //    mSocket.on("hello", onNewMessage);
+        mSocket.on("messagesToAdmin", getmessage);
+        getChat();
 
     }
+    private Emitter.Listener getmessage = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    JSONArray data = (JSONArray) args[0];
+                    ticketChatModels.clear();
+                    for (int i=0;i<=data.length();i++){
+                        try {
+                            JSONObject object = data.getJSONObject(i);
+
+                            String array = object.getString("array");
+                            String username = object.getString("username");
+                            String username1= userData.getUsername();
+                            Log.d("usernmae",username+"\n"+username1);
+                            JSONArray jsonArray = new JSONArray(array);
+                            if (username.equals(userData.getUsername())){
+                                for (int j=0; j<=jsonArray.length();i++){
+                                    JSONObject object1 = jsonArray.getJSONObject(i);
+
+                                    TicketChatModel ticketChatModel1 = new TicketChatModel();
+                                    String role= object1.getString("role");
+                                    String time= object1.getString("createdAt");
+
+                                    ticketChatModel1.setRoleId(role);
+                                    ticketChatModel1.setTime(time);
+
+                                    if (role.equals("incomingMessages")){
+                                        String in_message= object1.getString("incomingMessage");
+                                        sendername = object1.getString("senderName");
+                                        first_textUsername.setText(sendername);
+                                        fullName.setText(sendername);
+                                        ticketChatModel1.setMessage(in_message);
+                                    }else {
+                                        String out_message= object1.getString("outgoingMessage");
+                                        ticketChatModel1.setMessage(out_message);
+                                    }
+
+                                    ticketChatModels.add(ticketChatModel1);
+
+
+                                }
+                            }else{
+
+                                getChat();
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        tickectChatAdapter = new TickectChatAdapter(getApplicationContext(),ticketChatModels);
+                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+                        linearLayoutManager.setStackFromEnd(true);
+                        tickectChatAdapter.notifyDataSetChanged();
+                        tickectChatAdapter.update(ticketChatModels);
+                        chatRecyclerView.setLayoutManager(linearLayoutManager);
+                        chatRecyclerView.setHasFixedSize(true);
+                        chatRecyclerView.setAdapter(tickectChatAdapter);
+                    }
+
+                  //  Log.d("hello",data.toString());
+                 // Toast.makeText(TicketChat.this, ""+data.toString(), Toast.LENGTH_SHORT).show();
+
+                }
+            });
+        }
+    };
+
 
     private Emitter.Listener onNewMessage = new Emitter.Listener() {
         @Override
@@ -107,8 +224,8 @@ String message;
                 public void run() {
                     JSONObject data = (JSONObject) args[0];
 
-                    Log.d("hello",data.toString());
-                    Toast.makeText(TicketChat.this, ""+data.toString(), Toast.LENGTH_SHORT).show();
+                  //  Log.d("hello",data.toString());
+                   // Toast.makeText(TicketChat.this, ""+data.toString(), Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -116,18 +233,321 @@ String message;
     };
 
 
+    public void getChat(){
+        UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
+        String token=user.getToken();
+
+        /*progressDialog = KProgressHUD.create(TicketChat.this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Loading.........")
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
+
+        showpDialog();
+*/
+        Call<ResponseBody>call = RetrofitClient.getInstance().getApi().getChat(token);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+           //     hidepDialog();
+                String s = null;
+                if (response.code()==200){
+                    try {
+                        s=response.body().string();
+
+                        JSONObject object = new JSONObject(s);
+
+                        String array = object.getString("array");
+                        JSONArray jsonArray = new JSONArray(array);
+                        ticketChatModels.clear();
+                        for (int i=0;i<=jsonArray.length();i++){
+                            JSONObject  object1 =jsonArray.getJSONObject(i);
+                            TicketChatModel ticketChatModel1 = new TicketChatModel();
+                            String role= object1.getString("role");
+                            String time= object1.getString("createdAt");
+
+                            ticketChatModel1.setRoleId(role);
+                            ticketChatModel1.setTime(time);
+
+                            if (role.equals("incomingMessages")){
+                                String in_message= object1.getString("incomingMessage");
+                                sendername = object1.getString("senderName");
+                                first_textUsername.setText(sendername);
+                                fullName.setText(sendername);
+                                ticketChatModel1.setMessage(in_message);
+                            }else {
+                                String out_message= object1.getString("outgoingMessage");
+                                ticketChatModel1.setMessage(out_message);
+                            }
+
+                            ticketChatModels.add(ticketChatModel1);
+                          //  Log.d("s1",role);
+
+                        }
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    tickectChatAdapter = new TickectChatAdapter(getApplicationContext(),ticketChatModels);
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+                    linearLayoutManager.setStackFromEnd(true);
+                    tickectChatAdapter.notifyDataSetChanged();
+                    tickectChatAdapter.update(ticketChatModels);
+                    chatRecyclerView.setLayoutManager(linearLayoutManager);
+                    chatRecyclerView.setHasFixedSize(true);
+                    chatRecyclerView.setAdapter(tickectChatAdapter);
+
+
+                } else if(response.code()==400){
+                    try {
+                        s=response.errorBody().string();
+                        JSONObject jsonObject1=new JSONObject(s);
+                        String error =jsonObject1.getString("error");
+
+
+                        Snacky.builder()
+                                .setActivity(TicketChat.this)
+                                .setText(error)
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
+
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if(response.code()==401){
+
+                    Snacky.builder()
+                            .setActivity(TicketChat.this)
+                            .setText("unAuthorization Request")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+               // hidepDialog();
+                Snacky.builder()
+                        .setActivity(TicketChat.this)
+                        .setText("Internet Problem ")
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+            }
+        });
+    }
 
 
     private void sendMessage() {
+
+        UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
+        String token=user.getToken();
+        message = text_message.getText().toString();
+       //sendMessage
+
+       /* progressDialog = KProgressHUD.create(TicketChat.this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Loading.........")
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
+
+        showpDialog();
+*/
+
+
+
+        JsonObject bodyParameters = new JsonObject();
+        JsonArray details= new JsonArray();
+        JsonObject orderData= new JsonObject();
+        orderData.addProperty("outgoingMessage", message);
+        details.add(orderData);
+        bodyParameters.add("outgoingMessages", details);
+
+        Call<ResponseBody> call = RetrofitClient
+                .getInstance()
+                .getApi().SendMessageApi(token,bodyParameters);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+              //  hidepDialog();
+                String s = null;
+                if (response.code()==200){
+                    try {
+                        s=response.body().string();
+
+                        text_message.setText(" ");
+                      //  Log.d("s1",s);
+                     // Toast.makeText(TicketChat.this, ""+s, Toast.LENGTH_SHORT).show();
+
+                    /*    new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                // This method will be executed once the timer is over
+                                getChat();
+                            }
+                        }, 500);*/
+                    } catch (IOException  e) {
+                        e.printStackTrace();
+                    }
+
+                } else if(response.code()==400){
+                    try {
+                        s=response.errorBody().string();
+                        JSONObject jsonObject1=new JSONObject(s);
+                        String error =jsonObject1.getString("error");
+
+
+                        Snacky.builder()
+                                .setActivity(TicketChat.this)
+                                .setText(error)
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
+
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if(response.code()==401){
+
+                    Snacky.builder()
+                            .setActivity(TicketChat.this)
+                            .setText("unAuthorization Request")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+
+                }
+
+            }
+
+
+
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                //hidepDialog();
+                Snacky.builder()
+                        .setActivity(TicketChat.this)
+                        .setText("Internet Problem ")
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+            }
+        });
     }
 
     public void back(View view) {
         startActivity(new Intent(getApplicationContext(), Support.class));
+        ChatActive();
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         onSaveInstanceState(new Bundle());
+        ChatActive();
     }
+
+    private void showpDialog() {
+        if (!progressDialog.isShowing())
+            progressDialog.show();
+    }
+
+    private void hidepDialog() {
+        if (progressDialog.isShowing())
+            progressDialog.dismiss();
+    }
+
+    public void ChatActive(){
+        UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
+        String token=user.getToken();
+
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().Chat_Un_Active(token);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+
+                String s = null;
+                if (response.code()==200){
+                    try {
+                        s=response.body().string();
+                        //  Log.d("support",s);
+                       // Toast.makeText(TicketChat.this, ""+s, Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if(response.code()==400){
+                    try {
+                        s=response.errorBody().string();
+                        JSONObject jsonObject1=new JSONObject(s);
+                        String error =jsonObject1.getString("error");
+
+
+                        Snacky.builder()
+                                .setActivity(TicketChat.this)
+                                .setText(error)
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
+
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if(response.code()==401){
+
+                    Snacky.builder()
+                            .setActivity(TicketChat.this)
+                            .setText("unAuthorization Request")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Snacky.builder()
+                        .setActivity(TicketChat.this)
+                        .setText("Internet Problem ")
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+            }
+        });
+
+
+    }
+
 }

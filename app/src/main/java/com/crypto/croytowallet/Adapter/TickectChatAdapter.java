@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.crypto.croytowallet.AppUtils;
 import com.crypto.croytowallet.Model.TicketChatModel;
 import com.crypto.croytowallet.R;
 
@@ -45,8 +46,14 @@ public class TickectChatAdapter extends  RecyclerView.Adapter<TickectChatAdapter
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
         holder.show_message.setText(mChat.get(position).getMessage());
+
+        String dateAndTime = mChat.get(position).getTime();
+        String[] s= dateAndTime.split("T");
+        String time1 = s[1];
+
+        holder.date.setText(AppUtils.getDate(dateAndTime));
+        holder.time.setText(time1);
 
     }
 
@@ -57,7 +64,7 @@ public class TickectChatAdapter extends  RecyclerView.Adapter<TickectChatAdapter
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView show_message;
+        public TextView show_message,time,date;
         public ImageView profile_image;
         public TextView txt_seen;
 
@@ -65,18 +72,26 @@ public class TickectChatAdapter extends  RecyclerView.Adapter<TickectChatAdapter
             super(itemView);
 
             show_message = itemView.findViewById(R.id.show_message);
+            time = itemView.findViewById(R.id.time);
+            date = itemView.findViewById(R.id.date);
            // profile_image = itemView.findViewById(R.id.profile_image);
-            txt_seen = itemView.findViewById(R.id.txt_seen);
-        }
+
+}
     }
 
     @Override
     public int getItemViewType(int position) {
        // fuser = FirebaseAuth.getInstance().getCurrentUser();
-        if (mChat.get(position).getRoleId().equals("Customer") ){
+        if (mChat.get(position).getRoleId().equals("outgoingMessages") ){
             return MSG_TYPE_RIGHT;
         } else {
             return MSG_TYPE_LEFT;
         }
+    }
+
+    public void update(List<TicketChatModel> commentList){
+        mChat = new ArrayList<>();
+        mChat.addAll(commentList);
+        notifyDataSetChanged();
     }
 }
