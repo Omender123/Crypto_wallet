@@ -102,6 +102,7 @@
             android:onClick="allDelete"
             android:layout_alignParentRight="true"
             android:scaleType="center"
+            android:visibility="gone"
             android:layout_marginRight="5dp"
             android:src="@drawable/ic_ellipsis"/>
     </RelativeLayout>

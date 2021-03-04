@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.crypto.croytowallet.Chat.ChatOptions;
 import com.crypto.croytowallet.Chat.TicketChat;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
@@ -57,8 +58,7 @@ ActionBar actionBar;
         Mobile_support.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ChatActive();
-                Intent i = new Intent(Support.this, TicketChat.class);
+                Intent i = new Intent(Support.this, ChatOptions.class);
                 startActivity(i);
             }
         });
@@ -147,73 +147,5 @@ ActionBar actionBar;
 
     }
 
-    public void ChatActive(){
-        UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
-        String token=user.getToken();
 
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().ChatActive(token);
-
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
-
-                String s = null;
-                if (response.code()==200){
-                    try {
-                        s=response.body().string();
-                      //  Log.d("support",s);
-                      //  Toast.makeText(Support.this, ""+s, Toast.LENGTH_SHORT).show();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                } else if(response.code()==400){
-                    try {
-                        s=response.errorBody().string();
-                        JSONObject jsonObject1=new JSONObject(s);
-                        String error =jsonObject1.getString("error");
-
-
-                        Snacky.builder()
-                                .setActivity(Support.this)
-                                .setText(error)
-                                .setDuration(Snacky.LENGTH_SHORT)
-                                .setActionText(android.R.string.ok)
-                                .error()
-                                .show();
-
-
-                    } catch (IOException | JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                } else if(response.code()==401){
-
-                    Snacky.builder()
-                            .setActivity(Support.this)
-                            .setText("unAuthorization Request")
-                            .setDuration(Snacky.LENGTH_SHORT)
-                            .setActionText(android.R.string.ok)
-                            .error()
-                            .show();
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Snacky.builder()
-                        .setActivity(Support.this)
-                        .setText("Internet Problem ")
-                        .setDuration(Snacky.LENGTH_SHORT)
-                        .setActionText(android.R.string.ok)
-                        .error()
-                        .show();
-            }
-        });
-
-
-    }
 }

@@ -155,7 +155,7 @@ String message,sendername,messageId;
         deleteMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteMessageOne();
+               // deleteMessageOne();
             }
         });
 
@@ -165,6 +165,8 @@ String message,sendername,messageId;
         getChat();
 
     }
+
+
     private Emitter.Listener getmessage = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
@@ -418,13 +420,13 @@ String message,sendername,messageId;
                       //  Log.d("s1",s);
                      // Toast.makeText(TicketChat.this, ""+s, Toast.LENGTH_SHORT).show();
 
-                    /*    new Handler().postDelayed(new Runnable() {
+                        new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 // This method will be executed once the timer is over
                                 getChat();
                             }
-                        }, 500);*/
+                        }, 500);
                     } catch (IOException  e) {
                         e.printStackTrace();
                     }
@@ -481,7 +483,7 @@ String message,sendername,messageId;
     }
 
     public void back(View view) {
-        startActivity(new Intent(getApplicationContext(), Support.class));
+        startActivity(new Intent(getApplicationContext(), ChatOptions.class));
         ChatActive();
     }
 
@@ -681,7 +683,7 @@ String message,sendername,messageId;
     @Override
     public void onLongItemClick(int position) {
            messageId = ticketChatModels.get(position).getMessageId();
-        deleteMessage.setVisibility(View.VISIBLE);
+        //deleteMessage.setVisibility(View.VISIBLE);
     }
 
     public void deleteMessageOne(){
@@ -695,6 +697,7 @@ String message,sendername,messageId;
             public void onResponse(String response) {
 
                 deleteMessage.setVisibility(View.GONE);
+                getChat();
              //   Toast.makeText(TicketChat.this, ""+response, Toast.LENGTH_SHORT).show();
             }
         }, new com.android.volley.Response.ErrorListener() {

@@ -11,6 +11,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:padding="5dp"
+        android:background="@color/background"
         android:src="@mipmap/imt" /><!--Make sure image is present in Drawable folder-->
     <TextView
             android:id="@+id/coinName"
@@ -18,6 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="ImSmart"
+            android:background="@color/background"
             android:textColor="@color/toolbar_text_color"
             android:fontFamily="@font/montserrat"
             android:textSize="17dp"
