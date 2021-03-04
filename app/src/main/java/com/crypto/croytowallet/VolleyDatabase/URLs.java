@@ -70,4 +70,9 @@ public class URLs {
 
     //GET GAS FEES
     public static final String URL_GET_AMOUNT = ROOT_URL + "settings/Amount";
+
+    //GET GAS FEES
+    public static final String URL_DELETE_MESSAGE = ROOT_URL + "chat/removeMessage?id=";
+
+
 }

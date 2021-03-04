@@ -1,11 +1,13 @@
 package com.crypto.croytowallet.Chat;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,15 +16,24 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.crypto.croytowallet.Activity.Support;
 import com.crypto.croytowallet.Adapter.TickectChatAdapter;
+import com.crypto.croytowallet.Interface.MessageClickListner;
+import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.Model.TicketChatModel;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
+import com.crypto.croytowallet.VolleyDatabase.URLs;
+import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
 import com.crypto.croytowallet.database.RetrofitClient;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -35,7 +46,9 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.mateware.snacky.Snacky;
 import io.socket.client.IO;
@@ -46,17 +59,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TicketChat extends AppCompatActivity {
+public class TicketChat extends AppCompatActivity implements MessageClickListner {
 CardView send;
 EditText text_message;
 TextView textView_Send,first_textUsername,fullName;
-String message,sendername;
+String message,sendername,messageId;
     KProgressHUD progressDialog;
     UserData userData;
     RecyclerView chatRecyclerView;
     TickectChatAdapter tickectChatAdapter;
     ArrayList<TicketChatModel>ticketChatModels;
 
+    ImageView deleteMessage;
 
 
     private Socket mSocket;
@@ -76,7 +90,7 @@ String message,sendername;
         textView_Send = findViewById(R.id.textView_send);
         first_textUsername = findViewById(R.id.userFirsttext);
         fullName = findViewById(R.id.username);
-
+        deleteMessage = findViewById(R.id.message_delete);
         chatRecyclerView = findViewById(R.id.recycler_view);
 
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
@@ -138,6 +152,12 @@ String message,sendername;
             }
         });
 
+        deleteMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteMessageOne();
+            }
+        });
 
         mSocket.connect();
     //    mSocket.on("hello", onNewMessage);
@@ -197,7 +217,7 @@ String message,sendername;
                             e.printStackTrace();
                         }
 
-                        tickectChatAdapter = new TickectChatAdapter(getApplicationContext(),ticketChatModels);
+                        tickectChatAdapter = new TickectChatAdapter(getApplicationContext(),ticketChatModels,TicketChat.this);
                         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                         linearLayoutManager.setStackFromEnd(true);
                         tickectChatAdapter.notifyDataSetChanged();
@@ -267,10 +287,12 @@ String message,sendername;
                             JSONObject  object1 =jsonArray.getJSONObject(i);
                             TicketChatModel ticketChatModel1 = new TicketChatModel();
                             String role= object1.getString("role");
+                            String id = object1.getString("_id");
                             String time= object1.getString("createdAt");
 
                             ticketChatModel1.setRoleId(role);
                             ticketChatModel1.setTime(time);
+                            ticketChatModel1.setMessageId(id);
 
                             if (role.equals("incomingMessages")){
                                 String in_message= object1.getString("incomingMessage");
@@ -292,7 +314,7 @@ String message,sendername;
                         e.printStackTrace();
                     }
 
-                    tickectChatAdapter = new TickectChatAdapter(getApplicationContext(),ticketChatModels);
+                    tickectChatAdapter = new TickectChatAdapter(getApplicationContext(),ticketChatModels,TicketChat.this);
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                     linearLayoutManager.setStackFromEnd(true);
                     tickectChatAdapter.notifyDataSetChanged();
@@ -550,4 +572,147 @@ String message,sendername;
 
     }
 
+    public void allDelete(View view) {
+        AlertDialogBox();
+    }
+    public void AlertDialogBox(){
+
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(TicketChat.this);
+
+        alertDialogBuilder.setTitle("iMX");
+
+        alertDialogBuilder.setIcon(R.mipmap.ic_launcher_round);
+        alertDialogBuilder
+                .setMessage("Do you want to remove all chat?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        allRemoveMessage();
+                    }
+                })
+                .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+
+                    }
+                });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+    }
+
+    public void allRemoveMessage(){
+        UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
+        String token=user.getToken();
+
+        Call<ResponseBody>call =RetrofitClient.getInstance().getApi().deleteAllMessage(token);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String s = null;
+                if (response.code()==200){
+                    try {
+                        s=response.body().string();
+
+                        getChat();
+                        //  Log.d("support",s);
+                     //   Toast.makeText(TicketChat.this, ""+s, Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if(response.code()==400){
+                    try {
+                        s=response.errorBody().string();
+                        JSONObject jsonObject1=new JSONObject(s);
+                        String error =jsonObject1.getString("error");
+
+
+                        Snacky.builder()
+                                .setActivity(TicketChat.this)
+                                .setText(error)
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
+
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if(response.code()==401){
+
+                    Snacky.builder()
+                            .setActivity(TicketChat.this)
+                            .setText("unAuthorization Request")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Snacky.builder()
+                        .setActivity(TicketChat.this)
+                        .setText("Internet Problem ")
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+            }
+        });
+    }
+
+   /* @Override
+    public void onItemClick(int position) {
+        Toast.makeText(this, ""+position, Toast.LENGTH_SHORT).show();
+    }*/
+
+    @Override
+    public void onLongItemClick(int position) {
+           messageId = ticketChatModels.get(position).getMessageId();
+        deleteMessage.setVisibility(View.VISIBLE);
+    }
+
+    public void deleteMessageOne(){
+        UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
+        String token=user.getToken();
+
+        String Urls= URLs.URL_DELETE_MESSAGE+messageId;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.DELETE, Urls, new com.android.volley.Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                deleteMessage.setVisibility(View.GONE);
+             //   Toast.makeText(TicketChat.this, ""+response, Toast.LENGTH_SHORT).show();
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+
+                headers.put("Authorization", token);
+
+                return headers;
+            }
+        };
+
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+    }
 }

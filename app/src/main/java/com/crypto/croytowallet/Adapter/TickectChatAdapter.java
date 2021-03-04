@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.crypto.croytowallet.AppUtils;
+import com.crypto.croytowallet.Interface.MessageClickListner;
 import com.crypto.croytowallet.Model.TicketChatModel;
 import com.crypto.croytowallet.R;
 
@@ -23,10 +24,12 @@ public class TickectChatAdapter extends  RecyclerView.Adapter<TickectChatAdapter
 
     private Context mContext;
     private ArrayList<TicketChatModel> mChat;
+    private MessageClickListner messageClickListner;
 
-    public TickectChatAdapter(Context mContext, ArrayList<TicketChatModel> mChat) {
+    public TickectChatAdapter(Context mContext, ArrayList<TicketChatModel> mChat, MessageClickListner messageClickListner) {
         this.mContext = mContext;
         this.mChat = mChat;
+        this.messageClickListner=messageClickListner;
     }
 
     public TickectChatAdapter() {
@@ -74,7 +77,22 @@ public class TickectChatAdapter extends  RecyclerView.Adapter<TickectChatAdapter
             show_message = itemView.findViewById(R.id.show_message);
             time = itemView.findViewById(R.id.time);
             date = itemView.findViewById(R.id.date);
-           // profile_image = itemView.findViewById(R.id.profile_image);
+
+          /*  itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    messageClickListner.onItemClick(getAdapterPosition());
+                }
+            });*/
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    messageClickListner.onLongItemClick(getAdapterPosition());
+                    return true;
+                }
+            });
 
 }
     }

@@ -186,7 +186,11 @@ public class StoryView extends AppCompatActivity implements StoriesProgressView.
                                 JSONObject jsonObjec2 = jsonArray1.getJSONObject(j);
                                String  imageUrl = jsonObjec2.getString("url");
 
-                                images.add(imageUrl);
+                               String fullImage ="https://imxtest.s3.ap-south-1.amazonaws.com/"+imageUrl;
+
+                               Log.d("imagesss",fullImage);
+
+                                images.add(fullImage);
 
                             }
                         }
