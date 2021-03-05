@@ -24,7 +24,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Total Balance"
+            android:text="@string/total_amount"
             android:textColor="#242424"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
         <TextView

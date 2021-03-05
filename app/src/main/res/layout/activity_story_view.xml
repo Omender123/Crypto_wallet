@@ -27,7 +27,7 @@
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_gravity="center"
-            android:text="Stories"
+            android:text="@string/story"
             android:textColor="@color/white"
             android:id="@+id/toolbar_title" />
     </LinearLayout>

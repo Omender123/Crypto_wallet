@@ -48,19 +48,19 @@
      <com.google.android.material.tabs.TabItem
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:text="Account"
+         android:text="@string/account"
 
          />
 
      <com.google.android.material.tabs.TabItem
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:text="Payment"
+         android:text="@string/payment"
          />
      <com.google.android.material.tabs.TabItem
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:text="About"
+         android:text="@string/about"
 
          />
 

@@ -40,7 +40,7 @@
         android:layout_below="@id/welcome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Coin Address"
+        android:hint="@string/coin_address"
         style="@style/OutlineBox"
         android:layout_margin="20dp">
         <EditText

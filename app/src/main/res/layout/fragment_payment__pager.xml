@@ -19,7 +19,7 @@
         android:background="@drawable/button_border"
         android:layout_below="@id/Recyclerview_payment"
         android:layout_margin="20dp"
-        android:text="Add Your Query"
+        android:text="@string/add_Query"
 
         android:textStyle="bold"
         android:textAlignment="center"

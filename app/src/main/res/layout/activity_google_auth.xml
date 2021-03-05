@@ -115,7 +115,6 @@
                         android:gravity="center"
                         android:padding="10dp"
                         android:textColor="#242424"
-                        android:text="ADadadfasfafdaa"
                         android:textAlignment="center" />
 
                     <Button
@@ -123,7 +122,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_baseline_content_copy_24"
-                        android:text="Copy"
+                        android:text="@string/copy"
                         android:textAllCaps="false"
                         android:textColor="@color/black" />
                 </LinearLayout>

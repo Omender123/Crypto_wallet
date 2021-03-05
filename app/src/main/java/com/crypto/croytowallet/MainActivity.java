@@ -13,9 +13,11 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -35,6 +37,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.crypto.croytowallet.Activity.Setting;
 import com.crypto.croytowallet.Activity.StoryView;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.TransactionHistorySharedPrefManager;
@@ -50,6 +53,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -73,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadLocale();
         setContentView(R.layout.activity_main);
 
         toolbar=findViewById(R.id.toolbar);
@@ -193,14 +198,14 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle(R.string.app_name);
             builder.setIcon(R.mipmap.ic_launcher);
-            builder.setMessage("Do you want to exit?")
+            builder.setMessage(R.string.exit_text)
                     .setCancelable(false)
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             finish();
                         }
                     })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
                         }
@@ -218,6 +223,7 @@ public class MainActivity extends AppCompatActivity {
             window.setStatusBarColor(Color.TRANSPARENT);
         }
     }
+
 
     public void moreOptions(){
 
@@ -258,29 +264,91 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        MenuItem language = menu.findItem(R.id.langauge);
+
+        language.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                showChangeLanguageDialod();
+                return true;
+            }
+        });
     }
 
+    private void showChangeLanguageDialod() {
+        final  String[] listItem={"English","Hindi","Japanese","ThaiLand"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Choose Language.......");
+
+        builder.setSingleChoiceItems(listItem, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int i) {
+                if (i==0){
+                    setLocale("en");
+                    recreate();
+                }else if(i==1){
+                    setLocale("hi");
+                    recreate();
+                }else if(i==2){
+                    setLocale("ja");
+                    recreate();
+                }else if(i==3){
+                    setLocale("th");
+                    recreate();
+                }
+
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alertDialog =builder.create();
+        alertDialog.show();
+    }
+
+    private void setLocale(String lang) {
+
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+
+        Configuration configuration= new Configuration();
+        configuration.locale=locale;
+        getBaseContext().getResources().updateConfiguration(configuration,getBaseContext().getResources().getDisplayMetrics());
+
+        SharedPreferences.Editor editor = getSharedPreferences("settings",MODE_PRIVATE).edit();
+        editor.putString("My_Lang",lang);
+        editor.apply();
+
+    }
+    // load lanage saved in sharedPreference
+
+    public void loadLocale(){
+        SharedPreferences sharedPreferences =getSharedPreferences("settings", Activity.MODE_PRIVATE);
+        String Language = sharedPreferences.getString("My_Lang","");
+        setLocale(Language);
+    }
     public void AlertDialogBox(){
 
         //Logout
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
 
         // set title
-        alertDialogBuilder.setTitle("Crypto Wallet");
+        alertDialogBuilder.setTitle(getResources().getString(R.string.app_name));
 
         // set dialog message
         alertDialogBuilder.setIcon(R.mipmap.ic_launcher_round);
         alertDialogBuilder
-                .setMessage("Are you sure to Logout !!!!!")
+                .setMessage(R.string.log_text)
                 .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         logout();
                     }
                 })
-                .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.no,new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Toast.makeText(MainActivity.this, "Logout Failed", Toast.LENGTH_SHORT).show();
+
                         dialog.cancel();
 
                     }

@@ -183,4 +183,45 @@
     <string name="contact_text"> Reach us to us directly.</string>
 
     <string name="prefs_theme_key">theme</string>
+
+    <string name="language">Language</string>
+
+    <string name="exit_text">Do you want to exit?</string>
+    <string name="log_text">Are you sure to Logout !!!!!</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="add_Query">Add Your Query</string>
+    <string name="subject">Subject</string>
+    <string name="enter_Query"> Enter Query</string>
+    <string name="add_text1">Add</string>
+    <string name="verify_txt">Verification</string>
+    <string name="new_chat">New Chat</string>
+    <string name="old_chat">Old Chat</string>
+    <string name="recevied">Received</string>
+    <string name="coin_address">Enter Coin Address</string>
+    <string name="sumbit">Submit</string>
+    <string name="trans_su">Transaction Successful</string>
+    <string name="download">Download</string>
+    <string name="copy">Copy</string>
+    <string name="teans_id">Transaction Id</string>
+    <string name="paid_to">Paid to</string>
+    <string name="status">Status</string>
+    <string name="show">Show Details</string>
+    <string name="hide">Hide Details</string>
+    <string name="total_amount">Total Amount</string>
+    <string name="price">Price</string>
+    <string name="swap_p2p">SWAP P2P</string>
+    <string name="coin">Enter Coin Amount to Transfer</string>
+    <string name="account">Account</string>
+    <string name="payment">Payment</string>
+    <string name="about">About</string>
+    <string name="click">Click to Download Button</string>
+    <string name="for1">For Download Mnemonic</string>
+    <string name="save">Please save this  Mnemonic for Life time</string>
+    <string name="search">Search</string>
+    <string name="story">Stories</string>
+   <string name="old_ticket">Old Ticket</string>
+    <string name="recent">Recent Transaction History</string>
+    <string name="enter">Enter User ID or User name</string>
+    <string name="paid_form">Paid From </string>
 </resources>

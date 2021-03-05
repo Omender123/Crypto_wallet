@@ -67,6 +67,12 @@
                 <item
                     android:checkable="false"
                     android:checked="false"
+                    android:id="@+id/langauge"
+                    android:icon="@drawable/ic_translate"
+                    android:title="@string/language" />
+                <item
+                    android:checkable="false"
+                    android:checked="false"
                     android:id="@+id/share"
                     android:icon="@drawable/ic_share"
                     android:title="@string/share" />

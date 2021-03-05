@@ -47,7 +47,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Total Balance"
+            android:text="@string/total_amount"
             android:textColor="#242424"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
         <TextView
@@ -86,7 +86,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Recent Transaction History"
+            android:text="@string/recent"
             android:textSize="13dp"
             android:paddingBottom="5dp"
             android:textColor="@android:color/darker_gray"

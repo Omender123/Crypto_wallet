@@ -95,7 +95,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="15dp"
-                        android:text="place label scatter air camp cause network trade whale goose sport ridge"
                         android:textColor="@android:color/darker_gray"
                         android:justificationMode="inter_word"
                         android:textStyle="bold"/>
@@ -105,7 +104,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:drawableLeft="@drawable/ic_baseline_content_copy_24"
-                  android:text="Copy"
+                  android:text="@string/copy"
 
                   android:textAllCaps="false"
                   android:textColor="@color/black"/>

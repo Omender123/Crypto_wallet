@@ -50,7 +50,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:textColor="@color/toolbar_text_color"
-        android:text="Payment of $2,000 to usermane \n Successful"
         android:textStyle="bold"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="18dp"

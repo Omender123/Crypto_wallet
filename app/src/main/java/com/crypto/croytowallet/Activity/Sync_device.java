@@ -410,21 +410,20 @@ public class Sync_device extends AppCompatActivity implements HistoryClickLister
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Sync_device.this);
 
         // set title
-        alertDialogBuilder.setTitle("Crypto Wallet");
+        alertDialogBuilder.setTitle(R.string.app_name);
 
         // set dialog message
         alertDialogBuilder.setIcon(R.mipmap.ic_launcher_round);
         alertDialogBuilder
-                .setMessage("Are you sure to Logout !!!!!")
+                .setMessage(R.string.log_text)
                 .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Remove_Jwt();
                     }
                 })
-                .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.no,new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Toast.makeText(Sync_device.this, "Logout Failed", Toast.LENGTH_SHORT).show();
                         dialog.cancel();
 
                     }

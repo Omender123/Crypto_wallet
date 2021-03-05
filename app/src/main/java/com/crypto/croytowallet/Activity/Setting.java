@@ -2,12 +2,16 @@ package com.crypto.croytowallet.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -23,19 +27,21 @@ import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.login.Login;
 
+import java.util.Locale;
 import java.util.Set;
 
 import de.mateware.snacky.Snacky;
 
 public class Setting extends AppCompatActivity implements View.OnClickListener {
     ImageView imageView;
-    CardView Scan_devices,restore_wallet,notification,sound,currency;
+    CardView Scan_devices,restore_wallet,notification,sound,currency,language;
     SharedPreferences sharedPreferences;
 
     TextView currencyType;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_setting);
         imageView =findViewById(R.id.back);
         Scan_devices =findViewById(R.id.Scan_devices);
@@ -128,8 +134,11 @@ public class Setting extends AppCompatActivity implements View.OnClickListener {
                         .show();*/
                 break;
 
+
         }
     }
+
+
 
     @Override
     public void onBackPressed() {

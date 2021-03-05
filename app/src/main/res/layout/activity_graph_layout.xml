@@ -302,7 +302,7 @@
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/custom_graph_button"
                 android:gravity="center"
-                android:text="Price"
+                android:text="@string/price"
                 android:textAlignment="center"
                 android:textColor="#000"
                 android:textStyle="bold"
@@ -328,7 +328,7 @@
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/custom_graph_button"
                 android:gravity="center"
-                android:text="Balance"
+                android:text="@string/balance"
                 android:textAlignment="center"
                 android:textColor="#000"
                 android:textStyle="bold"
@@ -355,8 +355,7 @@
             android:layout_margin="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="12dp"
-            android:text="Overview"
-
+            android:text="@string/overview"
             android:textAlignment="textStart"
             android:textColor="#9a9a9a"
             android:textSize="15dp"
@@ -407,7 +406,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Price"
+                    android:text="@string/price"
                     android:layout_marginTop="-5dp"
                     android:textAlignment="center"
                     android:textStyle="normal"
@@ -447,7 +446,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="-5dp"
-                    android:text="Balance"
+                    android:text="@string/balance"
                     android:textAlignment="center"
                     android:textStyle="normal"
                     android:textColor="#000"
@@ -470,6 +469,6 @@
         android:layout_marginRight="50dp"
         android:background="@drawable/button_border"
         android:gravity="center"
-        android:text="SWAP P2P"
+        android:text="@string/swap_p2p"
         android:textSize="15dp" />
 </RelativeLayout>
