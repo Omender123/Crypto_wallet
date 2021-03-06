@@ -28,6 +28,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,7 +57,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
     NavController navController;
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     KProgressHUD progressDialog;
     SharedPreferences sharedPreferences;
-    CircleImageView status_img;
+    ImageView status_img;
     Switch drawerSwitch;
     SharedPreferences sharedPreferences1;
 
@@ -84,9 +84,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         status_img = findViewById(R.id.status_user);
 
-        //  toolbar.setTitleTextColor(getResources().getColor(R.color.toolbar_text_color));
 
-      // change_menu_icon();
         changeStatusBarColor();
         init();
         moreOptions();
@@ -146,17 +144,7 @@ public class MainActivity extends AppCompatActivity {
             drawerSwitch.setChecked(false);
         }
 
-      /*  preferences = getSharedPreferences("night",0);
-        Boolean booleanValue = preferences.getBoolean("night_mode",false);
-        if (booleanValue){
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
-
-        }else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-
-        }
-*/
         status_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

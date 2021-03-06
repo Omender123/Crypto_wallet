@@ -26,7 +26,8 @@ import com.google.zxing.WriterException;
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
 
-public class Received_Coin extends AppCompatActivity {
+public class
+Received_Coin extends AppCompatActivity {
     TextView barcodeAddress,toolbar_title;
     ImageView qrImage,imageView;
     CardView barCodeshare;

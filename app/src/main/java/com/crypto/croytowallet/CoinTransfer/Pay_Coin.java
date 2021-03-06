@@ -90,11 +90,12 @@ public class Pay_Coin extends AppCompatActivity {
 
           position = preferences.getInt("position", -1);
 */
-        toolbar_title.setText("Send "+cryptoCurrency);
+
 
         cryptoCurrency = Updated_data.getInstans(getApplicationContext()).getmobile();
         userData= SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
+        toolbar_title.setText("Send "+cryptoCurrency);
 
 
         next.setOnClickListener(new View.OnClickListener() {

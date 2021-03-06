@@ -10,12 +10,14 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:padding="5dp"
+        android:background="@color/background"
         android:src="@mipmap/imt" /><!--Make sure image is present in Drawable folder-->
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:background="@color/background"
         android:gravity="center">
 
         <TextView
@@ -24,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="3dp"
+            android:background="@color/background"
             android:text="ImSmart"
             android:textColor="@color/toolbar_text_color"
             android:fontFamily="@font/montserrat"
@@ -35,6 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:background="@color/background"
             android:text="imt"
             android:textColor="@color/toolbar_text_color"
             android:fontFamily="@font/montserrat"

@@ -160,7 +160,7 @@
                     android:layout_height="25dp"
                     android:layout_marginRight="20dp"
                     android:text="MIN"
-                    android:textColor="@color/black"
+                    android:textColor="@color/toolbar_text_color"
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                     android:gravity="center" />
@@ -170,7 +170,7 @@
                     android:layout_width="75dp"
                     android:layout_height="25dp"
                     android:text="HALF"
-                    android:textColor="@color/black"
+                    android:textColor="@color/toolbar_text_color"
                     android:textAlignment="center"
                     android:layout_marginRight="20dp"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
@@ -181,7 +181,7 @@
                     android:layout_width="75dp"
                     android:layout_height="25dp"
                     android:text="MAX"
-                    android:textColor="@color/black"
+                    android:textColor="@color/toolbar_text_color"
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                     android:gravity="center" />
