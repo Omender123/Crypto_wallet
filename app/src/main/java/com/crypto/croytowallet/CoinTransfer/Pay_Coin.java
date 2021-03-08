@@ -273,7 +273,7 @@ public class Pay_Coin extends AppCompatActivity {
                             .setDuration(Snacky.LENGTH_SHORT)
                             .success()
                             .show();*/
-                       OTPexpire();
+                     //  OTPexpire();
                     Toast.makeText(Pay_Coin.this, "Otp send in your registered Email", Toast.LENGTH_SHORT).show();
 
                 }else if(response.code()==400){

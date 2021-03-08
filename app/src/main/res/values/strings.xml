@@ -224,4 +224,7 @@
     <string name="recent">Recent Transaction History</string>
     <string name="enter">Enter User ID or User name</string>
     <string name="paid_form">Paid From </string>
+    <string name="threat_mode">Threat Mode</string>
+    <string name="caution">Caution</string>
+    <string name="threat_text">This will lock your account permanently. Unless you passed all the security parameter.</string>
 </resources>

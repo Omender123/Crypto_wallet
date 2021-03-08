@@ -153,7 +153,7 @@ public class Google_auth extends AppCompatActivity {
                         showWrongCustomDialog();
                         Snacky.builder()
                                 .setView(view)
-                                .setText(" Please enter Google Authentication Token !!!!!")
+                                .setText(error)
                                 .setDuration(Snacky.LENGTH_SHORT)
                                 .setActionText(android.R.string.ok)
                                 .error()

@@ -213,4 +213,17 @@ public interface Api {
 
     @DELETE("api/chat/removeMessage/{id}")
     Call<ResponseBody> deleteMessage(@Header("Authorization") String Authorization,@Path("id") String messageId);
+
+
+    @FormUrlEncoded
+    @POST("user/threatMode")
+    Call<ResponseBody>Threat_mode_Api(
+            @Header("Authorization")String Authtoken,
+            @Field("password") String password,
+            @Field("otp") String otp,
+            @Field("transactionPin") String transactionPin
+
+    );
+
+
 }

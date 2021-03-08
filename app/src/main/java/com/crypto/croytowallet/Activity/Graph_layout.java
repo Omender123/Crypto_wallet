@@ -94,15 +94,6 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         send.setOnClickListener(this);
 
 
-       /* preferences=getApplicationContext().getSharedPreferences("symbols", Context.MODE_PRIVATE);
-        position = preferences.getInt("position", -1);
-        Updated_data.getInstans(getApplicationContext()).getUserId();
-        price1 = preferences.getInt("price", -1);
-        symbol = preferences.getString("symbol1", null);
-        image = preferences.getString("image", null);
-        coinName = preferences.getString("coinName", null);
-        change = preferences.getString("change", null);*/
-       // preferences=getApplicationContext().getSharedPreferences("symbols", Context.MODE_PRIVATE);
         position = Updated_data.getInstans(getApplicationContext()).getUserId();
         price1 =Updated_data.getInstans(getApplicationContext()).getprice();
         symbol = Updated_data.getInstans(getApplicationContext()).getmobile();

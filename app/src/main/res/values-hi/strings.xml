@@ -226,4 +226,8 @@
     <string name = "recent"> हालिया लेन-देन इतिहास </string>
     <string name = "enter"> उपयोगकर्ता आईडी या उपयोगकर्ता नाम दर्ज करें </string>
     <string name="paid_form">से भुगतान किया </string>
+
+    <string name = "threat_mode"> खतरा मोड </string>
+    <string name = "caution"> सावधानी </string>
+    <string name = "threat_text"> यह आपके खाते को स्थायी रूप से लॉक कर देगा। जब तक आप सभी सुरक्षा पैरामीटर पास नहीं करते। </string>
 </resources>

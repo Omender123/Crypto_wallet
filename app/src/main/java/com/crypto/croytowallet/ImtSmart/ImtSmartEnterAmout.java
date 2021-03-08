@@ -208,7 +208,7 @@ public class ImtSmartEnterAmout extends AppCompatActivity {
                             .setDuration(Snacky.LENGTH_SHORT)
                             .success()
                             .show();*/
-                    OTPexpire();
+                 //   OTPexpire();
                     Toast.makeText(ImtSmartEnterAmout.this, "Otp send in your registered Email", Toast.LENGTH_SHORT).show();
 
                 }else if(response.code()==400){

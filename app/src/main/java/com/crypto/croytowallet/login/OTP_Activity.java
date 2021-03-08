@@ -111,7 +111,7 @@ Button next2;
                             .setDuration(Snacky.LENGTH_SHORT)
                             .success()
                             .show();
-                    OTPexpire();
+                 //   OTPexpire();
                 }else if(response.code()==400){
                     hideKeyboard(view);
                     try {

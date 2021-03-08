@@ -79,7 +79,7 @@
             android:name=".Activity.Sync_device"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />
         <activity
-            android:name=".Activity.Sync_scannner"
+            android:name=".Activity.Threat_Mode"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />
         <activity
             android:name=".Activity.knowlege_Base"

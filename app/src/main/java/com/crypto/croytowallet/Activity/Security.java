@@ -197,7 +197,7 @@ UserData userData;
                 if (response.code()==200){
 
                     Toast.makeText(Security.this, "Otp send in your register Email", Toast.LENGTH_SHORT).show();
-                    OTPexpire();
+                   // OTPexpire();
                 }else if(response.code()==400){
                     try {
 

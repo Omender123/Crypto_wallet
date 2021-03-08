@@ -296,7 +296,7 @@ public class ImtSmartVerification extends AppCompatActivity {
                 if (response.code()==200){
 
 
-                    OTPexpire();
+                  //  OTPexpire();
                     Snacky.builder()
                             .setView(view)
                             .setText("Otp resend in your register Email")

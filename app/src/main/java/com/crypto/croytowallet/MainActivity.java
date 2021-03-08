@@ -265,7 +265,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showChangeLanguageDialod() {
-        final  String[] listItem={"English","Hindi","Japanese","ThaiLand"};
+        final  String[] listItem={"English","Hindi","Japanese","ThaiLand","Chinese","Philippines"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Choose Language.......");
@@ -284,6 +284,12 @@ public class MainActivity extends AppCompatActivity {
                     recreate();
                 }else if(i==3){
                     setLocale("th");
+                    recreate();
+                }else if(i==4){
+                    setLocale("zh");
+                    recreate();
+                }else if(i==5){
+                    setLocale("phi");
                     recreate();
                 }
 

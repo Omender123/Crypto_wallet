@@ -177,7 +177,7 @@ public class CrashOtpActivity extends AppCompatActivity {
                             .success()
                             .show();
 
-                    expire();
+                //   OTPexpire();
                 } else if (response.code() == 400) {
                     hideKeyboard(view);
                     try {

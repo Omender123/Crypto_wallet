@@ -305,7 +305,7 @@ public class Payout_verification extends AppCompatActivity {
                 if (response.code()==200){
 
 
-                    OTPexpire();
+                 //   OTPexpire();
                     Snacky.builder()
                             .setView(view)
                             .setText("Otp resend in your register Email")

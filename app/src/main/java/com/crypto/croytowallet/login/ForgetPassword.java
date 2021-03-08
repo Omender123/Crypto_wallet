@@ -136,7 +136,7 @@ public class ForgetPassword extends AppCompatActivity {
                     intent.putExtra("username",usernames);
                     startActivity(intent);
                     finish();
-                    OTPexpire();
+                 //   OTPexpire();
                     Toast.makeText(ForgetPassword.this, "Otp send in your registered Email", Toast.LENGTH_SHORT).show();
 
                 }else if(response.code()==400){

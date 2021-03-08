@@ -175,7 +175,7 @@ public class BackVerification extends AppCompatActivity {
 
                 String s=null;
                 if (response.code()==200){
-                    OTPexpire();
+                    //OTPexpire();
                     Snacky.builder()
                             .setView(view)
                             .setText("Otp resend in your register Email")

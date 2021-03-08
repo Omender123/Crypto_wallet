@@ -106,7 +106,7 @@ Button skip;
                     Intent intent= new Intent(getApplicationContext(), GmailVerfiyOtp.class);
                     startActivity(intent);
 
-                    OTPexpire();
+                 //   OTPexpire();
                     Toast.makeText(Add_Verification.this, "Otp send in your registered Email", Toast.LENGTH_SHORT).show();
 
                 }else if(response.code()==400){

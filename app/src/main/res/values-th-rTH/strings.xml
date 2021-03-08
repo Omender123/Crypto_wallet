@@ -225,4 +225,8 @@
     <string name = "recent"> ประวัติการทำธุรกรรมล่าสุด </string>
     <string name = "enter"> ป้อน รหัสผู้ใช้ หรือชื่อผู้ใช้ </string>
     <string name = "paid_form"> ชำระจาก </string>
+
+    <string name = "threat_mode"> โหมดภัยคุกคาม </string>
+    <string name = "caution"> ข้อควรระวัง </string>
+    <string name = "threat_text"> การดำเนินการนี้จะล็อกบัญชีของคุณอย่างถาวร เว้นแต่คุณจะส่งผ่านพารามิเตอร์ความปลอดภัยทั้งหมด </string>
 </resources>
