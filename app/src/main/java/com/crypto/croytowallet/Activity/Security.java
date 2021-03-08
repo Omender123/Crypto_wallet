@@ -137,9 +137,11 @@ UserData userData;
             @Override
             public void onClick(View v) {
                // onSaveInstanceState(new Bundle());
-                Intent intent = new Intent(Security.this, MainActivity.class);
+                /*Intent intent = new Intent(Security.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                startActivity(intent);*/
+
+                onBackPressed();
             }
         });
 

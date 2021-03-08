@@ -104,11 +104,7 @@ ActionBar actionBar;
     public void onBackPressed() {
         super.onBackPressed();
         onSaveInstanceState(new Bundle());
-/*
-        Intent intent = new Intent(Support.this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();*/
+
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -139,10 +135,12 @@ ActionBar actionBar;
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Support.this, MainActivity.class);
+               /* Intent intent = new Intent(Support.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-               // onSaveInstanceState(new Bundle());
+                startActivity(intent);*/
+                // onSaveInstanceState(new Bundle());
+
+                onBackPressed();
             }
         });
 

@@ -175,9 +175,7 @@ CardView submit;
     }
 
     public void back(View view) {
-       Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-       startActivity(intent);
 
-
+        onBackPressed();
     }
 }
