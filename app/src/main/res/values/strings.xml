@@ -220,11 +220,16 @@
     <string name="save">Please save this  Mnemonic for Life time</string>
     <string name="search">Search</string>
     <string name="story">Stories</string>
-   <string name="old_ticket">Old Ticket</string>
+    <string name="old_ticket">Old Ticket</string>
     <string name="recent">Recent Transaction History</string>
     <string name="enter">Enter User ID or User name</string>
     <string name="paid_form">Paid From </string>
     <string name="threat_mode">Threat Mode</string>
     <string name="caution">Caution</string>
     <string name="threat_text">This will lock your account permanently. Unless you passed all the security parameter.</string>
+
+    <string name="your_referral_code">Your Referral Code</string>
+    <string name="tab_below">Tab to text to copy referral code</string>
+
+
 </resources>

@@ -225,7 +225,10 @@
     <string name="enter">ユーザーIDまたはユーザー名を入力</string>
     <string name="paid_form">から支払われた </string>
 
-    <string name ="threat_mode">脅威モード</string>
-<string name ="caution">注意</string>
-<string name ="threat_text">これにより、アカウントが永続的にロックされます。 すべてのセキュリティパラメータを渡さない限り。</string>
+    <string name="threat_mode">脅威モード</string>
+    <string name="caution">注意</string>
+    <string name="threat_text">これにより、アカウントが永続的にロックされます。 すべてのセキュリティパラメータを渡さない限り。</string>
+    <string name="your_referral_code">紹介コード</string>
+    <string name="tab_below">参照コードをコピーするためのテキストへのタブ</string>
+
 </resources>

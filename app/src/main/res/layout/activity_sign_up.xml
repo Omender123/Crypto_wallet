@@ -151,7 +151,37 @@
                 android:drawableTint="@android:color/darker_gray"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="50dp"
+          android:orientation="horizontal"
+          android:layout_marginTop="10dp"
+          android:layout_marginLeft="20dp"
+          android:layout_marginRight="20dp"
+          android:gravity="center"
+          android:background="@drawable/border"
+          >
+
+          <Spinner
+              android:id="@+id/countryCode"
+              android:layout_width="wrap_content"
+              android:layout_height="40dp"
+              android:layout_marginLeft="10dp"/>
+          <EditText
+              android:id="@+id/phone1"
+              android:layout_width="match_parent"
+              android:layout_height="40dp"
+              android:background="@null"
+              android:hint="@string/phone"
+              android:ems="10"
+              android:textColor="@color/toolbar"
+              android:inputType="number"
+              android:textColorHint="@color/light_gray"
+              />
+      </LinearLayout>
+
+        <!--<com.google.android.material.textfield.TextInputLayout
             android:id="@+id/phone"
             android:layout_below="@id/welcome"
             android:layout_width="match_parent"
@@ -173,7 +203,7 @@
                 android:drawablePadding="10dp"
                 android:drawableTint="@android:color/darker_gray"/>
         </com.google.android.material.textfield.TextInputLayout>
-
+-->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/pass"
             android:layout_below="@id/welcome"

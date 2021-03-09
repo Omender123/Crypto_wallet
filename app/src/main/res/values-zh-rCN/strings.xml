@@ -228,4 +228,6 @@
     <string name="caution">警告</string>
     <string name="threat_text">这将永久锁定您的帐户。 除非您传递了所有安全性参数。</string>
 
+    <string name="your_referral_code">您的推荐代码</string>
+    <string name="tab_below">制表符到文本以复制推荐代码</string>
 </resources>

@@ -230,4 +230,7 @@
     <string name = "threat_mode"> खतरा मोड </string>
     <string name = "caution"> सावधानी </string>
     <string name = "threat_text"> यह आपके खाते को स्थायी रूप से लॉक कर देगा। जब तक आप सभी सुरक्षा पैरामीटर पास नहीं करते। </string>
+
+    <string name = "your_referral_code"> आपका रेफरल कोड </string>
+    <string name = "tab_below"> रेफ़र कोड कॉपी करने के लिए टेक्स्ट को टैब </string>
 </resources>

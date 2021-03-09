@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import com.crypto.croytowallet.Activity.MyReferral_code;
 import com.crypto.croytowallet.Activity.Security;
 import com.crypto.croytowallet.Activity.Setting;
 import com.crypto.croytowallet.Activity.Support;
@@ -42,7 +43,7 @@ import retrofit2.Callback;
  * A simple {@link Fragment} subclass.
  */
 public class Profile extends Fragment {
-    CardView security, setting, support, threat_mode;
+    CardView security, setting, support, threat_mode,referral_code1;
     LinearLayout profile;
     Animation down, blink, right, left;
     ImageView share;
@@ -66,6 +67,7 @@ public class Profile extends Fragment {
         get = view.findViewById(R.id.get);
         send = view.findViewById(R.id.send);
         threat_mode = view.findViewById(R.id.threat_mode);
+        referral_code1 = view.findViewById(R.id.referral_code1);
 
         //animation
         down = AnimationUtils.loadAnimation(getContext(), R.anim.silde_down);
@@ -109,7 +111,15 @@ public class Profile extends Fragment {
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), Threat_Mode.class));
                 threat_mode.startAnimation(blink);
-               // resendOTP();
+                resendOTP();
+
+            }
+        });
+        referral_code1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), MyReferral_code.class));
+                referral_code1.startAnimation(blink);
 
             }
         });

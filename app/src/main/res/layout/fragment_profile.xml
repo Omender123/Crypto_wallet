@@ -226,8 +226,58 @@
                 android:layout_height="34dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="12dp"
-                android:src="@drawable/ic_alret"
+                android:src="@drawable/ic_threat_mode1"
                 android:scaleType="centerCrop"
+                android:layout_marginRight="16dp" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/referral_code1"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:cardBackgroundColor="@color/card_background"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="5dp"
+        android:elevation="2dp">
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <View
+                android:id="@+id/view4"
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/gradient" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/view4"
+                android:layout_marginLeft="17dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/referal_code"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/toolbar_text_color"
+                android:textSize="20dp"
+                />
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_share"
+                android:scaleType="fitXY"
                 android:layout_marginRight="16dp" />
 
         </RelativeLayout>

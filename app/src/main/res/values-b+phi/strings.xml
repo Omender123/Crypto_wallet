@@ -230,4 +230,9 @@
     <string name = "threat_mode"> mode ng banta </string>
     <string name = "caution"> Pag-iingat </string>
     <string name = "threat_text"> Ito ay permanenteng magla-lock ng iyong account. Maliban kung naipasa mo ang lahat ng parameter ng seguridad. </string>
+
+
+    <string name = "your_referral_code"> Ang iyong Referral Code </string>
+    <string name = "tab_below"> Tab sa teksto upang kopyahin ang referral code </string>
+
 </resources>

@@ -222,8 +222,19 @@ public interface Api {
             @Field("password") String password,
             @Field("otp") String otp,
             @Field("transactionPin") String transactionPin
+    );
+
+    @FormUrlEncoded
+    @POST("user/unlockAccount")
+    Call<ResponseBody>Unlock_Account_Api(
+             @Field("username") String username,
+            @Field("transactionPin") String transactionPin,
+             @Field("otp") String otp,
+             @Field("password") String new_password,
+             @Field("mnemonic") String Mnemonic
 
     );
 
-
+    @GET("user/countryCodeList")
+    Call<ResponseBody> getCountryCode();
 }

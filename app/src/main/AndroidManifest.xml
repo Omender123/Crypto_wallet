@@ -16,8 +16,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CroytoWallet"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Chat.ChatOptions"
+        <activity android:name=".Activity.MyReferral_code"
             android:theme="@style/Theme.CroytoWallet.NoActionBar"></activity>
+        <activity
+            android:name=".Chat.ChatOptions"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
         <activity android:name=".Offer.Full_Offer" />
         <activity
             android:name=".Offer.Offer"
@@ -132,7 +135,7 @@
             android:name=".Activity.Add_Currency"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />
         <activity
-            android:name=".Security.EnterPasscode"
+            android:name=".login.Unlock_Account"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />
         <activity
             android:name=".Activity.Two_FA"

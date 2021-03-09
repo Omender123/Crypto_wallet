@@ -46,17 +46,40 @@ public class ForgetPassword extends AppCompatActivity {
     Button next1;
     KProgressHUD progressDialog;
     EditText enter_username;
+    TextView welcome;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forget_password);
         next1=findViewById(R.id.next1);
         enter_username = findViewById(R.id.enter_user);
+        welcome = findViewById(R.id.welcome);
+
+        Bundle bundle = getIntent().getExtras();
+        String options = bundle.getString("options");
+
+        if (options.equals("1")){
+            welcome.setText("Unlock Account");
+        }
         next1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendOtp(v);
-                hideKeyboard(v);
+                if (options.equals("0")){
+                    String usernames = enter_username.getText().toString().trim();
+                    Intent intent= new Intent(getApplicationContext(), OTP_Activity.class);
+                    intent.putExtra("username",usernames);
+                    startActivity(intent);
+                    finish();
+                    sendOtp(v);
+                    hideKeyboard(v);
+                }else if (options.equals("1")){
+                    Intent intent= new Intent(getApplicationContext(), Unlock_Account.class);
+                    startActivity(intent);
+                    finish();
+                    sendOtp(v);
+                    hideKeyboard(v);
+                }
+
 
             }
         });
@@ -132,10 +155,7 @@ public class ForgetPassword extends AppCompatActivity {
                             .setDuration(Snacky.LENGTH_SHORT)
                             .success()
                             .show();*/
-                Intent intent= new Intent(getApplicationContext(), OTP_Activity.class);
-                    intent.putExtra("username",usernames);
-                    startActivity(intent);
-                    finish();
+
                  //   OTPexpire();
                     Toast.makeText(ForgetPassword.this, "Otp send in your registered Email", Toast.LENGTH_SHORT).show();
 

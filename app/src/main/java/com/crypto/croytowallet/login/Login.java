@@ -77,7 +77,7 @@ import retrofit2.Response;
 
 public class Login extends AppCompatActivity {
 Button login;
-TextView forget_password,signup;
+TextView forget_password,signup,unlock;
 EditText username,password,otp;
 TextInputLayout layout_otp;
     KProgressHUD progressDialog;
@@ -93,6 +93,7 @@ TextInputLayout layout_otp;
         login =findViewById(R.id.login1);
         signup =findViewById(R.id.signup);
         layout_otp =findViewById(R.id.otp);
+        unlock = findViewById(R.id.unlock);
         //input
         username = findViewById(R.id.ed_username1);
         password = findViewById(R.id.ed_password1);
@@ -589,7 +590,7 @@ public void listener(){
     forget_password.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            startActivity(new Intent(getApplicationContext(), ForgetPassword.class));
+            startActivity(new Intent(getApplicationContext(), ForgetPassword.class).putExtra("options","0"));
             finish();
         }
     });
@@ -600,6 +601,15 @@ public void listener(){
             finish();
         }
     });
+
+    unlock.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            startActivity(new Intent(getApplicationContext(), ForgetPassword.class).putExtra("options","1"));
+            finish();
+        }
+    });
+
 }
 
 }
