@@ -230,4 +230,7 @@
 
     <string name="your_referral_code">您的推荐代码</string>
     <string name="tab_below">制表符到文本以复制推荐代码</string>
+
+    <string name="no_chat_text">没有旧的聊天记录</string>
+    <string name="un_lock">解锁帐号</string>
 </resources>

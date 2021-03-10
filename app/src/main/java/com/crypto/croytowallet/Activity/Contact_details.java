@@ -40,8 +40,10 @@ CardView card_email,card_phone_no,card_website;
       back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Contact_details.this, Support.class);
-                startActivity(intent);
+              //  Intent intent = new Intent(Contact_details.this, Support.class);
+               // startActivity(intent);
+
+                onBackPressed();
             }
         });
 
@@ -50,8 +52,10 @@ CardView card_email,card_phone_no,card_website;
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(Contact_details.this, Support.class);
-        startActivity(intent);
+       // Intent intent = new Intent(Contact_details.this, Support.class);
+       // startActivity(intent);
+
+        onSaveInstanceState(new Bundle());
     }
 
     @SuppressLint("LongLogTag")

@@ -233,4 +233,7 @@
 
     <string name = "your_referral_code"> आपका रेफरल कोड </string>
     <string name = "tab_below"> रेफ़र कोड कॉपी करने के लिए टेक्स्ट को टैब </string>
+
+    <string name = "no_chat_text"> कोई पुराना चैट इतिहास नहीं </string>
+    <string name = "un_lock"> खाता अनलॉक</string>
 </resources>

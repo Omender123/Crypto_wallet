@@ -231,4 +231,6 @@
     <string name="your_referral_code">紹介コード</string>
     <string name="tab_below">参照コードをコピーするためのテキストへのタブ</string>
 
+    <string name="no_chat_text">古いチャット履歴はありません</string>
+    <string name="un_lock">アカウントのロックを解除する</string>
 </resources>

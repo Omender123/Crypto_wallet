@@ -232,4 +232,7 @@
 
     <string name = "your_referral_code"> รหัสอ้างอิงของคุณ </string>
     <string name = "tab_below"> แท็บไปที่ข้อความเพื่อคัดลอกรหัสอ้างอิง </string>
+
+    <string name = "no_chat_text"> ไม่มีประวัติการแชทเก่า </string>
+    <string name = "un_lock"> ปลดล็อคบัญชี </string>
 </resources>

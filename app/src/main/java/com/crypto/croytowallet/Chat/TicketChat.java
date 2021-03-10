@@ -160,9 +160,9 @@ String message,sendername,messageId;
         });
 
         mSocket.connect();
-    //    mSocket.on("hello", onNewMessage);
+     // mSocket.on("hello", onNewMessage);
         mSocket.on("messagesToAdmin", getmessage);
-        getChat();
+      //  getChat();
 
     }
 
@@ -178,7 +178,6 @@ String message,sendername,messageId;
                     for (int i=0;i<=data.length();i++){
                         try {
                             JSONObject object = data.getJSONObject(i);
-
                             String array = object.getString("array");
                             String username = object.getString("username");
                             String username1= userData.getUsername();
@@ -212,7 +211,7 @@ String message,sendername,messageId;
                                 }
                             }else{
 
-                                getChat();
+                                //getChat();
                             }
 
                         } catch (JSONException e) {
@@ -229,8 +228,8 @@ String message,sendername,messageId;
                         chatRecyclerView.setAdapter(tickectChatAdapter);
                     }
 
-                  //  Log.d("hello",data.toString());
-                 // Toast.makeText(TicketChat.this, ""+data.toString(), Toast.LENGTH_SHORT).show();
+                  // Log.d("hello",data.toString());
+                 Toast.makeText(TicketChat.this, ""+data.toString(), Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -247,7 +246,7 @@ String message,sendername,messageId;
                     JSONObject data = (JSONObject) args[0];
 
                   //  Log.d("hello",data.toString());
-                   // Toast.makeText(TicketChat.this, ""+data.toString(), Toast.LENGTH_SHORT).show();
+                  //Toast.makeText(TicketChat.this, ""+data.toString(), Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -381,18 +380,7 @@ String message,sendername,messageId;
         UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
         String token=user.getToken();
         message = text_message.getText().toString();
-       //sendMessage
 
-       /* progressDialog = KProgressHUD.create(TicketChat.this)
-                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                .setLabel("Loading.........")
-                .setCancellable(false)
-                .setAnimationSpeed(2)
-                .setDimAmount(0.5f)
-                .show();
-
-        showpDialog();
-*/
 
 
 
@@ -424,7 +412,7 @@ String message,sendername,messageId;
                             @Override
                             public void run() {
                                 // This method will be executed once the timer is over
-                                getChat();
+                              //  getChat();
                             }
                         }, 500);
                     } catch (IOException  e) {
@@ -483,15 +471,14 @@ String message,sendername,messageId;
     }
 
     public void back(View view) {
-        startActivity(new Intent(getApplicationContext(), ChatOptions.class));
-        ChatActive();
+       onBackPressed();
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         onSaveInstanceState(new Bundle());
-        ChatActive();
+        ChatUnActive();
     }
 
     private void showpDialog() {
@@ -504,7 +491,7 @@ String message,sendername,messageId;
             progressDialog.dismiss();
     }
 
-    public void ChatActive(){
+    public void ChatUnActive(){
         UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
         String token=user.getToken();
 

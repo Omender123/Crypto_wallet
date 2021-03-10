@@ -59,7 +59,7 @@ public class ForgetPassword extends AppCompatActivity {
         String options = bundle.getString("options");
 
         if (options.equals("1")){
-            welcome.setText("Unlock Account");
+            welcome.setText(R.string.un_lock);
         }
         next1.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -165,9 +165,9 @@ ImageView imageView;
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Ticket.this, Support.class);
-
-                startActivity(intent);
+                //Intent intent = new Intent(Ticket.this, Support.class);
+                //startActivity(intent);
+                onBackPressed();
             }
         });
 
@@ -178,6 +178,14 @@ ImageView imageView;
                 startActivity(i);
             }
         });
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        onSaveInstanceState(new Bundle());
 
     }
 }

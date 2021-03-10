@@ -2,7 +2,12 @@
 package com.crypto.croytowallet.fragement;
 
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
@@ -22,6 +28,7 @@ import com.crypto.croytowallet.Activity.Security;
 import com.crypto.croytowallet.Activity.Setting;
 import com.crypto.croytowallet.Activity.Support;
 import com.crypto.croytowallet.Activity.Threat_Mode;
+import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
@@ -32,6 +39,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import de.mateware.snacky.Snacky;
 import okhttp3.ResponseBody;
@@ -43,7 +51,7 @@ import retrofit2.Callback;
  * A simple {@link Fragment} subclass.
  */
 public class Profile extends Fragment {
-    CardView security, setting, support, threat_mode,referral_code1;
+    CardView security, setting, support, threat_mode,referral_code1,language;
     LinearLayout profile;
     Animation down, blink, right, left;
     ImageView share;
@@ -68,13 +76,14 @@ public class Profile extends Fragment {
         send = view.findViewById(R.id.send);
         threat_mode = view.findViewById(R.id.threat_mode);
         referral_code1 = view.findViewById(R.id.referral_code1);
+        language  = view.findViewById(R.id.langauge1);
 
         //animation
         down = AnimationUtils.loadAnimation(getContext(), R.anim.silde_down);
         blink = AnimationUtils.loadAnimation(getContext(), R.anim.blink);
         right = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_right);
         left = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_left);
-
+        loadLocale();
         //set animation
         // profile.startAnimation(right);
        /* setting.startAnimation(left);
@@ -124,7 +133,72 @@ public class Profile extends Fragment {
             }
         });
 
+        language.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showChangeLanguageDialod();
+            }
+        });
         return view;
+    }
+
+    private void showChangeLanguageDialod() {
+        final  String[] listItem={"English","Hindi","Japanese","ThaiLand","Chinese","Philippines"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Choose Language.......");
+
+        builder.setSingleChoiceItems(listItem, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int i) {
+                if (i==0){
+                    setLocale("en");
+                    getActivity().recreate();
+                }else if(i==1){
+                    setLocale("hi");
+                    getActivity().recreate();
+                }else if(i==2){
+                    setLocale("ja");
+                    getActivity().recreate();
+                }else if(i==3){
+                    setLocale("th");
+                    getActivity().recreate();
+                }else if(i==4){
+                    setLocale("zh");
+                    getActivity().recreate();
+                }else if(i==5){
+                    setLocale("phi");
+                    getActivity().recreate();
+                }
+
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alertDialog =builder.create();
+        alertDialog.show();
+    }
+
+    private void setLocale(String lang) {
+
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+
+        Configuration configuration= new Configuration();
+        configuration.locale=locale;
+        getActivity().getBaseContext().getResources().updateConfiguration(configuration,getActivity().getBaseContext().getResources().getDisplayMetrics());
+
+        SharedPreferences.Editor editor = getActivity().getSharedPreferences("settings", Context.MODE_PRIVATE).edit();
+        editor.putString("My_Lang",lang);
+        editor.apply();
+
+    }
+    // load lanage saved in sharedPreference
+
+    public void loadLocale(){
+        SharedPreferences sharedPreferences =getActivity().getSharedPreferences("settings", Activity.MODE_PRIVATE);
+        String Language = sharedPreferences.getString("My_Lang","");
+        setLocale(Language);
     }
 
 

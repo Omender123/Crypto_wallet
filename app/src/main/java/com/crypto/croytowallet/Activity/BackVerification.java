@@ -104,7 +104,7 @@ public class BackVerification extends AppCompatActivity {
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }
-                    startActivity(new Intent(getApplicationContext(),Scretephases.class));
+                  //  startActivity(new Intent(getApplicationContext(),Scretephases.class));
                 }else if(response.code()==400){
                     try {
 
@@ -264,15 +264,19 @@ public class BackVerification extends AppCompatActivity {
 
 
     public void back(View view) {
-        startActivity(new Intent(getApplicationContext(),Security.class));
-        finish();
+      //  startActivity(new Intent(getApplicationContext(),Security.class));
+      //  finish();
+
+        onBackPressed();
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(getApplicationContext(),Security.class));
-        finish();
+       // startActivity(new Intent(getApplicationContext(),Security.class));
+        //finish();
+
+        onSaveInstanceState(new Bundle());
     }
 
     private void showpDialog() {

@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.crypto.croytowallet.Activity.Support;
 import com.crypto.croytowallet.R;
@@ -37,6 +39,7 @@ public class ChatOptions extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ChatActive();
+                newChatSeason();
                 Intent i = new Intent(ChatOptions.this, TicketChat.class);
                 startActivity(i);
             }
@@ -45,19 +48,23 @@ public class ChatOptions extends AppCompatActivity {
         oldChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snacky.builder()
+               /* Snacky.builder()
                         .setActivity(ChatOptions.this)
                         .setText("Coming Up Features")
                         .setTextColor(getResources().getColor(R.color.white))
                         .setDuration(Snacky.LENGTH_SHORT)
                         .success()
-                        .show();
+                        .show();*/
+
+                Intent i = new Intent(ChatOptions.this, OldChat.class);
+                startActivity(i);
             }
         });
     }
 
     public void back(View view) {
-        startActivity(new Intent(getApplicationContext(), Support.class));
+       // startActivity(new Intent(getApplicationContext(), Support.class));
+        onBackPressed();
     }
 
     @Override
@@ -135,4 +142,75 @@ public class ChatOptions extends AppCompatActivity {
 
 
     }
+
+
+    public void newChatSeason(){
+        UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
+        String token=user.getToken();
+
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().newChatSeason(token);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String s = null;
+                if (response.code()==200){
+                    try {
+                        s=response.body().string();
+                       // Log.d("support",s);
+                      //   Toast.makeText(ChatOptions.this, ""+s, Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if(response.code()==400){
+                    try {
+                        s=response.errorBody().string();
+                        JSONObject jsonObject1=new JSONObject(s);
+                        String error =jsonObject1.getString("error");
+
+
+                        Snacky.builder()
+                                .setActivity(ChatOptions.this)
+                                .setText(error)
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
+
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if(response.code()==401){
+
+                    Snacky.builder()
+                            .setActivity(ChatOptions.this)
+                            .setText("unAuthorization Request")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Snacky.builder()
+                        .setActivity(ChatOptions.this)
+                        .setText("Internet Problem ")
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+            }
+        });
+
+
+    }
+
+
 }

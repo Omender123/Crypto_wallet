@@ -155,7 +155,7 @@ UserData userData;
 
             case R.id.tofa:
                 startActivity(new Intent(Security.this, Two_FA.class));
-                finish();
+
                 break;
             case R.id.backUp:
               /*  Snacky.builder()
@@ -167,6 +167,7 @@ UserData userData;
                         .show();*/
                 resendOTP();
                 startActivity(new Intent(getApplicationContext(),BackVerification.class));
+                finish();
                 break;
         }
     }

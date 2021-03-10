@@ -386,19 +386,22 @@ public class Two_FA extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        Intent intent = new Intent(Two_FA.this, Security.class);
+       /* Intent intent = new Intent(Two_FA.this, Security.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        finish();
+        finish();*/
+
+        onSaveInstanceState(new Bundle());
     }
 
     public void back(){
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Two_FA.this, Security.class);
+               /* Intent intent = new Intent(Two_FA.this, Security.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                startActivity(intent);*/
+                onBackPressed();
             }
         });
 

@@ -208,7 +208,7 @@ public class SelectCurrency extends AppCompatActivity implements HistoryClickLis
 
     @Override
     public void onHistoryItemClickListener(int position) {
-        Intent intent = new Intent(getApplicationContext(), Setting.class);
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
         String currency = currencyModels.get(position).getCurrency();
         String symbols = currencyModels.get(position).getSymbols();

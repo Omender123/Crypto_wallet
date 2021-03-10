@@ -231,5 +231,6 @@
     <string name="your_referral_code">Your Referral Code</string>
     <string name="tab_below">Tab to text to copy referral code</string>
 
-
+    <string name="no_chat_text">No Old Chat History</string>
+    <string name="un_lock">UnLock Account</string>
 </resources>

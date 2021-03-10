@@ -199,6 +199,10 @@ public interface Api {
             @Header("Authorization")String Authtoken
     );
 
+    @POST("chat/newChatDocument")
+    Call<ResponseBody>newChatSeason(
+            @Header("Authorization")String Authtoken
+    );
     @POST("chat/ejectUser")
     Call<ResponseBody>Chat_Un_Active(
             @Header("Authorization")String Authtoken
@@ -237,4 +241,10 @@ public interface Api {
 
     @GET("user/countryCodeList")
     Call<ResponseBody> getCountryCode();
+
+    @GET("chat/oldChats")
+    Call<ResponseBody> getChatHistory(
+            @Header("Authorization") String Authorization
+    );
+
 }

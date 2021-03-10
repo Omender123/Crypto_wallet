@@ -16,8 +16,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CroytoWallet"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.MyReferral_code"
+        <activity android:name=".Chat.OldChatHistory"
             android:theme="@style/Theme.CroytoWallet.NoActionBar"></activity>
+        <activity
+            android:name=".Chat.OldChat"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+        <activity
+            android:name=".Activity.MyReferral_code"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
         <activity
             android:name=".Chat.ChatOptions"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />
