@@ -99,7 +99,6 @@ public class TickectChatAdapter extends  RecyclerView.Adapter<TickectChatAdapter
 
     @Override
     public int getItemViewType(int position) {
-       // fuser = FirebaseAuth.getInstance().getCurrentUser();
         if (mChat.get(position).getRoleId().equals("outgoingMessages") ){
             return MSG_TYPE_RIGHT;
         } else {

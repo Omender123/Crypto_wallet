@@ -39,7 +39,7 @@ public class ChatOptions extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ChatActive();
-                newChatSeason();
+               //newChatSeason();
                 Intent i = new Intent(ChatOptions.this, TicketChat.class);
                 startActivity(i);
             }

@@ -236,8 +236,8 @@ TextInputLayout layout_otp;
                         SharedPrefManager.getInstance(getApplicationContext()).userLogin(userData);
                         startActivity(new Intent(getApplicationContext(),MainActivity.class));
                         finish();
+                       Toast.makeText(Login.this, "Login Successfully", Toast.LENGTH_SHORT).show();
 
-                        Toast.makeText(Login.this, "Login Successfully", Toast.LENGTH_SHORT).show();
 
                         new Handler().postDelayed(new Runnable() {
 

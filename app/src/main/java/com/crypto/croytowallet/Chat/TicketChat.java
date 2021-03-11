@@ -76,7 +76,10 @@ String message,sendername,messageId;
     private Socket mSocket;
     {
         try {
-            mSocket = IO.socket("https://api.imx.global");
+           mSocket = IO.socket("https://api.imx.global");
+
+          //  mSocket = IO.socket("http://13.233.136.56:8080");
+
         } catch (URISyntaxException e) {}
     }
 
@@ -160,9 +163,9 @@ String message,sendername,messageId;
         });
 
         mSocket.connect();
-     // mSocket.on("hello", onNewMessage);
-        mSocket.on("messagesToAdmin", getmessage);
-      //  getChat();
+     //   mSocket.on("hello", onNewMessage);
+       mSocket.on("messagesToAdmin",getmessage);
+     //  getChat();
 
     }
 
@@ -211,7 +214,7 @@ String message,sendername,messageId;
                                 }
                             }else{
 
-                                //getChat();
+                            //   getChat();
                             }
 
                         } catch (JSONException e) {
@@ -229,7 +232,7 @@ String message,sendername,messageId;
                     }
 
                   // Log.d("hello",data.toString());
-                 Toast.makeText(TicketChat.this, ""+data.toString(), Toast.LENGTH_SHORT).show();
+               //  Toast.makeText(TicketChat.this, ""+data.toString(), Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -246,7 +249,7 @@ String message,sendername,messageId;
                     JSONObject data = (JSONObject) args[0];
 
                   //  Log.d("hello",data.toString());
-                  //Toast.makeText(TicketChat.this, ""+data.toString(), Toast.LENGTH_SHORT).show();
+                  Toast.makeText(TicketChat.this, ""+data.toString(), Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -405,14 +408,13 @@ String message,sendername,messageId;
                         s=response.body().string();
 
                         text_message.setText(" ");
-                      //  Log.d("s1",s);
-                     // Toast.makeText(TicketChat.this, ""+s, Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(TicketChat.this, ""+s, Toast.LENGTH_SHORT).show();
 
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 // This method will be executed once the timer is over
-                              //  getChat();
+                           //  getChat();
                             }
                         }, 500);
                     } catch (IOException  e) {
@@ -608,7 +610,7 @@ String message,sendername,messageId;
                     try {
                         s=response.body().string();
 
-                        getChat();
+                       // getChat();
                         //  Log.d("support",s);
                      //   Toast.makeText(TicketChat.this, ""+s, Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
@@ -684,7 +686,7 @@ String message,sendername,messageId;
             public void onResponse(String response) {
 
                 deleteMessage.setVisibility(View.GONE);
-                getChat();
+             //   getChat();
              //   Toast.makeText(TicketChat.this, ""+response, Toast.LENGTH_SHORT).show();
             }
         }, new com.android.volley.Response.ErrorListener() {
@@ -704,5 +706,12 @@ String message,sendername,messageId;
         };
 
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ChatUnActive();
+       // mSocket.disconnect();
     }
 }
