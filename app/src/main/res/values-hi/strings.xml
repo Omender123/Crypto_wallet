@@ -236,4 +236,9 @@
 
     <string name = "no_chat_text"> कोई पुराना चैट इतिहास नहीं </string>
     <string name = "un_lock"> खाता अनलॉक</string>
+
+    <string name = "close_chat"> चैट बंद करें </string>
+    <string name = "close_chat_text"> क्या आप चैट समाप्त करना चाहते हैं? </string>
+    <string name = "confirm"> पुष्टि करें </string>
+    <string name = "cancel"> रद्द करें </string>
 </resources>

@@ -233,4 +233,9 @@
 
     <string name="no_chat_text">古いチャット履歴はありません</string>
     <string name="un_lock">アカウントのロックを解除する</string>
+
+    <string name="close_chat">チャットを閉じる</string>
+    <string name="close_chat_text">チャットを終了しますか？</string>
+    <string name="confirm">確認</string>
+    <string name="cancel">キャンセル</string>
 </resources>

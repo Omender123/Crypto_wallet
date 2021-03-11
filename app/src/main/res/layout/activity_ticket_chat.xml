@@ -95,16 +95,17 @@
             android:layout_marginRight="10dp"
             android:visibility="gone"
             android:src="@drawable/ic_baseline_delete_24" />
+
         <ImageView
             android:id="@+id/threeDot"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:onClick="allDelete"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
             android:layout_alignParentRight="true"
-            android:scaleType="center"
-            android:visibility="gone"
-            android:layout_marginRight="5dp"
-            android:src="@drawable/ic_ellipsis"/>
+            android:onClick="allDelete"
+            android:scaleType="fitXY"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/ic_disagreement" />
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView

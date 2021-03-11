@@ -493,6 +493,44 @@ String message,sendername,messageId;
             progressDialog.dismiss();
     }
 
+    public void EndChat_AlertDialogBox(){
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(TicketChat.this);
+
+        alertDialogBuilder.setTitle(R.string.close_chat);
+
+        alertDialogBuilder.setIcon(R.drawable.ic_disagreement);
+        alertDialogBuilder
+                .setMessage(R.string.close_chat_text)
+                .setCancelable(false)
+                .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        ChatUnActive();
+                        send.setVisibility(View.GONE);
+                        textView_Send.setVisibility(View.GONE);
+                    }
+                })
+                .setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+
+                        Snacky.builder()
+                                .setActivity(TicketChat.this)
+                                .setText("Continue chat")
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .success()
+                                .show();
+                    }
+                });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+    }
+
     public void ChatUnActive(){
         UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
         String token=user.getToken();
@@ -508,9 +546,9 @@ String message,sendername,messageId;
                 if (response.code()==200){
                     try {
                         s=response.body().string();
-                        //  Log.d("support",s);
-                       // Toast.makeText(TicketChat.this, ""+s, Toast.LENGTH_SHORT).show();
-                    } catch (IOException e) {
+
+
+                              } catch (IOException e) {
                         e.printStackTrace();
                     }
 
@@ -564,36 +602,7 @@ String message,sendername,messageId;
     }
 
     public void allDelete(View view) {
-        AlertDialogBox();
-    }
-    public void AlertDialogBox(){
-
-
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(TicketChat.this);
-
-        alertDialogBuilder.setTitle("iMX");
-
-        alertDialogBuilder.setIcon(R.mipmap.ic_launcher_round);
-        alertDialogBuilder
-                .setMessage("Do you want to remove all chat?")
-                .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        allRemoveMessage();
-                    }
-                })
-                .setNegativeButton("No",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-
-                    }
-                });
-
-        // create alert dialog
-        AlertDialog alertDialog = alertDialogBuilder.create();
-
-        // show it
-        alertDialog.show();
+      EndChat_AlertDialogBox();
     }
 
     public void allRemoveMessage(){
@@ -708,10 +717,6 @@ String message,sendername,messageId;
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ChatUnActive();
-       // mSocket.disconnect();
-    }
+
+
 }

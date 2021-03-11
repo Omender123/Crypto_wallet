@@ -233,4 +233,10 @@
 
     <string name="no_chat_text">No Old Chat History</string>
     <string name="un_lock">UnLock Account</string>
+
+    <string name="close_chat">Close chat</string>
+    <string name="close_chat_text">Do you want to end chat?</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+
 </resources>

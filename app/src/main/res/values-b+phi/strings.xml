@@ -238,4 +238,8 @@
     <string name = "no_chat_text"> Walang Lumang Kasaysayan sa Chat </string>
     <string name = "un_lock"> I-unlock ang Account</string>
 
+    <string name = "close_chat"> Isara ang chat </string>
+    <string name = "close_chat_text"> Nais mo bang wakasan ang chat? </string>
+    <string name = "confirm"> Kumpirmahin </string>
+    <string name = "cancel"> Kanselahin </string>
 </resources>
