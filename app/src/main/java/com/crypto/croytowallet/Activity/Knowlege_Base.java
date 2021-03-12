@@ -19,20 +19,16 @@ import com.google.android.material.tabs.TabLayout;
 
 import static com.google.android.material.tabs.TabLayout.*;
 
-public class knowlege_Base extends AppCompatActivity {
+public class Knowlege_Base extends AppCompatActivity {
 TabLayout tabLayout;
 ViewPager viewPager;
 Pager_Adapter pager_adapter;
 TextView show_deatils,detail;
-ImageView back_btn;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_knowlege__base);
 
-        back_btn =findViewById(R.id.back);
-        back();
 
         tabLayout = findViewById(R.id.tablayout);
         viewPager = findViewById(R.id.pager);
@@ -63,14 +59,20 @@ ImageView back_btn;
         });
     }
 
-    public void back(){
-        back_btn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(knowlege_Base.this,Support.class);
-                startActivity(intent);
-            }
-        });
 
+    public void Back(View view) {
+        onBackPressed();
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        onSaveInstanceState(new Bundle());
+    }
+
+    public void sendQuery(View view) {
+        startActivity(new Intent(getApplicationContext(),Add_Ticket.class));
+    }
+
+
 }

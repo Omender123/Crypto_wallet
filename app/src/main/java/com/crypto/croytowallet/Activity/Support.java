@@ -83,17 +83,8 @@ ActionBar actionBar;
         knowledge_base.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(getApplicationContext(),"Knowledge",Toast.LENGTH_LONG).show();
-                /*Intent i = new Intent(Support.this,knowlege_Base.class);
-                startActivity(i);*/
 
-                Snacky.builder()
-                        .setActivity(Support.this)
-                        .setText("Coming Up Features")
-                        .setTextColor(getResources().getColor(R.color.white))
-                        .setDuration(Snacky.LENGTH_SHORT)
-                        .success()
-                        .show();
+                startActivity(new Intent(Support.this,Knowlege_Base.class));
             }
         });
 

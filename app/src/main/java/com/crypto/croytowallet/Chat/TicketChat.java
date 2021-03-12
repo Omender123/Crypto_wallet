@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -72,13 +73,15 @@ String message,sendername,messageId;
 
     ImageView deleteMessage;
 
+    SharedPreferences sharedPreferences = null;
+
 
     private Socket mSocket;
     {
         try {
-           mSocket = IO.socket("https://api.imx.global");
+          // mSocket = IO.socket("https://api.imx.global");
 
-          //  mSocket = IO.socket("http://13.233.136.56:8080");
+            mSocket = IO.socket("http://13.233.136.56:8080");
 
         } catch (URISyntaxException e) {}
     }
@@ -98,14 +101,11 @@ String message,sendername,messageId;
 
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
-       /* if (sendername!=null){
-            first_textUsername.setText(sendername);
-            fullName.setText(sendername);
-        }else {
-            first_textUsername.setText(userData.getUsername());
-            fullName.setText(userData.getName());
-        }*/
-
+        sharedPreferences = getSharedPreferences("season",0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("status","false");
+        editor.commit();
+        editor.apply();
 
         ticketChatModels = new ArrayList<TicketChatModel>();
 
@@ -480,7 +480,6 @@ String message,sendername,messageId;
     public void onBackPressed() {
         super.onBackPressed();
         onSaveInstanceState(new Bundle());
-        ChatUnActive();
     }
 
     private void showpDialog() {
@@ -508,6 +507,10 @@ String message,sendername,messageId;
                         ChatUnActive();
                         send.setVisibility(View.GONE);
                         textView_Send.setVisibility(View.GONE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("status","true");
+                        editor.commit();
+                        editor.apply();
                     }
                 })
                 .setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {

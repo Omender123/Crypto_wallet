@@ -105,7 +105,7 @@
             android:scaleType="fitXY"
             android:layout_marginRight="10dp"
             android:layout_marginTop="15dp"
-            android:src="@drawable/ic_disagreement" />
+            android:src="@drawable/ic_close_chat" />
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView

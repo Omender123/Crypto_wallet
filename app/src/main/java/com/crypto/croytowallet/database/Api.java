@@ -247,4 +247,17 @@ public interface Api {
             @Header("Authorization") String Authorization
     );
 
+    @FormUrlEncoded
+    @POST("FAQ/getFAQ")
+    Call<ResponseBody>GetFAQ(
+            @Field("subject") String subject
+            );
+
+
+    @GET("chat/chatDocument/{id}")
+    Call<ResponseBody> getALLChat(
+            @Header("Authorization") String Authorization,
+            @Path("id") String id
+    );
+
 }

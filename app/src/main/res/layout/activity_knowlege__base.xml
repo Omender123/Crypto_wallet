@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".Activity.knowlege_Base">
+    tools:context=".Activity.Knowlege_Base">
 
     <LinearLayout
         android:id="@+id/toolbar"
@@ -19,6 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_height="wrap_content"
+            android:onClick="Back"
             android:src="@drawable/ic_baseline_arrow_back_24"/>
         <TextView
             android:layout_width="match_parent"
@@ -65,11 +66,32 @@
          />
 
  </com.google.android.material.tabs.TabLayout>
-<androidx.viewpager.widget.ViewPager
-    android:id="@+id/pager"
-    android:layout_marginTop="5dp"
-    android:background="@color/background"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:layout_below="@id/tablayout"/>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tablayout"
+        android:layout_marginTop="5dp"
+        android:background="@color/background"
+        android:layout_above="@id/tv_send_query"/>
+
+    <TextView
+        android:id="@+id/tv_send_query"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/button_border"
+        android:gravity="center"
+        android:onClick="sendQuery"
+        android:text="@string/add_Query"
+        android:textAlignment="center"
+        android:textSize="15dp"
+        android:textStyle="bold" />
 </RelativeLayout>

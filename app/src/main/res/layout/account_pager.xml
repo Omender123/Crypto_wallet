@@ -6,28 +6,16 @@
     android:background="@color/background"
     tools:context=".Account_Pager">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/Recyclerview_account"
+    <ExpandableListView
+        android:id="@+id/expandableListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        android:layout_marginBottom="40dp"
-        android:layout_alignParentStart="true"
+        android:background="@color/background"
+        android:nestedScrollingEnabled="true"
+        android:dividerHeight="@null"
+        android:groupIndicator="@null"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
-        android:background="@color/background" />
-    <TextView
-        android:id="@+id/Pager_about_Button"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/button_border"
-           android:layout_below="@id/Recyclerview_account"
-        android:layout_margin="20dp"
-        android:text="@string/add_Query"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:gravity="center"
-        android:textSize="15dp"/>
+        android:layout_above="@+id/tv_send_query"
+        />
+
 </RelativeLayout>

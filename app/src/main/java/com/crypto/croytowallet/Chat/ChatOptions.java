@@ -3,6 +3,7 @@ package com.crypto.croytowallet.Chat;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,6 +29,8 @@ import retrofit2.Response;
 
 public class ChatOptions extends AppCompatActivity {
     RelativeLayout newChat,oldChat;
+    SharedPreferences sharedPreferences;
+    String status;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,11 +38,17 @@ public class ChatOptions extends AppCompatActivity {
         newChat = findViewById(R.id.Mobile_support);
         oldChat = findViewById(R.id.Mobile_support1);
 
+        sharedPreferences = getSharedPreferences("season",0);
+
         newChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                status = sharedPreferences.getString("status","false");
+               // Toast.makeText(getApplicationContext(), ""+status, Toast.LENGTH_SHORT).show();
                 ChatActive();
-               //newChatSeason();
+                if (status.equals("true") ){
+                 newChatSeason();
+                }
                 Intent i = new Intent(ChatOptions.this, TicketChat.class);
                 startActivity(i);
             }
