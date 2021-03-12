@@ -79,9 +79,9 @@ String message,sendername,messageId;
     private Socket mSocket;
     {
         try {
-          // mSocket = IO.socket("https://api.imx.global");
+          mSocket = IO.socket("https://api.imx.global");
 
-            mSocket = IO.socket("http://13.233.136.56:8080");
+          // mSocket = IO.socket("http://13.233.136.56:8080");
 
         } catch (URISyntaxException e) {}
     }
