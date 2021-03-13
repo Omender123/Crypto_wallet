@@ -126,8 +126,7 @@ public class Sync_device extends AppCompatActivity implements HistoryClickLister
             @Override
             public void onResponse(String response) {
                 hidepDialog();
-
-              //  Log.d("respon",response);
+                modelArrayList.clear();
                 try {
                     JSONObject object = new JSONObject(response);
                     String result = object.getString("result");
@@ -401,8 +400,7 @@ public class Sync_device extends AppCompatActivity implements HistoryClickLister
 
         jwt_token =modelArrayList.get(position).getJwt();
         AlertDialogBox();
-       // Log.d("jwt",modelArrayList.get(position).getJwt());
-      //  Toast.makeText(this, ""+position, Toast.LENGTH_SHORT).show();
+
     }
     public void AlertDialogBox(){
 
@@ -420,6 +418,7 @@ public class Sync_device extends AppCompatActivity implements HistoryClickLister
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Remove_Jwt();
+
                     }
                 })
                 .setNegativeButton(R.string.no,new DialogInterface.OnClickListener() {
@@ -472,6 +471,7 @@ public class Sync_device extends AppCompatActivity implements HistoryClickLister
                                 .setActionText(android.R.string.ok)
                                 .success()
                                 .show();
+
                         getActiveDeviceDetails();
 
                     } catch (IOException e) {

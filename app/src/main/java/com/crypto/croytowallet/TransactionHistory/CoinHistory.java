@@ -112,8 +112,8 @@ public class CoinHistory extends AppCompatActivity implements HistoryClickLister
 
               try {
                   getSendCoinHistory();
-                  coinModals.clear();
-                  coin_history_adapter.notifyDataSetChanged();
+/*
+                 // coin_history_adapter.notifyDataSetChanged();
                   new Handler().postDelayed(new Runnable() {
                       @Override
                       public void run() {
@@ -131,6 +131,7 @@ public class CoinHistory extends AppCompatActivity implements HistoryClickLister
                                       }
                       }
                   },500);
+*/
 
               }catch (Exception e){
 
@@ -150,10 +151,10 @@ public class CoinHistory extends AppCompatActivity implements HistoryClickLister
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 receivedData=coinSymbols1[position];
-
+                getReceivedCoinHistory();
               try {
-                  getReceivedCoinHistory();
-                  coinModals.clear();
+                 // getReceivedCoinHistory();
+               /*   coinModals.clear();
                   coin_history_adapter.notifyDataSetChanged();
 
                   new Handler().postDelayed(new Runnable() {
@@ -173,7 +174,7 @@ public class CoinHistory extends AppCompatActivity implements HistoryClickLister
                           }
                       }
                   },500);
-
+*/
               }catch (Exception e){
 
               }
@@ -199,7 +200,8 @@ public class CoinHistory extends AppCompatActivity implements HistoryClickLister
                     lyt_send.setBackground(getResources().getDrawable(R.drawable.background_broder));
                     coinSpinner.setVisibility(View.GONE);
                     coinReceived.setVisibility(View.VISIBLE);
-
+                    getReceivedCoinHistory();
+/*
                     try {
                       //  getSendCoinHistory();
                         getReceivedCoinHistory();
@@ -227,6 +229,7 @@ public class CoinHistory extends AppCompatActivity implements HistoryClickLister
 
                     }
 
+*/
 
 
                 }else{
@@ -238,8 +241,9 @@ public class CoinHistory extends AppCompatActivity implements HistoryClickLister
                     coinSpinner.setVisibility(View.VISIBLE);
                     coinReceived.setVisibility(View.GONE);
 
+                    getSendCoinHistory();
                     // getSendCoinHistory();
-                    try {
+                    /*try {
                         getSendCoinHistory();
                         coinModals.clear();
                         coin_history_adapter.notifyDataSetChanged();
@@ -264,7 +268,7 @@ public class CoinHistory extends AppCompatActivity implements HistoryClickLister
                     }catch (Exception e){
 
                     }
-
+*/
 
                 }
 
@@ -296,6 +300,7 @@ public class CoinHistory extends AppCompatActivity implements HistoryClickLister
                 String s=null;
                 if (response.code()==200){
 
+                    coinModals.clear();
                     try {
                         s=response.body().string();
 
@@ -399,7 +404,7 @@ public class CoinHistory extends AppCompatActivity implements HistoryClickLister
                 hidepDialog();
                 String s=null;
                 if (response.code()==200){
-
+                     coinModals.clear();
                     try {
                         s=response.body().string();
                         JSONObject object  = new JSONObject(s);
