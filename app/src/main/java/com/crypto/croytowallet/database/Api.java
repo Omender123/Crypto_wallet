@@ -14,6 +14,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface Api {
 
@@ -258,6 +259,13 @@ public interface Api {
     Call<ResponseBody> getALLChat(
             @Header("Authorization") String Authorization,
             @Path("id") String id
+    );
+
+    @GET("coins/{id}/market_chart")
+    Call<ResponseBody> getGraphData(
+            @Path("id") String id,
+            @Query("vs_currency") String currency,
+            @Query("days") String days
     );
 
 }
