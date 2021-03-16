@@ -12,7 +12,7 @@ public class Updated_data {
     private static final String SHARD_PERFNAME="myshardperf624";
     private static final String KEY_ID="id";
 
-    private static final String KEY_SID="sid";
+    private static final String KEY_Coin_ID="Coin_id";
 
     private static final String KEY_TripID="tid";
 
@@ -47,7 +47,7 @@ public class Updated_data {
     }
 
 
-    public boolean userLogin(int id, String coinname, String symbol,String image,String change,String  price){
+    public boolean userLogin(int id, String coinname, String symbol,String image,String change,String  price,String CoinId){
 
         SharedPreferences sharedPreferences=mct.getSharedPreferences(SHARD_PERFNAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferences.edit();
@@ -57,6 +57,7 @@ public class Updated_data {
         editor.putString(IMAGE,image);
         editor.putString(CHANGE,change);
         editor.putString(PRICE,price);
+        editor.putString(KEY_Coin_ID,CoinId);
 
 
 
@@ -69,7 +70,7 @@ public class Updated_data {
 
         SharedPreferences sharedPreferences=mct.getSharedPreferences(SHARD_PERFNAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferences.edit();
-        editor.putString(KEY_SID,id);
+        editor.putString(KEY_Coin_ID,id);
 
 
 
@@ -198,25 +199,12 @@ public class Updated_data {
 
     }
 
-    public String getUserServiceId(){
+    public String getCoinId(){
         SharedPreferences sharedPreferences=mct.getSharedPreferences(SHARD_PERFNAME, Context.MODE_PRIVATE);
-        return sharedPreferences.getString(KEY_SID,null);
+        return sharedPreferences.getString(KEY_Coin_ID,null);
 
     }
 
-    public String getUserTripId(){
-        SharedPreferences sharedPreferences=mct.getSharedPreferences(SHARD_PERFNAME, Context.MODE_PRIVATE);
-        return sharedPreferences.getString(KEY_TripID,null);
-
-    }
-
-
-
-    public String getdeviceToken(){
-        SharedPreferences sharedPreferences=mct.getSharedPreferences(SHARD_PERFNAME, Context.MODE_PRIVATE);
-        return sharedPreferences.getString(Device,null);
-
-    }
     public String getUsername(){
         SharedPreferences sharedPreferences=mct.getSharedPreferences(SHARD_PERFNAME, Context.MODE_PRIVATE);
         return sharedPreferences.getString(NAME,null);
@@ -238,12 +226,6 @@ public class Updated_data {
         return sharedPreferences.getString(IMAGE,null);
 
     }
-    public String getLastName(){
-        SharedPreferences sharedPreferences=mct.getSharedPreferences(SHARD_PERFNAME, Context.MODE_PRIVATE);
-        return sharedPreferences.getString(KEY_LAST_NAME,null);
-
-    }
-
 
     public String getmobile(){
         SharedPreferences sharedPreferences=mct.getSharedPreferences(SHARD_PERFNAME, Context.MODE_PRIVATE);
@@ -251,16 +233,6 @@ public class Updated_data {
 
     }
 
-
-    public String getLatitude() {
-        SharedPreferences sharedPreferences=mct.getSharedPreferences(SHARD_PERFNAME, Context.MODE_PRIVATE);
-        return sharedPreferences.getString(LATITUDE,null);
-
-    }
-    public String getLongitude(){
-        SharedPreferences sharedPreferences=mct.getSharedPreferences(SHARD_PERFNAME, Context.MODE_PRIVATE);
-        return sharedPreferences.getString(LONGITUDE,null);
-    }
 
 
 

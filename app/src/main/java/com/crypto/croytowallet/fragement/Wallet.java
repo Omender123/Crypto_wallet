@@ -157,13 +157,14 @@ public class Wallet extends Fragment implements  CryptoClickListner{
         Intent intent = new Intent(getContext(), Graph_layout.class);
       //  intent.putExtra("position",position);
         startActivity(intent);
+        String CoinID=crptoInfoModels.get(position).getId();
         String result=crptoInfoModels.get(position).getSymbol();
        String price=crptoInfoModels.get(position).getCurrentPrice();
         String image=crptoInfoModels.get(position).getImage();
         String coinName=crptoInfoModels.get(position).getName();
         String change=crptoInfoModels.get(position).getCurrencyRate();
 
-        Updated_data.getInstans(getContext()).userLogin(position,coinName,result,image,change,price);
+        Updated_data.getInstans(getContext()).userLogin(position,coinName,result,image,change,price,CoinID);
 
        /* SharedPreferences.Editor editor=sharedPreferences.edit();
         editor.putString("symbol1",result);

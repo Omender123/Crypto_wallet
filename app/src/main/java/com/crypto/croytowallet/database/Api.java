@@ -268,4 +268,14 @@ public interface Api {
             @Query("days") String days
     );
 
+
+
+    @GET("coins/{id}/market_chart")
+    Call<ResponseBody> getGraphData1(
+            @Path("id") String id,
+            @Query("vs_currency") String currency,
+            @Query("days") String days,
+            @Query("interval") String interval
+    );
+
 }

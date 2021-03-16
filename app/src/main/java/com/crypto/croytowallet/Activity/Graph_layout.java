@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,9 +62,10 @@ import retrofit2.Response;
 public class Graph_layout extends AppCompatActivity implements View.OnClickListener {
 
     TextView swap,price,balance,coinname,coinsymbols,coinprice,sync,increaseRate,null1;
+    LinearLayout h_24,d_7,m_1,m_3,m_6,y_1;
     private Exchange exchange;
     int position;
-    String symbol,image,coinName,change,CurrencySymbols;
+    String symbol,image,coinName,change,CurrencySymbols,coinId,currency2;
     ImageView back,received,send;
     KProgressHUD progressDialog;
     SharedPreferences preferences,sharedPreferences;;
@@ -88,12 +90,24 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         // sync = findViewById(R.id.sync);
         increaseRate  =findViewById(R.id.increaseRate);
         null1  = findViewById(R.id.null1);
+        h_24 = findViewById(R.id.h_24);
+        d_7 = findViewById(R.id.d_7);
+        m_1 = findViewById(R.id.m_1);
+        m_3 = findViewById(R.id.m_3);
+        m_6 = findViewById(R.id.m_6);
+        y_1 = findViewById(R.id.y_1);
 
           send=findViewById(R.id.send_coin);
          swap.setOnClickListener(this);
          back.setOnClickListener(this);
         received.setOnClickListener(this);
         send.setOnClickListener(this);
+        h_24.setOnClickListener(this);
+        d_7.setOnClickListener(this);
+        m_1.setOnClickListener(this);
+        m_3.setOnClickListener(this);
+        m_6.setOnClickListener(this);
+        y_1.setOnClickListener(this);
 
 
         position = Updated_data.getInstans(getApplicationContext()).getUserId();
@@ -108,6 +122,9 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         sharedPreferences =getApplicationContext().getSharedPreferences("currency",0);
 
         CurrencySymbols =sharedPreferences.getString("Currency_Symbols","$");
+        coinId = Updated_data.getInstans(getApplicationContext()).getCoinId();
+         currency2 =sharedPreferences.getString("currency1","usd");
+
 
         //   Log.d("price",getString(price1));
 
@@ -165,6 +182,70 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
             case R.id.swap_btc_btn:
                 Intent intent2=new Intent(getApplicationContext(), imtSwap.class);
                 startActivity(intent2);
+                break;
+
+            case R.id.h_24:
+                h_24.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                d_7.setBackgroundColor(getResources().getColor(R.color.white));
+                m_1.setBackgroundColor(getResources().getColor(R.color.white));
+                m_3.setBackgroundColor(getResources().getColor(R.color.white));
+                m_6.setBackgroundColor(getResources().getColor(R.color.white));
+                y_1.setBackgroundColor(getResources().getColor(R.color.white));
+                getGraph();
+
+                break;
+
+            case R.id.d_7:
+                h_24.setBackgroundColor(getResources().getColor(R.color.white));
+                d_7.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                m_1.setBackgroundColor(getResources().getColor(R.color.white));
+                m_3.setBackgroundColor(getResources().getColor(R.color.white));
+                m_6.setBackgroundColor(getResources().getColor(R.color.white));
+                y_1.setBackgroundColor(getResources().getColor(R.color.white));
+                getGraphData(coinId,currency2,"7","daily");
+                break;
+
+            case R.id.m_1:
+                h_24.setBackgroundColor(getResources().getColor(R.color.white));
+                d_7.setBackgroundColor(getResources().getColor(R.color.white));
+                m_1.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                m_3.setBackgroundColor(getResources().getColor(R.color.white));
+                m_6.setBackgroundColor(getResources().getColor(R.color.white));
+                y_1.setBackgroundColor(getResources().getColor(R.color.white));
+                getGraphData(coinId,currency2,"30","daily");
+
+                break;
+
+            case R.id.m_3:
+                h_24.setBackgroundColor(getResources().getColor(R.color.white));
+                d_7.setBackgroundColor(getResources().getColor(R.color.white));
+                m_1.setBackgroundColor(getResources().getColor(R.color.white));
+                m_3.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                m_6.setBackgroundColor(getResources().getColor(R.color.white));
+                y_1.setBackgroundColor(getResources().getColor(R.color.white));
+                getGraphData(coinId,currency2,"90","daily");
+
+                break;
+
+            case R.id.m_6:
+                h_24.setBackgroundColor(getResources().getColor(R.color.white));
+                d_7.setBackgroundColor(getResources().getColor(R.color.white));
+                m_1.setBackgroundColor(getResources().getColor(R.color.white));
+                m_3.setBackgroundColor(getResources().getColor(R.color.white));
+                m_6.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                y_1.setBackgroundColor(getResources().getColor(R.color.white));
+                getGraphData(coinId,currency2,"180","daily");
+
+                break;
+
+            case R.id.y_1:
+                h_24.setBackgroundColor(getResources().getColor(R.color.white));
+                d_7.setBackgroundColor(getResources().getColor(R.color.white));
+                m_1.setBackgroundColor(getResources().getColor(R.color.white));
+                m_3.setBackgroundColor(getResources().getColor(R.color.white));
+                m_6.setBackgroundColor(getResources().getColor(R.color.white));
+                y_1.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                getGraphData(coinId,currency2,"365","daily");
                 break;
 
 
@@ -294,11 +375,8 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
 
     public void getGraph() {
 
-        String coinname1 = coinName.toLowerCase();
-        String currency2 =sharedPreferences.getString("currency1","usd");
 
-
-        Call<ResponseBody>call = RetrofitGraph.getInstance().getApi().getGraphData(coinname1,currency2,"1");
+        Call<ResponseBody>call = RetrofitGraph.getInstance().getApi().getGraphData(coinId,currency2,"1");
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -306,6 +384,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                 String s =null;
                 if (response.code()==200){
                     ArrayList<Entry> yvalue=new ArrayList<>();
+                    yvalue.clear();
                     try {
                         s=response.body().string();
 
@@ -342,7 +421,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                     // Set the marker to the chart
                     mv.setChartView(chart);
                     chart.setMarker(mv);
-                    chart.animateXY(6000,6000);
+                    chart.animateXY(1000,1000);
                     chart.getXAxis().setDrawGridLines(false);
                     chart.getAxisLeft().setDrawGridLinesBehindData(false);
                     chart.getAxisLeft().setDrawGridLines(false);
@@ -420,4 +499,128 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    public void getGraphData(String id,String currency,String days,String interval){
+        Call<ResponseBody>call = RetrofitGraph.getInstance().getApi().getGraphData1(id,currency,days,interval);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String s =null;
+                if (response.code()==200){
+                    ArrayList<Entry> yvalue=new ArrayList<>();
+                    yvalue.clear();
+                    try {
+                        s=response.body().string();
+
+                        JSONObject object = new JSONObject(s);
+
+                        String prices = object.getString("prices");
+                        JSONArray jsonArray = new JSONArray(prices);
+
+                        for (int i=0;i<=jsonArray.length();i++){
+
+                            String peice1 = jsonArray.getString(i);
+
+                            JSONArray jsonArray1 = new JSONArray(peice1);
+                            for (int j=0; j<=jsonArray1.length();j++){
+                                String lowPrices = jsonArray1.getString(1);
+
+                                Float aFloat = Float.parseFloat(lowPrices);
+                                yvalue.add(new Entry(i,aFloat));
+                            }
+
+                        }
+
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    chart.setDragEnabled(true);
+                    chart.setScaleEnabled(true);
+                    chart.setPinchZoom(true);
+                    /* create marker to display box when values are selected */
+                    MyMarkerView mv = new MyMarkerView(Graph_layout.this, R.layout.custom_marker_view);
+
+                    // Set the marker to the chart
+                    mv.setChartView(chart);
+                    chart.setMarker(mv);
+                    chart.animateXY(1000,1000);
+                    chart.getXAxis().setDrawGridLines(false);
+                    chart.getAxisLeft().setDrawGridLinesBehindData(false);
+                    chart.getAxisLeft().setDrawGridLines(false);
+                    chart.getAxisRight().setDrawGridLines(false);
+                    chart.getDescription().setEnabled(false);
+                    chart.getAxisLeft().setDrawLabels(false);
+                    chart.getAxisRight().setDrawLabels(false);
+                    chart.getXAxis().setDrawLabels(false);
+
+                    YAxis y = chart.getAxisRight();
+                    y.setEnabled(false);
+                    y.setDrawAxisLine(false);
+                    YAxis y1 = chart.getAxisLeft();
+                    y1.setDrawAxisLine(false);
+
+                    XAxis x = chart.getXAxis();
+                    x.setDrawAxisLine(false);
+                    x.setDrawGridLines(false);
+
+
+                    LineDataSet set1=new LineDataSet(yvalue,"");
+                    set1.setFillAlpha(110);
+                    ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+                    dataSets.add(set1);
+                    LineData data = new LineData(dataSets);
+                    chart.setData(data);
+
+                    if (Utils.getSDKInt() >= 18) {
+                        Drawable drawable = ContextCompat.getDrawable(Graph_layout.this, R.drawable.gradient1);
+                        set1.setFillDrawable(drawable);
+                    } else {
+                        set1.setFillColor(Color.rgb(229, 146, 19));
+                    }
+                    set1.setMode(LineDataSet.Mode.LINEAR);
+                    set1.setLineWidth(2f);
+                    set1.setColor(Color.WHITE);
+                    set1.setDrawFilled(true);
+                    set1.setDrawCircles(false);
+                    chart.setBackgroundColor(getResources().getColor(R.color.purple_500));
+
+
+                } else if(response.code()==400){
+                    try {
+                        s=response.errorBody().string();
+                        JSONObject jsonObject1=new JSONObject(s);
+                        String error =jsonObject1.getString("error");
+                        Snacky.builder()
+                                .setActivity(Graph_layout.this)
+                                .setText(error)
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
+
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Snacky.builder()
+                        .setActivity(Graph_layout.this)
+                        .setText("Internet Problem ")
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+            }
+        });
+
+    }
 }

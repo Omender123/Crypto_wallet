@@ -163,7 +163,7 @@ String message,sendername,messageId;
         });
 
         mSocket.connect();
-     //   mSocket.on("hello", onNewMessage);
+     //  mSocket.on("hello", onNewMessage);
        mSocket.on("messagesToAdmin",getmessage);
      //  getChat();
 
@@ -248,8 +248,10 @@ String message,sendername,messageId;
                 public void run() {
                     JSONObject data = (JSONObject) args[0];
 
-                  //  Log.d("hello",data.toString());
-                  Toast.makeText(TicketChat.this, ""+data.toString(), Toast.LENGTH_SHORT).show();
+                   Log.d("hello111",data.toString());
+
+
+              Toast.makeText(TicketChat.this, ""+data.toString(), Toast.LENGTH_SHORT).show();
 
                 }
             });

@@ -59,9 +59,9 @@ public class Exchange extends Fragment implements View.OnClickListener {
     String[] coinSymbols = {"imt", "btc","eth","usdt","xrp","ltc","usdc"};
     int[] coinImage = {R.mipmap.imt,R.mipmap.bitcoin_image,R.mipmap.group_blue,R.mipmap.usdt,R.mipmap.xrp,R.mipmap.ltc,R.mipmap.usdc};
 
-    String[] coinName1 = {"Airdrop"};
-    String[] coinSymbols1 = {"airdrop"};
-    int[] coinImage1 = {R.mipmap.airdrop};
+    String[] coinName1 = {"Airdrop","ImSmart"};
+    String[] coinSymbols1 = {"airdrop","imt"};
+    int[] coinImage1 = {R.mipmap.airdrop,R.mipmap.imt};
     int value;
     SeekBar seekBar;
 
