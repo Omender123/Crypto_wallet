@@ -9,6 +9,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.CompoundButton;
 import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,19 +24,18 @@ import com.crypto.croytowallet.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelectCurrencyAdapter extends RecyclerView.Adapter<SelectCurrencyAdapter.Myviewholder> {
-ArrayList<CurrencyModel>currencyModels;
-Context context;
+public class SelectCurrencyAdapter extends RecyclerView.Adapter<SelectCurrencyAdapter.Myviewholder> implements Filterable {
+    ArrayList<CurrencyModel> currencyModels;
+    Context context;
     private HistoryClickLister historyClickLister;
-    List<CurrencyModel> mDataFiltered ;
-
-    SharedPreferences sharedPreferences = null;
+    private List<CurrencyModel> exampleListFull;
 
     public SelectCurrencyAdapter(ArrayList<CurrencyModel> currencyModels, Context contex, HistoryClickLister historyClickLister) {
         this.currencyModels = currencyModels;
         this.context = context;
-        this.historyClickLister=historyClickLister;
-        this.mDataFiltered = currencyModels;
+        this.historyClickLister = historyClickLister;
+        exampleListFull = new ArrayList<>(currencyModels);
+
     }
 
     public SelectCurrencyAdapter() {
@@ -55,8 +55,6 @@ Context context;
 
         holder.currency.setText(currencyModels.get(position).getCurrency());
         holder.CountryName.setText(currencyModels.get(position).getCountryName());
-        // holder.radioButton.setChecked(lastSelectedPosition == position);
-
 
 
     }
@@ -67,73 +65,14 @@ Context context;
         return currencyModels.size();
     }
 
-   /* @Override
-    public Filter getFilter() {
-
-        return  new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                String Key = constraint.toString();
-                if (Key.isEmpty()) {
-                    mDataFiltered = currencyModels ;
-                }
-                else {
-                    List<CurrencyModel> lstFiltered = new ArrayList<>();
-                    for (CurrencyModel row : currencyModels) {
-
-                        if (row.getCurrency().toLowerCase().contains(Key.toLowerCase()) || row.getCountryName().toLowerCase().contains(Key.toLowerCase())){
-
-                            lstFiltered.add(row);
-                        }
-
-                    }
-
-                    mDataFiltered = lstFiltered;
-
-                }
-
-
-                FilterResults filterResults = new FilterResults();
-                filterResults.values= mDataFiltered;
-                return filterResults;
-
-            }
-
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-                mDataFiltered = (List<CurrencyModel>) results.values;
-                notifyDataSetChanged();
-            }
-        };
-    }
-    */
 
     public class Myviewholder extends RecyclerView.ViewHolder {
         TextView currency, CountryName;
-        RadioButton radioButton;
 
         public Myviewholder(@NonNull View itemView) {
             super(itemView);
             currency = itemView.findViewById(R.id.currency);
             CountryName = itemView.findViewById(R.id.CountryName);
-         //   radioButton =itemView.findViewById(R.id.clickRadio);
-
-
-
-          /*  radioButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    lastSelectedPosition = getAdapterPosition();
-                   // notifyDataSetChanged();
-
-                    Toast.makeText(SelectCurrencyAdapter.this.context,
-                            "Country Name " + CountryName.getText(),
-                            Toast.LENGTH_LONG).show();
-                }
-            });
-
-*/
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -142,6 +81,39 @@ Context context;
             });
 
         }
-        }
     }
+
+    @Override
+    public Filter getFilter() {
+        return exampleFilter;
+    }
+
+    private Filter exampleFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<CurrencyModel> filteredList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(exampleListFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (CurrencyModel item : exampleListFull) {
+                    if (item.getCurrency().toLowerCase().contains(filterPattern)|| item.getCountryName().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            currencyModels.clear();
+            currencyModels.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
+}
+
+
 

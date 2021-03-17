@@ -106,13 +106,7 @@ public class Setting extends AppCompatActivity implements View.OnClickListener {
 
                 break;
             case R.id.notification:
-                Snacky.builder()
-                        .setActivity(Setting.this)
-                        .setText("Coming Up Features")
-                        .setTextColor(getResources().getColor(R.color.white))
-                        .setDuration(Snacky.LENGTH_SHORT)
-                        .success()
-                        .show();
+                startActivity(new Intent(getApplicationContext(),Notification.class));
 
                 break;
             case R.id.sound:
@@ -126,14 +120,7 @@ public class Setting extends AppCompatActivity implements View.OnClickListener {
                 break;
             case R.id.currency:
                 startActivity(new Intent(getApplicationContext(),SelectCurrency.class));
-              /*  Snacky.builder()
-                        .setActivity(Setting.this)
-                        .setText("Coming Up Features")
-                        .setTextColor(getResources().getColor(R.color.white))
-                        .setDuration(Snacky.LENGTH_SHORT)
-                        .success()
-                        .show();*/
-                break;
+                 break;
 
 
         }

@@ -74,4 +74,8 @@ public class URLs {
     public static final String URL_DELETE_MESSAGE = ROOT_URL + "chat/removeMessage?id=";
 
 
+ //Image Urls
+ public static final String URL_Image = "https://imxtest.s3.ap-south-1.amazonaws.com/";
+
+
 }

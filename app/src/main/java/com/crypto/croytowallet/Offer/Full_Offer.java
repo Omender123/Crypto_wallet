@@ -46,8 +46,7 @@ TextView offername,shortDes,long_Des,title;
         shortDes.setText(offerModel.getShortDescription());
         long_Des.setText(offerModel.getLongDescription());
 
-        //Toast.makeText(this, ""+offerModel.getImageUrl(), Toast.LENGTH_SHORT).show();
-        if(offerModel.getImageUrl().equals("https://imsmart.s3.ap-south-1.amazonaws.com/logo.png")){
+         if(offerModel.getImageUrl().equals("https://imsmart.s3.ap-south-1.amazonaws.com/logo.png")){
             imageView.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.ic_artboard___5));
         }else {
             Picasso.get().load(offerModel.getImageUrl()).into(imageView);

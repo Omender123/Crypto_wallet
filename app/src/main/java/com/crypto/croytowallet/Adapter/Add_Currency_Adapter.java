@@ -4,28 +4,31 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.crypto.croytowallet.Model.CurrencyModel;
 import com.crypto.croytowallet.Model.Model_Class_Add_Currency;
 import com.crypto.croytowallet.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class Add_Currency_Adapter extends RecyclerView.Adapter<Add_Currency_Adapter.Myviewholder> {
-
+public class Add_Currency_Adapter extends RecyclerView.Adapter<Add_Currency_Adapter.Myviewholder> implements Filterable {
     ArrayList<Model_Class_Add_Currency> currency;
-
+    private List<Model_Class_Add_Currency> exampleListFull;
     public Add_Currency_Adapter() {
     }
 
     public Add_Currency_Adapter(ArrayList<Model_Class_Add_Currency> currency) {
         this.currency = currency;
-
+        exampleListFull = new ArrayList<>(currency);
     }
 
 
@@ -65,4 +68,34 @@ public class Add_Currency_Adapter extends RecyclerView.Adapter<Add_Currency_Adap
         }
     }
 
+
+    @Override
+    public Filter getFilter() {
+        return exampleFilter;
+    }
+    private Filter exampleFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Model_Class_Add_Currency> filteredList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(exampleListFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (Model_Class_Add_Currency item : exampleListFull) {
+                    if (item.getCurrency_Title().toLowerCase().contains(filterPattern)|| item.getTitle_Des().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            currency.clear();
+            currency.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
 }

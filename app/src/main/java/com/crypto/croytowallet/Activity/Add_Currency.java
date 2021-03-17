@@ -43,6 +43,7 @@ public class Add_Currency extends AppCompatActivity {
     ArrayList<Model_Class_Add_Currency> item_data;
     EditText search;
     ImageView imageView;
+    CharSequence search1 = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,10 +58,8 @@ public class Add_Currency extends AppCompatActivity {
     }
 
     public void Coin_setdata() {
-        String url = "http://13.233.136.56:8080/api/currency/";
         UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
-       // String username=user.getUsername();
-        String token = user.getToken();
+         String token = user.getToken();
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_GET_COIN, new Response.Listener<String>() {
             @Override
@@ -72,25 +71,9 @@ public class Add_Currency extends AppCompatActivity {
                         Model_Class_Add_Currency currency_model = new Model_Class_Add_Currency();
                         JSONObject jsonObject1 = jsonArray.getJSONObject(i);
                         String id = jsonObject1.getString("_id");
-                        //  String image = jsonObject1.getString("image");
-                        String name = jsonObject1.getString("name");
-//                        String rate = jsonObject1.getString("price_change_percentage_24h");
-//                        String price = jsonObject1.getString("current_price");
-//                        String high_price = jsonObject1.getString("high_24h");
-//                        String low_price = jsonObject1.getString("low_24h");
-
-
-//                        data_coin.setCoin_name(name);
-//                        data_coin.setCoin_amount(price);
-//                        data_coin.setCoin_Change(rate);
-//                        data_coin.setImage(image);
-////                        data_coin.setCoin_name(name);
-////                        data_coin.setCoin_Current_Change(price);
-////                        data_coin.setCoin_amount(rate);
-////                        data_coin.setCoin_name(name);
+                         String name = jsonObject1.getString("name");
                         currency_model.setCurrency_Title(name);
                         currency_model.setTitle_Des(id);
-                        //currency_model.setImage(image);
 
                         item_data.add(currency_model);
 
@@ -107,16 +90,32 @@ public class Add_Currency extends AppCompatActivity {
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
                 recyclerView.setAdapter(adapter);
 
+                search.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        adapter.getFilter().filter(s);
+                        search1 = s;
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
 
 
-                //  Toast.makeText(getContext(), ""+response.toString(), Toast.LENGTH_SHORT).show();
 
             }
 
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(Add_Currency.this, "" + error.toString(), Toast.LENGTH_SHORT).show();
+               // Toast.makeText(Add_Currency.this, "" + error.toString(), Toast.LENGTH_SHORT).show();
             }
         }){
             @Override
@@ -134,26 +133,7 @@ public class Add_Currency extends AppCompatActivity {
 
 
     }
-//    private void fillExampleList() {
-//        datavalue = new ArrayList<>();
-//        datavalue.add(new Add_currency_Model(R.drawable.bitcoin_image, "One", "Ten"));
-//        datavalue.add(new Add_currency_Model(R.drawable.bitcoin_image, "Two", "Eleven"));
-//        datavalue.add(new Add_currency_Model(R.drawable.bitcoin_image, "Three", "Twelve"));
-//        datavalue.add(new Add_currency_Model(R.drawable.bitcoin_image, "Four", "Thirteen"));
-//        datavalue.add(new Add_currency_Model(R.drawable.bitcoin_image, "Four", "Thirteen"));
-//        datavalue.add(new Add_currency_Model(R.drawable.bitcoin_image, "One", "Ten"));
-//        datavalue.add(new Add_currency_Model(R.drawable.bitcoin_image, "One", "Ten"));
-//        datavalue.add(new Add_currency_Model(R.drawable.bitcoin_image, "One", "Ten"));
-//
-//   }
-//    private void setUpRecyclerView() {
-//        RecyclerView recyclerView = findViewById(R.id.recyclerView_add_currenecy);
-//        recyclerView.setHasFixedSize(true);
-//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-//        adapter = new Add_currency_Adapter(datavalue_model);
-//        recyclerView.setLayoutManager(layoutManager);
-//        recyclerView.setAdapter(adapter);
-//    }
+
 
     public void back(){
         imageView.setOnClickListener(new View.OnClickListener() {

@@ -110,6 +110,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         y_1.setOnClickListener(this);
 
 
+
         position = Updated_data.getInstans(getApplicationContext()).getUserId();
         price1 =Updated_data.getInstans(getApplicationContext()).getprice();
         symbol = Updated_data.getInstans(getApplicationContext()).getmobile();
@@ -124,6 +125,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         CurrencySymbols =sharedPreferences.getString("Currency_Symbols","$");
         coinId = Updated_data.getInstans(getApplicationContext()).getCoinId();
          currency2 =sharedPreferences.getString("currency1","usd");
+
 
 
         //   Log.d("price",getString(price1));
@@ -236,6 +238,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                 y_1.setBackgroundColor(getResources().getColor(R.color.white));
                 getGraphData(coinId,currency2,"180","daily");
 
+
                 break;
 
             case R.id.y_1:
@@ -245,7 +248,9 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                 m_3.setBackgroundColor(getResources().getColor(R.color.white));
                 m_6.setBackgroundColor(getResources().getColor(R.color.white));
                 y_1.setBackgroundColor(getResources().getColor(R.color.purple_500));
+
                 getGraphData(coinId,currency2,"365","daily");
+
                 break;
 
 
@@ -383,7 +388,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 String s =null;
                 if (response.code()==200){
-                    ArrayList<Entry> yvalue=new ArrayList<>();
+                    ArrayList<Entry> yvalue = new ArrayList<>();
                     yvalue.clear();
                     try {
                         s=response.body().string();
@@ -458,6 +463,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                     set1.setMode(LineDataSet.Mode.LINEAR);
                     set1.setLineWidth(2f);
                     set1.setColor(Color.WHITE);
+                    set1.setDrawValues(!set1.isDrawValuesEnabled());
                     set1.setDrawFilled(true);
                     set1.setDrawCircles(false);
                     chart.setBackgroundColor(getResources().getColor(R.color.purple_500));
@@ -582,6 +588,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                     set1.setMode(LineDataSet.Mode.LINEAR);
                     set1.setLineWidth(2f);
                     set1.setColor(Color.WHITE);
+                    set1.setDrawValues(!set1.isDrawValuesEnabled());
                     set1.setDrawFilled(true);
                     set1.setDrawCircles(false);
                     chart.setBackgroundColor(getResources().getColor(R.color.purple_500));

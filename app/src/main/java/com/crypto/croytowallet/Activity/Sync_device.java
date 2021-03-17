@@ -306,63 +306,6 @@ public class Sync_device extends AppCompatActivity implements HistoryClickLister
         });
     }
 
-    public void checkBalance(){
-        UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
-        String id=user.getId();
-        String url1= URLs.URL_AIRDROP_BALANCE+""+id;
-
-
-        StringRequest stringRequest =new StringRequest(Request.Method.GET, url1, new Response.Listener<String>() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onResponse(String response) {
-
-                try {
-                    JSONObject object=new JSONObject(response);
-                    int   checkBalance=object.getInt("airDrop");
-
-
-
-                    balances.setText(checkBalance+".00");
-                    Double balance = checkBalance*0.09;
-                    DecimalFormat df = new DecimalFormat();
-                    df.setMaximumFractionDigits(2);
-                    textView1.setText(CurrencySymbols+df.format(balance));
-
-                   // textView1.setText(CurrencySymbols+balance);
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                /* params.put("_id", id);*/
-
-                return params;
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<String, String>();
-
-                // headers.put("Authorization", "Bearer "+Token);
-
-                return headers;
-            }
-        };
-
-        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
-
-    }
 
     private void showpDialog() {
         if (!progressDialog.isShowing())
@@ -378,9 +321,6 @@ public class Sync_device extends AppCompatActivity implements HistoryClickLister
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-       /* Intent intent = new Intent(Sync_device.this, Setting.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);*/
 
         onSaveInstanceState(new Bundle());
     }

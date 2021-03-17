@@ -277,5 +277,9 @@ public interface Api {
             @Query("days") String days,
             @Query("interval") String interval
     );
+    @GET("notification/user/allNotification")
+    Call<ResponseBody> getNotification(
+            @Header("Authorization") String Authorization
 
+    );
 }

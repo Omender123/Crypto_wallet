@@ -54,6 +54,7 @@ public class SelectCurrency extends AppCompatActivity implements HistoryClickLis
     EditText search_input;
 
     CharSequence search = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,8 +62,8 @@ public class SelectCurrency extends AppCompatActivity implements HistoryClickLis
         imageView = findViewById(R.id.back);
         search_input = findViewById(R.id.search_currency);
         recyclerView = findViewById(R.id.recyclerCurrency);
-        currencyModels =new ArrayList<CurrencyModel>();
-        sharedPreferences=getSharedPreferences("currency", Context.MODE_PRIVATE);
+        currencyModels = new ArrayList<CurrencyModel>();
+        sharedPreferences = getSharedPreferences("currency", Context.MODE_PRIVATE);
 
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
         back();
@@ -70,8 +71,8 @@ public class SelectCurrency extends AppCompatActivity implements HistoryClickLis
     }
 
 
-    public void getCurrency(){
-        String token=userData.getToken();
+    public void getCurrency() {
+        String token = userData.getToken();
 
         progressDialog = KProgressHUD.create(SelectCurrency.this)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
@@ -83,22 +84,22 @@ public class SelectCurrency extends AppCompatActivity implements HistoryClickLis
 
         showpDialog();
 
-        StringRequest stringRequest=new StringRequest(Request.Method.GET, URLs.URL_GET_CURRENCY, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_GET_CURRENCY, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 hidepDialog();
 
                 try {
-                    JSONObject object =new JSONObject(response);
+                    JSONObject object = new JSONObject(response);
                     String result = object.getString("currency");
                     JSONArray jsonArray = new JSONArray(result);
 
-                    for (int i=0;i<=jsonArray.length();i++){
-                        CurrencyModel currencyModel1 =new CurrencyModel();
-                        JSONObject object1=jsonArray.getJSONObject(i);
-                        String countryName=object1.getString("countryName");
-                        String currency=object1.getString("currency");
-                        String symbols=object1.getString("symbol");
+                    for (int i = 0; i <= jsonArray.length(); i++) {
+                        CurrencyModel currencyModel1 = new CurrencyModel();
+                        JSONObject object1 = jsonArray.getJSONObject(i);
+                        String countryName = object1.getString("countryName");
+                        String currency = object1.getString("currency");
+                        String symbols = object1.getString("symbol");
 
                         currencyModel1.setCountryName(countryName);
                         currencyModel1.setCurrency(currency);
@@ -106,54 +107,49 @@ public class SelectCurrency extends AppCompatActivity implements HistoryClickLis
 
                         currencyModels.add(currencyModel1);
 
-                    //    Toast.makeText(SelectCurrency.this, ""+countryName+currency+symbols, Toast.LENGTH_SHORT).show();
+                        //    Toast.makeText(SelectCurrency.this, ""+countryName+currency+symbols, Toast.LENGTH_SHORT).show();
 
                     }
 
-/*
 
-                    */
-/*------------------Searching Filter---------------------
-                     *//*
-
-                    search_input.addTextChangedListener(new TextWatcher() {
-                        @Override
-                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                        }
-
-                        @Override
-                        public void onTextChanged(CharSequence s, int start, int before, int count) {
-                            SelectCurrencyAdapter.getFilter().filter(s);
-                            search = s;
-                        }
-
-                        @Override
-                        public void afterTextChanged(Editable s) {
-
-                        }
-                    });
-*/
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                selectCurrencyAdapter = new SelectCurrencyAdapter(currencyModels,getApplicationContext(),SelectCurrency.this);
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL,false);
+                selectCurrencyAdapter = new SelectCurrencyAdapter(currencyModels, getApplicationContext(), SelectCurrency.this);
+                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
                 recyclerView.setLayoutManager(mLayoutManager);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
                 recyclerView.setAdapter(selectCurrencyAdapter);
 
+                search_input.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                //  Toast.makeText(getApplicationContext(), ""+response, Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        selectCurrencyAdapter.getFilter().filter(s);
+                        search = s;
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+
+
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 hidepDialog();
-               // Toast.makeText(getApplicationContext(), ""+error.toString(), Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getApplicationContext(), ""+error.toString(), Toast.LENGTH_SHORT).show();
             }
-        }){
+        }) {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -170,8 +166,6 @@ public class SelectCurrency extends AppCompatActivity implements HistoryClickLis
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
 
     }
-
-
 
 
     private void showpDialog() {
@@ -199,7 +193,7 @@ public class SelectCurrency extends AppCompatActivity implements HistoryClickLis
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SelectCurrency.this, Setting.class);
-               intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });
@@ -213,9 +207,9 @@ public class SelectCurrency extends AppCompatActivity implements HistoryClickLis
         String currency = currencyModels.get(position).getCurrency();
         String symbols = currencyModels.get(position).getSymbols();
 
-        SharedPreferences.Editor editor=sharedPreferences.edit();
-        editor.putString("currency1",currency);
-        editor.putString("Currency_Symbols",symbols);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("currency1", currency);
+        editor.putString("Currency_Symbols", symbols);
         editor.commit();
 
     }
