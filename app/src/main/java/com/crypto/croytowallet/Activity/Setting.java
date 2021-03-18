@@ -34,7 +34,7 @@ import de.mateware.snacky.Snacky;
 
 public class Setting extends AppCompatActivity implements View.OnClickListener {
     ImageView imageView;
-    CardView Scan_devices,restore_wallet,notification,sound,currency,language;
+    CardView Scan_devices,restore_wallet,notification,sound,currency;
     SharedPreferences sharedPreferences;
 
     TextView currencyType;
@@ -61,8 +61,6 @@ public class Setting extends AppCompatActivity implements View.OnClickListener {
         String currency2 =sharedPreferences.getString("currency1","usd");
 
         currencyType.setText(currency2);
-       // Toast.makeText(this, ""+currency, Toast.LENGTH_SHORT).show();
-
         back();
     }
     @Override
@@ -84,12 +82,8 @@ public class Setting extends AppCompatActivity implements View.OnClickListener {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* Intent intent = new Intent(Setting.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);*/
-
                 onBackPressed();
-               // onSaveInstanceState(new Bundle());
+
             }
         });
 
@@ -103,7 +97,13 @@ public class Setting extends AppCompatActivity implements View.OnClickListener {
                 startActivity(new Intent(getApplicationContext(),Sync_device.class));
                 break;
             case R.id.restore_wallet:
-
+                Snacky.builder()
+                        .setActivity(Setting.this)
+                        .setText("Coming Up Features")
+                        .setTextColor(getResources().getColor(R.color.white))
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .success()
+                        .show();
                 break;
             case R.id.notification:
                 startActivity(new Intent(getApplicationContext(),Notification.class));

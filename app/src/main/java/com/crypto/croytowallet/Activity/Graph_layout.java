@@ -268,38 +268,17 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
 
         String token = userData.getToken();
        String  symbols = Updated_data.getInstans(getApplicationContext()).getmobile();
-        progressDialog = KProgressHUD.create(Graph_layout.this)
-                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                .setLabel("Please wait.....")
-                .setCancellable(false)
-                .setAnimationSpeed(2)
-                .setDimAmount(0.5f)
-                .show();
-
-        showpDialog();
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().Balance(token,symbols);
+          Call<ResponseBody> call = RetrofitClient.getInstance().getApi().Balance(token,symbols);
 
         call.enqueue(new Callback<ResponseBody>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 String s =null;
-              hidepDialog();
 
                 if (response.code()==200){
                     try {
                         s=response.body().string();
-/*
-                        JSONObject jsonObject = new JSONObject(s);
-                        balance1 = jsonObject.getInt("balance");
-
-                        String bal =jsonObject.getString("balance");
-                        Toast.makeText(Graph_layout.this, ""+bal, Toast.LENGTH_SHORT).show();
-                      //  int price2 = Integer.parseInt(price1);
-                        Double balance2 = Double.valueOf(balance1*price1);
-
-                     //   balance.setText(CurrencySymbols+balance2);
-                       coinprice.setText(""+bal);*/
 
                         JSONObject jsonObject = new JSONObject(s);
                         balance1 = jsonObject.getString("balance");
@@ -379,6 +358,15 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
     }
 
     public void getGraph() {
+        progressDialog = KProgressHUD.create(Graph_layout.this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Please wait.....")
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
+
+        showpDialog();
 
 
         Call<ResponseBody>call = RetrofitGraph.getInstance().getApi().getGraphData(coinId,currency2,"1");
@@ -387,6 +375,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 String s =null;
+                hidepDialog();
                 if (response.code()==200){
                     ArrayList<Entry> yvalue = new ArrayList<>();
                     yvalue.clear();
@@ -426,7 +415,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                     // Set the marker to the chart
                     mv.setChartView(chart);
                     chart.setMarker(mv);
-                    chart.animateXY(1000,1000);
+                    chart.animateXY(3000,1000);
                     chart.getXAxis().setDrawGridLines(false);
                     chart.getAxisLeft().setDrawGridLinesBehindData(false);
                     chart.getAxisLeft().setDrawGridLines(false);
@@ -494,6 +483,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                hidepDialog();
                 Snacky.builder()
                         .setActivity(Graph_layout.this)
                         .setText("Internet Problem ")
@@ -506,12 +496,25 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
     }
 
     public void getGraphData(String id,String currency,String days,String interval){
+
+        progressDialog = KProgressHUD.create(Graph_layout.this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Please wait.....")
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
+
+        showpDialog();
+
+
         Call<ResponseBody>call = RetrofitGraph.getInstance().getApi().getGraphData1(id,currency,days,interval);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 String s =null;
+                hidepDialog();
                 if (response.code()==200){
                     ArrayList<Entry> yvalue=new ArrayList<>();
                     yvalue.clear();
@@ -551,7 +554,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                     // Set the marker to the chart
                     mv.setChartView(chart);
                     chart.setMarker(mv);
-                    chart.animateXY(1000,1000);
+                    chart.animateXY(3000,1000);
                     chart.getXAxis().setDrawGridLines(false);
                     chart.getAxisLeft().setDrawGridLinesBehindData(false);
                     chart.getAxisLeft().setDrawGridLines(false);
@@ -619,6 +622,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                hidepDialog();
                 Snacky.builder()
                         .setActivity(Graph_layout.this)
                         .setText("Internet Problem ")

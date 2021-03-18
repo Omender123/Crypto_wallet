@@ -184,19 +184,20 @@
 
             <LinearLayout
                 android:id="@+id/label_chart"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
                 android:layout_below="@id/cubiclinechart"
-                android:background="#FFFFFF">
-
+                android:background="#FFFFFF"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
                 <LinearLayout
                     android:id="@+id/label_chartB"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
                     android:layout_below="@id/chart"
                     android:background="#FFFFFF"
-                    android:gravity="center"
+                    android:layout_width="match_parent"
                     android:orientation="horizontal"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
                     android:weightSum="6">
 
                     <LinearLayout
@@ -204,98 +205,94 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:id="@+id/h_24"
                         android:orientation="vertical">
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="24H"
                             android:textColor="#000"
-                            android:textStyle="bold" />
+                            android:layout_gravity="center"
+                            android:textStyle="bold"
+                            android:text="24H"/>
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:id="@+id/d_7"
                         android:gravity="center"
                         android:orientation="vertical">
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="7D"
                             android:textColor="#000"
-                            android:textStyle="bold" />
+                            android:layout_gravity="center"
+                            android:textStyle="bold"
+                            android:text="7D"/>
                     </LinearLayout>
-
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:id="@+id/m_1"
                         android:gravity="center"
                         android:orientation="vertical">
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="1M"
                             android:textColor="#000"
-                            android:textStyle="bold" />
+                            android:layout_gravity="center"
+                            android:textStyle="bold"
+                            android:text="1M"/>
                     </LinearLayout>
-
                     <LinearLayout
 
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:id="@+id/m_3"
                         android:orientation="vertical">
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="3M"
                             android:textColor="#000"
-                            android:textStyle="bold" />
+                            android:layout_gravity="center"
+                            android:textStyle="bold"
+                            android:text="3M"/>
                     </LinearLayout>
-
                     <LinearLayout
 
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:id="@+id/m_6"
                         android:orientation="vertical">
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="6M"
                             android:textColor="#000"
-                            android:textStyle="bold" />
+                            android:layout_gravity="center"
+                            android:textStyle="bold"
+                            android:text="6M"/>
                     </LinearLayout>
-
                     <LinearLayout
 
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:id="@+id/y_1"
                         android:orientation="vertical">
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="1Y"
                             android:textColor="#000"
-                            android:textStyle="bold" />
+                            android:layout_gravity="center"
+                            android:textStyle="bold"
+                            android:text="1Y"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

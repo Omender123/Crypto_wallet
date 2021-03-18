@@ -280,6 +280,19 @@ public interface Api {
     @GET("notification/user/allNotification")
     Call<ResponseBody> getNotification(
             @Header("Authorization") String Authorization
+    );
 
+    @GET("histohour")
+    Call<ResponseBody>ImtGraph1d(
+            @Query("fsym") String coinName,
+            @Query("tsym") String currency,
+             @Query("limit") int hour
+            );
+
+    @GET("histoday")
+    Call<ResponseBody>ImtGraphall(
+            @Query("fsym") String coinName,
+            @Query("tsym") String currency,
+            @Query("limit") int days
     );
 }

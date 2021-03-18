@@ -179,5 +179,7 @@ public class Notification extends AppCompatActivity implements HistoryClickListe
         NotificationSharedPreference.getInstance(getApplicationContext()).AddNotificationData(noticationModel);
 
         startActivity(new Intent(getApplicationContext(), Full_Notification.class));
+
+
     }
 }

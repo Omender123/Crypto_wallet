@@ -467,15 +467,15 @@ public class SignUp extends AppCompatActivity {
     }
 
     public void signup_login(View view) {
-        Intent intent = new Intent(getApplicationContext(), Login.class);
+       /* Intent intent = new Intent(getApplicationContext(), Login.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-
+*/
     }
 
     public void signup_signup(View view) {
-        Intent intent = new Intent(getApplicationContext(), Referral_code.class);
+      /*  Intent intent = new Intent(getApplicationContext(), Referral_code.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        startActivity(intent);*/
     }
 }
