@@ -121,6 +121,16 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 sendData = coinId[position];
+
+                if(sendData.equals(receviedData)){
+                    Snacky.builder()
+                            .setActivity(imtSwap.this)
+                            .setText("You can't select the same currency for Swap ")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+                }
                 //  Toast.makeText(view.getContext(), sendData,Toast.LENGTH_SHORT).show();
 
             }
@@ -138,6 +148,15 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 receviedData = coinId1[position];
+                if(sendData.equals(receviedData)){
+                    Snacky.builder()
+                            .setActivity(imtSwap.this)
+                            .setText("You can't select the same currency for Swap ")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+                }
                 // Toast.makeText(view.getContext(), receviedData,Toast.LENGTH_SHORT).show();
 
             }

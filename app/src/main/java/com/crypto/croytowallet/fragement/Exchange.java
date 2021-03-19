@@ -119,7 +119,16 @@ public class Exchange extends Fragment implements View.OnClickListener {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 sendData = coinId[position];
-                //  Toast.makeText(view.getContext(), sendData,Toast.LENGTH_SHORT).show();
+
+                  if(sendData.equals(receviedData)){
+                    Snacky.builder()
+                            .setActivity(getActivity())
+                            .setText("You can't select the same currency for Swap ")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+                }
 
             }
 
@@ -138,6 +147,15 @@ public class Exchange extends Fragment implements View.OnClickListener {
                 receviedData = coinId1[position];
                 // Toast.makeText(view.getContext(), receviedData,Toast.LENGTH_SHORT).show();
 
+                if(sendData.equals(receviedData)){
+                    Snacky.builder()
+                            .setActivity(getActivity())
+                            .setText("You can't select the same currency for Swap ")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+                }
             }
 
             @Override

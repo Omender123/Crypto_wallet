@@ -19,6 +19,8 @@
         android:textColor="@android:color/white"
         android:ellipsize="end"
         android:singleLine="true"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

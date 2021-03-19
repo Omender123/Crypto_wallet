@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.crypto.croytowallet.Activity.Graph_layout;
 import com.crypto.croytowallet.Activity.MyMarkerView;
+import com.crypto.croytowallet.Activity.MyMarkerView1;
 import com.crypto.croytowallet.CoinTransfer.CoinScan;
 import com.crypto.croytowallet.CoinTransfer.Received_Coin;
 import com.crypto.croytowallet.MainActivity;
@@ -385,7 +386,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                     chart.setScaleEnabled(true);
                     chart.setPinchZoom(true);
                     /* create marker to display box when values are selected */
-                    MyMarkerView mv = new MyMarkerView(ImtSmartGraphLayout.this, R.layout.custom_marker_view);
+                    MyMarkerView1 mv = new MyMarkerView1(ImtSmartGraphLayout.this, R.layout.custom_marker_view);
 
                     // Set the marker to the chart
                     mv.setChartView(chart);
@@ -512,7 +513,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                     chart.setScaleEnabled(true);
                     chart.setPinchZoom(true);
                     /* create marker to display box when values are selected */
-                    MyMarkerView mv = new MyMarkerView(ImtSmartGraphLayout.this, R.layout.custom_marker_view);
+                    MyMarkerView1 mv = new MyMarkerView1(ImtSmartGraphLayout.this, R.layout.custom_marker_view);
 
                     // Set the marker to the chart
                     mv.setChartView(chart);

@@ -68,7 +68,7 @@
                     android:background="@drawable/verifying_textview"
                     android:drawableTint="@android:color/darker_gray"
                     android:ems="10"
-                    android:inputType="text" />
+                    android:inputType="numberDecimal" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.cardview.widget.CardView
