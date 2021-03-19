@@ -66,13 +66,15 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
     TextView swapBtn, txt_low, txt_average, txt_high, gwei_low, gwei_average, gwei_high, min_low, min_average, min_high, min_rate, half_rate, max_rate;
     LinearLayout lyt_low, lyt_average, lyt_high;
     EditText enter_Swap_Amount;
-    String[] coinName = {"ImSmart", "Airdrop","Bitcoin","Ethereum","Tether","XRP","Litcoin","USD Coin"};
-    String[] coinSymbols = {"imt", "airdrop","btc","eth","usdt","xrp","ltc","usdc"};
-    int[] coinImage = {R.mipmap.imt, R.mipmap.airdrop,R.mipmap.bitcoin_image,R.mipmap.group_blue,R.mipmap.usdt,R.mipmap.xrp,R.mipmap.ltc,R.mipmap.usdc};
+    String[] coinName = {"ImSmart", "Bitcoin","Ethereum","Tether","XRP","Litcoin","USD Coin"};
+    String[] coinSymbols = {"IMT", "BTC","ETH","USDT","XRP","LTC","USDC"};
+    String[] coinId = {"imt", "btc","eth","usdt","xrp","ltc","usdc"};
+    int[] coinImage = {R.mipmap.imt,R.mipmap.bitcoin_image,R.mipmap.group_blue,R.mipmap.usdt,R.mipmap.xrp,R.mipmap.ltc,R.mipmap.usdc};
 
-    String[] coinName1 = {"Airdrop", "ImSmart"};
-    String[] coinSymbols1 = {"airdrop", "imt"};
-    int[] coinImage1 = {R.mipmap.airdrop, R.mipmap.imt};
+    String[] coinName1 = {"ImSmart Utility", "ImSmart"};
+    String[] coinSymbols1 = {"IMT-U","IMT"};
+    String[] coinId1 = {"airdrop","imt"};
+    int[] coinImage1 = {R.mipmap.imt, R.mipmap.imt};
     int value;
     SeekBar seekBar;
     KProgressHUD progressDialog;
@@ -113,12 +115,12 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
         lyt_high.setOnClickListener(this);
 
 
-        CustomSpinnerAdapter customAdapter = new CustomSpinnerAdapter(getApplicationContext(), coinImage, coinName, coinSymbols);
+        CustomSpinnerAdapter customAdapter = new CustomSpinnerAdapter(getApplicationContext(), coinImage, coinName, coinSymbols,coinId);
         sendSpinner.setAdapter(customAdapter);
         sendSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                sendData = coinSymbols[position];
+                sendData = coinId[position];
                 //  Toast.makeText(view.getContext(), sendData,Toast.LENGTH_SHORT).show();
 
             }
@@ -129,13 +131,13 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
             }
         });
 
-        CustomSpinnerAdapter customAdapter1 = new CustomSpinnerAdapter(getApplicationContext(), coinImage1, coinName1, coinSymbols1);
+        CustomSpinnerAdapter customAdapter1 = new CustomSpinnerAdapter(getApplicationContext(), coinImage1, coinName1, coinSymbols1,coinId1);
 
         reciveSpinner.setAdapter(customAdapter1);
         reciveSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                receviedData = coinSymbols1[position];
+                receviedData = coinId1[position];
                 // Toast.makeText(view.getContext(), receviedData,Toast.LENGTH_SHORT).show();
 
             }
@@ -165,8 +167,7 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
                 } else {
 
                     SwapApi();
-                    //Log.d("datat",sendData+receviedData+String.valueOf(value)+SwapAmount);
-                }
+                   }
             }
         });
 
@@ -219,10 +220,11 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
 
         showpDialog();
 
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().IMT_SWAP(Token, sendData, receviedData, value, SwapAmount, "", eth_Address);
+
+       Call<ResponseBody> call = RetrofitClient.getInstance().getApi().IMT_SWAP(Token, sendData, receviedData, value, SwapAmount, "", eth_Address);
 
 
-        call.enqueue(new Callback<ResponseBody>() {
+         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 String s = null;
@@ -296,9 +298,9 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
                         .setDuration(Snacky.LENGTH_SHORT)
                         .setActionText(android.R.string.ok)
                         .error()
-                        .show();*/
+                        .show();
 
-              /*  startActivity(new Intent(getApplicationContext(), ImtSmartGraphLayout.class));
+              startActivity(new Intent(getApplicationContext(), ImtSmartGraphLayout.class));
                 Toast.makeText(imtSwap.this, "Your Amount is Not detected ", Toast.LENGTH_SHORT).show();*/
 
                 AppUtils.showMessageOKCancel("Your transaction is in process. Kindly check again for the confirmation.", imtSwap.this, new DialogInterface.OnClickListener() {
@@ -312,7 +314,6 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
 
             }
         });
-
 
     }
 

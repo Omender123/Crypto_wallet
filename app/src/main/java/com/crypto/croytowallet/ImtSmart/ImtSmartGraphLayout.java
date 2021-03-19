@@ -195,17 +195,8 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                 m_3.setBackgroundColor(getResources().getColor(R.color.purple_500));
                 m_6.setBackgroundColor(getResources().getColor(R.color.white));
                 y_1.setBackgroundColor(getResources().getColor(R.color.white));
-              //  GetImtGraphAll("imt",currency2,90);
-                yvalue.clear();
-                chart.invalidate();
-                Snacky.builder()
-                        .setActivity(ImtSmartGraphLayout.this)
-                        .setText("Coming soon!!!!!!!!!!!!!")
-                        .setDuration(Snacky.LENGTH_SHORT)
-                        .setActionText(android.R.string.ok)
-                        .success()
-                        .show();
-                break;
+                GetImtGraphAll("imt",currency2,90);
+               break;
 
             case R.id.m_6:
                 h_24.setBackgroundColor(getResources().getColor(R.color.white));
@@ -215,16 +206,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                 m_6.setBackgroundColor(getResources().getColor(R.color.purple_500));
                 y_1.setBackgroundColor(getResources().getColor(R.color.white));
 
-              //  GetImtGraphAll("imt",currency2,180);
-                yvalue.clear();
-                chart.invalidate();
-                Snacky.builder()
-                        .setActivity(ImtSmartGraphLayout.this)
-                        .setText("Coming soon!!!!!!!!!!!!!")
-                        .setDuration(Snacky.LENGTH_SHORT)
-                        .setActionText(android.R.string.ok)
-                        .success()
-                        .show();
+                GetImtGraphAll("imt",currency2,180);
                 break;
 
             case R.id.y_1:
@@ -235,17 +217,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                 m_6.setBackgroundColor(getResources().getColor(R.color.white));
                 y_1.setBackgroundColor(getResources().getColor(R.color.purple_500));
 
-              //  GetImtGraphAll("imt",currency2,365);
-                yvalue.clear();
-                chart.invalidate();
-                Snacky.builder()
-                        .setActivity(ImtSmartGraphLayout.this)
-                        .setText("Coming soon!!!!!!!!!!!!!")
-                        .setDuration(Snacky.LENGTH_SHORT)
-                        .setActionText(android.R.string.ok)
-                        .success()
-                        .show();
-
+               GetImtGraphAll("imt",currency2,365);
                 break;
 
         }

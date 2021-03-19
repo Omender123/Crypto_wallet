@@ -241,4 +241,6 @@
     <string name = "close_chat_text"> क्या आप चैट समाप्त करना चाहते हैं? </string>
     <string name = "confirm"> पुष्टि करें </string>
     <string name = "cancel"> रद्द करें </string>
+
+    <string name="imt_u">ImSmart Utility</string>
 </resources>

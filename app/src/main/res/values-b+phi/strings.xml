@@ -242,4 +242,6 @@
     <string name = "close_chat_text"> Nais mo bang wakasan ang chat? </string>
     <string name = "confirm"> Kumpirmahin </string>
     <string name = "cancel"> Kanselahin </string>
+
+    <string name="imt_u">ImSmart Utility</string>
 </resources>

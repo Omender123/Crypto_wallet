@@ -238,4 +238,6 @@
     <string name="close_chat_text">您要结束聊天吗？</string>
     <string name="confirm">确认</string>
     <string name="cancel">取消</string>
+
+    <string name="imt_u">ImSmart Utility</string>
 </resources>

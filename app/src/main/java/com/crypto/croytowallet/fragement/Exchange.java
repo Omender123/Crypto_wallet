@@ -56,12 +56,14 @@ public class Exchange extends Fragment implements View.OnClickListener {
     LinearLayout lyt_low, lyt_average, lyt_high;
     EditText enter_Swap_Amount;
     String[] coinName = {"ImSmart", "Bitcoin","Ethereum","Tether","XRP","Litcoin","USD Coin"};
-    String[] coinSymbols = {"imt", "btc","eth","usdt","xrp","ltc","usdc"};
+    String[] coinSymbols = {"IMT", "BTC","ETH","USDT","XRP","LTC","USDC"};
+    String[] coinId = {"imt", "btc","eth","usdt","xrp","ltc","usdc"};
     int[] coinImage = {R.mipmap.imt,R.mipmap.bitcoin_image,R.mipmap.group_blue,R.mipmap.usdt,R.mipmap.xrp,R.mipmap.ltc,R.mipmap.usdc};
 
-    String[] coinName1 = {"Airdrop","ImSmart"};
-    String[] coinSymbols1 = {"airdrop","imt"};
-    int[] coinImage1 = {R.mipmap.airdrop,R.mipmap.imt};
+    String[] coinName1 = {"ImSmart Utility","ImSmart"};
+    String[] coinSymbols1 = {"IMT-U","IMT"};
+    String[] coinId1 = {"airdrop","imt"};
+    int[] coinImage1 = {R.mipmap.imt,R.mipmap.imt};
     int value;
     SeekBar seekBar;
 
@@ -110,12 +112,13 @@ public class Exchange extends Fragment implements View.OnClickListener {
         lyt_high.setOnClickListener(this);
 
 
-        CustomSpinnerAdapter customAdapter = new CustomSpinnerAdapter(getContext(), coinImage, coinName, coinSymbols);
+        CustomSpinnerAdapter customAdapter = new CustomSpinnerAdapter(getContext(), coinImage, coinName, coinSymbols,coinId);
         sendSpinner.setAdapter(customAdapter);
         sendSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                sendData = coinSymbols[position];
+
+                sendData = coinId[position];
                 //  Toast.makeText(view.getContext(), sendData,Toast.LENGTH_SHORT).show();
 
             }
@@ -126,13 +129,13 @@ public class Exchange extends Fragment implements View.OnClickListener {
             }
         });
 
-        CustomSpinnerAdapter customAdapter1 = new CustomSpinnerAdapter(getContext(), coinImage1, coinName1, coinSymbols1);
+        CustomSpinnerAdapter customAdapter1 = new CustomSpinnerAdapter(getContext(), coinImage1, coinName1, coinSymbols1,coinId1);
 
         reciveSpinner.setAdapter(customAdapter1);
         reciveSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                receviedData = coinSymbols1[position];
+                receviedData = coinId1[position];
                 // Toast.makeText(view.getContext(), receviedData,Toast.LENGTH_SHORT).show();
 
             }
@@ -158,9 +161,8 @@ public class Exchange extends Fragment implements View.OnClickListener {
                             .show();
                 } else {
 
-                    SwapApi();
-                 // Log.d("datat",sendData+receviedData+String.valueOf(value)+SwapAmount);
-                }
+                   SwapApi();
+                     }
             }
         });
 
@@ -212,7 +214,10 @@ public class Exchange extends Fragment implements View.OnClickListener {
                 .setDimAmount(0.5f)
                 .show();
 
-        showpDialog();
+      showpDialog();
+
+
+
 
         Call<ResponseBody> call = RetrofitClient.getInstance().getApi().IMT_SWAP(Token, sendData, receviedData, value, SwapAmount, "", eth_Address);
 
@@ -291,11 +296,11 @@ public class Exchange extends Fragment implements View.OnClickListener {
                         .setDuration(Snacky.LENGTH_SHORT)
                         .setActionText(android.R.string.ok)
                         .error()
-                        .show();*/
+                        .show();
 
-              /*  startActivity(new Intent(getContext(), ImtSmartGraphLayout.class));
-                Toast.makeText(getContext(), "Your Amount is Not detected ", Toast.LENGTH_SHORT).show();*/
-
+                startActivity(new Intent(getContext(), ImtSmartGraphLayout.class));
+                Toast.makeText(getContext(), "Your Amount is Not detected ", Toast.LENGTH_SHORT).show();
+*/
                 AppUtils.showMessageOKCancel("Your transaction is in process. Kindly check again for the confirmation.", getActivity(), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

@@ -238,4 +238,6 @@
     <string name="close_chat_text">チャットを終了しますか？</string>
     <string name="confirm">確認</string>
     <string name="cancel">キャンセル</string>
+
+    <string name="imt_u">ImSmart Utility</string>
 </resources>

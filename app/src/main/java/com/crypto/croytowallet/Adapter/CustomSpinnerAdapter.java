@@ -18,14 +18,15 @@ public class CustomSpinnerAdapter   extends BaseAdapter {
     int coinImage[];
     String[] coinName;
     String[] coinSymbols;
-
+    String[] coinId;
     LayoutInflater inflter;
 
-    public CustomSpinnerAdapter(Context applicationContext, int[] coinImage, String[] coinName,String[] coinSymbols) {
+    public CustomSpinnerAdapter(Context applicationContext, int[] coinImage, String[] coinName,String[] coinSymbols, String[] coinId) {
         this.context = applicationContext;
         this.coinImage = coinImage;
         this.coinName = coinName;
         this.coinSymbols=coinSymbols;
+        this.coinId=coinId;
         inflter = (LayoutInflater.from(applicationContext));
     }
 

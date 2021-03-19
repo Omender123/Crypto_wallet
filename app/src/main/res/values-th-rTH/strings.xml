@@ -240,4 +240,6 @@
     <string name = "close_chat_text"> คุณต้องการยุติการแชทหรือไม่ </string>
     <string name = "confirm"> ยืนยัน </string>
     <string name = "cancel"> ยกเลิก </string>
+
+    <string name="imt_u">ImSmart Utility</string>
 </resources>
