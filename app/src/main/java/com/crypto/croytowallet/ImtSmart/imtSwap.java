@@ -164,10 +164,17 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
                             .setActionText(android.R.string.ok)
                             .error()
                             .show();
-                } else {
-
+                } else if(sendData.equals(receviedData)){
+                    Snacky.builder()
+                            .setActivity(imtSwap.this)
+                            .setText("You can't select the same currency for Swap ")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+                }else{
                     SwapApi();
-                   }
+                }
             }
         });
 

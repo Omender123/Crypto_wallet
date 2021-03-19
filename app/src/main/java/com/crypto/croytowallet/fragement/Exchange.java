@@ -159,10 +159,17 @@ public class Exchange extends Fragment implements View.OnClickListener {
                             .setActionText(android.R.string.ok)
                             .error()
                             .show();
-                } else {
-
-                   SwapApi();
-                     }
+                } else if(sendData.equals(receviedData)){
+                    Snacky.builder()
+                            .setActivity(getActivity())
+                            .setText("You can't select the same currency for Swap ")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+                     }else{
+                    SwapApi();
+                }
             }
         });
 
