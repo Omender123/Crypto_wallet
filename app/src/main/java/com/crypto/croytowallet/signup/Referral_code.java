@@ -22,6 +22,7 @@ public class Referral_code extends AppCompatActivity {
     ConstraintLayout relativeLayout;
     Animation fade_in;
     EditText enterReferral_code;
+    String getreferralCode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,12 +39,8 @@ public class Referral_code extends AppCompatActivity {
         referral_ready.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String getreferralCode = enterReferral_code.getText().toString().trim();
-               /* if (getreferralCode.isEmpty()) {
-                    enterReferral_code.setError("please enter refercode");
-                    enterReferral_code.requestFocus();
-                } else {*/
-                    Intent intent = new Intent(getApplicationContext(), SignUp.class);
+                 getreferralCode = enterReferral_code.getText().toString().trim();
+                   Intent intent = new Intent(getApplicationContext(), SignUp.class);
                     intent.putExtra("referral_code", getreferralCode);
                     startActivity(intent);
                 }
@@ -62,6 +59,12 @@ public class Referral_code extends AppCompatActivity {
     public void referral_login(View view) {
         Intent intent = new Intent(getApplicationContext(), Login.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    public void dont_Referral(View view) {
+        Intent intent = new Intent(getApplicationContext(), SignUp.class);
+        intent.putExtra("referral_code", getreferralCode);
         startActivity(intent);
     }
 }

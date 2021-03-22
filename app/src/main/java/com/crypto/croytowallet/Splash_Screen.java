@@ -38,7 +38,6 @@ public class Splash_Screen extends AppCompatActivity {
         imageView=findViewById(R.id.image_view);
         left=findViewById(R.id.left_image);
         right=findViewById(R.id.right_image);
-
         Animation animation_left = AnimationUtils.loadAnimation(this,R.anim.slide_in_left);
         left.setAnimation(animation_left);
         Animation animation_right = AnimationUtils.loadAnimation(this,R.anim.slide_in_right);

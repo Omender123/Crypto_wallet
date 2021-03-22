@@ -268,7 +268,7 @@ public class SignUp extends AppCompatActivity {
 
     private void saveToServerDB(View parentView) {
 
-        progressDialog=  KProgressHUD.create(SignUp.this)
+        progressDialog = KProgressHUD.create(SignUp.this)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel("Please wait.....")
                 .setCancellable(false)
@@ -286,39 +286,39 @@ public class SignUp extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         String refercode = bundle.getString("referral_code");
 
-        Log.d("referral_Code",refercode);
+        Log.d("referral_Code", refercode);
 
-        String number = codeName+mobile;
-        Call<ResponseBody> call= RetrofitClient
+        String number = codeName + mobile;
+        Call<ResponseBody> call = RetrofitClient
                 .getInstance()
-                .getApi().register(name,email,username,password,refercode,number);
+                .getApi().register(name, email, username, password, refercode, number);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                String s=null;
+                String s = null;
                 hidepDialog();
 
-                if (response.code()==200) {
+                if (response.code() == 200) {
 
                     try {
-                        s=response.body().string();
-                        JSONObject object=new JSONObject(s);
-                        String result=object.getString("result");
-                        JSONObject object1=new JSONObject(result);
+                        s = response.body().string();
+                        JSONObject object = new JSONObject(s);
+                        String result = object.getString("result");
+                        JSONObject object1 = new JSONObject(result);
 
-                        String googlekey =object1.getString("googleAuthenticatorKey");
+                        String googlekey = object1.getString("googleAuthenticatorKey");
 
                         JSONObject object2 = new JSONObject(googlekey);
-                    SignUpData user = new SignUpData(
+                        SignUpData user = new SignUpData(
                                 object1.getString("username"),
                                 object1.getString("mnemonic"),
-                                 object2.getString("key")
+                                object2.getString("key")
                         );
 
                         //storing the user in shared preferences
                         SignUpRefernace.getInstance(getApplicationContext()).UserSignUP(user);
 
-                        Intent intent = new Intent(getApplicationContext(),TransactionPin.class);
+                        Intent intent = new Intent(getApplicationContext(), TransactionPin.class);
                         startActivity(intent);
 
                     } catch (IOException e) {
@@ -327,28 +327,26 @@ public class SignUp extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                }
-                else if (response.code()==400)
-                {
+                } else if (response.code() == 400) {
 
                     try {
 
-                        s=response.errorBody().string();
-                        JSONObject jsonObject1=new JSONObject(s);
-                        String error =jsonObject1.getString("error");
+                        s = response.errorBody().string();
+                        JSONObject jsonObject1 = new JSONObject(s);
+                        String error = jsonObject1.getString("error");
 
                         Snackbar snackbar = Snackbar
                                 .make(parentView, "Oops username or email address is already exist", Snackbar.LENGTH_LONG)
                                 .setAction("ok", new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        Snackbar snackbar1 = Snackbar.make(parentView, " "+error, Snackbar.LENGTH_SHORT);
+                                        Snackbar snackbar1 = Snackbar.make(parentView, " " + error, Snackbar.LENGTH_SHORT);
                                         snackbar1.show();
                                     }
                                 });
 
                         snackbar.show();
-                       // Toast.makeText(SignUp.this, jsonObject1.getString("error")+"", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(SignUp.this, jsonObject1.getString("error")+"", Toast.LENGTH_SHORT).show();
 
 
                     } catch (IOException | JSONException e) {
@@ -371,76 +369,8 @@ public class SignUp extends AppCompatActivity {
         });
 
 
-
-
-
-        //   Toast.makeText(SignUp.this,name+username+email+mobile+password+refercode, Toast.LENGTH_SHORT).show();
-
-       /* StringRequest stringRequest =new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                hidepDialog();
-                Toast.makeText(SignUp.this, ""+response, Toast.LENGTH_SHORT).show();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                hidepDialog();
-              parseVolleyError(error);
-
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("name",name);
-                params.put("email",email);
-                params.put("username",username);
-               *//* params.put("referalCode",refercode);
-               *//* params.put("phone",mobile);
-                params.put("password",password);
-
-            *//*    {
-                    "name":"devender singh",
-                        "email":"Deveder@gmail.com",
-                        "username":"dev123",
-                        "password":"12345678",
-                        "referalCode":"0rbvw8imgw",
-                        "countryCode":"+91",
-                        "phone":"7017760600",
-                        "country":"INDIA"
-
-                }*//*
-                return params;
-
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<String, String>();
-
-
-                return headers;
-            }
-        };
-
-        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        queue.add(stringRequest);*/
-
     }
-    /*
-    public void parseVolleyError(VolleyError error) {
-        try {
-            String responseBody = new String(error.networkResponse.data, "utf-8");
-            JSONObject data = new JSONObject(responseBody);
-
-            String message=data.getString("error");
-            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-        } catch (JSONException e) {
-        } catch (UnsupportedEncodingException errorr) {
-        }
-    }*/
-    private void showpDialog() {
+private void showpDialog() {
         if (!progressDialog.isShowing())
             progressDialog.show();
     }

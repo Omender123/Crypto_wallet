@@ -242,4 +242,7 @@
     <string name = "cancel"> ยกเลิก </string>
 
     <string name="imt_u">ImSmart Utility</string>
+
+    <string name="reff">ฉันไม่มีรหัสอ้างอิง</string>
+    <string name = "noconnection"> กรุณาเชื่อมต่อกับเครือข่าย WIFI หรือเปิดใช้งานข้อมูลมือถือ </string>
 </resources>

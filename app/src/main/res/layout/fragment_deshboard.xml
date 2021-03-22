@@ -17,10 +17,11 @@
         android:layout_width="match_parent"
         android:layout_height="220dp"
         android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
         android:layout_marginTop="20dp"
         android:orientation="vertical"
         android:gravity="center"
-        android:background="@mipmap/first">
+        android:background="@drawable/ic_back_des">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,10 +32,8 @@
             android:id="@+id/balance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="--.--"
             android:textSize="30dp"
             android:textColor="#242424"
-
             android:textStyle="bold"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"/>/>
 
@@ -42,7 +41,6 @@
             android:id="@+id/balance1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="$--.--"
             android:textSize="15dp"
             android:textColor="#242424"
             android:textStyle="bold"
@@ -303,7 +301,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/coinname"
                         android:textColor="@color/toolbar_text_color"
-                        android:maxLength="6"
+                        android:maxLength="7"
                         android:textSize="22dp"
                         android:textStyle="bold"
                         android:layout_marginTop="3dp"

@@ -240,4 +240,7 @@
     <string name="cancel">Cancel</string>
 
     <string name="imt_u">ImSmart Utility</string>
+
+    <string name="reff">I Don\'t Have Referral Code</string>
+    <string name="noconnection">Kindly connect to a WIFI network or enable Mobile Data</string>
 </resources>

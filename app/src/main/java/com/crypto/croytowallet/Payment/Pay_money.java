@@ -83,11 +83,15 @@ public class Pay_money extends AppCompatActivity {
                 if (amount.isEmpty()){
                     textView.setText("$ 0 ");
                 }else{
-                    Double a = Double.valueOf(s.toString());
-                    double result = a*0.09;
+                  try {
+                      Double a = Double.valueOf(s.toString());
+                      double result = a*0.09;
 
-                    textView.setText("$ " +result );
+                      textView.setText("$ " +result );
 
+                  }catch (Exception e){
+
+                  }
                 }
 
             }

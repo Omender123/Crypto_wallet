@@ -5,18 +5,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".Activity.Graph_layout"
-        android:background="#FFFFFF">
+        android:background="@color/background">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FFFFFF"
+    android:background="@color/background"
     android:paddingBottom="20dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFFFF"
+        android:background="@color/background"
         android:paddingBottom="20dp">
 
           <RelativeLayout
@@ -24,7 +24,7 @@
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:layout_alignParentStart="true"
-       android:background="@color/purple_500"
+       android:background="@color/graph"
        android:layout_alignParentEnd="true"
        android:layout_marginStart="0dp"
        android:layout_marginEnd="0dp"
@@ -126,7 +126,8 @@
            android:fontFamily="@font/montserrat"
 
            android:textAlignment="center"
-           android:textColor="#000"
+            android:textColor="@color/toolbar_text_color"
+                          
            android:textSize="15dp"
            android:textStyle="bold" />
 
@@ -186,13 +187,13 @@
   <LinearLayout
        android:id="@+id/label_chart"
        android:layout_below="@id/cubiclinechart"
-       android:background="#FFFFFF"
+       android:background="@color/background"
        android:layout_width="match_parent"
        android:layout_height="50dp">
        <LinearLayout
            android:id="@+id/label_chartB"
            android:layout_below="@id/chart"
-           android:background="#FFFFFF"
+           android:background="@color/background"
            android:layout_width="match_parent"
            android:orientation="horizontal"
            android:layout_height="40dp"
@@ -211,7 +212,7 @@
                <TextView
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:textColor="#000"
+                   android:textColor="@color/toolbar_text_color"
                    android:layout_gravity="center"
                    android:textStyle="bold"
                    android:text="24H"/>
@@ -227,7 +228,7 @@
                <TextView
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:textColor="#000"
+                    android:textColor="@color/toolbar_text_color"
                    android:layout_gravity="center"
                    android:textStyle="bold"
                    android:text="7D"/>
@@ -242,7 +243,8 @@
                <TextView
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:textColor="#000"
+                    android:textColor="@color/toolbar_text_color"
+                          
                    android:layout_gravity="center"
                    android:textStyle="bold"
                    android:text="1M"/>
@@ -258,7 +260,8 @@
                <TextView
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:textColor="#000"
+                    android:textColor="@color/toolbar_text_color"
+                          
                    android:layout_gravity="center"
                    android:textStyle="bold"
                    android:text="3M"/>
@@ -274,7 +277,8 @@
                <TextView
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:textColor="#000"
+                    android:textColor="@color/toolbar_text_color"
+                          
                    android:layout_gravity="center"
                    android:textStyle="bold"
                    android:text="6M"/>
@@ -290,7 +294,8 @@
                <TextView
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:textColor="#000"
+                    android:textColor="@color/toolbar_text_color"
+                          
                    android:layout_gravity="center"
                    android:textStyle="bold"
                    android:text="1Y"/>
@@ -301,7 +306,7 @@
        android:id="@+id/button_layout"
        android:layout_width="match_parent"
        android:layout_height="80dp"
-       android:background="@color/white"
+       android:background="@color/background"
        android:weightSum="2"
        android:layout_below="@id/label_chart"
        android:orientation="horizontal">
@@ -323,7 +328,8 @@
                android:gravity="center"
                android:text="@string/price"
                android:textAlignment="center"
-               android:textColor="#000"
+                android:textColor="@color/toolbar_text_color"
+                          
                android:textStyle="bold"
                app:layout_constraintStart_toStartOf="parent"
                app:layout_constraintTop_toBottomOf="@+id/cubiclinechart" />
@@ -349,7 +355,8 @@
                android:gravity="center"
                android:text="@string/balance"
                android:textAlignment="center"
-               android:textColor="#000"
+                android:textColor="@color/toolbar_text_color"
+                          
                android:textStyle="bold"
                app:layout_constraintStart_toStartOf="parent"
                app:layout_constraintTop_toBottomOf="@+id/cubiclinechart" />
@@ -362,7 +369,7 @@
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:orientation="vertical"
-       android:background="#EFEFEF"
+       android:background="@color/over"
        app:layout_constraintBottom_toBottomOf="parent"
        android:layout_below="@id/button_layout"
        app:layout_constraintVertical_bias="0.031"
@@ -389,7 +396,7 @@
        android:layout_height="wrap_content"
        android:layout_marginLeft="10dp"
        android:layout_marginRight="10dp"
-      app:cardBackgroundColor="#FFFFFF"
+      app:cardBackgroundColor="@color/card_background"
        android:layout_below="@id/overview"
        >
        <LinearLayout
@@ -403,7 +410,6 @@
            android:layout_gravity="center"
            android:orientation="horizontal">
            <LinearLayout
-
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:gravity="center"
@@ -414,12 +420,13 @@
                    android:id="@+id/price"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:background="#FFF"
+                   android:background="@color/card_background"
                    android:textSize="25dp"
                    android:fontFamily="@font/montserrat"
                    android:layout_marginTop="5dp"
                    android:maxLength="6"
-                   android:textColor="#000"
+                    android:textColor="@color/toolbar_text_color"
+                          
                    android:textStyle="bold"
                    />
                <TextView
@@ -429,7 +436,8 @@
                    android:layout_marginTop="-5dp"
                    android:textAlignment="center"
                    android:textStyle="normal"
-                   android:textColor="#000"
+                    android:textColor="@color/toolbar_text_color"
+                          
                    android:textSize="15dp"
                    />
            </LinearLayout>
@@ -452,13 +460,14 @@
                    android:id="@+id/balance"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:background="#FFF"
+                   android:background="@color/card_background"
 
                    android:textSize="25dp"
                    android:fontFamily="@font/montserrat"
                    android:layout_marginTop="5dp"
                    android:textAlignment="center"
-                   android:textColor="#000"
+                    android:textColor="@color/toolbar_text_color"
+                          
                    android:textStyle="bold"
                    />
                <TextView
@@ -468,7 +477,8 @@
                    android:text="@string/balance"
                    android:textAlignment="center"
                    android:textStyle="normal"
-                   android:textColor="#000"
+                    android:textColor="@color/toolbar_text_color"
+                          
                    android:textSize="15dp"
                    />
            </LinearLayout>

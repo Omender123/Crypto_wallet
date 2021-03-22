@@ -244,4 +244,7 @@
     <string name = "cancel"> Kanselahin </string>
 
     <string name="imt_u">ImSmart Utility</string>
+    <string name="reff">私は紹介コードを持っていません</string>
+
+    <string name = "noconnection"> Pinapayuhan na kumonekta sa isang WIFI network o paganahin ang Mobile Data </string>
 </resources>

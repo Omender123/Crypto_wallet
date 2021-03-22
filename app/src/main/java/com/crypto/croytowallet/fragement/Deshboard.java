@@ -220,7 +220,6 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
                 cryptoInfoRecyclerView.setLayoutManager(mLayoutManager);
                 cryptoInfoRecyclerView.setItemAnimator(new DefaultItemAnimator());
                 cryptoInfoRecyclerView.setAdapter(crypto_currencyInfo);
-                //  Toast.makeText(getContext(), ""+response.toString(), Toast.LENGTH_SHORT).show();
 
             }
 

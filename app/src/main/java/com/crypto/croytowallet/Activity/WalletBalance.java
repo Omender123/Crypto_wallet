@@ -118,6 +118,16 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
         UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
         String token = user.getToken();
 
+        progressDialog = KProgressHUD.create(WalletBalance.this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Loading.........")
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
+
+        showpDialog();
+
         String currency = currency2.toUpperCase();
         Call<ResponseBody> call = RetrofitClient.getInstance().getApi().AirDropBalance(token,"airdrop",currency);
 
@@ -127,7 +137,7 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
             public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
                 String s =null;
 
-
+                hidepDialog();
                 if (response.code()==200){
                     try {
                         s=response.body().string();
@@ -197,7 +207,7 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                hidepDialog();
                 Snacky.builder()
                         .setActivity(WalletBalance.this)
                         .setText("Internet Problem ")
@@ -209,59 +219,6 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
         });
     }
 
-
-    public void checkBalance(){
-        UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
-        String id=user.getId();
-
-        String url1= URLs.URL_AIRDROP_BALANCE+""+id;
-        progressDialog = KProgressHUD.create(WalletBalance.this)
-                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                .setLabel("Loading.........")
-                .setCancellable(false)
-                .setAnimationSpeed(2)
-                .setDimAmount(0.5f)
-                .show();
-
-        showpDialog();
-
-        StringRequest stringRequest =new StringRequest(Request.Method.GET, url1, new Response.Listener<String>() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onResponse(String response) {
-                hidepDialog();
-                //   Toast.makeText(getContext(), ""+response, Toast.LENGTH_SHORT).show();
-
-                try {
-                    JSONObject object=new JSONObject(response);
-                     int   checkBalance=object.getInt("airDrop");
-
-
-                    textView.setText(checkBalance+".00");
-
-                    Double balance = checkBalance*0.09;
-                    DecimalFormat df = new DecimalFormat();
-                    df.setMaximumFractionDigits(2);
-                    textView1.setText(CurrencySymbols+df.format(balance));
-
-                  //  textView1.setText(CurrencySymbols+balance);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                hidepDialog();
-
-               Toast.makeText(WalletBalance.this, ""+error.toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
-
-    }
 
     public  void getHistory(){
         UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();

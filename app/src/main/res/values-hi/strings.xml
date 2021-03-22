@@ -243,4 +243,7 @@
     <string name = "cancel"> रद्द करें </string>
 
     <string name="imt_u">ImSmart Utility</string>
+
+    <string name="reff">मैं रेफरल कोड नहीं है</string>
+    <string name="noconnection"> कृपया WIFI नेटवर्क से कनेक्ट करें या मोबाइल डेटा को सक्षम करें</string>
 </resources>

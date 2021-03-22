@@ -34,5 +34,10 @@
     <!--gradent color Header-->
     <color name="end_color">#F7CE2B</color>
     <color name="start_color">#F1BB0E</color>
+    <color name="over">#EFEFEF</color>
+    <color name="graph">#F1BB0E</color>
+    <color name="grey_light_secondary">#cccccc</color>
+    <color name="grey_light_tertiary">#eeeeee</color>
+
 
 </resources>

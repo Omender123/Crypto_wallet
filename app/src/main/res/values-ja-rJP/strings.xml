@@ -240,4 +240,8 @@
     <string name="cancel">キャンセル</string>
 
     <string name="imt_u">ImSmart Utility</string>
+
+    <string name="reff">私は紹介コードを持っていません</string>
+
+    <string name = "noconnection"> WIFIネットワークに接続するか、モバイルデータを有効にしてください</string>
 </resources>

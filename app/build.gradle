@@ -92,7 +92,7 @@ dependencies {
     implementation 'com.github.shts:StoriesProgressView:3.0.0'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
 
-    //implementation('com.github.nkzawa:socket.io-client:0.6.0') { exclude group: 'org.json', module: 'json' }
+    implementation 'com.geniusforapp.fancydialog:FancyDialog:0.1.4'
 
     implementation ('io.socket:socket.io-client:2.0.0') {
         exclude group: 'org.json', module: 'json'

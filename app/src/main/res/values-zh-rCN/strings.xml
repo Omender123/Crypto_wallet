@@ -240,4 +240,6 @@
     <string name="cancel">取消</string>
 
     <string name="imt_u">ImSmart Utility</string>
+    <string name="reff">我没有推荐代码</string>
+    <string name ="noconnection">请连接到WIFI网络或启用移动数据</string>
 </resources>

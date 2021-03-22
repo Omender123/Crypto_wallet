@@ -23,4 +23,10 @@
     <color name="red">#FF1100</color>
     <color name="stoke_color">#FFFFFF</color>
     <color name="layout_color">#363F61</color>
+    <color name="over">#1F2641</color>
+    <color name="graph">#1F2641</color>
+    <color name="grey_light_secondary">#cccccc</color>
+    <color name="grey_light_tertiary">#eeeeee</color>
+
+
 </resources>

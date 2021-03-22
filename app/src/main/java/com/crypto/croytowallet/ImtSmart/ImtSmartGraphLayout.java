@@ -53,31 +53,32 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnClickListener {
-    ImageView back,received,send;
-    TextView price,balances,coinprice,increaseRate,null1;
+    ImageView back, received, send;
+    TextView price, balances, coinprice, increaseRate, null1;
     KProgressHUD progressDialog;
     UserData userData;
     private LineChart chart;
     TextView swap;
-    String balance1,  price1;
-    SharedPreferences sharedPreferences1,sharedPreferences;
-    String currency2,CurrencySymbols;
-    LinearLayout h_24,d_7,m_1,m_3,m_6,y_1;
-    ArrayList<Entry> yvalue ;
+    String balance1, price1;
+    SharedPreferences sharedPreferences1, sharedPreferences;
+    String currency2, CurrencySymbols;
+    LinearLayout h_24, d_7, m_1, m_3, m_6, y_1;
+    ArrayList<Entry> yvalue;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_imt_smart_graph_layout);
-        chart =  findViewById(R.id.cubiclinechart);
-        swap =findViewById(R.id.swap_btc_btn);
-        back =findViewById(R.id.back);
-        received =findViewById(R.id.receive_coin);
+        chart = findViewById(R.id.cubiclinechart);
+        swap = findViewById(R.id.swap_btc_btn);
+        back = findViewById(R.id.back);
+        received = findViewById(R.id.receive_coin);
         price = findViewById(R.id.price);
-        balances =findViewById(R.id.balance);
-        coinprice= findViewById(R.id.coinPrice);
+        balances = findViewById(R.id.balance);
+        coinprice = findViewById(R.id.coinPrice);
 
-        increaseRate  =findViewById(R.id.increaseRate);
-         null1  = findViewById(R.id.null1);
+        increaseRate = findViewById(R.id.increaseRate);
+        null1 = findViewById(R.id.null1);
         h_24 = findViewById(R.id.h_24);
         d_7 = findViewById(R.id.d_7);
         m_1 = findViewById(R.id.m_1);
@@ -87,7 +88,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
 
         yvalue = new ArrayList<>();
 
-        send=findViewById(R.id.send_coin);
+        send = findViewById(R.id.send_coin);
         swap.setOnClickListener(this);
         back.setOnClickListener(this);
         received.setOnClickListener(this);
@@ -101,156 +102,155 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
         y_1.setOnClickListener(this);
 
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
-        sharedPreferences1=getSharedPreferences("imtInfo", Context.MODE_PRIVATE);
+        sharedPreferences1 = getSharedPreferences("imtInfo", Context.MODE_PRIVATE);
 
-        sharedPreferences =getApplicationContext().getSharedPreferences("currency",0);
-        currency2 =sharedPreferences.getString("currency1","usd");
-        CurrencySymbols =sharedPreferences.getString("Currency_Symbols","$");
-
-
+        sharedPreferences = getApplicationContext().getSharedPreferences("currency", 0);
+        currency2 = sharedPreferences.getString("currency1", "usd");
+        CurrencySymbols = sharedPreferences.getString("Currency_Symbols", "$");
 
 
-        price1 = sharedPreferences1.getString("price",null);
-        String increaseRate1 = sharedPreferences1.getString("chanage",null);
+        price1 = sharedPreferences1.getString("price", null);
+        String increaseRate1 = sharedPreferences1.getString("chanage", null);
         increaseRate.setText(increaseRate1);
-        price.setText("$"+price1);
+        price.setText("$" + price1);
 
         try {
-            increaseRate.setTextColor(increaseRate1.contains("-")?
-                getApplicationContext().getResources().getColor(R.color.red): getApplicationContext().getResources().getColor(R.color.green)  );
+            increaseRate.setTextColor(increaseRate1.contains("-") ?
+                    getApplicationContext().getResources().getColor(R.color.red) : getApplicationContext().getResources().getColor(R.color.green));
 
-        null1.setTextColor(increaseRate1.contains("-")?
-                getApplicationContext().getResources().getColor(R.color.red): getApplicationContext().getResources().getColor(R.color.green)  );
+            null1.setTextColor(increaseRate1.contains("-") ?
+                    getApplicationContext().getResources().getColor(R.color.red) : getApplicationContext().getResources().getColor(R.color.green));
 
-        if(increaseRate1.contains("-")){
-          increaseRate.setText(increaseRate1);
-        }else{
-            increaseRate.setText("+"+increaseRate1);
-        }
-        }catch (Exception e){
+            if (increaseRate1.contains("-")) {
+                increaseRate.setText(increaseRate1);
+            } else {
+                increaseRate.setText("+" + increaseRate1);
+            }
+        } catch (Exception e) {
 
         }
         getBalance();
 
-        GetImtGraph1d("imt",currency2,24);
+        GetImtGraph1d("imt", currency2, 24);
 
     }
 
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.back:
                 startActivity(new Intent(ImtSmartGraphLayout.this, MainActivity.class));
                 break;
 
             case R.id.receive_coin:
-                Intent intent=new Intent(getApplicationContext(), ImtSmartRecevied.class);
+                Intent intent = new Intent(getApplicationContext(), ImtSmartRecevied.class);
                 startActivity(intent);
                 break;
 
             case R.id.send_coin:
-                Intent intent1=new Intent(getApplicationContext(), ImtSmartCoinScan.class);
+                Intent intent1 = new Intent(getApplicationContext(), ImtSmartCoinScan.class);
                 startActivity(intent1);
                 break;
 
             case R.id.swap_btc_btn:
-                Intent intent2=new Intent(getApplicationContext(), imtSwap.class);
+                Intent intent2 = new Intent(getApplicationContext(), imtSwap.class);
                 startActivity(intent2);
                 break;
 
             case R.id.h_24:
                 h_24.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                d_7.setBackgroundColor(getResources().getColor(R.color.white));
-                m_1.setBackgroundColor(getResources().getColor(R.color.white));
-                m_3.setBackgroundColor(getResources().getColor(R.color.white));
-                m_6.setBackgroundColor(getResources().getColor(R.color.white));
-                y_1.setBackgroundColor(getResources().getColor(R.color.white));
-                GetImtGraph1d("imt",currency2,24);
+                d_7.setBackgroundColor(getResources().getColor(R.color.background));
+                m_1.setBackgroundColor(getResources().getColor(R.color.background));
+                m_3.setBackgroundColor(getResources().getColor(R.color.background));
+                m_6.setBackgroundColor(getResources().getColor(R.color.background));
+                y_1.setBackgroundColor(getResources().getColor(R.color.background));
+                GetImtGraph1d("imt", currency2, 24);
                 break;
 
             case R.id.d_7:
-                h_24.setBackgroundColor(getResources().getColor(R.color.white));
+                h_24.setBackgroundColor(getResources().getColor(R.color.background));
                 d_7.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                m_1.setBackgroundColor(getResources().getColor(R.color.white));
-                m_3.setBackgroundColor(getResources().getColor(R.color.white));
-                m_6.setBackgroundColor(getResources().getColor(R.color.white));
-                y_1.setBackgroundColor(getResources().getColor(R.color.white));
-                GetImtGraphAll("imt",currency2,7);
+                m_1.setBackgroundColor(getResources().getColor(R.color.background));
+                m_3.setBackgroundColor(getResources().getColor(R.color.background));
+                m_6.setBackgroundColor(getResources().getColor(R.color.background));
+                y_1.setBackgroundColor(getResources().getColor(R.color.background));
+                GetImtGraphAll("imt", currency2, 7);
                 break;
 
             case R.id.m_1:
-                h_24.setBackgroundColor(getResources().getColor(R.color.white));
-                d_7.setBackgroundColor(getResources().getColor(R.color.white));
+                h_24.setBackgroundColor(getResources().getColor(R.color.background));
+                d_7.setBackgroundColor(getResources().getColor(R.color.background));
                 m_1.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                m_3.setBackgroundColor(getResources().getColor(R.color.white));
-                m_6.setBackgroundColor(getResources().getColor(R.color.white));
-                y_1.setBackgroundColor(getResources().getColor(R.color.white));
-                GetImtGraphAll("imt",currency2,30);
+                m_3.setBackgroundColor(getResources().getColor(R.color.background));
+                m_6.setBackgroundColor(getResources().getColor(R.color.background));
+                y_1.setBackgroundColor(getResources().getColor(R.color.background));
+                GetImtGraphAll("imt", currency2, 30);
                 break;
 
             case R.id.m_3:
-                h_24.setBackgroundColor(getResources().getColor(R.color.white));
-                d_7.setBackgroundColor(getResources().getColor(R.color.white));
-                m_1.setBackgroundColor(getResources().getColor(R.color.white));
+                h_24.setBackgroundColor(getResources().getColor(R.color.background));
+                d_7.setBackgroundColor(getResources().getColor(R.color.background));
+                m_1.setBackgroundColor(getResources().getColor(R.color.background));
                 m_3.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                m_6.setBackgroundColor(getResources().getColor(R.color.white));
-                y_1.setBackgroundColor(getResources().getColor(R.color.white));
-                GetImtGraphAll("imt",currency2,90);
-               break;
+                m_6.setBackgroundColor(getResources().getColor(R.color.background));
+                y_1.setBackgroundColor(getResources().getColor(R.color.background));
+                GetImtGraphAll("imt", currency2, 90);
+                break;
 
             case R.id.m_6:
-                h_24.setBackgroundColor(getResources().getColor(R.color.white));
-                d_7.setBackgroundColor(getResources().getColor(R.color.white));
-                m_1.setBackgroundColor(getResources().getColor(R.color.white));
-                m_3.setBackgroundColor(getResources().getColor(R.color.white));
+                h_24.setBackgroundColor(getResources().getColor(R.color.background));
+                d_7.setBackgroundColor(getResources().getColor(R.color.background));
+                m_1.setBackgroundColor(getResources().getColor(R.color.background));
+                m_3.setBackgroundColor(getResources().getColor(R.color.background));
                 m_6.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                y_1.setBackgroundColor(getResources().getColor(R.color.white));
+                y_1.setBackgroundColor(getResources().getColor(R.color.background));
 
-                GetImtGraphAll("imt",currency2,180);
+                GetImtGraphAll("imt", currency2, 180);
                 break;
 
             case R.id.y_1:
-                h_24.setBackgroundColor(getResources().getColor(R.color.white));
-                d_7.setBackgroundColor(getResources().getColor(R.color.white));
-                m_1.setBackgroundColor(getResources().getColor(R.color.white));
-                m_3.setBackgroundColor(getResources().getColor(R.color.white));
-                m_6.setBackgroundColor(getResources().getColor(R.color.white));
+                h_24.setBackgroundColor(getResources().getColor(R.color.background));
+                d_7.setBackgroundColor(getResources().getColor(R.color.background));
+                m_1.setBackgroundColor(getResources().getColor(R.color.background));
+                m_3.setBackgroundColor(getResources().getColor(R.color.background));
+                m_6.setBackgroundColor(getResources().getColor(R.color.background));
                 y_1.setBackgroundColor(getResources().getColor(R.color.purple_500));
 
-               GetImtGraphAll("imt",currency2,365);
+                GetImtGraphAll("imt", currency2, 365);
                 break;
 
         }
-}
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
 
-     //   onSaveInstanceState(new Bundle());
+        //   onSaveInstanceState(new Bundle());
         Intent intent = new Intent(ImtSmartGraphLayout.this, MainActivity.class);
         startActivity(intent);
         finish();
     }
 
-    public void getBalance(){
+    public void getBalance() {
 
         String token = userData.getToken();
 
 
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().AirDropBalance(token,"imt",currency2);
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().AirDropBalance(token, "imt", currency2);
 
         call.enqueue(new Callback<ResponseBody>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                String s =null;
+                String s = null;
 
-                if (response.code()==200){
+                if (response.code() == 200) {
                     try {
-                       s=response.body().string();
+                        s = response.body().string();
 
-                         JSONObject object = new JSONObject(s);
+                        JSONObject object = new JSONObject(s);
                         String balance = object.getString("balance");
                         String cal = object.getString("calculationPrice");
                         JSONObject object1 = new JSONObject(cal);
@@ -259,17 +259,17 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                         DecimalFormat df = new DecimalFormat();
                         df.setMaximumFractionDigits(2);
 
-                        if (calBalance.equals("null")){
+                        if (calBalance.equals("null")) {
                             double balance2 = Double.parseDouble(balance);
-                            coinprice.setText(""+df.format(balance2));
-                            balances.setText(CurrencySymbols+"0");
-                        }else{
+                            coinprice.setText("" + df.format(balance2));
+                            balances.setText(CurrencySymbols + "0");
+                        } else {
 
                             double balance2 = Double.parseDouble(balance);
                             double calBalance2 = Double.parseDouble(calBalance);
 
-                            coinprice.setText(""+df.format(balance2));
-                            balances.setText(CurrencySymbols+df.format(calBalance2));
+                            coinprice.setText("" + df.format(balance2));
+                            balances.setText(CurrencySymbols + df.format(calBalance2));
                         }
 
 
@@ -277,11 +277,11 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                         e.printStackTrace();
                     }
 
-                } else if(response.code()==400){
+                } else if (response.code() == 400) {
                     try {
-                        s=response.errorBody().string();
-                        JSONObject jsonObject1=new JSONObject(s);
-                        String error =jsonObject1.getString("error");
+                        s = response.errorBody().string();
+                        JSONObject jsonObject1 = new JSONObject(s);
+                        String error = jsonObject1.getString("error");
 
 
                         Snacky.builder()
@@ -297,7 +297,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                         e.printStackTrace();
                     }
 
-                } else if(response.code()==401){
+                } else if (response.code() == 401) {
 
                     Snacky.builder()
                             .setActivity(ImtSmartGraphLayout.this)
@@ -336,24 +336,24 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
 
         showpDialog();
 
-        Call<ResponseBody>call = RetrofitGraph.RetrofitGraph1.getInstance().getApi1().ImtGraph1d(coinName,currency2,hour);
+        Call<ResponseBody> call = RetrofitGraph.RetrofitGraph1.getInstance().getApi1().ImtGraph1d(coinName, currency2, hour);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                String s =null;
+                String s = null;
                 hidepDialog();
 
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     ArrayList<Entry> yvalue = new ArrayList<>();
                     yvalue.clear();
                     try {
-                        s=response.body().string();
+                        s = response.body().string();
 
                         JSONObject object = new JSONObject(s);
                         String response1 = object.getString("Response");
 
-                        if (response1.equals("Error")){
+                        if (response1.equals("Error")) {
                             String Message = object.getString("Message");
                             Snacky.builder()
                                     .setActivity(ImtSmartGraphLayout.this)
@@ -362,18 +362,18 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                                     .setActionText(android.R.string.ok)
                                     .error()
                                     .show();
-                        }else {
+                        } else {
                             String Data = object.getString("Data");
 
                             JSONObject object1 = new JSONObject(Data);
                             String Data1 = object1.getString("Data");
 
                             JSONArray jsonArray = new JSONArray(Data1);
-                            for (int i=0 ; i<=jsonArray.length();i++){
+                            for (int i = 0; i <= jsonArray.length(); i++) {
                                 JSONObject object2 = jsonArray.getJSONObject(i);
                                 String high = object2.getString("high");
                                 Float aFloat = Float.parseFloat(high);
-                                yvalue.add(new Entry(i,aFloat));
+                                yvalue.add(new Entry(i, aFloat));
                             }
                         }
 
@@ -391,7 +391,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                     // Set the marker to the chart
                     mv.setChartView(chart);
                     chart.setMarker(mv);
-                    chart.animateXY(3000,1000);
+                    chart.animateXY(2000, 200);
 
                     chart.getXAxis().setDrawGridLines(false);
                     chart.getAxisLeft().setDrawGridLinesBehindData(false);
@@ -401,7 +401,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                     chart.getAxisLeft().setDrawLabels(false);
                     chart.getAxisRight().setDrawLabels(false);
                     chart.getXAxis().setDrawLabels(false);
-
+                    chart.getLegend().setEnabled(false);
                     YAxis y = chart.getAxisRight();
                     y.setEnabled(false);
                     y.setDrawAxisLine(false);
@@ -413,7 +413,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                     x.setDrawGridLines(false);
 
 
-                    LineDataSet set1=new LineDataSet(yvalue,"");
+                    LineDataSet set1 = new LineDataSet(yvalue, "");
                     set1.setFillAlpha(110);
                     ArrayList<ILineDataSet> dataSets = new ArrayList<>();
                     dataSets.add(set1);
@@ -432,7 +432,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                     set1.setDrawValues(!set1.isDrawValuesEnabled());
                     set1.setDrawFilled(true);
                     set1.setDrawCircles(false);
-                    chart.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                    chart.setBackgroundColor(getResources().getColor(R.color.graph));
 
                 }
             }
@@ -442,7 +442,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                 hidepDialog();
                 Snacky.builder()
                         .setActivity(ImtSmartGraphLayout.this)
-                        .setText("Internet Problem ")
+                        .setText(t.getMessage())
                         .setDuration(Snacky.LENGTH_SHORT)
                         .setActionText(android.R.string.ok)
                         .error()
@@ -451,7 +451,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
         });
     }
 
-    public void GetImtGraphAll(String coinName, String currency2,int days) {
+    public void GetImtGraphAll(String coinName, String currency2, int days) {
 
         progressDialog = KProgressHUD.create(ImtSmartGraphLayout.this)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
@@ -463,24 +463,24 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
 
         showpDialog();
 
-        Call<ResponseBody>call = RetrofitGraph.RetrofitGraph1.getInstance().getApi1().ImtGraphall(coinName,currency2,days);
+        Call<ResponseBody> call = RetrofitGraph.RetrofitGraph1.getInstance().getApi1().ImtGraphall(coinName, currency2, days);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                String s =null;
+                String s = null;
                 hidepDialog();
 
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
 
                     yvalue.clear();
                     try {
-                        s=response.body().string();
+                        s = response.body().string();
 
                         JSONObject object = new JSONObject(s);
                         String response1 = object.getString("Response");
 
-                        if (response1.equals("Error")){
+                        if (response1.equals("Error")) {
                             String Message = object.getString("Message");
                             Snacky.builder()
                                     .setActivity(ImtSmartGraphLayout.this)
@@ -489,18 +489,18 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                                     .setActionText(android.R.string.ok)
                                     .error()
                                     .show();
-                        }else {
+                        } else {
                             String Data = object.getString("Data");
 
                             JSONObject object1 = new JSONObject(Data);
                             String Data1 = object1.getString("Data");
 
                             JSONArray jsonArray = new JSONArray(Data1);
-                            for (int i=0 ; i<=jsonArray.length();i++){
+                            for (int i = 0; i <= jsonArray.length(); i++) {
                                 JSONObject object2 = jsonArray.getJSONObject(i);
                                 String high = object2.getString("high");
                                 Float aFloat = Float.parseFloat(high);
-                                yvalue.add(new Entry(i,aFloat));
+                                yvalue.add(new Entry(i, aFloat));
                             }
                         }
 
@@ -518,8 +518,8 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                     // Set the marker to the chart
                     mv.setChartView(chart);
                     chart.setMarker(mv);
-                    chart.animateXY(3000,1000);
-                   // chart.animateX(2000);
+                    chart.animateXY(2000, 200);
+                    // chart.animateX(2000);
                     chart.getXAxis().setDrawGridLines(false);
                     chart.getAxisLeft().setDrawGridLinesBehindData(false);
                     chart.getAxisLeft().setDrawGridLines(false);
@@ -528,7 +528,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                     chart.getAxisLeft().setDrawLabels(false);
                     chart.getAxisRight().setDrawLabels(false);
                     chart.getXAxis().setDrawLabels(false);
-
+                    chart.getLegend().setEnabled(false);
                     YAxis y = chart.getAxisRight();
                     y.setEnabled(false);
                     y.setDrawAxisLine(false);
@@ -540,7 +540,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                     x.setDrawGridLines(false);
 
 
-                    LineDataSet set1=new LineDataSet(yvalue,"");
+                    LineDataSet set1 = new LineDataSet(yvalue, "");
                     set1.setFillAlpha(110);
                     ArrayList<ILineDataSet> dataSets = new ArrayList<>();
                     dataSets.add(set1);
@@ -559,7 +559,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                     set1.setDrawValues(!set1.isDrawValuesEnabled());
                     set1.setDrawFilled(true);
                     set1.setDrawCircles(false);
-                    chart.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                    chart.setBackgroundColor(getResources().getColor(R.color.graph));
 
                 }
             }

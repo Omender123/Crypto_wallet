@@ -444,7 +444,8 @@ public void logout(){
     @Override
     protected void onResume() {
         super.onResume();
-
+        new CheckInternetConnection(this).checkConnection();
 
     }
+
 }

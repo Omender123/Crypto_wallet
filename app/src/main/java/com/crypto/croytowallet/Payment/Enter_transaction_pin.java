@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.chaos.view.PinView;
 import com.crypto.croytowallet.R;
@@ -52,6 +53,7 @@ CardView pay_money;
          userData= SharedPrefManager.getInstance(getApplicationContext()).getUser();
         String trans =userData.getTransaction_Pin();
 
+     //   Toast.makeText(this, ""+trans, Toast.LENGTH_SHORT).show();
         preferences=getApplicationContext().getSharedPreferences("walletScan", Context.MODE_PRIVATE);
 
         pay_money.setOnClickListener(new View.OnClickListener() {

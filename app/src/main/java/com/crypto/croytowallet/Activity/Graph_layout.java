@@ -188,65 +188,65 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
 
             case R.id.h_24:
                 h_24.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                d_7.setBackgroundColor(getResources().getColor(R.color.white));
-                m_1.setBackgroundColor(getResources().getColor(R.color.white));
-                m_3.setBackgroundColor(getResources().getColor(R.color.white));
-                m_6.setBackgroundColor(getResources().getColor(R.color.white));
-                y_1.setBackgroundColor(getResources().getColor(R.color.white));
+                d_7.setBackgroundColor(getResources().getColor(R.color. background));
+                m_1.setBackgroundColor(getResources().getColor(R.color. background));
+                m_3.setBackgroundColor(getResources().getColor(R.color. background));
+                m_6.setBackgroundColor(getResources().getColor(R.color. background));
+                y_1.setBackgroundColor(getResources().getColor(R.color. background));
                 getGraph();
 
                 break;
 
             case R.id.d_7:
-                h_24.setBackgroundColor(getResources().getColor(R.color.white));
+                h_24.setBackgroundColor(getResources().getColor(R.color. background));
                 d_7.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                m_1.setBackgroundColor(getResources().getColor(R.color.white));
-                m_3.setBackgroundColor(getResources().getColor(R.color.white));
-                m_6.setBackgroundColor(getResources().getColor(R.color.white));
-                y_1.setBackgroundColor(getResources().getColor(R.color.white));
+                m_1.setBackgroundColor(getResources().getColor(R.color. background));
+                m_3.setBackgroundColor(getResources().getColor(R.color. background));
+                m_6.setBackgroundColor(getResources().getColor(R.color. background));
+                y_1.setBackgroundColor(getResources().getColor(R.color. background));
                 getGraphData(coinId,currency2,"7","daily");
                 break;
 
             case R.id.m_1:
-                h_24.setBackgroundColor(getResources().getColor(R.color.white));
-                d_7.setBackgroundColor(getResources().getColor(R.color.white));
+                h_24.setBackgroundColor(getResources().getColor(R.color. background));
+                d_7.setBackgroundColor(getResources().getColor(R.color. background));
                 m_1.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                m_3.setBackgroundColor(getResources().getColor(R.color.white));
-                m_6.setBackgroundColor(getResources().getColor(R.color.white));
-                y_1.setBackgroundColor(getResources().getColor(R.color.white));
+                m_3.setBackgroundColor(getResources().getColor(R.color. background));
+                m_6.setBackgroundColor(getResources().getColor(R.color. background));
+                y_1.setBackgroundColor(getResources().getColor(R.color. background));
                 getGraphData(coinId,currency2,"30","daily");
 
                 break;
 
             case R.id.m_3:
-                h_24.setBackgroundColor(getResources().getColor(R.color.white));
-                d_7.setBackgroundColor(getResources().getColor(R.color.white));
-                m_1.setBackgroundColor(getResources().getColor(R.color.white));
+                h_24.setBackgroundColor(getResources().getColor(R.color. background));
+                d_7.setBackgroundColor(getResources().getColor(R.color. background));
+                m_1.setBackgroundColor(getResources().getColor(R.color. background));
                 m_3.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                m_6.setBackgroundColor(getResources().getColor(R.color.white));
-                y_1.setBackgroundColor(getResources().getColor(R.color.white));
+                m_6.setBackgroundColor(getResources().getColor(R.color. background));
+                y_1.setBackgroundColor(getResources().getColor(R.color. background));
                 getGraphData(coinId,currency2,"90","daily");
 
                 break;
 
             case R.id.m_6:
-                h_24.setBackgroundColor(getResources().getColor(R.color.white));
-                d_7.setBackgroundColor(getResources().getColor(R.color.white));
-                m_1.setBackgroundColor(getResources().getColor(R.color.white));
-                m_3.setBackgroundColor(getResources().getColor(R.color.white));
+                h_24.setBackgroundColor(getResources().getColor(R.color. background));
+                d_7.setBackgroundColor(getResources().getColor(R.color. background));
+                m_1.setBackgroundColor(getResources().getColor(R.color. background));
+                m_3.setBackgroundColor(getResources().getColor(R.color. background));
                 m_6.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                y_1.setBackgroundColor(getResources().getColor(R.color.white));
+                y_1.setBackgroundColor(getResources().getColor(R.color. background));
                 getGraphData(coinId,currency2,"180","daily");
 
 
                 break;
 
             case R.id.y_1:
-                h_24.setBackgroundColor(getResources().getColor(R.color.white));
-                d_7.setBackgroundColor(getResources().getColor(R.color.white));
-                m_1.setBackgroundColor(getResources().getColor(R.color.white));
-                m_3.setBackgroundColor(getResources().getColor(R.color.white));
-                m_6.setBackgroundColor(getResources().getColor(R.color.white));
+                h_24.setBackgroundColor(getResources().getColor(R.color. background));
+                d_7.setBackgroundColor(getResources().getColor(R.color. background));
+                m_1.setBackgroundColor(getResources().getColor(R.color. background));
+                m_3.setBackgroundColor(getResources().getColor(R.color. background));
+                m_6.setBackgroundColor(getResources().getColor(R.color. background));
                 y_1.setBackgroundColor(getResources().getColor(R.color.purple_500));
 
                 getGraphData(coinId,currency2,"365","daily");
@@ -338,7 +338,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                 hidepDialog();
                 Snacky.builder()
                         .setActivity(Graph_layout.this)
-                        .setText("Internet Problem ")
+                        .setText(t.getMessage())
                         .setDuration(Snacky.LENGTH_SHORT)
                         .setActionText(android.R.string.ok)
                         .error()
@@ -415,7 +415,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                     // Set the marker to the chart
                     mv.setChartView(chart);
                     chart.setMarker(mv);
-                    chart.animateXY(3000,1000);
+                    chart.animateXY(2000,200);
                     chart.getXAxis().setDrawGridLines(false);
                     chart.getAxisLeft().setDrawGridLinesBehindData(false);
                     chart.getAxisLeft().setDrawGridLines(false);
@@ -424,7 +424,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                     chart.getAxisLeft().setDrawLabels(false);
                     chart.getAxisRight().setDrawLabels(false);
                     chart.getXAxis().setDrawLabels(false);
-
+                    chart.getLegend().setEnabled(false);
                     YAxis y = chart.getAxisRight();
                     y.setEnabled(false);
                     y.setDrawAxisLine(false);
@@ -455,7 +455,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                     set1.setDrawValues(!set1.isDrawValuesEnabled());
                     set1.setDrawFilled(true);
                     set1.setDrawCircles(false);
-                    chart.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                    chart.setBackgroundColor(getResources().getColor(R.color.graph));
 
 
                 } else if(response.code()==400){
@@ -554,7 +554,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                     // Set the marker to the chart
                     mv.setChartView(chart);
                     chart.setMarker(mv);
-                    chart.animateXY(3000,1000);
+                    chart.animateXY(2000,200);
                     chart.getXAxis().setDrawGridLines(false);
                     chart.getAxisLeft().setDrawGridLinesBehindData(false);
                     chart.getAxisLeft().setDrawGridLines(false);
@@ -563,7 +563,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                     chart.getAxisLeft().setDrawLabels(false);
                     chart.getAxisRight().setDrawLabels(false);
                     chart.getXAxis().setDrawLabels(false);
-
+                    chart.getLegend().setEnabled(false);
                     YAxis y = chart.getAxisRight();
                     y.setEnabled(false);
                     y.setDrawAxisLine(false);
@@ -594,7 +594,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                     set1.setDrawValues(!set1.isDrawValuesEnabled());
                     set1.setDrawFilled(true);
                     set1.setDrawCircles(false);
-                    chart.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                    chart.setBackgroundColor(getResources().getColor(R.color.graph));
 
 
                 } else if(response.code()==400){

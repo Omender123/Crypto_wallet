@@ -69,12 +69,12 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
     String[] coinName = {"ImSmart", "Bitcoin","Ethereum","Tether","XRP","Litcoin","USD Coin","ImSmart Utility"};
     String[] coinSymbols = {"IMT", "BTC","ETH","USDT","XRP","LTC","USDC","IMT-U"};
     String[] coinId = {"imt", "btc","eth","usdt","xrp","ltc","usdc","airdrop"};
-    int[] coinImage = {R.mipmap.imt,R.mipmap.bitcoin_image,R.mipmap.group_blue,R.mipmap.usdt,R.mipmap.xrp,R.mipmap.ltc,R.mipmap.usdc,R.mipmap.imt};
+    int[] coinImage = {R.mipmap.imt,R.mipmap.bitcoin_image,R.mipmap.group_blue,R.mipmap.usdt,R.mipmap.xrp,R.mipmap.ltc,R.mipmap.usdc,R.drawable.ic_imt__u};
 
     String[] coinName1 = {"ImSmart Utility", "ImSmart"};
     String[] coinSymbols1 = {"IMT-U","IMT"};
     String[] coinId1 = {"airdrop","imt"};
-    int[] coinImage1 = {R.mipmap.imt, R.mipmap.imt};
+    int[] coinImage1 = {R.drawable.ic_imt__u, R.mipmap.imt};
     int value;
     SeekBar seekBar;
     KProgressHUD progressDialog;
