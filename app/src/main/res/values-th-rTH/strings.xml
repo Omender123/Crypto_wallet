@@ -211,7 +211,7 @@
     <string name = "hide"> ซ่อนรายละเอียด </string>
     <string name = "total_amount"> จำนวนเงินทั้งหมด </string>
     <string name = "price"> ราคา </string>
-    <string name = "swap_p2p"> แลกเปลี่ยน น2น </string>
+    <string name = "swap_p2p"> แลกเปลี่ยนยูทิลิตี้ </string>
     <string name = "coin"> ป้อนจำนวนเหรียญที่จะโอน </string>
     <string name = "account"> บัญชี </string>
     <string name = "payment"> การชำระเงิน </string>
@@ -245,4 +245,14 @@
 
     <string name="reff">ฉันไม่มีรหัสอ้างอิง</string>
     <string name = "noconnection"> กรุณาเชื่อมต่อกับเครือข่าย WIFI หรือเปิดใช้งานข้อมูลมือถือ </string>
+    <string name="recent_txt">คุณไม่มีธุรกรรมล่าสุด</string>
+
+    <string name="scan_txt"> สแกนรหัส QR โดยคลิกปุ่มบนหน้าจอ</string>
+
+    <string name = "kyc"> KYC </string>
+    <string name = "kyc_txt"> โปรดกรอก kyc ของคุณเพื่อความปลอดภัยที่ดีขึ้น </string>
+    <string name = "kyc_country"> ประเทศ </string>
+    <string name = "kyc_address"> ที่อยู่ </string>
+    <string name = "doc_type"> ประเภทเอกสาร </string>
+    <string name = "docu_men"> เอกสาร </string>
 </resources>

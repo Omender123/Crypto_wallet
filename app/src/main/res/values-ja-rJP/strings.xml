@@ -210,7 +210,7 @@
     <string name="hide">詳細を非表示</string>
     <string name="total_amount">合計金額</string>
     <string name="price">価格</string>
-    <string name="swap_p2p"> スワップP2P</string>
+    <string name="swap_p2p">スワップユーティリティ</string>
     <string name="coin">転送するコインの金額を入力してください</string>
     <string name="account">アカウント</string>
     <string name="payment">支払い</string>
@@ -244,4 +244,13 @@
     <string name="reff">私は紹介コードを持っていません</string>
 
     <string name = "noconnection"> WIFIネットワークに接続するか、モバイルデータを有効にしてください</string>
+    <string name="recent_txt">最近の取引はありません</string>
+    <string name="scan_txt">स画面上のボタンをクリックしてQRコードをスキャンします</string>
+
+    <string name = "kyc"> KYC </string>
+    <string name = "kyc_txt">セキュリティを強化するためにkycを完成させてください</string>
+    <string name ="kyc_country">国</string>
+    <string name ="kyc_address">アドレス</string>
+    <string name ="doc_type">ドキュメントタイプ</string>
+    <string name ="docu_men">ドキュメント</string>
 </resources>

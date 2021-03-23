@@ -34,7 +34,7 @@ import de.mateware.snacky.Snacky;
 
 public class Setting extends AppCompatActivity implements View.OnClickListener {
     ImageView imageView;
-    CardView Scan_devices,restore_wallet,notification,sound,currency;
+    CardView Scan_devices,restore_wallet,notification,sound,currency,kyc;
     SharedPreferences sharedPreferences;
 
     TextView currencyType;
@@ -49,11 +49,13 @@ public class Setting extends AppCompatActivity implements View.OnClickListener {
         notification = findViewById(R.id.notification);
         sound = findViewById(R.id.sound);
         currency = findViewById(R.id.currency);
+        kyc= findViewById(R.id.kyc);
         Scan_devices.setOnClickListener(this);
         restore_wallet.setOnClickListener(this);
         notification.setOnClickListener(this);
         sound.setOnClickListener(this);
         currency.setOnClickListener(this);
+        kyc.setOnClickListener(this);
 
         currencyType = findViewById(R.id.currency1);
 
@@ -122,7 +124,9 @@ public class Setting extends AppCompatActivity implements View.OnClickListener {
                 startActivity(new Intent(getApplicationContext(),SelectCurrency.class));
                  break;
 
-
+            case R.id.kyc:
+                startActivity(new Intent(getApplicationContext(),Kyc.class));
+                break;
         }
     }
 

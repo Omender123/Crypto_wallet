@@ -212,7 +212,7 @@
     <string name = "hide"> डिटेल्स छिपाएं  </string>
     <string name = "total_amount"> कुल राशि  </string>
     <string name = "price"> मूल्य  </string>
-    <string name = "swap_p2p"> स्वैप पी 2 पी  </string>
+    <string name = "swap_p2p"> स्वैप उपयोगिता </string>
     <string name = "coin"> ट्रांसफर के लिए कॉइन अमाउंट डालें  </string>
     <string name = "account"> खाता  </string>
     <string name = "payment"> भुगतान  </string>
@@ -246,4 +246,13 @@
 
     <string name="reff">मैं रेफरल कोड नहीं है</string>
     <string name="noconnection"> कृपया WIFI नेटवर्क से कनेक्ट करें या मोबाइल डेटा को सक्षम करें</string>
+
+    <string name="recent_txt">आपके पास हाल ही में कोई लेनदेन नहीं है</string>
+    <string name="scan_txt">स्क्रीन बटन पर क्लिक करके QR कोड स्कैन करें </string>
+    <string name = "kyc"> KYC </string>
+    <string name = "kyc_txt"> बेहतर सुरक्षा के लिए कृपया अपना kyc पूरा करें </string>
+    <string name = "kyc_country"> देश </string>
+    <string name = "kyc_address"> पता </string>
+    <string name = "doc_type"> दस्तावेज़ प्रकार </string>
+    <string name = "docu_men"> दस्तावेज़ </string>
 </resources>

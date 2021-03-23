@@ -208,7 +208,7 @@
     <string name="hide">隐藏详细信息</string>
     <string name="total_amount">总金额</string>
     <string name="price">价格</string>
-    <string name="swap_p2p"> SWAP P2P </string>
+    <string name="swap_p2p"> 交换工具 </string>
     <string name="coin">输入要转移的硬币金额</string>
     <string name="account">帐户</string>
     <string name="payment">付款</string>
@@ -242,4 +242,13 @@
     <string name="imt_u">ImSmart Utility</string>
     <string name="reff">我没有推荐代码</string>
     <string name ="noconnection">请连接到WIFI网络或启用移动数据</string>
+    <string name="recent_txt">您没有任何近期交易</string>
+    <string name="scan_txt">通过单击屏幕上的按钮扫描QR码</string>
+
+    <string name ="kyc"> KYC </string>
+    <string name ="kyc_txt">请完成您的kyc以获得更好的安全性</string>
+    <string name ="kyc_country">国家/地区</string>
+    <string name ="kyc_address">地址</string>
+    <string name ="doc_type">文档类型</string>
+    <string name ="docu_men">文档</string>
 </resources>

@@ -3,6 +3,9 @@ package com.crypto.croytowallet.Activity;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,17 +22,25 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crypto.croytowallet.Adapter.Coin_History_Adapter;
 import com.crypto.croytowallet.Adapter.Crypto_currencyInfo;
 import com.crypto.croytowallet.CoinTransfer.CoinScan;
 import com.crypto.croytowallet.CoinTransfer.Received_Coin;
+import com.crypto.croytowallet.ImtSmart.ImtSmartGraphLayout;
 import com.crypto.croytowallet.ImtSmart.ImtSmartVerification;
 import com.crypto.croytowallet.ImtSmart.imtSwap;
+import com.crypto.croytowallet.Interface.HistoryClickLister;
 import com.crypto.croytowallet.MainActivity;
+import com.crypto.croytowallet.Model.CoinModal;
 import com.crypto.croytowallet.Model.CrptoInfoModel;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.TransactionHistorySharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.Transaction_HistoryModel;
 import com.crypto.croytowallet.SharedPrefernce.Updated_data;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
+import com.crypto.croytowallet.TransactionHistory.CoinHistory;
+import com.crypto.croytowallet.TransactionHistory.Full_Transaction_History;
 import com.crypto.croytowallet.database.RetrofitClient;
 import com.crypto.croytowallet.database.RetrofitGraph;
 import com.crypto.croytowallet.fragement.Exchange;
@@ -59,9 +70,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class Graph_layout extends AppCompatActivity implements View.OnClickListener {
+public class Graph_layout extends AppCompatActivity implements View.OnClickListener, HistoryClickLister {
 
-    TextView swap,price,balance,coinname,coinsymbols,coinprice,sync,increaseRate,null1;
+    TextView swap,price,balance,coinname,coinsymbols,coinprice,sync,increaseRate,null1,more;
     LinearLayout h_24,d_7,m_1,m_3,m_6,y_1;
     private Exchange exchange;
     int position;
@@ -73,6 +84,11 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
     UserData userData;
     CircleImageView circleImageView;
     String balance1,  price1;
+    ArrayList<CoinModal> coinModals;
+    Coin_History_Adapter coin_history_adapter;
+    RecyclerView recyclerView;
+    TextView history_Empty;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +105,10 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         circleImageView = findViewById(R.id.coinImage);
         // sync = findViewById(R.id.sync);
         increaseRate  =findViewById(R.id.increaseRate);
+        recyclerView=findViewById(R.id.recyclerView);
+        history_Empty =findViewById(R.id.txt_list_is_empty);
+        more = findViewById(R.id.moretransactions);
+
         null1  = findViewById(R.id.null1);
         h_24 = findViewById(R.id.h_24);
         d_7 = findViewById(R.id.d_7);
@@ -96,8 +116,8 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         m_3 = findViewById(R.id.m_3);
         m_6 = findViewById(R.id.m_6);
         y_1 = findViewById(R.id.y_1);
-
-          send=findViewById(R.id.send_coin);
+        more.setOnClickListener(this);
+        send=findViewById(R.id.send_coin);
          swap.setOnClickListener(this);
          back.setOnClickListener(this);
         received.setOnClickListener(this);
@@ -109,7 +129,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         m_6.setOnClickListener(this);
         y_1.setOnClickListener(this);
 
-
+        coinModals =new ArrayList<CoinModal>();
 
         position = Updated_data.getInstans(getApplicationContext()).getUserId();
         price1 =Updated_data.getInstans(getApplicationContext()).getprice();
@@ -157,7 +177,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         getBalance();
         getGraph();
 
-
+        getSendCoinHistory();
 
     }
 
@@ -184,6 +204,11 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
             case R.id.swap_btc_btn:
                 Intent intent2=new Intent(getApplicationContext(), imtSwap.class);
                 startActivity(intent2);
+                break;
+
+            case R.id.moretransactions:
+                Intent intent3 = new Intent(getApplicationContext(), CoinHistory.class);
+                startActivity(intent3);
                 break;
 
             case R.id.h_24:
@@ -451,7 +476,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                     }
                     set1.setMode(LineDataSet.Mode.LINEAR);
                     set1.setLineWidth(2f);
-                    set1.setColor(Color.WHITE);
+                    set1.setColor(getResources().getColor(R.color.graph_line));
                     set1.setDrawValues(!set1.isDrawValuesEnabled());
                     set1.setDrawFilled(true);
                     set1.setDrawCircles(false);
@@ -590,7 +615,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                     }
                     set1.setMode(LineDataSet.Mode.LINEAR);
                     set1.setLineWidth(2f);
-                    set1.setColor(Color.WHITE);
+                    set1.setColor(getResources().getColor(R.color.graph_line));
                     set1.setDrawValues(!set1.isDrawValuesEnabled());
                     set1.setDrawFilled(true);
                     set1.setDrawCircles(false);
@@ -632,6 +657,141 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                         .show();
             }
         });
+
+    }
+
+    public void getSendCoinHistory() {
+
+        UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
+        String token=user.getToken();
+
+
+        Call<ResponseBody> call= RetrofitClient.getInstance().getApi().get_SendHistory(token,coinId);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                hidepDialog();
+                String s=null;
+                if (response.code()==200){
+                    coinModals.clear();
+                    try {
+                        s=response.body().string();
+                        JSONObject object  = new JSONObject(s);
+                        String result =object.getString("result");
+                        JSONArray jsonArray  =  new JSONArray(result);
+                        for (int i=0;i<=jsonArray.length();i++){
+                            JSONObject object1 = jsonArray.getJSONObject(i);
+
+                            CoinModal modal = new CoinModal();
+                            String type = object1.getString("cryptoCurrency");
+                            String amount = object1.getString("amtOfCrypto");
+                            String id = object1.getString("_id");
+                            String date = object1.getString("createdAt");
+                            String userData = object1.getString("userId");
+
+
+
+
+                            JSONObject object2 = new JSONObject(userData);
+                            String username =object2.getString("username");
+
+
+
+                            modal.setUsername(username);
+                            modal.setTime(date);
+                            modal.setAmount(amount);
+                            modal.setType(type);
+                            modal.setId(id);
+                            coinModals.add(modal);
+
+
+
+                        }
+
+
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+                    if(coinModals!=null && coinModals.size()>0){
+                        coin_history_adapter = new Coin_History_Adapter(coinModals,getApplicationContext(), Graph_layout.this);
+                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL,false);
+                        recyclerView.setLayoutManager(mLayoutManager);
+                        recyclerView.setItemAnimator(new DefaultItemAnimator());
+                        recyclerView.setAdapter(coin_history_adapter);
+                    }else{
+
+
+
+
+                        history_Empty.setVisibility(View.VISIBLE);
+
+                    }
+
+                }else if (response.code()==400){
+                    try {
+                        s=response.errorBody().string();
+                        JSONObject jsonObject1=new JSONObject(s);
+                        String error =jsonObject1.getString("error");
+
+
+                        Snacky.builder()
+                                .setActivity(Graph_layout.this)
+                                .setText(error)
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
+
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if (response.code()==401){
+                    Snacky.builder()
+                            .setActivity(Graph_layout.this)
+                            .setText("unAuthorization Request")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Snacky.builder()
+                        .setActivity(Graph_layout.this)
+                        .setText(t.getMessage())
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+
+            }
+        });
+    }
+
+    @Override
+    public void onHistoryItemClickListener(int position) {
+        String username =coinModals.get(position).getUsername();
+        String transaction =coinModals.get(position).getId();
+        String type =coinModals.get(position).getType();
+        String date =coinModals.get(position).getTime();
+        String amount =coinModals.get(position).getAmount();
+
+        Transaction_HistoryModel historyModel=new Transaction_HistoryModel(transaction,coinId,amount,type,username,date);
+
+        //storing the user in shared preferences
+        TransactionHistorySharedPrefManager.getInstance(getApplicationContext()).Transaction_History_Data(historyModel);
+
+
+        Intent intent = new Intent(Graph_layout.this, Full_Transaction_History.class);
+        startActivity(intent);
 
     }
 }

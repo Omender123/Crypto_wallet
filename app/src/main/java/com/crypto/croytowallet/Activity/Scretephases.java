@@ -2,23 +2,29 @@ package com.crypto.croytowallet.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
+import com.crypto.croytowallet.TransactionPin.ShowMnemonic;
+
+import de.mateware.snacky.Snacky;
 
 public class Scretephases extends AppCompatActivity {
     ImageView imageView;
     TextView text1,text2,text3,text4,text5,text6,text7,text8,text9,text10,text11,text12;
     String txt1,txt2,txt3,txt4,txt5,txt6,txt7,txt8,txt9,txt10,txt11,txt12;
-    Button download;
+    Button Copy;
     UserData userData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,13 +80,21 @@ public class Scretephases extends AppCompatActivity {
         text11.setText("11. "+txt11);
         text12.setText("12. "+txt12);
 
-        download = findViewById(R.id.button_secrete);
+        Copy = findViewById(R.id.button_secrete);
 
 
-        download.setOnClickListener(new View.OnClickListener() {
+        Copy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ClipboardManager cm = (ClipboardManager)getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                cm.setText(mnemonic);
+                Snacky.builder()
+                        .setActivity(Scretephases.this)
+                        .setText("Copied")
+                        .setTextColor(getResources().getColor(R.color.white))
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .success()
+                        .show();
             }
         });
         back();

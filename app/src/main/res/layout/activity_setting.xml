@@ -403,8 +403,8 @@
 
         </androidx.cardview.widget.CardView>
 
-       <!-- <androidx.cardview.widget.CardView
-            android:id="@+id/langauge"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/kyc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/card_background"
@@ -439,7 +439,7 @@
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="15dp"
                     android:textStyle="bold"
-                    android:text="@string/language"
+                    android:text="@string/kyc"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/toolbar_text_color"
                     android:textSize="16dp" />
@@ -452,7 +452,7 @@
                     android:layout_marginTop="12dp"
                     android:layout_marginLeft="15dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_translate" />
+                    android:src="@drawable/ic_secure_with_fingerprint" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -461,15 +461,15 @@
                     android:layout_marginTop="2dp"
                     android:layout_marginLeft="7dp"
                     android:layout_marginRight="60dp"
-                    android:layout_toEndOf="@+id/restore1"
-                    android:layout_toRightOf="@+id/restore1"
+                    android:layout_toEndOf="@id/restore1"
+                    android:layout_toRightOf="@id/restore1"
                     android:justificationMode="inter_word"
-                    android:text="@string/cryto_text"
+                    android:text="@string/kyc_txt"
                     android:textSize="10dp" />
 
             </RelativeLayout>
 
-        </androidx.cardview.widget.CardView>-->
+        </androidx.cardview.widget.CardView>
 
 
 

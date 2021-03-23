@@ -14,8 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crypto.croytowallet.Activity.Graph_layout;
 import com.crypto.croytowallet.Activity.WalletBalance;
 import com.crypto.croytowallet.AppUtils;
+import com.crypto.croytowallet.ImtSmart.ImtSmartGraphLayout;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.TransactionHistorySharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.Transaction_HistoryModel;
@@ -98,9 +100,15 @@ SharedPreferences sharedPreferences;
                      startActivity(new Intent(getApplicationContext(),Transaction_history.class));
                  }else if(back.equals("OK")){
                      startActivity(new Intent(getApplicationContext(), WalletBalance.class));
+                 }else if(back.equals("imt")){
+                     startActivity(new Intent(getApplicationContext(), ImtSmartGraphLayout.class));
+                 } else if(back.equals(back)){
+                     startActivity(new Intent(getApplicationContext(), Graph_layout.class));
                  }else{
+
                      startActivity(new Intent(getApplicationContext(), CoinHistory.class));
                  }
+
 
              }
          });
@@ -140,7 +148,12 @@ SharedPreferences sharedPreferences;
             startActivity(new Intent(getApplicationContext(),Transaction_history.class));
         }else if(back.equals("OK")){
             startActivity(new Intent(getApplicationContext(), WalletBalance.class));
+        }else if(back.equals("imt")){
+            startActivity(new Intent(getApplicationContext(), ImtSmartGraphLayout.class));
+        } else if(back.equals(back)){
+            startActivity(new Intent(getApplicationContext(), Graph_layout.class));
         }else{
+
             startActivity(new Intent(getApplicationContext(), CoinHistory.class));
         }
 

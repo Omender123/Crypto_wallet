@@ -210,7 +210,7 @@
     <string name="hide">Hide Details</string>
     <string name="total_amount">Total Amount</string>
     <string name="price">Price</string>
-    <string name="swap_p2p">SWAP P2P</string>
+    <string name="swap_p2p">SWAP Utility</string>
     <string name="coin">Enter Coin Amount to Transfer</string>
     <string name="account">Account</string>
     <string name="payment">Payment</string>
@@ -243,4 +243,15 @@
 
     <string name="reff">I Don\'t Have Referral Code</string>
     <string name="noconnection">Kindly connect to a WIFI network or enable Mobile Data</string>
+    <string name="recent_txt">You don\'t have any recent transactions</string>
+
+    <string name="scan_txt">Scan QR code by clicking the on screen button </string>
+
+    <string name="kyc">KYC</string>
+    <string name="kyc_txt">Please complete your kyc for better security </string>
+    <string name="kyc_country">Country</string>
+    <string name="kyc_address"> Address</string>
+    <string name="doc_type">Document type</string>
+    <string name="docu_men">Documents</string>
+
 </resources>

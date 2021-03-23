@@ -169,6 +169,9 @@ public class Exchange extends Fragment implements View.OnClickListener {
             public void onClick(View v) {
                 SwapAmount = enter_Swap_Amount.getText().toString().trim();
 
+                int mini = Integer.parseInt(min_amount);
+                int to = --mini ;
+
                 if (SwapAmount.isEmpty()) {
                     Snacky.builder()
                             .setActivity(getActivity())
@@ -185,8 +188,17 @@ public class Exchange extends Fragment implements View.OnClickListener {
                             .setActionText(android.R.string.ok)
                             .error()
                             .show();
-                     }else{
+                     }else if(Integer.parseInt(SwapAmount)<=to){
+                    Snacky.builder()
+                            .setActivity(getActivity())
+                            .setText("Please enter  the minimum amount of  "+min_amount)
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+                }else{
                     SwapApi();
+
                 }
             }
         });
@@ -203,8 +215,9 @@ public class Exchange extends Fragment implements View.OnClickListener {
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                double balance2 = Double.parseDouble(String.valueOf(progress));
-                double total = balance2 * 10;
+               // double balance2 = Double.parseDouble(String.valueOf(progress));
+
+                int total = progress * 10;
                 enter_Swap_Amount.setText(String.valueOf(total));
             }
 

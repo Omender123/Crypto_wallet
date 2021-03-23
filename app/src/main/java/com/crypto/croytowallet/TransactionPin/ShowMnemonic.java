@@ -16,6 +16,8 @@ import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SignUpData;
 import com.crypto.croytowallet.SharedPrefernce.SignUpRefernace;
 
+import de.mateware.snacky.Snacky;
+
 public class ShowMnemonic extends AppCompatActivity {
 
 Button copy,next;
@@ -39,7 +41,14 @@ Button copy,next;
             public void onClick(View view) {
                 ClipboardManager cm = (ClipboardManager)getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
                 cm.setText(txtcopypaste.getText().toString());
-                Toast.makeText(getApplicationContext(), "Copied ", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Copied ", Toast.LENGTH_SHORT).show();
+                Snacky.builder()
+                        .setActivity(ShowMnemonic.this)
+                        .setText("Copied")
+                        .setTextColor(getResources().getColor(R.color.white))
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .success()
+                        .show();
             }
         });
 

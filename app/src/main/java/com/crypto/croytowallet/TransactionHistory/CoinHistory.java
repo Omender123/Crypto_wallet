@@ -112,14 +112,16 @@ public class CoinHistory extends AppCompatActivity implements HistoryClickLister
 
               try {
                   getSendCoinHistory();
-/*
-                 // coin_history_adapter.notifyDataSetChanged();
+                  coinModals.clear();
+                  coin_history_adapter.notifyDataSetChanged();
+
                   new Handler().postDelayed(new Runnable() {
                       @Override
                       public void run() {
-                        //  getSendCoinHistory();
                           if (coinModals!=null && coinModals.size()>0){
                            //   history_Empty.setVisibility(View.GONE);
+
+
                           }else {
                                          Snacky.builder()
                                                   .setActivity(CoinHistory.this)
@@ -131,7 +133,6 @@ public class CoinHistory extends AppCompatActivity implements HistoryClickLister
                                       }
                       }
                   },500);
-*/
 
               }catch (Exception e){
 
@@ -151,10 +152,9 @@ public class CoinHistory extends AppCompatActivity implements HistoryClickLister
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 receivedData=coinSymbols1[position];
-                getReceivedCoinHistory();
-              try {
-                 // getReceivedCoinHistory();
-               /*   coinModals.clear();
+                  try {
+                      getReceivedCoinHistory();
+                  coinModals.clear();
                   coin_history_adapter.notifyDataSetChanged();
 
                   new Handler().postDelayed(new Runnable() {
@@ -174,7 +174,6 @@ public class CoinHistory extends AppCompatActivity implements HistoryClickLister
                           }
                       }
                   },500);
-*/
               }catch (Exception e){
 
               }
@@ -200,10 +199,9 @@ public class CoinHistory extends AppCompatActivity implements HistoryClickLister
                     lyt_send.setBackground(getResources().getDrawable(R.drawable.background_broder));
                     coinSpinner.setVisibility(View.GONE);
                     coinReceived.setVisibility(View.VISIBLE);
-                    getReceivedCoinHistory();
-/*
+                  //  getReceivedCoinHistory();
                     try {
-                      //  getSendCoinHistory();
+
                         getReceivedCoinHistory();
                         coinModals.clear();
                         coin_history_adapter.notifyDataSetChanged();
@@ -229,7 +227,6 @@ public class CoinHistory extends AppCompatActivity implements HistoryClickLister
 
                     }
 
-*/
 
 
                 }else{
@@ -241,9 +238,9 @@ public class CoinHistory extends AppCompatActivity implements HistoryClickLister
                     coinSpinner.setVisibility(View.VISIBLE);
                     coinReceived.setVisibility(View.GONE);
 
-                    getSendCoinHistory();
+                  //  getSendCoinHistory();
                     // getSendCoinHistory();
-                    /*try {
+                    try {
                         getSendCoinHistory();
                         coinModals.clear();
                         coin_history_adapter.notifyDataSetChanged();
@@ -268,7 +265,6 @@ public class CoinHistory extends AppCompatActivity implements HistoryClickLister
                     }catch (Exception e){
 
                     }
-*/
 
                 }
 
@@ -332,14 +328,14 @@ public class CoinHistory extends AppCompatActivity implements HistoryClickLister
                         recyclerView.setAdapter(coin_history_adapter);
 
                     } else{
-                        Snacky.builder()
+                      /*  Snacky.builder()
                                 .setActivity(CoinHistory.this)
                                 .setText("No Transaction History Available")
                                 .setDuration(Snacky.LENGTH_SHORT)
                                 .setActionText(android.R.string.ok)
                                 .success()
                                 .show();
-                    }
+                    */}
 
                 }else if (response.code()==400){
                     try {
@@ -452,14 +448,14 @@ public class CoinHistory extends AppCompatActivity implements HistoryClickLister
                         recyclerView.setAdapter(coin_history_adapter);
                     }else{
 
-                        Snacky.builder()
+                       /* Snacky.builder()
                                 .setActivity(CoinHistory.this)
                                 .setText("No Transaction History Available")
                                 .setDuration(Snacky.LENGTH_SHORT)
                                 .setActionText(android.R.string.ok)
                                 .success()
                                 .show();
-
+*/
 
                         // history_Empty.setVisibility(View.VISIBLE);
 

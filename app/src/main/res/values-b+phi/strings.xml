@@ -212,7 +212,7 @@
     <string name = "hide"> Itago ang Mga Detalye </string>
     <string name = "total_amount"> Kabuuang Halaga </string>
     <string name = "price"> Presyo </string>
-    <string name = "swap_p2p"> SWAP P2P </string>
+    <string name = "swap_p2p"> Ipagpalit Kagamitan </string>
     <string name = "coin"> Ipasok ang Halaga ng Barya sa Paglipat </string>
     <string name = "account"> Account </string>
     <string name = "payment"> Pagbabayad </string>
@@ -247,4 +247,13 @@
     <string name="reff">私は紹介コードを持っていません</string>
 
     <string name = "noconnection"> Pinapayuhan na kumonekta sa isang WIFI network o paganahin ang Mobile Data </string>
+    <string name="recent_txt">Wala kang kamakailang mga transaksyon</string>
+    <string name="scan_txt">I-scan ang QR code sa pamamagitan ng pag-click sa pindutan ng screen</string>
+
+    <string name = "kyc"> KYC </string>
+    <string name = "kyc_txt"> Mangyaring kumpletuhin ang iyong kyc para sa mas mahusay na seguridad </string>
+    <string name = "kyc_country"> Bansa </string>
+    <string name = "kyc_address"> Address </string>
+    <string name = "doc_type"> Uri ng dokumento </string>
+    <string name = "docu_men"> Mga Dokumento </string>
 </resources>

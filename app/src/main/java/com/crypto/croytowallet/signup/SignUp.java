@@ -65,13 +65,6 @@ public class SignUp extends AppCompatActivity {
         fade_in = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_in);
         sharedPreferences=getSharedPreferences("MyData", Context.MODE_PRIVATE);
 
-      //  constraintLayout.startAnimation(fade_in);
-
-
-
-      //  requestQueue= Volley.newRequestQueue(this);
-
-
         code = new ArrayList<String>();
 
         name1=findViewById(R.id.name1);
