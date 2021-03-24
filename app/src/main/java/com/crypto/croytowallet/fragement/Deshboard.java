@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.icu.text.DecimalFormat;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,7 +87,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
     TextView textView,textView1;
     CardView imtsmart;
     TextView add_currency,increaseRate,null1,imtPrice;
-    String imtPrices,increaseRate1;
+    String imtPrices,imtPrices1,increaseRate1;
     KProgressHUD progressDialog;
     String currency2,CurrencySymbols;
    UserData userData;
@@ -162,6 +163,16 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
 
         overViewData();
         AirDropBalance();
+        new Handler().postDelayed(new Runnable() {
+
+
+            @Override
+            public void run() {
+                // This method will be executed once the timer is over
+                GetImtPrice();
+            }
+        }, 1000);
+
         return view;
     }
 
@@ -330,75 +341,6 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
     }
 
 
-
- public void checkBalance(){
-     UserData user = SharedPrefManager.getInstance(getContext()).getUser();
-     String id=user.getId();
-     String url1= URLs.URL_AIRDROP_BALANCE+""+id;
-    // String url="http://13.233.136.56:8080/api/user/totalAirDrop/"+id;
-
-//     balance=getView().findViewById(R.id.balance);
-
-
-
-     StringRequest stringRequest =new StringRequest(Request.Method.GET, url1, new Response.Listener<String>() {
-         @RequiresApi(api = Build.VERSION_CODES.N)
-         @Override
-         public void onResponse(String response) {
-          //   Toast.makeText(getContext(), ""+response, Toast.LENGTH_SHORT).show();
-
-
-             try {
-                 JSONObject object=new JSONObject(response);
-                String   checkBalance=object.getString("airDrop");
-
-
-
-               // textView.setText(checkBalance+".00");
-                 double balance2 = Double.parseDouble(checkBalance);
-
-              //   String s = "";
-                 double balance1 = Double.parseDouble("0.09");
-
-                Double balance = balance2*balance1;
-                 DecimalFormat df = new DecimalFormat();
-                 df.setMaximumFractionDigits(2);
-                 textView.setText(""+df.format(balance2));
-                 textView1.setText(CurrencySymbols+df.format(balance));
-              //   Toast.makeText(getContext(), ""+checkBalance, Toast.LENGTH_SHORT).show();
-             } catch (JSONException e) {
-                 e.printStackTrace();
-             }
-         }
-     }, new Response.ErrorListener() {
-         @Override
-         public void onErrorResponse(VolleyError error) {
-
-
-         }
-     }) {
-         @Override
-         protected Map<String, String> getParams() throws AuthFailureError {
-             Map<String, String> params = new HashMap<>();
-            /* params.put("_id", id);*/
-
-                return params;
-         }
-
-         @Override
-         public Map<String, String> getHeaders() throws AuthFailureError {
-             Map<String, String> headers = new HashMap<String, String>();
-
-             // headers.put("Authorization", "Bearer "+Token);
-
-             return headers;
-         }
-     };
-
-     requestQueue = Volley.newRequestQueue(getContext());
-     requestQueue.add(stringRequest);
- }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -486,64 +428,95 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
 
         String Token =userData.getToken();
 
-      StringRequest stringRequest=new StringRequest(Request.Method.GET, URLs.URL_GET_COIN_IMT, new Response.Listener<String>() {
+        Call<ResponseBody>call = RetrofitClient.getInstance().getApi().getIMTDetails(Token);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
-            public void onResponse(String response) {
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                String s =null;
 
 
-                try {
-                    JSONArray jsonArray = new JSONArray(response);
-                    for (int i=0; i<=jsonArray.length();i++){
-                        JSONObject object = jsonArray.getJSONObject(i);
-                        imtPrices =object.getString("price");
-                        increaseRate1=object.getString("percent_change_24h");
+                if (response.code()==200){
+                    try {
+                        s=response.body().string();
 
-                        System.out.println("value"+increaseRate1);
+                        JSONArray jsonArray = new JSONArray(s);
 
-                      imtPrice.setText("$"+imtPrices);
-                      increaseRate.setText(increaseRate1);
+                        for (int i=0; i<=jsonArray.length();i++){
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            // imtPrices =object.getString("price");
+                            imtPrices1 =object.getString("price");
+                            increaseRate1=object.getString("percent_change_24h");
 
-                     try {
-                         increaseRate.setTextColor(increaseRate1.contains("-")?
-                                 getContext().getResources().getColor(R.color.red): getContext().getResources().getColor(R.color.green)  );
+                            //  imtPrice.setText("$"+imtPrices);
+                            increaseRate.setText(increaseRate1);
 
-                         null1.setTextColor(increaseRate1.contains("-")?
-                                 getContext().getResources().getColor(R.color.red): getContext().getResources().getColor(R.color.green)  );
-                         if(increaseRate1.contains("-")){
-                             increaseRate.setText(increaseRate1);
-                         }else{
-                             increaseRate.setText("+"+increaseRate1);
-                         }
-                     }catch (Exception e){
+                            try {
+                                increaseRate.setTextColor(increaseRate1.contains("-")?
+                                        getContext().getResources().getColor(R.color.red): getContext().getResources().getColor(R.color.green)  );
 
-                     }
+                                null1.setTextColor(increaseRate1.contains("-")?
+                                        getContext().getResources().getColor(R.color.red): getContext().getResources().getColor(R.color.green)  );
+                                if(increaseRate1.contains("-")){
+                                    increaseRate.setText(increaseRate1);
+                                }else{
+                                    increaseRate.setText("+"+increaseRate1);
+                                }
+                            }catch (Exception e){
+
+                            }
+                        }
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
 
-                    e.printStackTrace();
+                } else if(response.code()==400){
+                    try {
+                        s=response.errorBody().string();
+                        JSONObject jsonObject1=new JSONObject(s);
+                        String error =jsonObject1.getString("error");
+
+
+                        Snacky.builder()
+                                .setActivity(getActivity())
+                                .setText(error)
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
+
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if(response.code()==401){
+
+                    Snacky.builder()
+                            .setActivity(getActivity())
+                            .setText("unAuthorization Request")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+
                 }
-              //  Toast.makeText(getContext(), ""+response, Toast.LENGTH_SHORT).show();
+
             }
 
-        }, new Response.ErrorListener() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-              //  hidepDialog();
-               // Toast.makeText(getContext(), ""+error.toString(), Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Snacky.builder()
+                        .setActivity(getActivity())
+                        .setText("Internet Problem ")
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
             }
-        }){
-          @Override
-          public Map<String, String> getHeaders() throws AuthFailureError {
-              Map<String, String> headers = new HashMap<String, String>();
+        });
 
-               headers.put("Authorization", Token);
-
-              return headers;
-          }
-      };
-
-        requestQueue = Volley.newRequestQueue(getContext());
-        requestQueue.add(stringRequest);
 
     }
 
@@ -614,6 +587,85 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
         });
         requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);
+
+    }
+
+    public void GetImtPrice(){
+        String token = userData.getToken();
+
+        String currency = currency2.toUpperCase();
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().GET_IMT_PRICE(token,currency);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                String s =null;
+
+
+                if (response.code()==200){
+                    try {
+                        s=response.body().string();
+
+                        JSONObject object = new JSONObject(s);
+                        String price = object.getString("price");
+                        Double cp = Double.parseDouble(price);
+                        Double imi_p = Double.parseDouble(imtPrices1);
+                        Double total = imi_p*cp;
+
+                        imtPrices = String.valueOf(total);
+                        imtPrice.setText(CurrencySymbols+imtPrices);
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if(response.code()==400){
+                    try {
+                        s=response.errorBody().string();
+                        JSONObject jsonObject1=new JSONObject(s);
+                        String error =jsonObject1.getString("error");
+
+
+                        Snacky.builder()
+                                .setActivity(getActivity())
+                                .setText(error)
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
+
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if(response.code()==401){
+
+                    Snacky.builder()
+                            .setActivity(getActivity())
+                            .setText("unAuthorization Request")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                Snacky.builder()
+                        .setActivity(getActivity())
+                        .setText("Internet Problem ")
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+            }
+        });
 
     }
 }

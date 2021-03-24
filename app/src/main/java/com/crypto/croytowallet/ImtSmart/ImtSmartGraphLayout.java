@@ -129,7 +129,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
         price1 = sharedPreferences1.getString("price", null);
         String increaseRate1 = sharedPreferences1.getString("chanage", null);
         increaseRate.setText(increaseRate1);
-        price.setText("$" + price1);
+        price.setText(CurrencySymbols+price1);
 
         try {
             increaseRate.setTextColor(increaseRate1.contains("-") ?

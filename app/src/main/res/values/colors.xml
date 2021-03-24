@@ -45,8 +45,8 @@
 
     <color name="graph_line">#FFFFFF</color>
 
-    <color name="start_color_graph">#e4ad09</color>
-    <color name="end_color_graph">#e4ad09</color>
+    <color name="start_color_graph">#DD7714</color>
+    <color name="end_color_graph">#DCA906</color>
 
     <color name="swap_color">#F1BB0E</color>
 

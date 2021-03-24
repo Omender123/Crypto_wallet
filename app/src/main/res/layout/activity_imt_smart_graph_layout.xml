@@ -36,7 +36,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_arrow_back_24"
-                    />
+                    app:tint="@color/graph_icon_color" />
 
                 <LinearLayout
                     android:id="@+id/linear"
@@ -365,7 +365,7 @@
                             android:layout_marginTop="5dp"
                             android:background="@color/card_background"
                             android:fontFamily="@font/montserrat"
-                            android:maxLength="6"
+                            android:maxLength="7"
                             android:textColor="@color/toolbar_text_color"
                             android:textSize="25dp"
                             android:textStyle="bold" />

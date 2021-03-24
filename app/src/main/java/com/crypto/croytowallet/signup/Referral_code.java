@@ -34,14 +34,14 @@ public class Referral_code extends AppCompatActivity {
         setContentView(R.layout.activity_referral_code);
         referral_ready=findViewById(R.id.referral_ready);
         relativeLayout=findViewById(R.id.referral_layout);
-
+        enterReferral_code=findViewById(R.id.referral_code);
         scan = findViewById(R.id.scan);
         // animation
 
         fade_in = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_in);
        // relativeLayout.startAnimation(fade_in);
 
-        enterReferral_code=findViewById(R.id.referral_code);
+
 
         sharedPreferences=getSharedPreferences("referral_scan", Context.MODE_PRIVATE);
 

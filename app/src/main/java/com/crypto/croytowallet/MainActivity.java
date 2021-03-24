@@ -78,6 +78,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loadLocale();
+
+        if (InitApplication.getInstance().isNightModeEnabled()) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
         setContentView(R.layout.activity_main);
 
         toolbar=findViewById(R.id.toolbar);
@@ -131,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        sharedPreferences = getSharedPreferences("night",0);
+      /*  sharedPreferences = getSharedPreferences("night",0);
         Boolean booleanValue = sharedPreferences.getBoolean("night_mode",false);
         if (booleanValue){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -143,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             drawerSwitch.setChecked(false);
         }
-
+*/
 
         status_img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -230,7 +237,41 @@ public class MainActivity extends AppCompatActivity {
 
         MenuItem theme = menu.findItem(R.id.dark_mode);
          drawerSwitch = (Switch) theme.getActionView().findViewById(R.id.drawer_switch);
+
+
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
+            drawerSwitch.setChecked(true);
+
         drawerSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    InitApplication.getInstance().setIsNightModeEnabled(true);
+                  //  Intent intent = getIntent();
+                    //intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+
+                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    finish();
+                    startActivity(intent);
+
+                } else {
+                    InitApplication.getInstance().setIsNightModeEnabled(false);
+                  //  Intent intent = getIntent();
+                    //intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    finish();
+                    startActivity(intent);
+                }
+
+
+            }
+        });
+
+
+
+       /* drawerSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -250,9 +291,11 @@ public class MainActivity extends AppCompatActivity {
 
                     //Toast.makeText(MainActivity.this, "Switch turned off", Toast.LENGTH_SHORT).show();
                 }
+
+
             }
         });
-
+*/
         MenuItem language = menu.findItem(R.id.langauge);
 
         language.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {

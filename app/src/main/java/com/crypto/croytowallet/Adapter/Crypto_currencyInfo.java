@@ -3,6 +3,8 @@ package com.crypto.croytowallet.Adapter;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.icu.text.DecimalFormat;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.crypto.croytowallet.Interface.CryptoClickListner;
@@ -42,6 +45,7 @@ private CryptoClickListner cryptoClickListner;
         return new MyHolder(view);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
         String image=crptoInfoModels.get(position).getImage();
@@ -56,32 +60,6 @@ private CryptoClickListner cryptoClickListner;
       String   CurrencySymbols =sharedPreferences.getString("Currency_Symbols","$");
 
 
-      /*  String[] axisData = {"Jan", "Feb", "Mar", "Apr", "May"};
-        int[] yAxisData = {30, 10, 30, 10, 50};
-
-        List yAxisValues = new ArrayList();
-        List axisValues = new ArrayList();
-
-
-        Line line = new Line(yAxisValues).setColor(Color.parseColor("#4658e0"));
-
-        for (int i = 0; i < axisData.length; i++) {
-            axisValues.add(i, new AxisValue(i).setLabel(axisData[i]));
-        }
-
-        for (int i = 0; i < yAxisData.length; i++) {
-            yAxisValues.add(new PointValue(i, yAxisData[i]));
-        }
-        List lines = new ArrayList();
-        lines.add(line);
-        LineChartData data = new LineChartData();
-        data.setLines(lines);
-        Axis axis = new Axis();
-        axis.setValues(axisValues);
-        Axis yAxis = new Axis();
-        data.setAxisYLeft(yAxis);
-        holder.lineChartView.setLineChartData(data);
-*/
         Picasso.get().load(image).into(holder.imageView);
         holder.name.setText(iconname);
         holder.currencyPrice.setText(CurrencySymbols+CurrentPrice);

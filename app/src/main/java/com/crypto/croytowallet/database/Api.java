@@ -295,4 +295,19 @@ public interface Api {
             @Query("tsym") String currency,
             @Query("limit") int days
     );
+
+    @FormUrlEncoded
+    @POST("currency/CurrencyPrice")
+    Call<ResponseBody>GET_IMT_PRICE(
+            @Header("Authorization")String Authtoken,
+            @Field("currency") String Currency
+    );
+
+    @GET("currency/IMT")
+    Call<ResponseBody> getIMTDetails(
+            @Header("Authorization") String token
+    );
+
+    @GET("all")
+    Call<ResponseBody> getCountryname();
 }

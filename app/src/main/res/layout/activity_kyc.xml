@@ -5,7 +5,6 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:background="@color/background"
-android:paddingBottom="-60dp"
 tools:context=".Activity.Kyc">
 
 <LinearLayout
@@ -54,7 +53,6 @@ tools:context=".Activity.Kyc">
         android:paddingBottom="30dp"
         android:orientation="vertical">
 
-
         <EditText
             android:id="@+id/username"
             android:layout_width="match_parent"
@@ -67,22 +65,27 @@ tools:context=".Activity.Kyc">
             android:textAlignment="textStart"
             android:textColor="@color/toolbar_text_color"
             android:ems="10"
+            android:paddingStart="20dp"
             android:background="@drawable/verifying_textview"/>
 
 
-        <EditText
-            android:id="@+id/transactionPin"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:hint="@string/kyc_country"
-            android:inputType="textLongMessage"
-            android:textAlignment="textStart"
-            android:textColor="@color/toolbar_text_color"
-            android:ems="10"
-            android:background="@drawable/verifying_textview"/>
+            android:background="@drawable/verifying_textview"
+            android:layout_marginTop="20dp">
+            <Spinner
+                android:id="@+id/CountryNameSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                />
+        </LinearLayout>
+
 
         <EditText
             android:id="@+id/otp"
@@ -93,6 +96,7 @@ tools:context=".Activity.Kyc">
             android:layout_marginTop="20dp"
             android:textAlignment="textStart"
             android:hint="@string/kyc_address"
+            android:paddingStart="20dp"
             android:lineSpacingExtra="10dp"
             android:background="@drawable/verifying_textview"/>
 

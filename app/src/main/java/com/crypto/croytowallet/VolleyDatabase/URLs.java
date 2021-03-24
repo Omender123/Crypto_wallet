@@ -16,11 +16,6 @@ public class URLs {
     // peer to peer api
     public static final String URL_PEER_TO_PEER = ROOT_URL + "transaction/peerToPeer";
 
-    //add money to wallet api
-    public static final String URL_CREATE_ORDER_ID = ROOT_URL + "razorpay/order";
-    public static final String URL_CAPTURE_ORDER = ROOT_URL + "razorpay/capture";
-    public static final String URL_SAVE_DATA = ROOT_URL + "razorpay/data?id=";
-
     // all transaction history api
     public static final String URL_TRANSACTION_HISTORY = ROOT_URL + "transaction/allPeerTransactiones1";
     public static final String URL_TRANSACTION_HISTORY_FULL = ROOT_URL + "transaction/allPeerTransactiones1";
@@ -28,14 +23,10 @@ public class URLs {
     // google or email 2fa
     public static final String URL_2FA = ROOT_URL + "user/twoFaEnableOrDisable";
 
-    //coinTransfer
-    public static final String URL_COIN_TRANSFER = ROOT_URL + "transaction/transfer";
 
     //2fa api
     public static final String URL_USER_DETAILS = ROOT_URL + "user/userInfromation";
 
-    //Banner api
-    public static final String URL_BANNER = ROOT_URL + "banner";
 
     //Active Device
     public static final String URL_ACTIVE_DEVICE = ROOT_URL + "user/findCurrentlyActiveDevices";
