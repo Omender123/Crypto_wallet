@@ -54,18 +54,83 @@ tools:context=".Activity.Kyc">
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/username"
+            android:id="@+id/house_no"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="40dp"
             android:inputType="text"
-            android:hint="@string/username"
+            android:hint="@string/house_no"
             android:textAlignment="textStart"
             android:textColor="@color/toolbar_text_color"
             android:ems="10"
             android:paddingStart="20dp"
+            android:background="@drawable/verifying_textview"/>
+
+        <EditText
+            android:id="@+id/street_address"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:inputType="text"
+            android:hint="@string/street_add"
+            android:textAlignment="textStart"
+            android:textColor="@color/toolbar_text_color"
+            android:ems="10"
+            android:paddingStart="20dp"
+            android:background="@drawable/verifying_textview"/>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="vertical"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:gravity="center"
+            android:background="@drawable/verifying_textview"
+            android:layout_marginTop="20dp">
+            <Spinner
+                android:id="@+id/CountryNameSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_margin="5dp"
+
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/verifying_textview"
+            android:layout_marginTop="20dp">
+            <Spinner
+                android:id="@+id/stateNameSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                />
+        </LinearLayout>
+        <EditText
+            android:id="@+id/otp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:textAlignment="textStart"
+            android:hint="@string/zip_code"
+            android:paddingStart="20dp"
+            android:lineSpacingExtra="10dp"
+            android:inputType="number"
             android:background="@drawable/verifying_textview"/>
 
 
@@ -78,7 +143,7 @@ tools:context=".Activity.Kyc">
             android:background="@drawable/verifying_textview"
             android:layout_marginTop="20dp">
             <Spinner
-                android:id="@+id/CountryNameSpinner"
+                android:id="@+id/select_documet_Spinner"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:paddingStart="10dp"
@@ -88,51 +153,70 @@ tools:context=".Activity.Kyc">
 
 
         <EditText
-            android:id="@+id/otp"
+            android:id="@+id/document_no"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
+            android:hint="@string/doc_no"
             android:textAlignment="textStart"
-            android:hint="@string/kyc_address"
             android:paddingStart="20dp"
-            android:lineSpacingExtra="10dp"
-            android:background="@drawable/verifying_textview"/>
-
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:hint="@string/doc_type"
-            android:textAlignment="textStart"
+            android:inputType="text"
             android:textColor="@color/toolbar_text_color"
             android:ems="10"
             android:background="@drawable/verifying_textview"/>
 
 
-        <TextView
-            android:id="@+id/document"
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp">
+
+            <TextView
+                android:id="@+id/chooseFile"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/verifying_textview"
+                android:fontFamily="@font/montserrat"
+                android:paddingTop="14dp"
+                android:text="@string/choose"
+                android:textAlignment="center"
+                android:textColor="@color/toolbar_text_color"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+          <!--  <ImageView
+                android:id="@+id/camra"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/ic_camra"/>-->
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/setImageView"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
             android:layout_marginTop="20dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:background="@drawable/custom_border"
-            android:gravity="center"
-            android:text="@string/docu_men"/>
-
+            android:scaleType="fitXY"
+            android:padding="10dp"/>
         <Button
-
+            android:id="@+id/submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/done"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="30dp"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:background="@drawable/button_border"/>

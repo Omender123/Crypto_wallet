@@ -256,4 +256,10 @@
     <string name = "kyc_address"> Address </string>
     <string name = "doc_type"> Uri ng dokumento </string>
     <string name = "docu_men"> Mga Dokumento </string>
+
+    <string name = "house_no"> House / Suite / apartment </string>
+    <string name = "street_add"> Street Address </string>
+    <string name = "zip_code"> Zip code </string>
+    <string name = "doc_no"> Numero ng Dokumento </string>
+    <string name = "choose"> Pumili ng file </string>
 </resources>

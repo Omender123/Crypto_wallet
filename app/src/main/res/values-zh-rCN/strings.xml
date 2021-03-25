@@ -251,4 +251,12 @@
     <string name ="kyc_address">地址</string>
     <string name ="doc_type">文档类型</string>
     <string name ="docu_men">文档</string>
+
+    <string name="house_no">房屋/套房/公寓</string>
+    <string name="street_add">街道地址</string>
+    <string name="zip_code">邮政编码</string>
+    <string name="doc_no">文档编号</string>
+
+    <string name ="choose">选择文件</string>
+
 </resources>

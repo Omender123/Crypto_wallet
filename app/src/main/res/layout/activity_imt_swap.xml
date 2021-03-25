@@ -320,7 +320,7 @@
 
 <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="90dp"
+    android:layout_height="70dp"
     android:orientation="vertical"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp">
@@ -382,11 +382,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="65dp"
+        android:layout_height="45dp"
         android:orientation="horizontal">
        <LinearLayout
            android:layout_width="100dp"
-           android:layout_height="60dp"
+           android:layout_height="40dp"
            android:orientation="vertical">
            <TextView
                android:id="@+id/gwei_low"
@@ -401,6 +401,7 @@
                android:id="@+id/min_low"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
+               android:visibility="gone"
                android:text="$1560 |- 6min 6ago"
                android:textAlignment="center"
                android:textSize="9dp"
@@ -411,7 +412,7 @@
        </LinearLayout>
         <LinearLayout
             android:layout_width="150dp"
-            android:layout_height="60dp"
+            android:layout_height="40dp"
             android:layout_marginLeft="2dp"
             android:orientation="vertical">
             <TextView
@@ -428,6 +429,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="$1560 |- 6min 6ago"
+                android:visibility="gone"
                 android:textAlignment="center"
                 android:textSize="9dp"
                 android:textStyle="bold"
@@ -437,7 +439,7 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="40dp"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/gwei_high"
@@ -453,6 +455,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="$1560 |- 6min 6ago"
+                android:visibility="gone"
                 android:textAlignment="center"
                 android:textSize="9dp"
                 android:textStyle="bold"

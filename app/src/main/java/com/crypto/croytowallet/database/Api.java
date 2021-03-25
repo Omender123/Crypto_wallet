@@ -310,4 +310,11 @@ public interface Api {
 
     @GET("all")
     Call<ResponseBody> getCountryname();
+
+    @FormUrlEncoded
+    @POST("currency/countryState")
+    Call<ResponseBody>GET_State(
+            @Field("code") String code
+    );
+
 }

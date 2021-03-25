@@ -98,4 +98,7 @@ dependencies {
         exclude group: 'org.json', module: 'json'
     }
 
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.pixplicity.sharp:library:1.1.0'
+
 }

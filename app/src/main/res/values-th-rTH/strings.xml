@@ -255,4 +255,11 @@
     <string name = "kyc_address"> ที่อยู่ </string>
     <string name = "doc_type"> ประเภทเอกสาร </string>
     <string name = "docu_men"> เอกสาร </string>
+
+    <string name = "house_no"> บ้าน / ห้องชุด / อพาร์ตเมนต์ </string>
+    <string name = "street_add"> ที่อยู่ </string>
+    <string name = "zip_code"> รหัสไปรษณีย์ </string>
+    <string name = "doc_no"> หมายเลขเอกสาร </string>
+
+    <string name ="choose"> เลือกไฟล์ </string>
 </resources>

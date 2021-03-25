@@ -254,4 +254,12 @@
     <string name="doc_type">Document type</string>
     <string name="docu_men">Documents</string>
 
+    <string name="house_no">House/Suite/apartment</string>
+    <string name="street_add">Street Address</string>
+    <string name="zip_code">Zip code</string>
+    <string name="doc_no">Document Number</string>
+
+    <string name="choose">Choose file</string>
+
+
 </resources>

@@ -243,14 +243,20 @@
 
     <string name="reff">私は紹介コードを持っていません</string>
 
-    <string name = "noconnection"> WIFIネットワークに接続するか、モバイルデータを有効にしてください</string>
+    <string name="noconnection"> WIFIネットワークに接続するか、モバイルデータを有効にしてください</string>
     <string name="recent_txt">最近の取引はありません</string>
     <string name="scan_txt">स画面上のボタンをクリックしてQRコードをスキャンします</string>
 
-    <string name = "kyc"> KYC </string>
-    <string name = "kyc_txt">セキュリティを強化するためにkycを完成させてください</string>
-    <string name ="kyc_country">国</string>
-    <string name ="kyc_address">アドレス</string>
-    <string name ="doc_type">ドキュメントタイプ</string>
-    <string name ="docu_men">ドキュメント</string>
+    <string name="kyc"> KYC </string>
+    <string name="kyc_txt">セキュリティを強化するためにkycを完成させてください</string>
+    <string name="kyc_country">国</string>
+    <string name="kyc_address">アドレス</string>
+    <string name="doc_type">ドキュメントタイプ</string>
+    <string name="docu_men">ドキュメント</string>
+
+    <string name="house_no">家/スイート/アパート</string>
+    <string name="street_add">番地</string>
+    <string name="zip_code">郵便番号</string>
+    <string name="doc_no">ドキュメント番号</string>
+    <string name ="choose">ファイルを選択</string>
 </resources>
