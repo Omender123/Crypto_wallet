@@ -2,6 +2,10 @@ package com.crypto.croytowallet.database;
 
 import com.google.gson.JsonObject;
 
+import java.util.Map;
+
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -13,6 +17,8 @@ import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -26,7 +32,7 @@ public interface Api {
             @Field("email") String email,
             @Field("username") String username,
             @Field("password") String password,
-            @Field("referalCode")String referalCode,
+            @Field("referalCode") String referalCode,
             @Field("phone") String phone);
 
     @FormUrlEncoded
@@ -38,7 +44,7 @@ public interface Api {
             @Field("location") String location,
             @Field("os") String OsName,
             @Field("ip") String IpAddress
-            );
+    );
 
     @FormUrlEncoded
     @POST("user/transactionPin")
@@ -51,28 +57,28 @@ public interface Api {
 
     @FormUrlEncoded
     @POST("user/sendOTP")
-    Call<ResponseBody>sendOtp(
+    Call<ResponseBody> sendOtp(
             @Field("username") String username
     );
 
 
     @FormUrlEncoded
     @POST("user/otpExpiry")
-    Call<ResponseBody>expireOtp(
+    Call<ResponseBody> expireOtp(
             @Field("username") String username
     );
 
     @FormUrlEncoded
     @POST("user/emailVerify")
-    Call<ResponseBody>OtpVerify(
+    Call<ResponseBody> OtpVerify(
             @Field("username") String username,
             @Field("otp") String otp
 
-            );
+    );
 
     @FormUrlEncoded
     @POST("user/checkGoogleAuthentication")
-    Call<ResponseBody>GoogleAuthVerify(
+    Call<ResponseBody> GoogleAuthVerify(
             @Field("username") String username,
             @Field("token") String token
 
@@ -80,17 +86,17 @@ public interface Api {
 
     @FormUrlEncoded
     @PUT("user/forgot-password")
-    Call<ResponseBody>ChanagePassword(
+    Call<ResponseBody> ChanagePassword(
             @Field("username") String username,
             @Field("mnemonic") String mnemonic,
             @Field("password") String password,
-            @Field("otp")  String Otp
+            @Field("otp") String Otp
     );
 
     @FormUrlEncoded
     @POST("transaction/peerToPeer")
-    Call<ResponseBody>P2P(
-            @Header("Authorization")String token,
+    Call<ResponseBody> P2P(
+            @Header("Authorization") String token,
             @Field("amount") String amount,
             @Field("transactionPin") String transactionPin,
             @Field("toUserId") String userId,
@@ -99,37 +105,37 @@ public interface Api {
 
     @FormUrlEncoded
     @POST("transaction/transfer")
-    Call<ResponseBody>coinTransfer(
-            @Header("Authorization")String Authtoken,
+    Call<ResponseBody> coinTransfer(
+            @Header("Authorization") String Authtoken,
             @Field("cryptoCurrency") String crptoCurency,
             @Field("deliveryRate") String deliveryRate,
             @Field("token") String token,
             @Field("otp") String otp,
             @Field("cryptoAmt") String amount,
             @Field("transactionPin") String transactionPin,
-          /*  @Field("userAddress") String userAddress,*/
+            /*  @Field("userAddress") String userAddress,*/
             @Field("receiverAddress") String receiverAddress
     );
 
     @FormUrlEncoded
     @POST("user/balance")
-    Call<ResponseBody>Balance(
-            @Header("Authorization")String Authtoken,
+    Call<ResponseBody> Balance(
+            @Header("Authorization") String Authtoken,
             @Field("type") String type
     );
 
     @FormUrlEncoded
     @POST("user/balance")
-    Call<ResponseBody>AirDropBalance(
-            @Header("Authorization")String Authtoken,
+    Call<ResponseBody> AirDropBalance(
+            @Header("Authorization") String Authtoken,
             @Field("type") String type,
             @Field("currency") String currency
     );
 
     @FormUrlEncoded
     @POST("transaction/swapCurrency")
-    Call<ResponseBody>IMT_SWAP(
-            @Header("Authorization")String Authtoken,
+    Call<ResponseBody> IMT_SWAP(
+            @Header("Authorization") String Authtoken,
             @Field("sendCurrency") String sendCurrency,
             @Field("receiveCurrency") String receiveCurrency,
             @Field("deliveryRate") int rate,
@@ -142,27 +148,27 @@ public interface Api {
     @POST("user/appCrashed/transactionPin")
     Call<ResponseBody> setTransactionPin(
             @Field("username") String username,
-             @Field("transactionPin") String transactionPin,
+            @Field("transactionPin") String transactionPin,
             @Field("password") String password);
 
     @FormUrlEncoded
     @POST("user/removeCurrentlyActiveDevices")
-    Call<ResponseBody>remove_JWT(
-            @Header("Authorization")String Authtoken,
+    Call<ResponseBody> remove_JWT(
+            @Header("Authorization") String Authtoken,
             @Field("username") String username,
             @Field("jwt") String jwt
     );
 
     @FormUrlEncoded
     @POST("user/sendEmailAfterLogin")
-    Call<ResponseBody>Send_Email(
+    Call<ResponseBody> Send_Email(
             @Field("userId") String userId
     );
 
     @FormUrlEncoded
     @POST("user/viewMnemonic")
-    Call<ResponseBody>get_Mnenonic(
-            @Header("Authorization")String Authtoken,
+    Call<ResponseBody> get_Mnenonic(
+            @Header("Authorization") String Authtoken,
             @Field("userId") String userId,
             @Field("transactionPin") String transactionPin,
             @Field("otp") String otp
@@ -170,15 +176,15 @@ public interface Api {
 
     @FormUrlEncoded
     @POST("transaction/send/user")
-    Call<ResponseBody>get_SendHistory(
-            @Header("Authorization")String Authtoken,
+    Call<ResponseBody> get_SendHistory(
+            @Header("Authorization") String Authtoken,
             @Field("crypto") String type
     );
 
     @FormUrlEncoded
     @POST("transaction/receive/user")
-    Call<ResponseBody>get_ReceivedHistory(
-            @Header("Authorization")String Authtoken,
+    Call<ResponseBody> get_ReceivedHistory(
+            @Header("Authorization") String Authtoken,
             @Field("crypto") String type
     );
 
@@ -187,27 +193,29 @@ public interface Api {
             @Header("Authorization") String token
     );
 
-   // @FormUrlEncoded
-   // @Multipart
+    // @FormUrlEncoded
+    // @Multipart
     @POST("chat/chatToAdmin")
-    Call<ResponseBody> SendMessageApi( @Header("Authorization") String auth_token,
-                              @Body JsonObject object);
+    Call<ResponseBody> SendMessageApi(@Header("Authorization") String auth_token,
+                                      @Body JsonObject object);
 
 
-  //  @FormUrlEncoded
+    //  @FormUrlEncoded
     @POST("chat/insertUser")
-    Call<ResponseBody>ChatActive(
-            @Header("Authorization")String Authtoken
+    Call<ResponseBody> ChatActive(
+            @Header("Authorization") String Authtoken
     );
 
     @POST("chat/newChatDocument")
-    Call<ResponseBody>newChatSeason(
-            @Header("Authorization")String Authtoken
+    Call<ResponseBody> newChatSeason(
+            @Header("Authorization") String Authtoken
     );
+
     @POST("chat/ejectUser")
-    Call<ResponseBody>Chat_Un_Active(
-            @Header("Authorization")String Authtoken
+    Call<ResponseBody> Chat_Un_Active(
+            @Header("Authorization") String Authtoken
     );
+
     @GET("chat/getMessages")
     Call<ResponseBody> getChat(
             @Header("Authorization") String Authorization
@@ -217,13 +225,13 @@ public interface Api {
     Call<ResponseBody> deleteAllMessage(@Header("Authorization") String Authorization);
 
     @DELETE("api/chat/removeMessage/{id}")
-    Call<ResponseBody> deleteMessage(@Header("Authorization") String Authorization,@Path("id") String messageId);
+    Call<ResponseBody> deleteMessage(@Header("Authorization") String Authorization, @Path("id") String messageId);
 
 
     @FormUrlEncoded
     @POST("user/threatMode")
-    Call<ResponseBody>Threat_mode_Api(
-            @Header("Authorization")String Authtoken,
+    Call<ResponseBody> Threat_mode_Api(
+            @Header("Authorization") String Authtoken,
             @Field("password") String password,
             @Field("otp") String otp,
             @Field("transactionPin") String transactionPin
@@ -231,12 +239,12 @@ public interface Api {
 
     @FormUrlEncoded
     @POST("user/unlockAccount")
-    Call<ResponseBody>Unlock_Account_Api(
-             @Field("username") String username,
+    Call<ResponseBody> Unlock_Account_Api(
+            @Field("username") String username,
             @Field("transactionPin") String transactionPin,
-             @Field("otp") String otp,
-             @Field("password") String new_password,
-             @Field("mnemonic") String Mnemonic
+            @Field("otp") String otp,
+            @Field("password") String new_password,
+            @Field("mnemonic") String Mnemonic
 
     );
 
@@ -250,9 +258,9 @@ public interface Api {
 
     @FormUrlEncoded
     @POST("FAQ/getFAQ")
-    Call<ResponseBody>GetFAQ(
+    Call<ResponseBody> GetFAQ(
             @Field("subject") String subject
-            );
+    );
 
 
     @GET("chat/chatDocument/{id}")
@@ -269,7 +277,6 @@ public interface Api {
     );
 
 
-
     @GET("coins/{id}/market_chart")
     Call<ResponseBody> getGraphData1(
             @Path("id") String id,
@@ -277,20 +284,21 @@ public interface Api {
             @Query("days") String days,
             @Query("interval") String interval
     );
+
     @GET("notification/user/allNotification")
     Call<ResponseBody> getNotification(
             @Header("Authorization") String Authorization
     );
 
     @GET("histohour")
-    Call<ResponseBody>ImtGraph1d(
+    Call<ResponseBody> ImtGraph1d(
             @Query("fsym") String coinName,
             @Query("tsym") String currency,
-             @Query("limit") int hour
-            );
+            @Query("limit") int hour
+    );
 
     @GET("histoday")
-    Call<ResponseBody>ImtGraphall(
+    Call<ResponseBody> ImtGraphall(
             @Query("fsym") String coinName,
             @Query("tsym") String currency,
             @Query("limit") int days
@@ -298,8 +306,8 @@ public interface Api {
 
     @FormUrlEncoded
     @POST("currency/CurrencyPrice")
-    Call<ResponseBody>GET_IMT_PRICE(
-            @Header("Authorization")String Authtoken,
+    Call<ResponseBody> GET_IMT_PRICE(
+            @Header("Authorization") String Authtoken,
             @Field("currency") String Currency
     );
 
@@ -313,8 +321,22 @@ public interface Api {
 
     @FormUrlEncoded
     @POST("currency/countryState")
-    Call<ResponseBody>GET_State(
+    Call<ResponseBody> GET_State(
             @Field("code") String code
     );
 
+
+    @PUT("user")
+    Call<ResponseBody> SetAddress(
+            @Header("Authorization") String token,
+            @Body JsonObject object
+    );
+
+    @Multipart
+    @POST("user/kyc")
+    Call<ResponseBody> Kyc(@Header("Authorization") String authorization,
+                           @Part MultipartBody.Part image,
+                           @Part("number") RequestBody doc_no,
+                           @Part("type") RequestBody doc_type
+    );
 }

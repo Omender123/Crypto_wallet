@@ -120,7 +120,7 @@ tools:context=".Activity.Kyc">
                 />
         </LinearLayout>
         <EditText
-            android:id="@+id/otp"
+            android:id="@+id/zippin"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginRight="20dp"
@@ -207,7 +207,7 @@ tools:context=".Activity.Kyc">
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/custom_border"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:padding="10dp"/>
         <Button
             android:id="@+id/submit"

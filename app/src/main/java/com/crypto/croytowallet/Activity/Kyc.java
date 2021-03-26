@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -17,17 +18,25 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crypto.croytowallet.Adapter.CountryNameSpinnerAddapter;
+import com.crypto.croytowallet.Chat.TicketChat;
+import com.crypto.croytowallet.ImagePath;
+import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.Model.CountryModel;
 import com.crypto.croytowallet.R;
+import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.Utility;
 import com.crypto.croytowallet.database.RetrofitClient;
 import com.crypto.croytowallet.database.RetrofitCountryName;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONArray;
@@ -42,8 +51,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import de.mateware.snacky.Snacky;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,7 +65,7 @@ import retrofit2.Response;
 public class Kyc extends AppCompatActivity implements View.OnClickListener {
     Spinner countryNameSpinner,stateNameSpinner,selectDocumentSpinner;
     TextView chooseFile;
-    String countryName,stateName,documentName;
+    String countryName,stateName,documentName,token,house_no,street_no,zipCode,document;
     KProgressHUD progressDialog;
     ArrayList<CountryModel>countryModels ;
     ArrayList<String>stateList;
@@ -61,8 +74,9 @@ public class Kyc extends AppCompatActivity implements View.OnClickListener {
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     private ImageView ivImage;
     private String userChoosenTask;
-    private String Document_img1="";
-
+    File file;
+    UserData user;
+    EditText house,street,zipPin,document_no;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +85,10 @@ public class Kyc extends AppCompatActivity implements View.OnClickListener {
         stateNameSpinner = findViewById(R.id.stateNameSpinner);
         selectDocumentSpinner = findViewById(R.id.select_documet_Spinner);
         chooseFile = findViewById(R.id.chooseFile);
+        house = findViewById(R.id.house_no);
+        street = findViewById(R.id.street_address);
+        zipPin = findViewById(R.id.zippin);
+        document_no = findViewById(R.id.document_no);
        // takeImge = findViewById(R.id.camra);
         ivImage = findViewById(R.id.setImageView);
         submit = findViewById(R.id.submit);
@@ -79,6 +97,9 @@ public class Kyc extends AppCompatActivity implements View.OnClickListener {
 
         countryModels = new ArrayList<CountryModel>();
         stateList  = new ArrayList<String>();
+
+         user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
+         token=user.getToken();
 
         getCountryName();
 
@@ -102,8 +123,28 @@ public class Kyc extends AppCompatActivity implements View.OnClickListener {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+               house_no = house.getText().toString().trim();
+               street_no = street.getText().toString().trim();
+                document = document_no.getText().toString().trim();
+                zipCode = zipPin.getText().toString().trim();
 
-                Toast.makeText(Kyc.this, ""+Document_img1, Toast.LENGTH_SHORT).show();
+                if (house_no.isEmpty() || street_no.isEmpty() || document.isEmpty() || zipCode.isEmpty()){
+
+                    Snacky.builder()
+                            .setActivity(Kyc.this)
+                            .setText("Please filled all required details")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .warning()
+                            .show();
+
+                }else{
+
+                    setAddress(token,house_no,street_no,countryName,stateName,zipCode);
+                    KycSet(token,file,documentName,document);
+                }
+
+
             }
         });
     }
@@ -302,9 +343,7 @@ public class Kyc extends AppCompatActivity implements View.OnClickListener {
         switch (requestCode) {
             case Utility.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if(userChoosenTask.equals("Take Photo"))
-                        cameraIntent();
-                    else if(userChoosenTask.equals("Choose from Library"))
+                    if(userChoosenTask.equals("Choose from Library"))
                         galleryIntent();
                 } else {
                     //code for deny
@@ -314,7 +353,7 @@ public class Kyc extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void selectImage() {
-        final CharSequence[] items = { "Take Photo", "Choose from Library",
+        final CharSequence[] items = { "Choose from Library",
                 "Cancel" };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Kyc.this);
@@ -323,13 +362,7 @@ public class Kyc extends AppCompatActivity implements View.OnClickListener {
             @Override
             public void onClick(DialogInterface dialog, int item) {
                 boolean result= Utility.checkPermission(Kyc.this);
-
-                if (items[item].equals("Take Photo")) {
-                    userChoosenTask ="Take Photo";
-                    if(result)
-                        cameraIntent();
-
-                } else if (items[item].equals("Choose from Library")) {
+                if (items[item].equals("Choose from Library")) {
                     userChoosenTask ="Choose from Library";
                     if(result)
                         galleryIntent();
@@ -350,12 +383,6 @@ public class Kyc extends AppCompatActivity implements View.OnClickListener {
         startActivityForResult(Intent.createChooser(intent, "Select File"),SELECT_FILE);
     }
 
-    private void cameraIntent()
-    {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, REQUEST_CAMERA);
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -363,36 +390,9 @@ public class Kyc extends AppCompatActivity implements View.OnClickListener {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == SELECT_FILE)
                 onSelectFromGalleryResult(data);
-            else if (requestCode == REQUEST_CAMERA)
-                onCaptureImageResult(data);
         }
     }
 
-    private void onCaptureImageResult(Intent data) {
-        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-
-        File destination = new File(Environment.getExternalStorageDirectory(),
-                System.currentTimeMillis() + ".jpg");
-
-        FileOutputStream fo;
-        try {
-            destination.createNewFile();
-            fo = new FileOutputStream(destination);
-            fo.write(bytes.toByteArray());
-            fo.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        ivImage.setImageBitmap(thumbnail);
-        BitMapToString(thumbnail);
-        thumbnail=getResizedBitmap(thumbnail, 400);
-
-    }
 
     @SuppressWarnings("deprecation")
     private void onSelectFromGalleryResult(Intent data) {
@@ -407,31 +407,175 @@ public class Kyc extends AppCompatActivity implements View.OnClickListener {
         }
 
         ivImage.setImageBitmap(bm);
-        bm=getResizedBitmap(bm, 400);
-        BitMapToString(bm);
-    }
+        Uri uri = data.getData();
+        System.out.println("urii  "+uri +" "+uri.getPath());
+        String path  = ImagePath.getPath(Kyc.this,uri);
+        System.out.println("urii path "+path );
+        if(path!=null && !path.equals("")) {
+           file = new File(path);
 
-
-    public String BitMapToString(Bitmap userImage1) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        userImage1.compress(Bitmap.CompressFormat.PNG, 60, baos);
-        byte[] b = baos.toByteArray();
-        Document_img1 = Base64.encodeToString(b, Base64.DEFAULT);
-        return Document_img1;
-    }
-
-    public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
-        int width = image.getWidth();
-        int height = image.getHeight();
-
-        float bitmapRatio = (float)width / (float) height;
-        if (bitmapRatio > 1) {
-            width = maxSize;
-            height = (int) (width / bitmapRatio);
-        } else {
-            height = maxSize;
-            width = (int) (height * bitmapRatio);
         }
-        return Bitmap.createScaledBitmap(image, width, height, true);
+
     }
+
+    public void setAddress(String token,String house,String street, String country,String state, String zip_code ){
+
+
+        progressDialog = KProgressHUD.create(Kyc.this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Please wait.....")
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
+
+        showpDialog();
+
+
+
+        JsonObject bodyParameters = new JsonObject();
+
+        JsonObject data = new JsonObject();
+        data.addProperty("street",street);
+        data.addProperty("house",house);
+        data.addProperty("zipCode",zip_code);
+        data.addProperty("state",state);
+        data.addProperty("country",country);
+        bodyParameters.add("address",data);
+
+        Call<ResponseBody>call = RetrofitClient.getInstance().getApi().SetAddress(token,bodyParameters);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+               hidepDialog();
+               String  s=null;
+               if (response.code()==200){
+
+                        }else if (response.code()==400){
+
+                   try {
+                       s=response.errorBody().string();
+                       JSONObject jsonObject1=new JSONObject(s);
+                       String error =jsonObject1.getString("error");
+
+
+                       Snacky.builder()
+                               .setActivity(Kyc.this)
+                               .setText(error)
+                               .setDuration(Snacky.LENGTH_SHORT)
+                               .setActionText(android.R.string.ok)
+                               .error()
+                               .show();
+
+
+                   } catch (IOException | JSONException e) {
+                       e.printStackTrace();
+                   }
+
+                } else if (response.code()==401){
+                   Snacky.builder()
+                           .setActivity(Kyc.this)
+                           .setText("unAuthorization Request")
+                           .setDuration(Snacky.LENGTH_SHORT)
+                           .setActionText(android.R.string.ok)
+                           .error()
+                           .show();
+
+               }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                hidepDialog();
+                Snacky.builder()
+                        .setActivity(Kyc.this)
+                        .setText("Internet problem")
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+            }
+        });
+    }
+
+    public void KycSet(String Token,File file,String documentType,String document_no){
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part image =
+                MultipartBody.Part.createFormData("kyc", file.getName(), requestFile);
+
+        RequestBody doc_no =
+                RequestBody.create(
+                        MediaType.parse("multipart/form-data"), document_no);
+        RequestBody doc_type =
+                RequestBody.create(
+                        MediaType.parse("multipart/form-data"),documentType);
+
+
+        Call<ResponseBody>call = RetrofitClient.getInstance().getApi().Kyc(Token,image,doc_no,doc_type);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String  s=null;
+                if (response.code()==200){
+                    try {
+                        s = response.body().string();
+
+
+                        Toast.makeText(Kyc.this, "Successfully Submit", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }else if (response.code()==400){
+
+                    try {
+                        s=response.errorBody().string();
+                        JSONObject jsonObject1=new JSONObject(s);
+                        String error =jsonObject1.getString("error");
+
+
+                        Snacky.builder()
+                                .setActivity(Kyc.this)
+                                .setText(error)
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
+
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if (response.code()==401){
+                    Snacky.builder()
+                            .setActivity(Kyc.this)
+                            .setText("unAuthorization Request")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Snacky.builder()
+                        .setActivity(Kyc.this)
+                        .setText(t.getMessage())
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+            }
+        });
+
+
+    }
+
 }
