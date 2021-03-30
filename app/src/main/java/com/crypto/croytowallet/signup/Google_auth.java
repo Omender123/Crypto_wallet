@@ -74,7 +74,7 @@ public class Google_auth extends AppCompatActivity {
             }
         });
 
-        QRGEncoder qrgEncoder = new QRGEncoder(key,null, QRGContents.Type.TEXT,500);
+        QRGEncoder qrgEncoder = new QRGEncoder("otpauth://totp/iMX?secret="+key,null, QRGContents.Type.TEXT,500);
         try {
             Bitmap qrBits = qrgEncoder.encodeAsBitmap();
             qrImage.setImageBitmap(qrBits);
@@ -175,7 +175,7 @@ public class Google_auth extends AppCompatActivity {
                 hideKeyboard(view);
                 Snacky.builder()
                         .setView(view)
-                        .setText("Please Check Your Internet Connection")
+                        .setText(t.getMessage())
                         .setDuration(Snacky.LENGTH_SHORT)
                         .setActionText(android.R.string.ok)
                         .error()

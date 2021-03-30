@@ -201,7 +201,42 @@
                     android:layout_margin="20dp"/>
 
 
+                <LinearLayout
+                    android:id="@+id/linearotp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
 
+                    <TextView
+                        android:id="@+id/resendOtp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toStartOf="@+id/timer"
+                        android:alpha="0.4"
+                        android:gravity="center"
+                        android:text="@string/not_otp"
+                        android:textAlignment="textEnd"
+                        android:layout_marginRight="10dp"
+                        android:textColor="@android:color/darker_gray"
+                        tools:ignore="RtlCompat" />
+
+                    <TextView
+                        android:id="@+id/timer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat"
+                        android:paddingEnd="30dp"
+                        android:text="60"
+                        android:textAlignment="center"
+                        android:textColor="@color/red"
+                        android:textStyle="normal|italic" />
+                </LinearLayout>
             </LinearLayout>
         </ScrollView>
 

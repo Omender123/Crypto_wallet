@@ -162,20 +162,46 @@ tools:context=".Activity.BackVerification">
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="60dp"/>
-        <TextView
-            android:id="@+id/btn_sendOtp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15dp"
-            android:textColor="@color/toolbar_text_color"
-            android:text="@string/not_otp"
-            android:gravity="center"
-            android:onClick="sendOtpAgain"
-            android:textStyle="bold"
-            android:layout_below="@id/Next_btn"
-            android:layout_marginTop="80dp"/>
+
     </LinearLayout>
 </ScrollView>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/resendOtp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/timer"
+            android:alpha="0.2"
+            android:gravity="center"
+            android:text="@string/not_otp"
+            android:textAlignment="textEnd"
+            android:layout_marginRight="10dp"
+            tools:ignore="RtlCompat"
+            android:textColor="@color/toolbar_text_color"
+             android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:paddingEnd="30dp"
+            android:text="60"
+            android:textAlignment="center"
+            android:textColor="@color/red"
+            android:textStyle="normal|italic" />
+    </LinearLayout>
 
 </RelativeLayout>

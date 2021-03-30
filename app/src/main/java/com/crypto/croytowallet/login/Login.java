@@ -14,6 +14,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.util.Log;
@@ -67,6 +68,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import de.mateware.snacky.Snacky;
 import okhttp3.ResponseBody;
@@ -86,6 +88,9 @@ TextInputLayout layout_otp;
     Animation fade_in,blink;
     FusedLocationProviderClient fusedLocationProviderClient;
     String locations,ipAddress,os,id;
+    LinearLayout linearotp;
+    TextView timer_txt,resendOtp;
+    private static CountDownTimer countDownTimer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +99,10 @@ TextInputLayout layout_otp;
         signup =findViewById(R.id.signup);
         layout_otp =findViewById(R.id.otp);
         unlock = findViewById(R.id.unlock);
+        linearotp = findViewById(R.id.linearotp);
+        timer_txt = findViewById(R.id.timer);
+        resendOtp = findViewById(R.id.resendOtp);
+
         //input
         username = findViewById(R.id.ed_username1);
         password = findViewById(R.id.ed_password1);
@@ -373,7 +382,10 @@ TextInputLayout layout_otp;
                             .setDuration(Snacky.LENGTH_SHORT)
                             .success()
                             .show();
-                  //  OTPexpire();
+                    timer();
+                    linearotp.setVisibility(View.VISIBLE);
+
+                    //  OTPexpire();
                 }else if(response.code()==400){
                     try {
 
@@ -611,5 +623,26 @@ public void listener(){
     });
 
 }
+    public void timer(){
+        countDownTimer =   new CountDownTimer(60000, 1000){
+            public void onTick(long millisUntilFinished){
+                long millis = millisUntilFinished;
+                //Convert milliseconds into hour,minute and seconds
+                String hms = String.format("%02d",  TimeUnit.MILLISECONDS.toSeconds(millis) );
+                timer_txt.setText(hms+"s  ");
 
+            }
+            public  void onFinish(){
+                timer_txt.setVisibility(View.GONE);
+                resendOtp.setAlpha(0.9f);
+                countDownTimer = null;
+                resendOtp.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        resendOTP();
+                    }
+                });
+            }
+        }.start();
+    }
 }

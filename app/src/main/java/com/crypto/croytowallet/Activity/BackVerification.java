@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import de.mateware.snacky.Snacky;
 import okhttp3.ResponseBody;
@@ -38,6 +40,9 @@ public class BackVerification extends AppCompatActivity {
     EditText ed_otp;
     TextView next;
     String otp,userId,transactionPin,AuthToken;
+    TextView timer_txt,resendOtp;
+    private static CountDownTimer countDownTimer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +50,9 @@ public class BackVerification extends AppCompatActivity {
         next = findViewById(R.id.Next_btn);
         ed_otp = findViewById(R.id.enter_otp);
         pinView = findViewById(R.id.enter_pin);
+        timer_txt = findViewById(R.id.timer);
+        resendOtp = findViewById(R.id.resendOtp);
+
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
         next.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +75,7 @@ public class BackVerification extends AppCompatActivity {
             }
         });
 
+        timer();
     }
 
     public void getMeninonic(){
@@ -212,7 +221,7 @@ public class BackVerification extends AppCompatActivity {
                 hidepDialog();
                 Snacky.builder()
                         .setActivity(BackVerification.this)
-                        .setText("Please Check Your Internet Connection")
+                        .setText(t.getMessage())
                         .setDuration(Snacky.LENGTH_SHORT)
                         .setActionText(android.R.string.ok)
                         .error()
@@ -257,6 +266,14 @@ public class BackVerification extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
 
+                Snacky.builder()
+                        .setActivity(BackVerification.this)
+                        .setText("Please Check Your Internet Connection")
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+
             }
         });
 
@@ -289,4 +306,26 @@ public class BackVerification extends AppCompatActivity {
             progressDialog.dismiss();
     }
 
+    public void timer(){
+        countDownTimer =   new CountDownTimer(60000, 1000){
+            public void onTick(long millisUntilFinished){
+                long millis = millisUntilFinished;
+                //Convert milliseconds into hour,minute and seconds
+                String hms = String.format("%02d",  TimeUnit.MILLISECONDS.toSeconds(millis) );
+                timer_txt.setText(hms+"s  ");
+
+            }
+            public  void onFinish(){
+                timer_txt.setVisibility(View.GONE);
+                resendOtp.setAlpha(0.9f);
+                countDownTimer = null;
+                resendOtp.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        sendOtpAgain(v);
+                    }
+                });
+            }
+        }.start();
+    }
 }

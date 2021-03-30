@@ -282,7 +282,7 @@ public class Kyc extends AppCompatActivity implements View.OnClickListener {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             stateName  = parent.getItemAtPosition(position).toString();
-                            Toast.makeText(Kyc.this, ""+stateName, Toast.LENGTH_SHORT).show();
+
                         }
 
                         @Override

@@ -19,6 +19,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.crypto.croytowallet.CoinTransfer.Payout_verification;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.Payment.Complate_payment;
 import com.crypto.croytowallet.Payment.Enter_transaction_pin;
@@ -27,6 +28,7 @@ import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
+import com.crypto.croytowallet.database.RetrofitClient;
 import com.crypto.croytowallet.login.Login;
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.zcw.togglebutton.ToggleButton;
@@ -34,11 +36,15 @@ import com.zcw.togglebutton.ToggleButton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
 import de.mateware.snacky.Snacky;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class Two_FA extends AppCompatActivity {
     ImageView imageView;
@@ -46,7 +52,9 @@ public class Two_FA extends AppCompatActivity {
     KProgressHUD progressDialog;
     UserData userData;
     SharedPreferences sharedPreferences = null;
-    Boolean booleanValue,booleanValue1;
+    SharedPreferences sharedPreferences1 = null;
+    Boolean booleanValue,booleanValue1,email2f,googl2f;
+    String id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,14 +66,10 @@ public class Two_FA extends AppCompatActivity {
         userData= SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
 
+         id=userData.getId();
 
-        sharedPreferences = getSharedPreferences("night",0);
-
-        // for email2fa
-         booleanValue = sharedPreferences.getBoolean("email2fa",false);
-        if (booleanValue){
-            email_to_fa.setToggleOn(true);
-        }
+         // for Google 2FA
+        sharedPreferences = getSharedPreferences("google",0);
 
         // for google2fa
         booleanValue1 = sharedPreferences.getBoolean("google2fa",false);
@@ -73,8 +77,10 @@ public class Two_FA extends AppCompatActivity {
             google_to_fa.setToggleOn(true);
         }
 
+        googl2f = sharedPreferences.getBoolean("google2fa",false);
 
-      google_to_fa.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
+
+        google_to_fa.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
             @Override
             public void onToggle(boolean on) {
                 if (on){
@@ -83,37 +89,57 @@ public class Two_FA extends AppCompatActivity {
                     editor.commit();
                     google_to_fa.setToggleOn(true);
 
-                 google_2FA_Enable();
+                    googl2f = sharedPreferences.getBoolean("google2fa",true);
+                    GoogleFA_Enable(id,googl2f,email2f);
+
+
                 }
                 else{
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean("google2fa",false);
                     editor.commit();
+                    googl2f = sharedPreferences.getBoolean("google2fa",false);
                     google_to_fa.setToggleOff(true);
-                 Disable_2FA();
-                }
+
+                    TwoFA_Disable(id,googl2f,email2f);
+
+                    }
             }
         });
 
+        // for Email 2fa
+        sharedPreferences1 = getSharedPreferences("email",0);
+        email2f = sharedPreferences1.getBoolean("email2fa",false);
+
+        // for email2fa
+        booleanValue = sharedPreferences1.getBoolean("email2fa",false);
+        if (booleanValue){
+            email_to_fa.setToggleOn(true);
+        }
 
 
         email_to_fa.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
             @Override
             public void onToggle(boolean on) {
                 if (on){
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    SharedPreferences.Editor editor = sharedPreferences1.edit();
                     editor.putBoolean("email2fa",true);
                     editor.commit();
                     email_to_fa.setToggleOn(true);
-                   Email_2FA_Enable();
+                    email2f = sharedPreferences1.getBoolean("email2fa",true);
+                    EmailFA_Enable(id,googl2f,email2f);
+
                 }
                 else{
 
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    SharedPreferences.Editor editor = sharedPreferences1.edit();
                     editor.putBoolean("email2fa",false);
                     editor.commit();
+                    email2f = sharedPreferences1.getBoolean("email2fa",false);
                     email_to_fa.setToggleOff(true);
-                 Disable_2FA();
+
+                    TwoFA_Disable(id,googl2f,email2f);
+
                 }
             }
         });
@@ -122,186 +148,6 @@ public class Two_FA extends AppCompatActivity {
         get2fa();
 
 
-
-
-    }
-    public void google_2FA_Enable(){
-
-        String id=userData.getId();
-        progressDialog = KProgressHUD.create(Two_FA.this)
-                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                .setLabel("Please wait.....")
-                .setCancellable(false)
-                .setAnimationSpeed(2)
-                .setDimAmount(0.5f)
-                .show();
-
-        showpDialog();
-        StringRequest request=new StringRequest(Request.Method.POST, URLs.URL_2FA, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                hidepDialog();
-                Snacky.builder()
-                        .setActivity(Two_FA.this)
-                        .setText("successful Turn ON ")
-                        .setDuration(Snacky.LENGTH_SHORT)
-                        .setActionText(android.R.string.ok)
-                        .success()
-                        .show();
-            }
-
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                hidepDialog();
-                parseVolleyError(error);
-
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-              //  params.put("cryptoCurrency",cryptoCurrency);
-                params.put("userId",id);
-                params.put("google2fa","true");
-                params.put("email2fa","false");
-
-
-
-
-                return params;
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<String, String>();
-
-               // headers.put("Authorization", token);
-
-                return headers;
-            }
-
-        };
-        VolleySingleton.getInstance(this).addToRequestQueue(request);
-
-
-    }
-
-    public void Email_2FA_Enable(){
-      String id=userData.getId();
-        progressDialog = KProgressHUD.create(Two_FA.this)
-                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                .setLabel("Please wait.....")
-                .setCancellable(false)
-                .setAnimationSpeed(2)
-                .setDimAmount(0.5f)
-                .show();
-
-        showpDialog();
-        StringRequest request=new StringRequest(Request.Method.POST, URLs.URL_2FA, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                hidepDialog();
-                Snacky.builder()
-                        .setActivity(Two_FA.this)
-                        .setText("successful Turn ON ")
-                        .setDuration(Snacky.LENGTH_SHORT)
-                        .setActionText(android.R.string.ok)
-                        .success()
-                        .show();
-            }
-
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                hidepDialog();
-                parseVolleyError(error);
-
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                //  params.put("cryptoCurrency",cryptoCurrency);
-                params.put("userId",id);
-                params.put("google2fa","false");
-                params.put("email2fa","true");
-
-
-
-                return params;
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<String, String>();
-
-                // headers.put("Authorization", token);
-
-                return headers;
-            }
-
-        };
-        VolleySingleton.getInstance(this).addToRequestQueue(request);
-
-    }
-
-    public void Disable_2FA(){
-        String id=userData.getId();
-        progressDialog = KProgressHUD.create(Two_FA.this)
-                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                .setLabel("Please wait.....")
-                .setCancellable(false)
-                .setAnimationSpeed(2)
-                .setDimAmount(0.5f)
-                .show();
-
-        showpDialog();
-        StringRequest request=new StringRequest(Request.Method.POST, URLs.URL_2FA, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                hidepDialog();
-                Snacky.builder()
-                        .setActivity(Two_FA.this)
-                        .setText("successful Turn OFF ")
-                        .setDuration(Snacky.LENGTH_SHORT)
-                        .setActionText(android.R.string.ok)
-                        .success()
-                        .show();
-            }
-
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                hidepDialog();
-                parseVolleyError(error);
-
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                //  params.put("cryptoCurrency",cryptoCurrency);
-                params.put("userId",id);
-                params.put("google2fa","false");
-                params.put("email2fa","false");
-
-
-
-                return params;
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<String, String>();
-
-                // headers.put("Authorization", token);
-
-                return headers;
-            }
-
-        };
-        VolleySingleton.getInstance(this).addToRequestQueue(request);
 
 
     }
@@ -322,7 +168,7 @@ public class Two_FA extends AppCompatActivity {
                     booleanValue1 = object1.getBoolean("google2fa");
 
 
-                } catch (JSONException e) {
+                    } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
@@ -350,6 +196,209 @@ public class Two_FA extends AppCompatActivity {
         VolleySingleton.getInstance(this).addToRequestQueue(request);
 
 
+    }
+
+
+    public void EmailFA_Enable(String id, Boolean google2fa,Boolean email2fa){
+
+        progressDialog = KProgressHUD.create(Two_FA.this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Please wait.....")
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
+
+        showpDialog();
+
+        Call<ResponseBody>call = RetrofitClient.getInstance().getApi().TwoFA(id,google2fa,email2fa);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                String s =null;
+                hidepDialog();
+                if (response.code()==200){
+
+
+                        Snacky.builder()
+                                .setActivity(Two_FA.this)
+                                .setText("successful Turn ON ")
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .success()
+                                .show();
+
+
+                }else if (response.code()==400){
+                    try {
+                        s=response.errorBody().string();
+                        JSONObject jsonObject1=new JSONObject(s);
+                        String error =jsonObject1.getString("error");
+
+
+                        Snacky.builder()
+                                .setActivity(Two_FA.this)
+                                .setText(error)
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                hidepDialog();
+                Snacky.builder()
+                        .setActivity(Two_FA.this)
+                        .setText(t.getMessage())
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+            }
+        });
+    }
+    public void GoogleFA_Enable(String id, Boolean google2fa,Boolean email2fa){
+
+        progressDialog = KProgressHUD.create(Two_FA.this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Please wait.....")
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
+
+        showpDialog();
+
+        Call<ResponseBody>call = RetrofitClient.getInstance().getApi().TwoFA(id,google2fa,email2fa);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                String s =null;
+                hidepDialog();
+                if (response.code()==200){
+
+
+                        Snacky.builder()
+                                .setActivity(Two_FA.this)
+                                .setText("successful Turn ON ")
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .success()
+                                .show();
+
+
+                }else if (response.code()==400){
+                    try {
+                        s=response.errorBody().string();
+                        JSONObject jsonObject1=new JSONObject(s);
+                        String error =jsonObject1.getString("error");
+
+
+                        Snacky.builder()
+                                .setActivity(Two_FA.this)
+                                .setText(error)
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                hidepDialog();
+                Snacky.builder()
+                        .setActivity(Two_FA.this)
+                        .setText(t.getMessage())
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+            }
+        });
+    }
+    public void TwoFA_Disable(String id, Boolean google2fa,Boolean email2fa){
+
+        progressDialog = KProgressHUD.create(Two_FA.this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Please wait.....")
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
+
+        showpDialog();
+
+        Call<ResponseBody>call = RetrofitClient.getInstance().getApi().TwoFA(id,google2fa,email2fa);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                String s =null;
+                hidepDialog();
+                if (response.code()==200){
+
+                                Snacky.builder()
+                                .setActivity(Two_FA.this)
+                                .setText("successful Turn OFF ")
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .success()
+                                .show();
+
+
+
+                }else if (response.code()==400){
+                    try {
+                        s=response.errorBody().string();
+                        JSONObject jsonObject1=new JSONObject(s);
+                        String error =jsonObject1.getString("error");
+
+
+                        Snacky.builder()
+                                .setActivity(Two_FA.this)
+                                .setText(error)
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                hidepDialog();
+                Snacky.builder()
+                        .setActivity(Two_FA.this)
+                        .setText(t.getMessage())
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+            }
+        });
     }
 
 

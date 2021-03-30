@@ -47,6 +47,7 @@ public class ForgetPassword extends AppCompatActivity {
     KProgressHUD progressDialog;
     EditText enter_username;
     TextView welcome;
+    String options;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,12 +56,17 @@ public class ForgetPassword extends AppCompatActivity {
         enter_username = findViewById(R.id.enter_user);
         welcome = findViewById(R.id.welcome);
 
-        Bundle bundle = getIntent().getExtras();
-        String options = bundle.getString("options");
+       /* try {
 
+        }catch (Exception e){
+
+        }*/
+        Bundle bundle = getIntent().getExtras();
+        options = bundle.getString("options");
         if (options.equals("1")){
             welcome.setText(R.string.un_lock);
         }
+
         next1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,7 +79,9 @@ public class ForgetPassword extends AppCompatActivity {
                     sendOtp(v);
                     hideKeyboard(v);
                 }else if (options.equals("1")){
+                    String usernames = enter_username.getText().toString().trim();
                     Intent intent= new Intent(getApplicationContext(), Unlock_Account.class);
+                    intent.putExtra("username",usernames);
                     startActivity(intent);
                     finish();
                     sendOtp(v);

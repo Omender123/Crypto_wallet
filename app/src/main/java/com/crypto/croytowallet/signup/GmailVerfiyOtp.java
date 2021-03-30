@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import de.mateware.snacky.Snacky;
 import okhttp3.ResponseBody;
@@ -46,6 +48,8 @@ public class GmailVerfiyOtp extends AppCompatActivity {
     KProgressHUD progressDialog;
     EditText enter_otp;
     SignUpData user;
+    TextView timer_txt,resendOtp;
+    private static CountDownTimer countDownTimer;
 
 
     @Override
@@ -55,10 +59,13 @@ public class GmailVerfiyOtp extends AppCompatActivity {
 
         next2 = findViewById(R.id.next2);
         enter_otp = findViewById(R.id.enter_otp);
+        timer_txt = findViewById(R.id.timer);
+        resendOtp = findViewById(R.id.resendOtp);
+
         user = SignUpRefernace.getInstance(this).getUser();
        done = findViewById(R.id.Done_btn1);
 
-
+        timer();
 
         next2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -352,5 +359,28 @@ public class GmailVerfiyOtp extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void timer(){
+        countDownTimer =   new CountDownTimer(60000, 1000){
+            public void onTick(long millisUntilFinished){
+                long millis = millisUntilFinished;
+                //Convert milliseconds into hour,minute and seconds
+                String hms = String.format("%02d",  TimeUnit.MILLISECONDS.toSeconds(millis) );
+                timer_txt.setText(hms+"s  ");
+
+            }
+            public  void onFinish(){
+                timer_txt.setVisibility(View.GONE);
+                resendOtp.setAlpha(0.9f);
+                countDownTimer = null;
+                resendOtp.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        resendOTP(v);
+                    }
+                });
+            }
+        }.start();
     }
 }

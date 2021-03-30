@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crypto.croytowallet.R;
@@ -24,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import de.mateware.snacky.Snacky;
 import okhttp3.ResponseBody;
@@ -36,6 +39,8 @@ public class CrashOtpActivity extends AppCompatActivity {
     EditText enter_otp;
     CrashDataModel user;
     Button next2;
+    TextView timer_txt,resendOtp;
+    private static CountDownTimer countDownTimer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +50,9 @@ public class CrashOtpActivity extends AppCompatActivity {
 
         next2 = findViewById(R.id.next2);
         enter_otp = findViewById(R.id.enter_otp);
+        timer_txt = findViewById(R.id.timer);
+        resendOtp = findViewById(R.id.resendOtp);
+
 
 
         next2.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +79,7 @@ public class CrashOtpActivity extends AppCompatActivity {
             }
         });
 
-
+        timer();
 
     }
 
@@ -135,7 +143,7 @@ public class CrashOtpActivity extends AppCompatActivity {
                 hideKeyboard(view);
                 Snacky.builder()
                         .setView(view)
-                        .setText("Please Check Your Internet Connection")
+                        .setText(t.getMessage())
                         .setDuration(Snacky.LENGTH_SHORT)
                         .setActionText(android.R.string.ok)
                         .error()
@@ -210,7 +218,7 @@ public class CrashOtpActivity extends AppCompatActivity {
                 hideKeyboard(view);
                 Snacky.builder()
                         .setView(view)
-                        .setText("Please Check Your Internet Connection")
+                        .setText(t.getMessage())
                         .setDuration(Snacky.LENGTH_SHORT)
                         .setActionText(android.R.string.ok)
                         .error()
@@ -283,4 +291,27 @@ public class CrashOtpActivity extends AppCompatActivity {
         startActivity(new Intent(getApplicationContext(),Login.class));
         finish();
     }
+    public void timer(){
+        countDownTimer =   new CountDownTimer(60000, 1000){
+            public void onTick(long millisUntilFinished){
+                long millis = millisUntilFinished;
+                //Convert milliseconds into hour,minute and seconds
+                String hms = String.format("%02d",  TimeUnit.MILLISECONDS.toSeconds(millis) );
+                timer_txt.setText(hms+"s  ");
+
+            }
+            public  void onFinish(){
+                timer_txt.setVisibility(View.GONE);
+                resendOtp.setAlpha(0.9f);
+                countDownTimer = null;
+                resendOtp.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        resendOTP(v);
+                    }
+                });
+            }
+        }.start();
+    }
+
 }

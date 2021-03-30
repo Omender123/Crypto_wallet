@@ -311,7 +311,8 @@ public class SignUp extends AppCompatActivity {
                         //storing the user in shared preferences
                         SignUpRefernace.getInstance(getApplicationContext()).UserSignUP(user);
 
-                        Intent intent = new Intent(getApplicationContext(), TransactionPin.class);
+                       Intent intent = new Intent(getApplicationContext(), TransactionPin.class);
+                       // Intent intent = new Intent(getApplicationContext(), Google_auth.class);
                         startActivity(intent);
 
                     } catch (IOException e) {
@@ -356,7 +357,13 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 hidepDialog();
-                Toast.makeText(SignUp.this, "net", Toast.LENGTH_SHORT).show();
+                Snacky.builder()
+                        .setActivity(SignUp.this)
+                        .setText(t.getMessage())
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
 
             }
         });

@@ -20,6 +20,8 @@ import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.login.Login;
 
+import de.mateware.snacky.Snacky;
+
 public class Referral_code extends AppCompatActivity {
     Button referral_ready;
     ConstraintLayout relativeLayout;
@@ -53,12 +55,24 @@ public class Referral_code extends AppCompatActivity {
             public void onClick(View v) {
 
                  getreferralCode = enterReferral_code.getText().toString().trim();
+
+                 if (getreferralCode.isEmpty()){
+                     Snacky.builder()
+                             .setActivity(Referral_code.this)
+                             .setText("Please enter referral code")
+                             .setDuration(Snacky.LENGTH_SHORT)
+                             .setActionText(android.R.string.ok)
+                             .warning()
+                             .show();
+
+                 }else{
                    Intent intent = new Intent(getApplicationContext(), SignUp.class);
                     intent.putExtra("referral_code", getreferralCode);
                     startActivity(intent);
 
                 sharedPreferences.edit().clear().commit();
-                }
+                 }
+            }
 
         });
 
@@ -86,7 +100,7 @@ public class Referral_code extends AppCompatActivity {
 
     public void dont_Referral(View view) {
         Intent intent = new Intent(getApplicationContext(), SignUp.class);
-        intent.putExtra("referral_code", getreferralCode);
+        intent.putExtra("referral_code", "");
         startActivity(intent);
     }
 }

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
@@ -35,6 +36,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import de.mateware.snacky.Snacky;
 import okhttp3.ResponseBody;
@@ -46,12 +48,13 @@ public class ImtSmartVerification extends AppCompatActivity {
     String result,Amount,Token,enterPin,cryptoCurrency,otp,AuthToken,email2fa,google2fa;
     KProgressHUD progressDialog;
     UserData userData;
-    TextView next,email_otp,googleToken,btn_sendOtp;
+    TextView next,email_otp,googleToken,btn_sendOtp,timer_txt;
     PinView pinView;
     EditText ed_token,ed_otp;
     ImageView imageView;
     SharedPreferences sharedPreferences;
     TextInputLayout lyt_emiail,lyt_Google;
+    private static CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,7 @@ public class ImtSmartVerification extends AppCompatActivity {
         lyt_emiail = findViewById(R.id.pass);
         lyt_Google = findViewById(R.id.pass1);
         btn_sendOtp=findViewById(R.id.btn_sendOtp);
+        timer_txt = findViewById(R.id.timer);
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
 
@@ -125,35 +129,46 @@ public class ImtSmartVerification extends AppCompatActivity {
                     String  google2fa1 = object1.getString("google2fa");
 
 
-                    if (email2fa1.equals("true")){
+                    if (email2fa1.equals("true") && google2fa1.equals("false") ){
 
-                        ed_otp.setError("Please enter Email Otp");
-                        ed_otp.requestFocus();
                         email_otp.setVisibility(View.VISIBLE);
                         lyt_emiail.setVisibility(View.VISIBLE);
                         btn_sendOtp.setVisibility(View.VISIBLE);
-                    }else {
-                            email_otp.setVisibility(View.GONE);
-                        lyt_emiail.setVisibility(View.GONE);
-                        btn_sendOtp.setVisibility(View.GONE);
-                       // Toast.makeText(ImtSmartVerification.this, "Your Email 2FA OFF", Toast.LENGTH_SHORT).show();
-                    }
+                        timer_txt.setVisibility(View.VISIBLE);
+                        googleToken.setVisibility(View.GONE);
+                        lyt_Google.setVisibility(View.GONE);
 
-                    if (google2fa1.equals("true")){
+                        timer();
 
-                        ed_otp.setError("Please enter Google Token");
-                        ed_otp.requestFocus();
+                    }else  if (email2fa1.equals("false") && google2fa1.equals("true")){
                         googleToken.setVisibility(View.VISIBLE);
                         lyt_Google.setVisibility(View.VISIBLE);
                         btn_sendOtp.setVisibility(View.GONE);
+                        timer_txt.setVisibility(View.GONE);
+                        email_otp.setVisibility(View.GONE);
+                        lyt_emiail.setVisibility(View.GONE);
+
+                    }else if (email2fa1.equals("true") && google2fa1.equals("true")){
+                        email_otp.setVisibility(View.VISIBLE);
+                        lyt_emiail.setVisibility(View.VISIBLE);
+                        btn_sendOtp.setVisibility(View.VISIBLE);
+                        timer_txt.setVisibility(View.VISIBLE);
+                        googleToken.setVisibility(View.VISIBLE);
+                        lyt_Google.setVisibility(View.VISIBLE);
+
+                        timer();
 
                     }else {
+                        email_otp.setVisibility(View.GONE);
+                        lyt_emiail.setVisibility(View.GONE);
+                        btn_sendOtp.setVisibility(View.GONE);
+                        timer_txt.setVisibility(View.GONE);
                         googleToken.setVisibility(View.GONE);
                         lyt_Google.setVisibility(View.GONE);
-                        btn_sendOtp.setVisibility(View.GONE);
-                      //  Toast.makeText(ImtSmartVerification.this, "Your Google 2FA OFF", Toast.LENGTH_SHORT).show();
+
+
                     }
-                    // Toast.makeText(Two_FA.this, ""+email2fa1+google2fa1, Toast.LENGTH_SHORT).show();
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -399,5 +414,28 @@ public class ImtSmartVerification extends AppCompatActivity {
 
     }
 
+
+    public void timer(){
+        countDownTimer =   new CountDownTimer(60000, 1000){
+            public void onTick(long millisUntilFinished){
+                long millis = millisUntilFinished;
+                //Convert milliseconds into hour,minute and seconds
+                String hms = String.format("%02d",  TimeUnit.MILLISECONDS.toSeconds(millis) );
+                timer_txt.setText(hms+"s  ");
+
+            }
+            public  void onFinish(){
+                timer_txt.setVisibility(View.GONE);
+                btn_sendOtp.setAlpha(0.9f);
+                countDownTimer = null;
+                btn_sendOtp.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        sendOtpAgain1(v);
+                    }
+                });
+            }
+        }.start();
+    }
 
 }

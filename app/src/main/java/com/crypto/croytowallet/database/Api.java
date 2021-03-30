@@ -339,4 +339,13 @@ public interface Api {
                            @Part("number") RequestBody doc_no,
                            @Part("type") RequestBody doc_type
     );
+
+    @FormUrlEncoded
+    @POST("user/twoFaEnableOrDisable")
+    Call<ResponseBody> TwoFA(
+            @Field("userId") String userId,
+            @Field("google2fa") Boolean google2fa,
+            @Field("email2fa") Boolean email2fa
+    );
+
 }
