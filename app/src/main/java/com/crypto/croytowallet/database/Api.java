@@ -285,6 +285,14 @@ public interface Api {
             @Query("interval") String interval
     );
 
+    @GET("simple/price")
+    Call<ResponseBody>getCoinPrice(
+            @Query("ids") String coinId,
+            @Query("vs_currency")String currency
+
+    );
+
+
     @GET("notification/user/allNotification")
     Call<ResponseBody> getNotification(
             @Header("Authorization") String Authorization

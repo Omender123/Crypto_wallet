@@ -395,7 +395,7 @@
                     android:layout_marginBottom="20dp"
                     android:justificationMode="inter_word"
                     android:paddingBottom="10dp"
-                    android:text="@string/below_text"
+                    android:text="Kindly enter the Mnemonic in order to confirm your account. Make sure you will enter the mnemonic in the same order as it was appear. "
                     android:textColor="@android:color/darker_gray"
                     android:textSize="10dp" />
 

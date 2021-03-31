@@ -362,7 +362,7 @@
                 android:layout_marginRight="20dp"
                 android:textSize="10dp"
                 android:textColor="@android:color/darker_gray"
-                android:text="@string/below_text"
+                android:text="Kindly enter in the Transaction PIN in order to make sure you will able to set up the transaction PIN for your account. "
                 android:justificationMode="inter_word"
                 android:paddingBottom="10dp"
                 android:layout_marginBottom="20dp"
