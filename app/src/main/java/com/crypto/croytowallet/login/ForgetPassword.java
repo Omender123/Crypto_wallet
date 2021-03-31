@@ -70,25 +70,34 @@ public class ForgetPassword extends AppCompatActivity {
         next1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (options.equals("0")){
-                    String usernames = enter_username.getText().toString().trim();
+                String usernames = enter_username.getText().toString().trim();
+
+              /*  if (options.equals("0") && !usernames.isEmpty() ){
                     Intent intent= new Intent(getApplicationContext(), OTP_Activity.class);
                     intent.putExtra("username",usernames);
                     startActivity(intent);
                     finish();
                     sendOtp(v);
                     hideKeyboard(v);
-                }else if (options.equals("1")){
-                    String usernames = enter_username.getText().toString().trim();
+                }else if (options.equals("1") && !usernames.isEmpty() ){
                     Intent intent= new Intent(getApplicationContext(), Unlock_Account.class);
                     intent.putExtra("username",usernames);
                     startActivity(intent);
                     finish();
                     sendOtp(v);
                     hideKeyboard(v);
+                }else{
+                    Snackbar warningSnackBar = Snacky.builder()
+                            .setActivity(ForgetPassword.this)
+                            .setText("Please enter the username")
+                            .setTextColor(getResources().getColor(R.color.white))
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .warning();
+                    warningSnackBar.show();
                 }
+*/
 
-
+                sendOtp(v);
             }
         });
     }
@@ -157,15 +166,24 @@ public class ForgetPassword extends AppCompatActivity {
                 String s=null;
                 if (response.code()==200){
                     hideKeyboard(view);
-                  /*  Snacky.builder()
-                            .setView(view)
-                            .setText("Otp send in your register Email")
-                            .setDuration(Snacky.LENGTH_SHORT)
-                            .success()
-                            .show();*/
 
-                 //   OTPexpire();
-                    Toast.makeText(ForgetPassword.this, "Otp send in your registered Email", Toast.LENGTH_SHORT).show();
+                    if (options.equals("0")){
+                        Intent intent= new Intent(getApplicationContext(), OTP_Activity.class);
+                        intent.putExtra("username",usernames);
+                        intent.putExtra("options","0");
+                        startActivity(intent);
+                        finish();
+
+
+                    }else if (options.equals("1")  ) {
+                        Intent intent = new Intent(getApplicationContext(), Unlock_Account.class);
+                        intent.putExtra("username", usernames);
+                        intent.putExtra("options","1");
+                        startActivity(intent);
+                        finish();
+
+                    }
+                        Toast.makeText(ForgetPassword.this, "Otp send in your registered Email", Toast.LENGTH_SHORT).show();
 
                 }else if(response.code()==400){
                     hideKeyboard(view);

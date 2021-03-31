@@ -200,14 +200,14 @@
                     android:textAllCaps="false"
                     android:layout_margin="20dp"/>
 
-
                 <LinearLayout
                     android:id="@+id/linearotp"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:layout_marginTop="5dp"
                     android:visibility="gone"
-                    android:layout_marginTop="20dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -223,20 +223,43 @@
                         android:text="@string/not_otp"
                         android:textAlignment="textEnd"
                         android:layout_marginRight="10dp"
+                        android:textStyle="bold"
                         android:textColor="@android:color/darker_gray"
                         tools:ignore="RtlCompat" />
 
-                    <TextView
-                        android:id="@+id/timer"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat"
-                        android:paddingEnd="30dp"
-                        android:text="60"
-                        android:textAlignment="center"
-                        android:textColor="@color/red"
-                        android:textStyle="normal|italic" />
+                    <RelativeLayout
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:gravity="center">
+                        <ProgressBar
+                            android:id="@+id/progressBarCircle"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_centerInParent="true"
+                            android:background="@drawable/drawable_circle_dark_blue"
+                            android:indeterminate="false"
+                            android:max="100"
+                            android:progress="100"
+                            android:progressDrawable="@drawable/drawable_circle_yellow"
+                            android:rotation="-90" />
+
+                        <TextView
+                            android:id="@+id/timer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="11dp"
+                            android:layout_centerInParent="true"
+                            android:fontFamily="@font/montserrat"
+                            android:text="60s"
+                            android:textSize="8dp"
+                            android:textAlignment="center"
+                            android:textColor="@color/red"
+                            android:textStyle="normal|italic" />
+                    </RelativeLayout>
+
                 </LinearLayout>
+
             </LinearLayout>
         </ScrollView>
 

@@ -167,12 +167,15 @@ tools:context=".Activity.BackVerification">
 </ScrollView>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center"
         android:layout_marginBottom="20dp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -181,27 +184,48 @@ tools:context=".Activity.BackVerification">
             android:id="@+id/resendOtp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
             android:layout_toStartOf="@+id/timer"
-            android:alpha="0.2"
+            android:alpha="0.4"
             android:gravity="center"
             android:text="@string/not_otp"
             android:textAlignment="textEnd"
-            android:layout_marginRight="10dp"
-            tools:ignore="RtlCompat"
-            android:textColor="@color/toolbar_text_color"
-             android:textStyle="bold"
-            />
+            android:textColor="@android:color/darker_gray"
+            android:textStyle="bold"
+            tools:ignore="RtlCompat" />
 
-        <TextView
-            android:id="@+id/timer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat"
-            android:paddingEnd="30dp"
-            android:text="60"
-            android:textAlignment="center"
-            android:textColor="@color/red"
-            android:textStyle="normal|italic" />
+        <RelativeLayout
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:gravity="center">
+
+            <ProgressBar
+                android:id="@+id/progressBarCircle"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/drawable_circle_dark_blue"
+                android:indeterminate="false"
+                android:max="100"
+                android:progress="100"
+                android:progressDrawable="@drawable/drawable_circle_yellow"
+                android:rotation="-90" />
+
+            <TextView
+                android:id="@+id/timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="11dp"
+                android:fontFamily="@font/montserrat"
+                android:text="60s"
+                android:textAlignment="center"
+                android:textColor="@color/red"
+                android:textSize="8dp"
+                android:textStyle="normal|italic" />
+        </RelativeLayout>
+
     </LinearLayout>
 
 </RelativeLayout>

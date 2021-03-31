@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +31,18 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Unlock_Account extends AppCompatActivity {
-EditText ed_uername,ed_transactionPin,ed_otp,ed_new_pass,ed_mnemonic;
+    private long timeCountInMilliSeconds = 1 * 60000;
+
+    private enum TimerStatus {
+        STARTED,
+        STOPPED
+    }
+
+    private TimerStatus timerStatus =TimerStatus.STOPPED;
+    private ProgressBar progressBarCircle;
+    Boolean click=false;
+
+    EditText ed_uername,ed_transactionPin,ed_otp,ed_new_pass,ed_mnemonic;
 String  username,transactionPin,otp,new_pass,mnemonic;
 Button btn_unlock;
     KProgressHUD progressDialog;
@@ -49,6 +61,7 @@ Button btn_unlock;
         btn_unlock = findViewById(R.id.btn_unlock);
         timer_txt = findViewById(R.id.timer);
         resendOtp = findViewById(R.id.resendOtp);
+        progressBarCircle = (ProgressBar) findViewById(R.id.progressBarCircle);
 
         btn_unlock.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +86,8 @@ Button btn_unlock;
                 }
             }
         });
-        timer();
+
+        startCountDownTimer();
     }
 
     public void Unlock_Account_api() {
@@ -184,7 +198,8 @@ Button btn_unlock;
                             .setDuration(Snacky.LENGTH_SHORT)
                             .success()
                             .show();
-                    //   OTPexpire();
+
+                    reset();
                 }else if(response.code()==400){
                     hideKeyboard(view);
                     try {
@@ -238,37 +253,109 @@ Button btn_unlock;
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        startActivity(new Intent(getApplicationContext(),Login.class));
+    private void reset() {
+        stopCountDownTimer();
+        startCountDownTimer();
+
     }
 
-    public void timer(){
-        countDownTimer =   new CountDownTimer(60000, 1000){
-            public void onTick(long millisUntilFinished){
-                long millis = millisUntilFinished;
-                //Convert milliseconds into hour,minute and seconds
-                String hms = String.format("%02d",  TimeUnit.MILLISECONDS.toSeconds(millis) );
-                timer_txt.setText(hms+"s  ");
+    private void startCountDownTimer() {
+
+        countDownTimer = new CountDownTimer(timeCountInMilliSeconds, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                click =false;
+                timer_txt.setText(hmsTimeFormatter(millisUntilFinished)+"s");
+
+                progressBarCircle.setProgress((int) (millisUntilFinished / 1000));
+                resendOtp.setAlpha(0.4f);
 
             }
-            public  void onFinish(){
-                timer_txt.setVisibility(View.GONE);
+
+            @Override
+            public void onFinish() {
+
+                click = true;
+                timer_txt.setText("60s");
+                // call to initialize the progress bar values
+                setProgressBarValues();
+                timerStatus = TimerStatus.STOPPED;
                 resendOtp.setAlpha(0.9f);
-                countDownTimer = null;
+
                 resendOtp.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        resendOTP(v);
+                        // resendOTP(v);
+                        if(click==true){
+                            resendOTP(v);
+                        }
+
                     }
                 });
             }
+
         }.start();
+        countDownTimer.start();
+    }
+
+    private void stopCountDownTimer() {
+        countDownTimer.cancel();
+    }
+
+    /**
+     * method to set circular progress bar values
+     */
+    private void setProgressBarValues() {
+
+        progressBarCircle.setMax((int) timeCountInMilliSeconds/ 1000);
+        progressBarCircle.setProgress((int) timeCountInMilliSeconds / 1000);
     }
 
 
+    /**
+     * method to convert millisecond to time format
+     *
+     * @param milliSeconds
+     * @return HH:mm:ss time formatted string
+     */
+    private String hmsTimeFormatter(long milliSeconds) {
+
+        String hms = String.format("%02d",  TimeUnit.MILLISECONDS.toSeconds(milliSeconds) );
+        return hms;
+
+
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+       // startActivity(new Intent(getApplicationContext(),Login.class));
+
+        Bundle bundle = getIntent().getExtras();
+        String options = bundle.getString("options");
+
+
+        if(options.equals("1")) {
+            Intent intent = new Intent(getApplicationContext(), ForgetPassword.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("options","1");
+            startActivity(intent);
+
+        }
+    }
+
     public void back(View view) {
-        startActivity(new Intent(getApplicationContext(),Login.class));
+        Bundle bundle = getIntent().getExtras();
+        String options = bundle.getString("options");
+
+
+        if(options.equals("1")) {
+            Intent intent = new Intent(getApplicationContext(), ForgetPassword.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("options","1");
+            startActivity(intent);
+
+        }
     }
 }

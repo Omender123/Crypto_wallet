@@ -188,7 +188,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
                             .setActionText(android.R.string.ok)
                             .error()
                             .show();
-                     }else if(Integer.parseInt(SwapAmount)<=to){
+                     }/*else if(Integer.parseInt(SwapAmount)<=to){
                     Snacky.builder()
                             .setActivity(getActivity())
                             .setText("Please enter  the minimum amount of  "+min_amount)
@@ -196,7 +196,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
                             .setActionText(android.R.string.ok)
                             .error()
                             .show();
-                }else{
+                }*/else{
                     SwapApi();
 
                 }

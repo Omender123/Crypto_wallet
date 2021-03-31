@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
 import com.crypto.croytowallet.database.RetrofitClient;
+import com.crypto.croytowallet.login.OTP_Activity;
 import com.google.android.material.textfield.TextInputLayout;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
@@ -48,6 +50,17 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Payout_verification extends AppCompatActivity {
+    private long timeCountInMilliSeconds = 1 * 60000;
+
+    private enum TimerStatus {
+        STARTED,
+        STOPPED
+    }
+
+    private TimerStatus timerStatus = TimerStatus.STOPPED;
+
+    private ProgressBar progressBarCircle;
+
     String result,Amount,Token,enterPin,cryptoCurrency,otp,AuthToken,email2fa,google2fa;
     SharedPreferences preferences;
     KProgressHUD progressDialog;
@@ -58,6 +71,7 @@ public class Payout_verification extends AppCompatActivity {
     ImageView imageView;
     TextInputLayout lyt_emiail,lyt_Google;
     private static CountDownTimer countDownTimer;
+    Boolean click=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +89,8 @@ public class Payout_verification extends AppCompatActivity {
         lyt_Google = findViewById(R.id.pass1);
         btn_sendOtp=findViewById(R.id.btn_sendOtp);
         timer_txt = findViewById(R.id.timer);
+        progressBarCircle = (ProgressBar) findViewById(R.id.progressBarCircle);
+
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
       //  preferences=getApplicationContext().getSharedPreferences("symbols", Context.MODE_PRIVATE);
@@ -108,7 +124,7 @@ public class Payout_verification extends AppCompatActivity {
 
                 } else if (enterPin.equals(trans)) {
                     pinView.setLineColor(getResources().getColor(R.color.green));
-                    Toast.makeText(Payout_verification.this, ""+enterPin, Toast.LENGTH_SHORT).show();
+              //      Toast.makeText(Payout_verification.this, ""+enterPin, Toast.LENGTH_SHORT).show();
                    sendcoin();
                 }
 
@@ -142,14 +158,15 @@ public class Payout_verification extends AppCompatActivity {
                         lyt_emiail.setVisibility(View.VISIBLE);
                         btn_sendOtp.setVisibility(View.VISIBLE);
                         timer_txt.setVisibility(View.VISIBLE);
+                        progressBarCircle.setVisibility(View.VISIBLE);
                         googleToken.setVisibility(View.GONE);
                         lyt_Google.setVisibility(View.GONE);
-
-                        timer();
+                         startCountDownTimer();
 
                     }else  if (email2fa1.equals("false") && google2fa1.equals("true")){
                         googleToken.setVisibility(View.VISIBLE);
                         lyt_Google.setVisibility(View.VISIBLE);
+                        progressBarCircle.setVisibility(View.GONE);
                         btn_sendOtp.setVisibility(View.GONE);
                         timer_txt.setVisibility(View.GONE);
                         email_otp.setVisibility(View.GONE);
@@ -160,10 +177,11 @@ public class Payout_verification extends AppCompatActivity {
                         lyt_emiail.setVisibility(View.VISIBLE);
                         btn_sendOtp.setVisibility(View.VISIBLE);
                         timer_txt.setVisibility(View.VISIBLE);
+                        progressBarCircle.setVisibility(View.VISIBLE);
                         googleToken.setVisibility(View.VISIBLE);
                         lyt_Google.setVisibility(View.VISIBLE);
 
-                        timer();
+                        startCountDownTimer();
 
                     }else {
                         email_otp.setVisibility(View.GONE);
@@ -172,6 +190,7 @@ public class Payout_verification extends AppCompatActivity {
                         timer_txt.setVisibility(View.GONE);
                         googleToken.setVisibility(View.GONE);
                         lyt_Google.setVisibility(View.GONE);
+                        progressBarCircle.setVisibility(View.GONE);
 
 
                     }
@@ -293,28 +312,6 @@ public class Payout_verification extends AppCompatActivity {
             progressDialog.dismiss();
     }
 
-    public void timer(){
-        countDownTimer =   new CountDownTimer(60000, 1000){
-            public void onTick(long millisUntilFinished){
-                long millis = millisUntilFinished;
-                //Convert milliseconds into hour,minute and seconds
-                String hms = String.format("%02d",  TimeUnit.MILLISECONDS.toSeconds(millis) );
-                timer_txt.setText(hms+"s  ");
-
-            }
-            public  void onFinish(){
-                timer_txt.setVisibility(View.GONE);
-                btn_sendOtp.setAlpha(0.9f);
-                countDownTimer = null;
-                btn_sendOtp.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        sendOtpAgain(v);
-                    }
-                });
-            }
-        }.start();
-    }
 
     public void sendOtpAgain(View view) {
         String username = userData.getUsername();
@@ -348,6 +345,7 @@ public class Payout_verification extends AppCompatActivity {
                             .setDuration(Snacky.LENGTH_SHORT)
                             .success()
                             .show();
+                    reset();
                 }else if(response.code()==400){
                     try {
 
@@ -387,6 +385,81 @@ public class Payout_verification extends AppCompatActivity {
         });
 
     }
+
+    private void reset() {
+        stopCountDownTimer();
+        startCountDownTimer();
+
+    }
+
+    private void startCountDownTimer() {
+
+        countDownTimer = new CountDownTimer(timeCountInMilliSeconds, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                click =false;
+                timer_txt.setText(hmsTimeFormatter(millisUntilFinished)+"s");
+
+                progressBarCircle.setProgress((int) (millisUntilFinished / 1000));
+                btn_sendOtp.setAlpha(0.4f);
+
+            }
+
+            @Override
+            public void onFinish() {
+
+                click = true;
+                timer_txt.setText("60s");
+                // call to initialize the progress bar values
+                setProgressBarValues();
+                timerStatus = TimerStatus.STOPPED;
+                btn_sendOtp.setAlpha(0.9f);
+
+                btn_sendOtp.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // resendOTP(v);
+                        if(click==true){
+                            sendOtpAgain(v);
+                        }
+
+                    }
+                });
+            }
+
+        }.start();
+        countDownTimer.start();
+    }
+
+    private void stopCountDownTimer() {
+        countDownTimer.cancel();
+    }
+
+    /**
+     * method to set circular progress bar values
+     */
+    private void setProgressBarValues() {
+
+        progressBarCircle.setMax((int) timeCountInMilliSeconds/ 1000);
+        progressBarCircle.setProgress((int) timeCountInMilliSeconds / 1000);
+    }
+
+
+    /**
+     * method to convert millisecond to time format
+     *
+     * @param milliSeconds
+     * @return HH:mm:ss time formatted string
+     */
+    private String hmsTimeFormatter(long milliSeconds) {
+
+        String hms = String.format("%02d",  TimeUnit.MILLISECONDS.toSeconds(milliSeconds) );
+        return hms;
+
+
+    }
+
+
     public void OTPexpire(){
         new Handler().postDelayed(new Runnable() {
 
