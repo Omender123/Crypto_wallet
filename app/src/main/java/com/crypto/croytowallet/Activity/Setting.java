@@ -33,11 +33,13 @@ import java.util.Set;
 import de.mateware.snacky.Snacky;
 
 public class Setting extends AppCompatActivity implements View.OnClickListener {
+    private LinearLayout setting2;
     ImageView imageView;
     CardView Scan_devices,restore_wallet,notification,sound,currency,kyc;
     SharedPreferences sharedPreferences;
 
     TextView currencyType;
+    Animation slide_up;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +58,13 @@ public class Setting extends AppCompatActivity implements View.OnClickListener {
         sound.setOnClickListener(this);
         currency.setOnClickListener(this);
         kyc.setOnClickListener(this);
+        
+        slide_up = AnimationUtils.loadAnimation(Setting.this, R.anim.silde_up);
+        notification.startAnimation(slide_up);
+        sound.startAnimation(slide_up);
+        currency.startAnimation(slide_up);
+        Scan_devices.startAnimation(slide_up);
+        restore_wallet.startAnimation(slide_up);
 
         currencyType = findViewById(R.id.currency1);
 

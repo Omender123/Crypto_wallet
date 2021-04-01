@@ -81,17 +81,19 @@ public class Profile extends Fragment {
         //animation
         down = AnimationUtils.loadAnimation(getContext(), R.anim.silde_down);
         blink = AnimationUtils.loadAnimation(getContext(), R.anim.blink);
-        right = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_right);
+        right = AnimationUtils.loadAnimation(getContext(), R.anim.silde_up);
         left = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_left);
         loadLocale();
-        //set animation
-        // profile.startAnimation(right);
-       /* setting.startAnimation(left);
-        support.startAnimation(left);
-        security.startAnimation(left);
-        share.startAnimation(left);
-        get.startAnimation(left);
-        send.startAnimation(left);*/
+
+        setting.startAnimation(right);
+        support.startAnimation(right);
+        security.startAnimation(right);
+        share.startAnimation(right);
+        get.startAnimation(right);
+        send.startAnimation(right);
+        threat_mode.startAnimation(right);
+        referral_code1.startAnimation(right);
+        language.startAnimation(right);
 
         setting.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -44,6 +46,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     @Override
     public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
         Picasso.get().load(URLs.URL_Image+noticationModels.get(position).getLandingImages()).into(holder.ImageView);
+
+        setAnimation(holder.itemView);
+
     }
 
     @Override
@@ -51,6 +56,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         return noticationModels.size();
     }
 
+    private void setAnimation(View view){
+
+        Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+        view.setAnimation(animation);
+    }
 
     public class myViewHolder extends RecyclerView.ViewHolder{
         ImageView ImageView;

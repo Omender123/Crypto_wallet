@@ -52,12 +52,14 @@
             android:paddingBottom="20dp">
 
             <ImageView
+                android:id="@+id/image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:src="@drawable/ic_threat"/>
 
             <TextView
+                android:id="@+id/textt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/caution"
@@ -68,6 +70,7 @@
                 android:textSize="25dp"/>
 
             <TextView
+                android:id="@+id/textC"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/threat_text"
@@ -79,6 +82,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/OutlineBox1"
+                android:id="@+id/enterpss"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -98,6 +102,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/OutlineBox1"
+                android:id="@+id/enterotp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/welcome"
@@ -117,6 +122,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/enterpin"
                 style="@style/OutlineBox1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -3,6 +3,7 @@ package com.crypto.croytowallet.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
@@ -41,10 +42,10 @@ import retrofit2.Response;
 public class Support extends AppCompatActivity {
 ImageView imageView;
 ActionBar actionBar;
-
+    CardView Mobilesupport, knowlegeBase,Addticket,contactdetails;
     RelativeLayout knowledge_base,Contact_detail,add_ticket,Mobile_support;
     LinearLayout support;
-    Animation down;
+    Animation slide_up;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +56,23 @@ ActionBar actionBar;
         Contact_detail=findViewById(R.id.contact_details);
         add_ticket=findViewById(R.id.Add_ticket_layout);
         Mobile_support=findViewById(R.id.Mobile_support);
+
+
+        //cardview id
+        Mobilesupport=findViewById(R.id.Mobilesupport);
+        knowlegeBase=findViewById(R.id.knowlegeBase);
+        Addticket=findViewById(R.id.Addticket);
+        contactdetails=findViewById(R.id.contactdetails);
+
+
+        slide_up = AnimationUtils.loadAnimation(Support.this, R.anim.silde_up);
+        knowlegeBase.setAnimation(slide_up);
+        contactdetails.setAnimation(slide_up);
+        Addticket.setAnimation(slide_up);
+        Mobilesupport.setAnimation(slide_up);
+
+
+
 
         Mobile_support.setOnClickListener(new View.OnClickListener() {
             @Override

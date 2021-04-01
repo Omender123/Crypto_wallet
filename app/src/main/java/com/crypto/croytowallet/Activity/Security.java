@@ -45,13 +45,14 @@ public class Security extends AppCompatActivity implements View.OnClickListener 
 ActionBar actionBar;
 Toolbar toolbar;
 ImageView imageView;
-CardView Two_FA1;
+CardView Two_FA1,card_passcode;
 CheckBox passcode;
     KProgressHUD progressDialog;
 CardView backUp;
 
     SharedPreferences sharedPreferences = null;
 UserData userData;
+    Animation slide_up;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +61,20 @@ UserData userData;
         imageView =findViewById(R.id.back);
         Two_FA1 =findViewById(R.id.tofa);
         backUp = findViewById(R.id.backUp);
-
+        card_passcode  = findViewById(R.id.card_passcode);
         passcode=findViewById(R.id.checkbox);
+
+
+        slide_up = AnimationUtils.loadAnimation(Security.this, R.anim.silde_up);
+        backUp.startAnimation(slide_up);
+        Two_FA1.startAnimation(slide_up);
+        card_passcode.startAnimation(slide_up);
+
+
+
+
+       
+
 
 
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();

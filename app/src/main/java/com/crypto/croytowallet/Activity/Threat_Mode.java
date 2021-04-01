@@ -8,7 +8,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +21,7 @@ import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.TransactionHistorySharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.database.RetrofitClient;
+import com.google.android.material.textfield.TextInputLayout;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONException;
@@ -38,6 +42,10 @@ String password,otp,pin;
 CardView submit;
     KProgressHUD progressDialog;
     SharedPreferences sharedPreferences1;
+    Animation slide_up;
+    TextInputLayout enterpss,enterotp,enterpin;
+    TextView textt,textC;
+    ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,10 +53,27 @@ CardView submit;
         ed_pass = findViewById(R.id.enter_pass);
         ed_otp = findViewById(R.id.enter_otp);
         ed_pin = findViewById(R.id.enter_pin);
-
         submit = findViewById(R.id.submit);
 
+        imageView = findViewById(R.id.image);
+
+        // textLyout input
+
+        enterpss = findViewById(R.id.enterpss);
+        enterotp = findViewById(R.id.enterotp);
+        enterpin = findViewById(R.id.enterpin);
+        textt = findViewById(R.id.textt);
+        textC = findViewById(R.id.textC);
+
         sharedPreferences1 =getApplicationContext().getSharedPreferences("currency",0);
+        slide_up = AnimationUtils.loadAnimation(Threat_Mode.this, R.anim.silde_up);
+
+        enterpss.setAnimation(slide_up);
+        enterotp.setAnimation(slide_up);
+        enterpin.setAnimation(slide_up);
+        textt.setAnimation(slide_up);
+        textC.setAnimation(slide_up);
+        submit.setAnimation(slide_up);
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
