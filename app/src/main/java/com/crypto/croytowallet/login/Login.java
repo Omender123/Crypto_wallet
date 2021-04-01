@@ -105,7 +105,7 @@ TextInputLayout layout_otp;
     LinearLayout linearotp;
     TextView timer_txt,resendOtp;
     private static CountDownTimer countDownTimer;
-    Boolean click=false,click1=true;
+    Boolean click=false,click1=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -286,10 +286,25 @@ TextInputLayout layout_otp;
                         JSONObject jsonObject1 = new JSONObject(s);
                         String error = jsonObject1.getString("error");
                         if(error.equals("Incorrect otp")){
-                            resendOTP();
-                            layout_otp.setVisibility(View.VISIBLE);
-                            linearotp.setVisibility(View.VISIBLE);
-                            startCountDownTimer();
+                            if (click1==true){
+                                Snacky.builder()
+                                        .setActivity(Login.this)
+                                        .setText(" Incorrect otp ")
+                                        .setDuration(Snacky.LENGTH_SHORT)
+                                        .setActionText(android.R.string.ok)
+                                        .error()
+                                        .show();
+                                layout_otp.setVisibility(View.VISIBLE);
+                                linearotp.setVisibility(View.VISIBLE);
+
+                            }else{
+                                resendOTP();
+                                layout_otp.setVisibility(View.VISIBLE);
+                                linearotp.setVisibility(View.VISIBLE);
+                                startCountDownTimer();
+
+                            }
+
 
                         }else if(error.equals("Transaction Pin not set")){
 
@@ -402,6 +417,7 @@ TextInputLayout layout_otp;
                             .setDuration(Snacky.LENGTH_SHORT)
                             .success()
                             .show();
+                    click1=true;
                      reset();
                       //  OTPexpire();
                 }else if(response.code()==400){
