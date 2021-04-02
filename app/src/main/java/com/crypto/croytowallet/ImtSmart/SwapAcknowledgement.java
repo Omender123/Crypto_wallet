@@ -65,6 +65,7 @@ Button okay;
             public void onClick(View v) {
 
                 startActivity(new Intent(SwapAcknowledgement.this, MainActivity.class));
+                SwapSharedPrefernce.getInstance(getApplicationContext()).ClearSwapData();
             }
         });
     }
