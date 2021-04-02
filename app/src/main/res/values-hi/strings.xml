@@ -262,5 +262,13 @@
     <string name = "doc_no"> डॉक्यूमेंट नंबर </string>
 
     <string name = "choose"> फ़ाइल चुनें </string>
+    <string name = "acko"> पावती </string>
+
+    <string name="Confirm">पुष्टीकरण</string>
+    <string name="Amt_in_cryto">क्रिप्टो में राशि</string>
+    <string name="Amt_in_USD">USD में राशि</string>
+    <string name="Reciver_add">रिसीवर का पता</string>
+    <string name="Trans_hsh">लेन-देन हैश</string>
+    <string name="Trans_sts">लेन-देन की स्थिति</string>
     
 </resources>

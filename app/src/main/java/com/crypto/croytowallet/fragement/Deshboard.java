@@ -177,17 +177,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
     }
 
     public void CryptoInfoRecyclerView(){
-       /* progressDialog = KProgressHUD.create(getContext())
-                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                .setLabel("Please wait.....")
-                .setCancellable(false)
-                .setAnimationSpeed(2)
-                .setDimAmount(0.5f)
-                .show();
-
-        showpDialog();
-*/
-        String url="https://api.coingecko.com/api/v3/coins/markets?vs_currency="+currency2+"&ids=bitcoin%2Cethereum%2Ctether%2Cripple%2Clitecoin%2Cusd-coin&order=market_cap_desc&sparkline=false&price_change_percentage=24h";
+            String url="https://api.coingecko.com/api/v3/coins/markets?vs_currency="+currency2+"&ids=bitcoin%2Cethereum%2Ctether%2Cripple%2Clitecoin%2Cusd-coin&order=market_cap_desc&sparkline=false&price_change_percentage=24h";
         StringRequest stringRequest=new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -237,8 +227,6 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-               // hidepDialog();
-             // Toast.makeText(getContext(), ""+error.toString(), Toast.LENGTH_SHORT).show();
             }
         });
         requestQueue = Volley.newRequestQueue(getContext());
@@ -331,7 +319,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
 
                 Snacky.builder()
                         .setActivity(getActivity())
-                        .setText("Internet Problem ")
+                        .setText(t.getMessage())
                         .setDuration(Snacky.LENGTH_SHORT)
                         .setActionText(android.R.string.ok)
                         .error()
@@ -509,7 +497,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Snacky.builder()
                         .setActivity(getActivity())
-                        .setText("Internet Problem ")
+                        .setText(t.getMessage())
                         .setDuration(Snacky.LENGTH_SHORT)
                         .setActionText(android.R.string.ok)
                         .error()
@@ -608,15 +596,33 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
                         s=response.body().string();
 
                         JSONObject object = new JSONObject(s);
-                        String price = object.getString("price");
-                        Double cp = Double.parseDouble(price);
-                        Double imi_p = Double.parseDouble(imtPrices1);
-                        Double total = imi_p*cp;
 
-                        imtPrices = String.valueOf(total);
-                        imtPrice.setText(CurrencySymbols+imtPrices);
+                        try {
 
-                    } catch (IOException | JSONException e) {
+                            String price = object.getString("price");
+                            Double cp = Double.parseDouble(price);
+                            Double imi_p = Double.parseDouble(imtPrices1);
+
+                            Double total = imi_p*cp;
+
+                            imtPrices = String.valueOf(total);
+                            imtPrice.setText(CurrencySymbols+imtPrices);
+
+
+
+                        }catch (Exception e){
+
+                            Snacky.builder()
+                                    .setActivity(getActivity())
+                                    .setText("Imt Price not Found")
+                                    .setDuration(Snacky.LENGTH_SHORT)
+                                    .setActionText(android.R.string.ok)
+                                    .error()
+                                    .show();
+                        }
+
+
+                    } catch (IOException | JSONException   e) {
                         e.printStackTrace();
                     }
 
@@ -659,7 +665,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
 
                 Snacky.builder()
                         .setActivity(getActivity())
-                        .setText("Internet Problem ")
+                        .setText(t.getMessage())
                         .setDuration(Snacky.LENGTH_SHORT)
                         .setActionText(android.R.string.ok)
                         .error()

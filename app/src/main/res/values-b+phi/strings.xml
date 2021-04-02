@@ -262,4 +262,15 @@
     <string name = "zip_code"> Zip code </string>
     <string name = "doc_no"> Numero ng Dokumento </string>
     <string name = "choose"> Pumili ng file </string>
+
+    <string name ="acko"> Pagkilala </string>
+
+    <string name="Confirm">Pagkumpirma</string>
+    <string name="Amt_in_cryto">Halaga sa crypto</string>
+    <string name="Amt_in_USD">Halaga sa USD</string>
+    <string name="Reciver_add">Address ng Tagatanggap</string>
+    <string name="Trans_hsh">Transaksyon hash</string>
+    <string name="Trans_sts">Katayuan sa Transaksyon</string>
+
+
 </resources>

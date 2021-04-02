@@ -1,5 +1,6 @@
 package com.crypto.croytowallet.ImtSmart;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,7 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.icu.text.DecimalFormat;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -33,9 +37,11 @@ import com.crypto.croytowallet.Adapter.SelectCurrencyAdapter;
 import com.crypto.croytowallet.AppUtils;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.Model.CurrencyModel;
+import com.crypto.croytowallet.Model.SwapModel;
 import com.crypto.croytowallet.Payment.Top_up_Money;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.SwapSharedPrefernce;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
@@ -80,10 +86,13 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
     String[] coinId1 = {"airdrop","imt"};
     String[] PricecoinId1 = {"airdrop","imt"};
     int[] coinImage1 = {R.drawable.ic_imt__u, R.mipmap.imt};
-    int value;
+    int value,userBalance;
     SeekBar seekBar;
     KProgressHUD progressDialog;
     SharedPreferences sharedPreferences;
+    String currency2,CurrencySymbols,token;
+    UserData userData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,9 +129,11 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
         lyt_average.setOnClickListener(this);
         lyt_high.setOnClickListener(this);
 
-       // sharedPreferences = getApplicationContext().getSharedPreferences("currency", 0);
-       // currency2 = sharedPreferences.getString("currency1", "usd");
-
+        userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
+        token = userData.getToken();
+        sharedPreferences =getApplication().getSharedPreferences("currency",0);
+        currency2 =sharedPreferences.getString("currency1","usd");
+        CurrencySymbols =sharedPreferences.getString("Currency_Symbols","$");
 
         CustomSpinnerAdapter customAdapter = new CustomSpinnerAdapter(getApplicationContext(), coinImage, coinName, coinSymbols,coinId,PricecoinId);
         sendSpinner.setAdapter(customAdapter);
@@ -131,6 +142,8 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 sendData = coinId[position];
                 priceCoinId = PricecoinId[position];
+                AirDropBalance(token,sendData,currency2);
+
                 if(sendData.equals(receviedData)){
                     Snacky.builder()
                             .setActivity(imtSwap.this)
@@ -143,7 +156,11 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
 
                 }else{
 
-                    getCoinPrice(priceCoinId,"usd");
+                    String coinid=priceCoinId.toLowerCase();
+                    String currency=currency2.toLowerCase();
+
+                    getCoinPrice(coinid,currency);
+
                 }
                 //  Toast.makeText(view.getContext(), sendData,Toast.LENGTH_SHORT).show();
 
@@ -185,6 +202,7 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
         back();
         GET_GAS();
         swapBtn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
                 SwapAmount = enter_Swap_Amount.getText().toString().trim();
@@ -215,10 +233,44 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
                             .setActionText(android.R.string.ok)
                             .error()
                             .show();
-                }*/else{
-                    SwapApi();
+                }*/else if(Integer.parseInt(SwapAmount)>=userBalance){
+                    Snacky.builder()
+                            .setActivity(imtSwap.this)
+                            .setText(" Inefficient balance")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+
+
+
+                }else {
+
+                    DecimalFormat df = new DecimalFormat();
+                    df.setMaximumFractionDigits(8);
+
+                    Double coinprices,enterAmount,totalAmoumt;
+                    coinprices=Double.parseDouble(coinPrice);
+                    enterAmount=Double.parseDouble(SwapAmount);
+
+                    totalAmoumt = coinprices/enterAmount;
+
+                    String coinAmount = String.valueOf(df.format(totalAmoumt));
+
+                    SwapModel swapModel = new SwapModel(sendData,receviedData,coinPrice,currency2,CurrencySymbols,coinAmount,SwapAmount,value);
+                    SwapSharedPrefernce.getInstance(getApplicationContext()).SetData(swapModel);
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent(imtSwap.this, SwapConfirmation.class);
+                            startActivity(intent);
+                        }
+                    },1000);
+
 
                 }
+
             }
         });
 
@@ -252,7 +304,7 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
 
         GET_AMOUNT();
 
-        // Toast.makeText(this, ""+value, Toast.LENGTH_SHORT).show();
+
     }
 
     public void getCoinPrice(String coinId,String currency) {
@@ -268,10 +320,9 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
                     JSONObject object = new JSONObject(response);
                     String id = object.getString(coinId);
                     JSONObject object1 = new JSONObject(id);
-                    coinPrice = object1.getString("usd");
+                    coinPrice = object1.getString(currency);
 
-                    Toast.makeText(getApplicationContext(), ""+coinPrice, Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
+                      } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
@@ -304,156 +355,8 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
 
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
 
-      /*  Call<ResponseBody>call = RetrofitGraph.getInstance().getApi().getCoinPrice(coinId,currency);
+      }
 
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                String s=null;
-                if (response.isSuccessful()){
-                    s= response.body().toString();
-*//*
-                    try {
-                        JSONObject object = new JSONObject(s);
-                        String id = object.getString(priceCoinId);
-                        JSONObject object1 = new JSONObject(id);
-                        coinPrice = object1.getString("usd");
-
-                        Toast.makeText(getContext(), ""+coinPrice, Toast.LENGTH_SHORT).show();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }*//*
-
-                    Toast.makeText(getContext(), ""+s, Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Snacky.builder()
-                        .setActivity(getActivity())
-                        .setText(t.getMessage())
-                        .setDuration(Snacky.LENGTH_SHORT)
-                        .setActionText(android.R.string.ok)
-                        .error()
-                        .show();
-
-            }
-        });
-    */}
-
-    public void SwapApi() {
-
-        UserData userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
-
-        String Token = userData.getToken();
-        String eth_Address = userData.getETH();
-        progressDialog = KProgressHUD.create(imtSwap.this)
-                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                .setLabel("Please wait.....")
-                .setCancellable(false)
-                .setAnimationSpeed(2)
-                .setDimAmount(0.5f)
-                .show();
-
-        showpDialog();
-
-
-       Call<ResponseBody> call = RetrofitClient.getInstance().getApi().IMT_SWAP(Token, sendData, receviedData, value, SwapAmount, "", eth_Address);
-
-
-         call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                String s = null;
-                hidepDialog();
-                if (response.code() == 200) {
-
-                    try {
-                        s = response.body().string();
-
-                        if (s == null) {
-                            startActivity(new Intent(getApplicationContext(), ImtSmartGraphLayout.class));
-                            Toast.makeText(imtSwap.this, "Error  occurred in Transaction", Toast.LENGTH_SHORT).show();
-                        } else {
-                            startActivity(new Intent(getApplicationContext(), ImtSmartGraphLayout.class));
-                            Toast.makeText(imtSwap.this, " Successfully \t" + sendData + "\t to \t" + receviedData, Toast.LENGTH_SHORT).show();
-                        }
-
-
-                        // Toast.makeText(imtSwap.this, ""+s, Toast.LENGTH_SHORT).show();
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                } else if (response.code() == 400) {
-                    try {
-                        s = response.errorBody().string();
-                        JSONObject jsonObject1 = new JSONObject(s);
-                        String error = jsonObject1.getString("error");
-
-
-                        Snacky.builder()
-                                .setActivity(imtSwap.this)
-                                .setText(error)
-                                .setDuration(Snacky.LENGTH_SHORT)
-                                .setActionText(android.R.string.ok)
-                                .error()
-                                .show();
-
-
-                    } catch (IOException | JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                } else if (response.code() == 401) {
-                    Snacky.builder()
-                            .setActivity(imtSwap.this)
-                            .setText("unAuthorization Request")
-                            .setDuration(Snacky.LENGTH_SHORT)
-                            .setActionText(android.R.string.ok)
-                            .error()
-                            .show();
-                } else if (response.code() == 504) {
-                    Snacky.builder()
-                            .setActivity(imtSwap.this)
-                            .setText("Gate Way Time Down")
-                            .setDuration(Snacky.LENGTH_SHORT)
-                            .setActionText(android.R.string.ok)
-                            .error()
-                            .show();
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                hidepDialog();
-            /*  Snacky.builder()
-                        .setActivity(imtSwap.this)
-                        .setText("Please Check Your Internet Connection")
-                        .setDuration(Snacky.LENGTH_SHORT)
-                        .setActionText(android.R.string.ok)
-                        .error()
-                        .show();
-
-              startActivity(new Intent(getApplicationContext(), ImtSmartGraphLayout.class));
-                Toast.makeText(imtSwap.this, "Your Amount is Not detected ", Toast.LENGTH_SHORT).show();*/
-
-                AppUtils.showMessageOKCancel("Your transaction is in process. Kindly check again for the confirmation.", imtSwap.this, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent = new Intent(imtSwap.this, ImtSmartGraphLayout.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                });
-
-            }
-        });
-
-    }
 
     private void showpDialog() {
         if (!progressDialog.isShowing())
@@ -724,5 +627,87 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
 
     }
+    public void AirDropBalance(String token,String coinType,String currency){
 
+        progressDialog = KProgressHUD.create(imtSwap.this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Please wait.....")
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
+
+        showpDialog();
+
+
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().AirDropBalance(token,coinType,currency);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                String s =null;
+
+                hidepDialog();
+
+                if (response.code()==200){
+                    try {
+                        s=response.body().string();
+
+                        JSONObject object = new JSONObject(s);
+                        userBalance = object.getInt("balance");
+
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if(response.code()==400){
+                    try {
+                        s=response.errorBody().string();
+                        JSONObject jsonObject1=new JSONObject(s);
+                        String error =jsonObject1.getString("error");
+
+
+                        Snacky.builder()
+                                .setActivity(imtSwap.this)
+                                .setText(error)
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
+
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if(response.code()==401){
+
+                    Snacky.builder()
+                            .setActivity(imtSwap.this)
+                            .setText("unAuthorization Request")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                hidepDialog();
+                Snacky.builder()
+                        .setActivity(imtSwap.this)
+                        .setText(t.getMessage())
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+            }
+        });
+    }
 }

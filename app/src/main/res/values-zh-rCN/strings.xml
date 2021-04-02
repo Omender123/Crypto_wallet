@@ -259,4 +259,11 @@
 
     <string name ="choose">选择文件</string>
 
+    <string name ="acko">致谢</string>
+    <string name="Confirm">确认</string>
+    <string name="Amt_in_cryto">加密货币数量</string>
+    <string name="Amt_in_USD">美元金额</string>
+    <string name="Reciver_add">收件人地址</string>
+    <string name="Trans_hsh">交易哈希</string>
+    <string name="Trans_sts">交易状态</string>
 </resources>

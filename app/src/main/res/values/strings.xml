@@ -261,5 +261,13 @@
 
     <string name="choose">Choose file</string>
 
+    <string name="acko">Acknowledgment</string>
+   
+    <string name="Confirm">Confirmation</string>
+    <string name="Amt_in_cryto">Amount in crypto</string>
+    <string name="Amt_in_USD">Amount in USD</string>
+    <string name="Reciver_add">Receiver Address</string>
+    <string name="Trans_hsh">Transaction hash</string>
+    <string name="Trans_sts">Transaction Status</string>
 
 </resources>

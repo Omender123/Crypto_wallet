@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
@@ -18,19 +19,25 @@
     <uses-feature
         android:name="android.hardware.camera.flash"
         android:required="false" />
-    <uses-permission android:name="ANDROID.PERMISSION.READ_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="ANDROID.PERMISSION.READ_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".InitApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".InitApplication"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CroytoWallet"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.Kyc"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar"></activity>
+        <activity android:name=".ImtSmart.SwapAcknowledgement"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" ></activity>
+        <activity android:name=".ImtSmart.SwapConfirmation"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+        <activity
+            android:name=".Activity.Kyc"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
         <activity
             android:name=".signup.Referral_code_scan"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />

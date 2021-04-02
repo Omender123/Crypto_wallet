@@ -262,4 +262,12 @@
     <string name = "doc_no"> หมายเลขเอกสาร </string>
 
     <string name ="choose"> เลือกไฟล์ </string>
+    <string name ="acko"> รับทราบ </string>
+
+    <string name="Confirm">การยืนยัน</string>
+    <string name="Amt_in_cryto">จำนวนเงินใน crypto</string>
+    <string name="Amt_in_USD">จำนวนเงินเป็น USD</string>
+    <string name="Reciver_add">ที่อยู่ผู้รับ</string>
+    <string name="Trans_hsh">แฮชธุรกรรม</string>
+    <string name="Trans_sts">สถานะการทำธุรกรรม</string>
 </resources>
