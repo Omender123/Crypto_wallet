@@ -233,7 +233,18 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
                             .setActionText(android.R.string.ok)
                             .error()
                             .show();
-                }*/else if(Integer.parseInt(SwapAmount)>=userBalance){
+                }*/
+                else if(priceCoinId.equals("airdrop")){
+                    Snacky.builder()
+                            .setActivity(imtSwap.this)
+                            .setText(" Coming Soon Airdrop Swap")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+
+                }
+                else if(Integer.parseInt(SwapAmount)<=userBalance){
                     Snacky.builder()
                             .setActivity(imtSwap.this)
                             .setText(" Inefficient balance")
@@ -253,7 +264,7 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
                     coinprices=Double.parseDouble(coinPrice);
                     enterAmount=Double.parseDouble(SwapAmount);
 
-                    totalAmoumt = coinprices/enterAmount;
+                    totalAmoumt = enterAmount/coinprices;
 
                     String coinAmount = String.valueOf(df.format(totalAmoumt));
 

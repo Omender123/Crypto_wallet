@@ -2,6 +2,7 @@ package com.crypto.croytowallet.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
@@ -11,6 +12,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -55,6 +58,8 @@ public class Two_FA extends AppCompatActivity {
     SharedPreferences sharedPreferences1 = null;
     Boolean booleanValue,booleanValue1,email2f,googl2f;
     String id;
+    CardView g2a,e2a;
+    Animation enterright;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +68,15 @@ public class Two_FA extends AppCompatActivity {
 
        google_to_fa=findViewById(R.id.toogle1);
         email_to_fa=findViewById(R.id.toogle2);
+
+        g2a = findViewById(R.id.g2a);
+        e2a = findViewById(R.id.e2a);
+        enterright = AnimationUtils.loadAnimation(Two_FA.this, R.anim.slide_in_left);
+        g2a.startAnimation(enterright);
+        e2a.startAnimation(enterright);
+
+
+
         userData= SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
 

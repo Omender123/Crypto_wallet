@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -21,6 +23,7 @@ import de.mateware.snacky.Snacky;
 public class Contact_details extends AppCompatActivity implements View.OnClickListener {
 ImageView back_btn;
 CardView card_email,card_phone_no,card_website;
+    Animation enterright;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +36,11 @@ CardView card_email,card_phone_no,card_website;
         card_email.setOnClickListener(this);
         card_phone_no.setOnClickListener(this);
         card_website.setOnClickListener(this);
+
+        enterright = AnimationUtils.loadAnimation(Contact_details.this, R.anim.slide_in_left);
+        card_email.setAnimation(enterright);
+        card_phone_no.setAnimation(enterright);
+        card_website.setAnimation(enterright);
 
         back();
     }

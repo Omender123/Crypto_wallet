@@ -1,12 +1,15 @@
 package com.crypto.croytowallet.Chat;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -31,12 +34,22 @@ public class ChatOptions extends AppCompatActivity {
     RelativeLayout newChat,oldChat;
     SharedPreferences sharedPreferences;
     String status;
-    @Override
+
+    CardView new_chat,old_chat;
+    Animation enterright;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_options);
         newChat = findViewById(R.id.Mobile_support);
         oldChat = findViewById(R.id.Mobile_support1);
+        new_chat =findViewById(R.id.new_chat);
+        old_chat = findViewById(R.id.old_chat);
+
+        enterright = AnimationUtils.loadAnimation(ChatOptions.this, R.anim.slide_in_left);
+        new_chat.startAnimation(enterright);
+        old_chat.startAnimation(enterright);
+
+
 
         sharedPreferences = getSharedPreferences("season",0);
 

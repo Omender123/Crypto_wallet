@@ -36,6 +36,7 @@
                 android:id="@+id/toolbar_title" />
         </LinearLayout>
     <androidx.cardview.widget.CardView
+        android:id="@+id/g2a"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/card_background"
@@ -114,6 +115,7 @@
 
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
+        android:id="@+id/e2a"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/card_background"

@@ -61,6 +61,7 @@ tools:context=".Chat.ChatOptions">
             android:textAlignment="center"
             android:gravity="center" />
         <androidx.cardview.widget.CardView
+            android:id="@+id/new_chat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/card_background"
@@ -129,6 +130,7 @@ tools:context=".Chat.ChatOptions">
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/old_chat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/card_background"
