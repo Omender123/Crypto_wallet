@@ -68,7 +68,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class imtSwap extends AppCompatActivity implements View.OnClickListener {
+public class
+imtSwap extends AppCompatActivity implements View.OnClickListener {
     Spinner sendSpinner, reciveSpinner;
     String sendData, receviedData, SwapAmount, low_gasFees, average_gasFees, high_gasFees, min_amount, half_amount, max_amount,priceCoinId,coinPrice;
     ImageView imageView, img_low, img_average, img_high;

@@ -83,23 +83,23 @@ public class SwapConfirmation extends AppCompatActivity {
             userBalance = Double.parseDouble(balance);
             TotalAmount = Double.parseDouble(total);
 
-            if(TotalAmount>=userBalance) {
+          /*  if(TotalAmount>=userBalance) {
 
                 confirm.setBackgroundColor(getResources().getColor(R.color.light_gray));
                 confirm.setAlpha(0.5f);
             }else{
                 confirm.setBackgroundColor(getResources().getColor(R.color.purple_500));
                 confirm.setAlpha(0.9f);
-            }
+            }*/
         }catch (Exception e){
 
-            Snacky.builder()
+           /* Snacky.builder()
                     .setActivity(SwapConfirmation.this)
                     .setText(" User Balance Not Found")
                     .setDuration(Snacky.LENGTH_SHORT)
                     .setActionText(android.R.string.ok)
                     .error()
-                    .show();
+                    .show();*/
         }
 
 
