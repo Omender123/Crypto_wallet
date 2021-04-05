@@ -23,8 +23,10 @@ public class Pay_money extends AppCompatActivity {
     CardView pay;
     EditText pay_enter_amount;
     TextView go_top_up,payUsername,payname,payEmail;
-    SharedPreferences preferences;
+    SharedPreferences preferences,sharedPreferences1,sharedPreferences;
     TextView textView;
+    String imtPrice,currency2,CurrencySymbols;
+    Double imtP;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,15 +40,25 @@ public class Pay_money extends AppCompatActivity {
         payUsername=findViewById(R.id.payUsername);
         payname=findViewById(R.id.name);
         payEmail=findViewById(R.id.email);
-
+        sharedPreferences1 = getApplicationContext().getSharedPreferences("imtInfo", Context.MODE_PRIVATE);
         preferences=getApplicationContext().getSharedPreferences("walletScan", Context.MODE_PRIVATE);
+
+        sharedPreferences = getApplicationContext().getSharedPreferences("currency", 0);
+        currency2 = sharedPreferences.getString("currency1", "usd");
+        CurrencySymbols = sharedPreferences.getString("Currency_Symbols", "$");
+
         String username = preferences.getString("username","");
         String name = preferences.getString("name","");
         String email = preferences.getString("email","");
 
+
+        imtPrice = sharedPreferences1.getString("imtPrices", "0.09");
+
         payUsername.setText(username);
         payname.setText(name);
         payEmail.setText(email);
+
+
 
 
         pay.setOnClickListener(new View.OnClickListener() {
@@ -81,13 +93,15 @@ public class Pay_money extends AppCompatActivity {
                 String amount = s.toString();
 
                 if (amount.isEmpty()){
-                    textView.setText("$ 0 ");
+                    textView.setText(CurrencySymbols+" 0 ");
                 }else{
                   try {
-                      Double a = Double.valueOf(s.toString());
-                      double result = a*0.09;
 
-                      textView.setText("$ " +result );
+                      Double a = Double.valueOf(s.toString());
+                      imtP = Double.parseDouble(imtPrice);
+                      double result = a*imtP;
+
+                      textView.setText(CurrencySymbols +result );
 
                   }catch (Exception e){
 

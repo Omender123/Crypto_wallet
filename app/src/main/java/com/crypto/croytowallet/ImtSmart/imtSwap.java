@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -77,7 +78,7 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
     String[] coinName = {"ImSmart", "Bitcoin","Ethereum","Tether","XRP","Litcoin","USD Coin","ImSmart Utility"};
     String[] coinSymbols = {"IMT", "BTC","ETH","USDT","XRP","LTC","USDC","IMT-U"};
     String[] coinId = {"imt", "btc","eth","usdt","xrp","ltc","usdc","airdrop"};
-    String[] PricecoinId = {"imsmart-token", "bitcoin","ethereum","tether","ripple","litecoin","usd-coin","airdrop"};
+    String[] PricecoinId = {"airdrop", "bitcoin","ethereum","tether","ripple","litecoin","usd-coin","airdrop"};
 
     int[] coinImage = {R.mipmap.imt,R.mipmap.bitcoin_image,R.mipmap.group_blue,R.mipmap.usdt,R.mipmap.xrp,R.mipmap.ltc,R.mipmap.usdc,R.drawable.ic_imt__u};
 
@@ -86,11 +87,11 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
     String[] coinId1 = {"airdrop","imt"};
     String[] PricecoinId1 = {"airdrop","imt"};
     int[] coinImage1 = {R.drawable.ic_imt__u, R.mipmap.imt};
-    int value,userBalance;
+    int value;
     SeekBar seekBar;
     KProgressHUD progressDialog;
-    SharedPreferences sharedPreferences;
-    String currency2,CurrencySymbols,token;
+    SharedPreferences sharedPreferences,sharedPreferences1;
+    String currency2,CurrencySymbols,token,userBalance,imtPrice;
     UserData userData;
 
     @Override
@@ -131,9 +132,15 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
 
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
         token = userData.getToken();
+
+
+        sharedPreferences1 = getApplicationContext().getSharedPreferences("imtInfo", Context.MODE_PRIVATE);
+
         sharedPreferences =getApplication().getSharedPreferences("currency",0);
         currency2 =sharedPreferences.getString("currency1","usd");
         CurrencySymbols =sharedPreferences.getString("Currency_Symbols","$");
+
+        imtPrice = sharedPreferences1.getString("imtPrices", "0.09");
 
         CustomSpinnerAdapter customAdapter = new CustomSpinnerAdapter(getApplicationContext(), coinImage, coinName, coinSymbols,coinId,PricecoinId);
         sendSpinner.setAdapter(customAdapter);
@@ -152,7 +159,7 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
                             .setActionText(android.R.string.ok)
                             .error()
                             .show();
-                }else if (priceCoinId.equals("airdrop")){
+                }else if(priceCoinId.equals("airdrop")){
 
                 }else{
 
@@ -234,28 +241,34 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
                             .error()
                             .show();
                 }*/
+
                 else if(priceCoinId.equals("airdrop")){
-                    Snacky.builder()
-                            .setActivity(imtSwap.this)
-                            .setText(" Coming Soon Airdrop Swap")
-                            .setDuration(Snacky.LENGTH_SHORT)
-                            .setActionText(android.R.string.ok)
-                            .error()
-                            .show();
 
-                }
-                else if(Integer.parseInt(SwapAmount)<=userBalance){
-                    Snacky.builder()
-                            .setActivity(imtSwap.this)
-                            .setText(" Inefficient balance")
-                            .setDuration(Snacky.LENGTH_SHORT)
-                            .setActionText(android.R.string.ok)
-                            .error()
-                            .show();
+                    DecimalFormat df = new DecimalFormat();
+                    df.setMaximumFractionDigits(8);
+
+                    Double coinprices,enterAmount,totalAmoumt;
+                    coinprices=Double.parseDouble(imtPrice);
+                    enterAmount=Double.parseDouble(SwapAmount);
+
+                    totalAmoumt = enterAmount/coinprices;
+
+                    String coinAmount = String.valueOf(df.format(totalAmoumt));
 
 
 
-                }else {
+                    SwapModel swapModel = new SwapModel(sendData,receviedData,imtPrice,currency2,CurrencySymbols,coinAmount,SwapAmount,userBalance,coinAmount,value);
+                    SwapSharedPrefernce.getInstance(getApplicationContext()).SetData(swapModel);
+
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent(imtSwap.this, SwapConfirmation.class);
+                            startActivity(intent);
+                        }
+                    },1000);
+                } else {
 
                     DecimalFormat df = new DecimalFormat();
                     df.setMaximumFractionDigits(8);
@@ -268,7 +281,7 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
 
                     String coinAmount = String.valueOf(df.format(totalAmoumt));
 
-                    SwapModel swapModel = new SwapModel(sendData,receviedData,coinPrice,currency2,CurrencySymbols,coinAmount,SwapAmount,value);
+                    SwapModel swapModel = new SwapModel(sendData,receviedData,coinPrice,currency2,CurrencySymbols,coinAmount,SwapAmount,userBalance,coinAmount,value);
                     SwapSharedPrefernce.getInstance(getApplicationContext()).SetData(swapModel);
 
                     new Handler().postDelayed(new Runnable() {
@@ -666,7 +679,7 @@ public class imtSwap extends AppCompatActivity implements View.OnClickListener {
                         s=response.body().string();
 
                         JSONObject object = new JSONObject(s);
-                        userBalance = object.getInt("balance");
+                        userBalance = object.getString("balance");
 
 
                     } catch (IOException | JSONException e) {

@@ -1,11 +1,13 @@
 package com.crypto.croytowallet.fragement;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.icu.text.DecimalFormat;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,7 +68,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
     String[] coinName = {"ImSmart", "Bitcoin","Ethereum","Tether","XRP","Litecoin","USD Coin","ImSmart Utility"};
     String[] coinSymbols = {"IMT", "BTC","ETH","USDT","XRP","LTC","USDC","IMT-U"};
     String[] coinId = {"imt", "btc","eth","usdt","xrp","ltc","usdc","airdrop"};
-    String[] PricecoinId = {"imsmart-token", "bitcoin","ethereum","tether","ripple","litecoin","usd-coin","airdrop"};
+    String[] PricecoinId = {"airdrop", "bitcoin","ethereum","tether","ripple","litecoin","usd-coin","airdrop"};
     int[] coinImage = {R.mipmap.imt,R.mipmap.bitcoin_image,R.mipmap.group_blue,R.mipmap.usdt,R.mipmap.xrp,R.mipmap.ltc,R.mipmap.usdc,R.drawable.ic_imt__u};
 
     String[] coinName1 = {"ImSmart Utility","ImSmart"};
@@ -74,13 +76,14 @@ public class Exchange extends Fragment implements View.OnClickListener {
     String[] coinId1 = {"airdrop","imt"};
     String[] PricecoinId1 = {"airdrop","imt"};
     int[] coinImage1 = {R.drawable.ic_imt__u,R.mipmap.imt};
-    int value,userBalance;
+    int value;
     SeekBar seekBar;
 
     KProgressHUD progressDialog;
-    SharedPreferences sharedPreferences;
-    String currency2,CurrencySymbols,token;
+    SharedPreferences sharedPreferences,sharedPreferences1;
+    String currency2,CurrencySymbols,token,userBalance,imtPrice;
     UserData userData;
+
 
 
        public Exchange() {
@@ -127,10 +130,17 @@ public class Exchange extends Fragment implements View.OnClickListener {
 
         userData = SharedPrefManager.getInstance(getContext()).getUser();
         token = userData.getToken();
+
+
+
+
+        sharedPreferences1 = getContext().getSharedPreferences("imtInfo", Context.MODE_PRIVATE);
         sharedPreferences =getActivity().getSharedPreferences("currency",0);
+
         currency2 =sharedPreferences.getString("currency1","usd");
         CurrencySymbols =sharedPreferences.getString("Currency_Symbols","$");
 
+        imtPrice = sharedPreferences1.getString("imtPrices", "0.09");
 
         CustomSpinnerAdapter customAdapter = new CustomSpinnerAdapter(getContext(), coinImage, coinName, coinSymbols,coinId,PricecoinId);
         sendSpinner.setAdapter(customAdapter);
@@ -150,7 +160,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
                             .setActionText(android.R.string.ok)
                             .error()
                             .show();
-                }else if (priceCoinId.equals("airdrop")){
+                }else if(priceCoinId.equals("airdrop")){
 
                   }else{
                       
@@ -228,29 +238,37 @@ public class Exchange extends Fragment implements View.OnClickListener {
                             .setActionText(android.R.string.ok)
                             .error()
                             .show();
-                }*/ else if(Integer.parseInt(SwapAmount)>=userBalance){
-                    Snacky.builder()
-                            .setActivity(getActivity())
-                            .setText(" Inefficient balance")
-                            .setDuration(Snacky.LENGTH_SHORT)
-                            .setActionText(android.R.string.ok)
-                            .error()
-                            .show();
+                }*/else if(priceCoinId.equals("airdrop")){
+
+                    DecimalFormat df = new DecimalFormat();
+                    df.setMaximumFractionDigits(8);
+
+                    Double coinprices,enterAmount,totalAmoumt;
+                    coinprices=Double.parseDouble(imtPrice);
+                    enterAmount=Double.parseDouble(SwapAmount);
+
+                    totalAmoumt = enterAmount/coinprices;
+
+                    String coinAmount = String.valueOf(df.format(totalAmoumt));
 
 
 
-                }else if(priceCoinId.equals("airdrop")){
-                    Snacky.builder()
-                            .setActivity(getActivity())
-                            .setText(" Coming Soon Airdrop Swap")
-                            .setDuration(Snacky.LENGTH_SHORT)
-                            .setActionText(android.R.string.ok)
-                            .error()
-                            .show();
+                    SwapModel swapModel = new SwapModel(sendData,receviedData,imtPrice,currency2,CurrencySymbols,coinAmount,SwapAmount,userBalance,coinAmount,value);
+                    SwapSharedPrefernce.getInstance(getContext()).SetData(swapModel);
+
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent(getActivity(), SwapConfirmation.class);
+                            startActivity(intent);
+                        }
+                    },1000);
+
                 }else {
 
                     DecimalFormat df = new DecimalFormat();
-                    df.setMaximumFractionDigits(2);
+                    df.setMaximumFractionDigits(8);
 
                     Double coinprices,enterAmount,totalAmoumt;
                     coinprices=Double.parseDouble(coinPrice);
@@ -258,14 +276,21 @@ public class Exchange extends Fragment implements View.OnClickListener {
 
                     totalAmoumt = enterAmount/coinprices;
 
-                  String coinAmount = String.valueOf(totalAmoumt);
+                  String coinAmount = String.valueOf(df.format(totalAmoumt));
 
-                    SwapModel swapModel = new SwapModel(sendData,receviedData,coinPrice,currency2,CurrencySymbols,coinAmount,SwapAmount,value);
+
+
+                    SwapModel swapModel = new SwapModel(sendData,receviedData,coinPrice,currency2,CurrencySymbols,coinAmount,SwapAmount,userBalance,coinAmount,value);
                     SwapSharedPrefernce.getInstance(getContext()).SetData(swapModel);
 
 
-                      Intent intent = new Intent(getActivity(), SwapConfirmation.class);
-                    startActivity(intent);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent(getContext(), SwapConfirmation.class);
+                            startActivity(intent);
+                        }
+                    },1000);
 
                 }
             }
@@ -749,10 +774,9 @@ public class Exchange extends Fragment implements View.OnClickListener {
                         s=response.body().string();
 
                         JSONObject object = new JSONObject(s);
-                        userBalance = object.getInt("balance");
+                        userBalance = object.getString("balance");
 
-
-                    } catch (IOException | JSONException e) {
+                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }
 

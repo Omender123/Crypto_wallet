@@ -126,6 +126,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
 
       //  sharedPreferences=getActivity().getSharedPreferences("symbols", Context.MODE_PRIVATE);
         sharedPreferences1=getActivity().getSharedPreferences("imtInfo", Context.MODE_PRIVATE);
+        sharedPreferences1.getString("price", null);
 
        sharedPreferences =getActivity().getSharedPreferences("currency",0);
          currency2 =sharedPreferences.getString("currency1","usd");
@@ -607,6 +608,9 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
 
                             imtPrices = String.valueOf(total);
                             imtPrice.setText(CurrencySymbols+imtPrices);
+                            SharedPreferences.Editor editor=sharedPreferences1.edit();
+                            editor.putString("imtPrices",imtPrices);
+                            editor.commit();
 
 
 

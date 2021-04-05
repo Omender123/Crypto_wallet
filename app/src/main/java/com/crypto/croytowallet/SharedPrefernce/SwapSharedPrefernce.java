@@ -19,7 +19,8 @@ public class SwapSharedPrefernce {
     private static final String KEY_COIN_AMOUNT = "keycoinAmount";
     private static final String KEY_ENTER_AMOUNT = "keyenterAmount";
     private static final String KEY_VALUE = "keyValue";
-
+    private static final String KEY_userBalance = "keyUserBalance";
+    private static final String KEY_Total = "keyTotal";
 
 
     private SwapSharedPrefernce(Context context) {
@@ -43,8 +44,9 @@ public class SwapSharedPrefernce {
         editor.putString(KEY_CURRENCY_SYMBOLS, user.getCurrencySymbol());
         editor.putString(KEY_COIN_AMOUNT, user.getCoinAmount());
         editor.putString(KEY_ENTER_AMOUNT, user.getEnterAmount());
+        editor.putString(KEY_userBalance, user.getUserBalance());
+        editor.putString(KEY_Total, user.getTotalAmount());
         editor.putInt(KEY_VALUE, user.getValue());
-
 
         editor.apply();
     }
@@ -60,6 +62,8 @@ public class SwapSharedPrefernce {
                 sharedPreferences.getString(KEY_CURRENCY_SYMBOLS, null),
                 sharedPreferences.getString(KEY_COIN_AMOUNT, null),
                 sharedPreferences.getString(KEY_ENTER_AMOUNT, null),
+                sharedPreferences.getString(KEY_userBalance, null),
+                sharedPreferences.getString(KEY_Total, null),
                 sharedPreferences.getInt(KEY_VALUE, 1)
         );
     }

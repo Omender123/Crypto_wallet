@@ -418,7 +418,7 @@ TextInputLayout layout_otp;
                             .success()
                             .show();
                     click1=true;
-                     reset();
+
                       //  OTPexpire();
                 }else if(response.code()==400){
                     try {
@@ -659,7 +659,7 @@ public void listener(){
 }
 
     private void reset() {
-       // stopCountDownTimer();
+       stopCountDownTimer();
         startCountDownTimer();
 
     }
@@ -693,6 +693,7 @@ public void listener(){
                         // resendOTP(v);
                         if(click==true){
                             resendOTP();
+                            reset();
                         }
 
                     }

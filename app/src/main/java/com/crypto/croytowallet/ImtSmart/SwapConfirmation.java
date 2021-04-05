@@ -39,6 +39,8 @@ public class SwapConfirmation extends AppCompatActivity {
     int value;
     KProgressHUD progressDialog;
     TextView coinValue,showCoinAmount,showEnteredAmount;
+    String balance,total;
+    Double userBalance,TotalAmount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,17 +63,68 @@ public class SwapConfirmation extends AppCompatActivity {
         enterAmount = swapModel.getEnterAmount();
         coinAmount = swapModel.getCoinAmount();
         value = swapModel.getValue();
+        balance = swapModel.getUserBalance();
+        total = swapModel.getTotalAmount();
+
+
 
 
         coinValue.setText("1 "+sendData.toUpperCase()+" = "+coinPrice+" "+currencyType.toUpperCase());
-        showCoinAmount.setText(coinAmount+" "+sendData.toUpperCase());
+        if(sendData.equals("airdrop")){
+            showCoinAmount.setText(coinAmount+" IMT-U");
+        }else{
+            showCoinAmount.setText(coinAmount+" "+sendData.toUpperCase());
+        }
+
         showEnteredAmount.setText(enterAmount+" "+currencySymbols);
+
+
+         try {
+            userBalance = Double.parseDouble(balance);
+            TotalAmount = Double.parseDouble(total);
+
+            if(TotalAmount>=userBalance) {
+
+                confirm.setBackgroundColor(getResources().getColor(R.color.light_gray));
+                confirm.setAlpha(0.5f);
+            }else{
+                confirm.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                confirm.setAlpha(0.9f);
+            }
+        }catch (Exception e){
+
+            Snacky.builder()
+                    .setActivity(SwapConfirmation.this)
+                    .setText(" User Balance Not Found")
+                    .setDuration(Snacky.LENGTH_SHORT)
+                    .setActionText(android.R.string.ok)
+                    .error()
+                    .show();
+        }
+
+
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                if(TotalAmount>=userBalance){
+                    Snacky.builder()
+                            .setActivity(SwapConfirmation.this)
+                            .setText(" Inefficient balance")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+                }else {
 
-                SwapApi();
+
+                    SwapApi();
+                }
+
+                //
+
+               // Toast.makeText(SwapConfirmation.this, total+" <= "+balance, Toast.LENGTH_SHORT).show();
+
 
             }
         });
@@ -102,7 +155,7 @@ public class SwapConfirmation extends AppCompatActivity {
 
 
 
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().IMT_SWAP(Token, sendData, receivedData, value, coinAmount, "", ethAddress);
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().IMT_SWAP(Token, sendData, receivedData, value, coinAmount, userData.getTransaction_Pin(), ethAddress);
 
 
         call.enqueue(new Callback<ResponseBody>() {
