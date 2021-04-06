@@ -267,5 +267,6 @@
     <string name="Reciver_add">受信者アドレス</string>
     <string name="Trans_hsh">トランザクションハッシュ</string>
     <string name="Trans_sts">トランザクションステータス</string>
+    <string name = "obtain"> Google 2FAを取得する</string>
 
 </resources>

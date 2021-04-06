@@ -270,4 +270,6 @@
     <string name="Reciver_add">ที่อยู่ผู้รับ</string>
     <string name="Trans_hsh">แฮชธุรกรรม</string>
     <string name="Trans_sts">สถานะการทำธุรกรรม</string>
+
+    <string name = "obtain"> รับ Google 2 ฉก </string>
 </resources>

@@ -6,22 +6,16 @@ import androidx.cardview.widget.CardView;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.TransactionHistorySharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.database.RetrofitClient;
-import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.JsonObject;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONException;
@@ -35,45 +29,23 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
-public class Threat_Mode extends AppCompatActivity {
-EditText ed_pass,ed_otp,ed_pin;
-String password,otp,pin;
-CardView submit;
+public class CheckGoogle2FA extends AppCompatActivity {
+    EditText ed_pass,ed_otp,ed_pin;
+    String password,otp,pin;
+    CardView submit;
     KProgressHUD progressDialog;
     SharedPreferences sharedPreferences1;
-    Animation slide_up;
-    TextInputLayout enterpss,enterotp,enterpin;
-    TextView textt,textC;
-    ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_threat_mode);
+        setContentView(R.layout.activity_check_google2_f);
         ed_pass = findViewById(R.id.enter_pass);
         ed_otp = findViewById(R.id.enter_otp);
         ed_pin = findViewById(R.id.enter_pin);
         submit = findViewById(R.id.submit);
 
-        imageView = findViewById(R.id.image);
+        sharedPreferences1 = getSharedPreferences("GoogleKey", MODE_PRIVATE);
 
-        // textLyout input
-
-        enterpss = findViewById(R.id.enterpss);
-        enterotp = findViewById(R.id.enterotp);
-        enterpin = findViewById(R.id.enterpin);
-        textt = findViewById(R.id.textt);
-        textC = findViewById(R.id.textC);
-
-        sharedPreferences1 =getApplicationContext().getSharedPreferences("currency",0);
-        slide_up = AnimationUtils.loadAnimation(Threat_Mode.this, R.anim.silde_up);
-
-        enterpss.setAnimation(slide_up);
-        enterotp.setAnimation(slide_up);
-        enterpin.setAnimation(slide_up);
-        textt.setAnimation(slide_up);
-        textC.setAnimation(slide_up);
-        submit.setAnimation(slide_up);
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +67,7 @@ CardView submit;
                     ed_pin.requestFocus();
 
                 }else {
-                 threat_mode_Api();
+                    Google_Option();
                 }
             }
         });
@@ -103,13 +75,13 @@ CardView submit;
 
     }
 
-    public void threat_mode_Api() {
+    public void Google_Option() {
 
         UserData userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
         String token = userData.getToken();
 
-        progressDialog = KProgressHUD.create(Threat_Mode.this)
+        progressDialog = KProgressHUD.create(CheckGoogle2FA.this)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel("Please wait.....")
                 .setCancellable(false)
@@ -120,7 +92,7 @@ CardView submit;
         showpDialog();
 
 
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().Threat_mode_Api(token,password,otp,pin);
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().Google_Obtain(token,password,otp,pin);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -129,9 +101,32 @@ CardView submit;
                 String s=null;
                 if (response.code()==200){
 
-                    SharedPrefManager.getInstance(getApplicationContext()).logout();
-                    TransactionHistorySharedPrefManager.getInstance(getApplicationContext()).clearPearData();
-                    sharedPreferences1.edit().clear().commit();
+                    try {
+                        s = response.body().string();
+                        JSONObject object = new JSONObject(s);
+                        String result = object.getString("result");
+                        JSONObject object1 = new JSONObject(result);
+                        String key= object1.getString("key");
+                        String oauthKey = object1.getString("otpauth_url");
+
+                        SharedPreferences.Editor myEdit = sharedPreferences1.edit();
+
+                        // write all the data entered by the user in SharedPreference and apply
+                        myEdit.putString("oauthKey",oauthKey );
+                        myEdit.putString("key",key );
+                        myEdit.apply();
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                startActivity(new Intent(CheckGoogle2FA.this,ShowGoogle2fa_BarCode.class));
+                            }
+                        },1000);
+
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
+                    }
 
 
                 }else if(response.code()==400){
@@ -142,7 +137,7 @@ CardView submit;
                         String error =jsonObject1.getString("error");
 
                         Snacky.builder()
-                                .setActivity(Threat_Mode.this)
+                                .setActivity(CheckGoogle2FA.this)
                                 .setText(error)
                                 .setDuration(Snacky.LENGTH_SHORT)
                                 .setActionText(android.R.string.ok)
@@ -158,7 +153,7 @@ CardView submit;
 
                 } else if(response.code()==401){
                     Snacky.builder()
-                            .setActivity(Threat_Mode.this)
+                            .setActivity(CheckGoogle2FA.this)
                             .setText("unAuthorization Request")
                             .setDuration(Snacky.LENGTH_SHORT)
                             .setActionText(android.R.string.ok)
@@ -173,7 +168,7 @@ CardView submit;
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 hidepDialog();
                 Snacky.builder()
-                        .setActivity(Threat_Mode.this)
+                        .setActivity(CheckGoogle2FA.this)
                         .setText(t.getMessage())
                         .setDuration(Snacky.LENGTH_SHORT)
                         .setActionText(android.R.string.ok)
@@ -196,11 +191,11 @@ CardView submit;
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+
         onSaveInstanceState(new Bundle());
     }
 
     public void back(View view) {
-
         onBackPressed();
     }
 }

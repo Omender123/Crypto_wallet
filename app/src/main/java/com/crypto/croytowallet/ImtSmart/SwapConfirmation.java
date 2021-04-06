@@ -70,11 +70,13 @@ public class SwapConfirmation extends AppCompatActivity {
 
 
         coinValue.setText("1 "+sendData.toUpperCase()+" = "+coinPrice+" "+currencyType.toUpperCase());
-        if(sendData.equals("airdrop")){
+        if(sendData.equals("airdrop") || receivedData.equals("airdrop")){
             showCoinAmount.setText(coinAmount+" IMT-U");
         }else{
             showCoinAmount.setText(coinAmount+" "+sendData.toUpperCase());
         }
+
+
 
         showEnteredAmount.setText(enterAmount+" "+currencySymbols);
 

@@ -356,4 +356,14 @@ public interface Api {
             @Field("email2fa") Boolean email2fa
     );
 
+
+
+    @FormUrlEncoded
+    @POST(" user/google2fa")
+    Call<ResponseBody> Google_Obtain(
+            @Header("Authorization") String Authtoken,
+            @Field("password") String password,
+            @Field("otp") String otp,
+            @Field("transactionPin") String transactionPin
+    );
 }

@@ -270,5 +270,6 @@
     <string name="Reciver_add">रिसीवर का पता</string>
     <string name="Trans_hsh">लेन-देन हैश</string>
     <string name="Trans_sts">लेन-देन की स्थिति</string>
-    
+
+    <string name = "obtain"> गूगल 2 एफ ए  प्राप्त करें </string>
 </resources>

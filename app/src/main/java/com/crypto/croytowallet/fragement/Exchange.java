@@ -8,6 +8,8 @@ import android.icu.text.DecimalFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -81,8 +83,9 @@ public class Exchange extends Fragment implements View.OnClickListener {
 
     KProgressHUD progressDialog;
     SharedPreferences sharedPreferences,sharedPreferences1;
-    String currency2,CurrencySymbols,token,userBalance,imtPrice;
+    String currency2,CurrencySymbols,token,userBalance,imtPrice,coinSymbol;
     UserData userData;
+    TextView text_send;
 
 
 
@@ -120,6 +123,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
         min_rate = view.findViewById(R.id.min);
         half_rate = view.findViewById(R.id.half);
         max_rate = view.findViewById(R.id.max);
+        text_send = view.findViewById(R.id.txt_send_amount);
         min_rate.setOnClickListener(this);
         half_rate.setOnClickListener(this);
         max_rate.setOnClickListener(this);
@@ -150,6 +154,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
 
                 sendData = coinId[position];
                 priceCoinId = PricecoinId[position];
+                coinSymbol = coinSymbols[position];
                 AirDropBalance(token,sendData,currency2);
 
                   if(sendData.equals(receviedData)){
@@ -163,10 +168,10 @@ public class Exchange extends Fragment implements View.OnClickListener {
                 }else if(priceCoinId.equals("airdrop")){
 
                   }else{
-                      
+
                       String coinid=priceCoinId.toLowerCase();
                       String currency=currency2.toLowerCase();
-                      
+
                      getCoinPrice(coinid,currency);
 
                   }
@@ -328,6 +333,61 @@ public class Exchange extends Fragment implements View.OnClickListener {
         GET_AMOUNT();
 
 
+
+        enter_Swap_Amount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String msg = s.toString();
+
+
+                if (priceCoinId.equals("airdrop")){
+
+                    if (msg.isEmpty()){
+                        text_send.setText(" ");
+                    }else{
+                        DecimalFormat df = new DecimalFormat();
+                        df.setMaximumFractionDigits(8);
+
+                        Double coinprices,enterAmount,totalAmoumt;
+                        coinprices=Double.parseDouble(imtPrice);
+                        enterAmount=Double.parseDouble(msg);
+
+                        totalAmoumt = enterAmount/coinprices;
+
+                        text_send.setText(msg +" "+ coinSymbol +"="+df.format(totalAmoumt)+" "+currency2.toUpperCase() );
+                    }
+
+                }else{
+
+                    if (msg.isEmpty()){
+                        text_send.setText(" ");
+                    }else {
+                        DecimalFormat df = new DecimalFormat();
+                        df.setMaximumFractionDigits(8);
+
+                        Double coinprices,enterAmount,totalAmoumt;
+                        coinprices=Double.parseDouble(coinPrice);
+                        enterAmount=Double.parseDouble(msg);
+
+                        totalAmoumt = enterAmount/coinprices;
+
+                        text_send.setText(msg +" "+ coinSymbol+"="+df.format(totalAmoumt)+" "+currency2.toUpperCase() );
+
+                    }
+                   }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         return view; }
 

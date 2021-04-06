@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -82,15 +84,16 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
     RequestQueue requestQueue;
     Crypto_currencyInfo crypto_currencyInfo;
     OverViewAdapter overViewAdapter;
-    LinearLayout lytscan,lytPay,lytWalletBalance,lytaddMoney;
+    LinearLayout lytscan,lytPay,lytWalletBalance,lytaddMoney,amt_pic;
     SharedPreferences sharedPreferences,sharedPreferences1;
     TextView textView,textView1;
-    CardView imtsmart;
+    CardView imtsmart,multi_option;;
     TextView add_currency,increaseRate,null1,imtPrice;
     String imtPrices,imtPrices1,increaseRate1;
     KProgressHUD progressDialog;
     String currency2,CurrencySymbols;
    UserData userData;
+    Animation enterright,rightin,right;
     public Deshboard() {
         // Required empty public constructor
     }
@@ -110,6 +113,18 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
         imtsmart = view.findViewById(R.id.ImtSmart);
         add_currency = view.findViewById(R.id.Add_more_Currency);
         overviewRecycler = view.findViewById(R.id.overviewRecycler);
+        multi_option =view.findViewById(R.id.multi_option);
+        amt_pic =view.findViewById(R.id.amt_pic);
+
+        // Animation
+        enterright = AnimationUtils.loadAnimation(getContext(), R.anim.enter_right);
+        rightin = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_right);
+        right = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_right);
+
+        //set animation
+
+        multi_option.startAnimation(right);
+        amt_pic.startAnimation(right);
         lytscan.setOnClickListener(this);
         lytPay.setOnClickListener(this);
         lytWalletBalance.setOnClickListener(this);

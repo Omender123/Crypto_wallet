@@ -266,4 +266,6 @@
     <string name="Reciver_add">收件人地址</string>
     <string name="Trans_hsh">交易哈希</string>
     <string name="Trans_sts">交易状态</string>
+
+    <string name ="obtain">获得Google 2 FA </string>
 </resources>

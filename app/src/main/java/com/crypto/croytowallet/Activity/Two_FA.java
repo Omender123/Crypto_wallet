@@ -470,4 +470,76 @@ public class Two_FA extends AppCompatActivity {
 
     }
 
+    public void Obtain_2fa(View view) {
+        resendOTP();
+    }
+
+    public void resendOTP() {
+        UserData userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
+        String usernames = userData.getUsername();
+
+        progressDialog = KProgressHUD.create(Two_FA.this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Please wait.....")
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
+
+        showpDialog();
+
+        Call<ResponseBody> call = RetrofitClient
+                .getInstance()
+                .getApi().sendOtp(usernames);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                hidepDialog();
+                String s = null;
+                if (response.code() == 200) {
+
+                    startActivity(new Intent(Two_FA.this,CheckGoogle2FA.class));
+                    Toast.makeText(getApplicationContext(), "Otp send in your register Email", Toast.LENGTH_SHORT).show();
+
+                } else if (response.code() == 400) {
+                    try {
+
+                        s = response.errorBody().string();
+                        JSONObject jsonObject1 = new JSONObject(s);
+                        String error = jsonObject1.getString("error");
+
+                        Snacky.builder()
+                                .setActivity(Two_FA.this)
+                                .setText(error)
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                hidepDialog();
+                Snacky.builder()
+                        .setActivity(Two_FA.this)
+                        .setText(t.getMessage())
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+            }
+        });
+
+
+    }
+
+
 }

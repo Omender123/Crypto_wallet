@@ -120,7 +120,6 @@ public class Profile extends Fragment {
         threat_mode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), Threat_Mode.class));
                 threat_mode.startAnimation(blink);
                 resendOTP();
 
@@ -219,6 +218,7 @@ public class Profile extends Fragment {
                 String s = null;
                 if (response.code() == 200) {
 
+                    startActivity(new Intent(getContext(), Threat_Mode.class));
                     Toast.makeText(getContext(), "Otp send in your register Email", Toast.LENGTH_SHORT).show();
 
                 } else if (response.code() == 400) {
@@ -248,7 +248,7 @@ public class Profile extends Fragment {
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Snacky.builder()
                         .setActivity(getActivity())
-                        .setText("Please Check Your Internet Connection")
+                        .setText(t.getMessage())
                         .setDuration(Snacky.LENGTH_SHORT)
                         .setActionText(android.R.string.ok)
                         .error()
