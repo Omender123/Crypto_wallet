@@ -48,29 +48,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:background="@color/background">
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/OutlineBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/welcome"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="20dp"
-                android:hint="Please Enter Swap amount  ">
-
-                <EditText
-                    android:id="@+id/enter_swap"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="10dp"
-                    android:textColor="@color/toolbar_text_color"
-                    android:background="@drawable/verifying_textview"
-                    android:drawableTint="@android:color/darker_gray"
-                    android:ems="10"
-                    android:inputType="numberDecimal" />
-            </com.google.android.material.textfield.TextInputLayout>
-
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
@@ -97,17 +74,25 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignLeft="@id/view"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
-                        android:layout_toEndOf="@+id/view"
-                        android:text="Bitcoin" />
+                        android:layout_marginTop="10dp"
+                        android:text="Bitcoin"/>
                 </RelativeLayout>
 
             </androidx.cardview.widget.CardView>
-
+            <TextView
+                android:id="@+id/txt_send_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:textAlignment="textStart"
+                android:textStyle="normal"
+                android:textColor="@color/toolbar_text_color"
+                />
             <SeekBar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -118,37 +103,18 @@
                 android:thumb="@drawable/seekbar_thumb_drawable"
                 android:thumbOffset="0dp"/>
 
-            <!--<RelativeLayout
+            <TextView
+                android:id="@+id/txt_received_amount"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:gravity="center">
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_alignParentLeft="true"
-                    android:background="@android:color/darker_gray"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="30dp"/>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="20dp"
-                    app:cardBackgroundColor="@color/purple_500"
-                    app:cardCornerRadius="100dp">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_exchange"
-                        app:tint="@color/white" />
-                </androidx.cardview.widget.CardView>
-            </RelativeLayout>
--->
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:textAlignment="textStart"
+                android:textStyle="normal"
+                android:textColor="@color/toolbar_text_color"
+                />
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
@@ -170,21 +136,40 @@
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/gradient" />
 
-
                     <Spinner
                         android:id="@+id/recivedSpiner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignLeft="@id/view1"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
-                        android:layout_toEndOf="@+id/view1"
-                        android:text="Bitcoin" />
-                   </RelativeLayout>
+                        android:layout_marginTop="10dp"
+                        />
+                </RelativeLayout>
             </androidx.cardview.widget.CardView>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/OutlineBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/welcome"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="5dp"
+                android:hint="Please Enter Swap amount  ">
+
+                <EditText
+                    android:id="@+id/enter_swap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:background="@drawable/verifying_textview"
+                    android:drawableTint="@android:color/darker_gray"
+                    android:ems="10"
+                    android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
