@@ -361,8 +361,7 @@ imtSwap extends AppCompatActivity implements View.OnClickListener {
 
                         totalAmoumt = enterAmount/coinprices;
 
-                        text_send.setText(msg +" "+ coinSymbol +"="+df.format(totalAmoumt)+" "+currency2.toUpperCase() );
-                    }
+                        text_send.setText(msg +" "+currency2.toUpperCase() +"="+df.format(totalAmoumt)+" " + coinSymbol);        }
 
                 }else{
 
@@ -378,8 +377,7 @@ imtSwap extends AppCompatActivity implements View.OnClickListener {
 
                         totalAmoumt = enterAmount/coinprices;
 
-                        text_send.setText(msg +" "+ coinSymbol+"="+df.format(totalAmoumt)+" "+currency2.toUpperCase() );
-
+                        text_send.setText(msg +" "+currency2.toUpperCase() +"="+df.format(totalAmoumt)+" " + coinSymbol);
                     }
                 }
             }

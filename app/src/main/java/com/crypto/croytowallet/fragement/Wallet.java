@@ -87,7 +87,7 @@ public class Wallet extends Fragment implements  CryptoClickListner{
     return view;
     }
     public void CryptoInfoRecyclerView(){
-        progressDialog = KProgressHUD.create(getContext())
+       /* progressDialog = KProgressHUD.create(getContext())
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel("Please wait.....")
                 .setCancellable(false)
@@ -95,12 +95,12 @@ public class Wallet extends Fragment implements  CryptoClickListner{
                 .setDimAmount(0.5f)
                 .show();
 
-        showpDialog();
+        showpDialog();*/
         String url="https://api.coingecko.com/api/v3/coins/markets?vs_currency="+currency2+"&ids=bitcoin%2Cethereum%2Ctether%2Cripple%2Clitecoin%2Cusd-coin&order=market_cap_desc&sparkline=false&price_change_percentage=24h";
         StringRequest stringRequest=new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                hidepDialog();
+           //     hidepDialog();
                 try {
                     JSONArray jsonArray=new JSONArray(response);
                     for (int i=0;i<=jsonArray.length();i++){
@@ -143,8 +143,8 @@ public class Wallet extends Fragment implements  CryptoClickListner{
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                hidepDialog();
-                Toast.makeText(getContext(), ""+error.toString(), Toast.LENGTH_SHORT).show();
+               // hidepDialog();
+              //  Toast.makeText(getContext(), ""+error.toString(), Toast.LENGTH_SHORT).show();
             }
         });
         requestQueue = Volley.newRequestQueue(getContext());
@@ -166,15 +166,7 @@ public class Wallet extends Fragment implements  CryptoClickListner{
 
         Updated_data.getInstans(getContext()).userLogin(position,coinName,result,image,change,price,CoinID);
 
-       /* SharedPreferences.Editor editor=sharedPreferences.edit();
-        editor.putString("symbol1",result);
-        editor.putInt("position",position);
-        editor.putInt("price",price);
-        editor.putString("image",image);
-        editor.putString("coinName",coinName);
-        editor.putString("change",change);
 
-        editor.commit();*/
 
     }
     private void showpDialog() {

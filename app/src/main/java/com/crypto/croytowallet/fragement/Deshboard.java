@@ -175,19 +175,11 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
                 getActivity().finish();
             }
         });
-        getImtDetails();
+      //  getImtDetails();
 
+        //
         overViewData();
         AirDropBalance();
-        new Handler().postDelayed(new Runnable() {
-
-
-            @Override
-            public void run() {
-                // This method will be executed once the timer is over
-                GetImtPrice();
-            }
-        }, 1000);
 
         return view;
     }
@@ -610,12 +602,11 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
                 if (response.code()==200){
                     try {
                         s=response.body().string();
-
                         JSONObject object = new JSONObject(s);
 
                         try {
 
-                            String price = object.getString("price");
+                       /*     String price = object.getString("price");
                             Double cp = Double.parseDouble(price);
                             Double imi_p = Double.parseDouble(imtPrices1);
 
@@ -626,7 +617,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
                             SharedPreferences.Editor editor=sharedPreferences1.edit();
                             editor.putString("imtPrices",imtPrices);
                             editor.commit();
-
+*/
 
 
                         }catch (Exception e){

@@ -21,6 +21,7 @@ import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.database.RetrofitClient;
+import com.google.gson.JsonObject;
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.squareup.picasso.Picasso;
 
@@ -40,10 +41,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class StoryView extends AppCompatActivity implements StoriesProgressView.StoriesListener {
-    private static final int PROGRESS_COUNT = 4;
 
     private StoriesProgressView storiesProgressView;
-    private ImageView image,back;
+    private ImageView image;
 
     private int counter = 0;
     long pressTime = 0L;
@@ -59,7 +59,6 @@ public class StoryView extends AppCompatActivity implements StoriesProgressView.
 
         storiesProgressView = (StoriesProgressView) findViewById(R.id.stories);
         image = (ImageView) findViewById(R.id.image);
-        back = findViewById(R.id.back);
 
         getStory();
         // bind reverse view
@@ -135,23 +134,11 @@ public class StoryView extends AppCompatActivity implements StoriesProgressView.
         storiesProgressView.destroy();
         super.onDestroy();
     }
-        public void back () {
-            back.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(StoryView.this, MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                }
-            });
-
-        }
 
     public void getStory(){
         images = new ArrayList<>();
         UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
         String token=user.getToken();
-
         progressDialog = KProgressHUD.create(StoryView.this)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel("Loading.........")
@@ -169,13 +156,35 @@ public class StoryView extends AppCompatActivity implements StoriesProgressView.
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                hidepDialog();
+            hidepDialog();
                 String s = null;
                 if (response.code()==200){
                     try {
                         s=response.body().string();
                         images.clear();
-                        JSONArray jsonArray = new JSONArray(s);
+
+                        JSONArray  jsonArray = new JSONArray(s);
+
+                        for (int i=0;i<=jsonArray.length();i++){
+                            JSONObject  object = jsonArray.getJSONObject(i);
+                            String imagess = object.getString("images");
+
+                            JSONArray jsonArray1 = new JSONArray(imagess);
+                            for ( int j=0;j<=0;j++){
+                                JSONObject object1 = jsonArray1.getJSONObject(j);
+
+                                String imageUrl = object1.getString("url");
+
+                                String fullImage ="https://imxtest.s3.ap-south-1.amazonaws.com/"+imageUrl;
+
+                                Log.d("imagesss",imageUrl);
+
+                                images.add(fullImage);
+                            }
+
+                        }
+
+                      /*  JSONArray jsonArray = new JSONArray(s);
                         for (int i = 0; i <= jsonArray.length(); i++) {
                             JSONObject jsonObject1 = jsonArray.getJSONObject(i);
                             String imagess = jsonObject1.getString("images");
@@ -188,12 +197,15 @@ public class StoryView extends AppCompatActivity implements StoriesProgressView.
 
                                String fullImage ="https://imxtest.s3.ap-south-1.amazonaws.com/"+imageUrl;
 
-                               Log.d("imagesss",fullImage);
+                               Log.d("imagesss",imageUrl);
 
                                 images.add(fullImage);
 
+
                             }
-                        }
+                        }*/
+
+
 
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
@@ -205,6 +217,7 @@ public class StoryView extends AppCompatActivity implements StoriesProgressView.
 
 
                     Picasso.get().load(images.get(counter)).into(image);
+
 
                 } else if(response.code()==400){
                     try {
@@ -242,7 +255,7 @@ public class StoryView extends AppCompatActivity implements StoriesProgressView.
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-            hidepDialog();
+       hidepDialog();
 
                 Snacky.builder()
                         .setActivity(StoryView.this)
@@ -263,5 +276,17 @@ public class StoryView extends AppCompatActivity implements StoriesProgressView.
     private void hidepDialog() {
         if (progressDialog.isShowing())
             progressDialog.dismiss();
+    }
+
+
+    public void back(View view) {
+        onBackPressed();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        onSaveInstanceState(new Bundle());
     }
 }

@@ -31,10 +31,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CroytoWallet"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.ShowGoogle2fa_BarCode"
+        <activity android:name=".SetTransactionPin.CompleteScreen"
             android:theme="@style/Theme.CroytoWallet.NoActionBar"></activity>
-        <activity android:name=".Activity.CheckGoogle2FA"
+        <activity android:name=".SetTransactionPin.NewPin"
             android:theme="@style/Theme.CroytoWallet.NoActionBar"/>
+        <activity android:name=".SetTransactionPin.EnterDetails"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar"/>
+        <activity android:name=".SetTransactionPin.CuurentPin"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar"/>
+        <activity
+            android:name=".Activity.ShowGoogle2fa_BarCode"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+        <activity
+            android:name=".Activity.CheckGoogle2FA"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
         <activity
             android:name=".ImtSmart.SwapAcknowledgement"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />

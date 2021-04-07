@@ -272,4 +272,16 @@
 
     <string name="obtain">Obtain Google 2 FA </string>
 
+    <string name="resetPin">Reset PIN</string>
+    <string name="forgetPin">Forget PIN</string>
+    <string name="resetPintxt">You can reset your transaction PIN.</string>
+    <string name="forgetPintxt">Setup your Transaction PIN, in case your forget it.</string>
+
+    <string name="currentPin">Current PIN</string>
+    <string name="enter_currentPin">Enter Current PIN</string>
+    <string name="newPin">New Pin</string>
+    <string name="com_newPin">Confirm New PIN</string>
+    <string name="enter_newPin">Enter New PIN</string>
+    <string name="update_pin">Your Transaction PIN is Successfully Update </string>
+
 </resources>

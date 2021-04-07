@@ -274,4 +274,16 @@
 
     <string name = "obtain"> Kunin ang Google 2 FA </string>
 
+    <string name = "resetPin"> I-reset ang Pin </string>
+    <string name = "forgetPin"> Kalimutan ang Pin </string>
+    <string name = "resetPintxt"> Maaari mong i-reset ang iyong PIN ng transaksyon.</string>
+    <string name = "forgetPintxt"> I-setup ang iyong Transaction PIN, kung sakaling kalimutan mo ito.</string>
+
+    <string name = "currentPin"> Kasalukuyang Pin </string>
+    <string name = "enter_currentPin"> Ipasok ang Kasalukuyang Pin </string>
+    <string name = "newPin"> Bagong Pin </string>
+    <string name = "enter_newPin"> Ipasok ang Bagong Pin </string>
+    <string name = "update_pin"> Matagumpay na Ina-update ang iyong PIN ng Transaksyon </string>
+    <string name = "com_newPin"> Kumpirmahin ang Bagong Pin </string>
+
 </resources>

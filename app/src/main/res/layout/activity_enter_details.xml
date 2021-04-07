@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SetTransactionPin.EnterDetails"
+    android:background="@color/background"
+    android:orientation="vertical">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:background="@color/toolbar"
+    android:orientation="horizontal">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="7dp"
+        android:layout_marginLeft="15dp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:onClick="back"
+        android:src="@drawable/ic_baseline_arrow_back_24"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25dp"
+        android:layout_marginRight="50dp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        android:layout_gravity="center"
+        android:text="@string/forgetPin"
+        android:textColor="@color/white"
+        android:id="@+id/toolbar_title" />
+
+</LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="20dp">
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/enterpss"
+        style="@style/OutlineBox1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="@string/password"
+        app:passwordToggleTint="@android:color/darker_gray">
+
+        <EditText
+            android:id="@+id/enter_pass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="10dp"
+            android:drawableTint="@android:color/darker_gray"
+            android:ems="10"
+            android:textColor="@color/toolbar_text_color"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/enterotp"
+        style="@style/OutlineBox1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="@string/enter_otp"
+        app:passwordToggleTint="@android:color/darker_gray">
+
+        <EditText
+            android:id="@+id/enter_otp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="10dp"
+            android:drawableTint="@android:color/darker_gray"
+            android:textColor="@color/toolbar_text_color"
+            android:ems="10"
+            android:inputType="numberPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <Button
+        android:id="@+id/nxt_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:background="@drawable/button_color_rounded"
+        android:text="@string/next"
+        android:textAllCaps="false"
+        android:textStyle="bold" />
+
+</LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

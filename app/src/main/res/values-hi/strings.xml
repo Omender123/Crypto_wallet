@@ -272,4 +272,17 @@
     <string name="Trans_sts">लेन-देन की स्थिति</string>
 
     <string name = "obtain"> गूगल 2 एफ ए  प्राप्त करें </string>
+
+    <string name = "resetPin"> रीसेट पिन </string>
+    <string name = "forgetPin"> पिन भूल जाओ </string>
+    <string name = "resetPintxt"> आप अपना लेनदेन पिन रीसेट कर सकते हैं। </string>
+    <string name = "forgetPintxt">  यदि आप इसे भूल जाते हैं, तो अपना ट्रांजेक्शन पिन सेट करें </string>
+
+    <string name = "currentPin"> करंट पिन </string>
+    <string name = "enter_currentPin"> करंट पिन दर्ज करें </string>
+    <string name = "newPin"> नया पिन  </string>
+    <string name = "enter_newPin"> नया पिन दर्ज करें </string>
+    <string name = "update_pin"> आपका लेन-देन पिन सफलतापूर्वक अपडेट है </string>
+    <string name = "com_newPin"> नए पिन की पुष्टि करें </string>
+
 </resources>

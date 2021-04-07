@@ -272,4 +272,17 @@
     <string name="Trans_sts">สถานะการทำธุรกรรม</string>
 
     <string name = "obtain"> รับ Google 2 ฉก </string>
+
+    <string name = "resetPin"> รีเซ็ตพิน </string>
+    <string name = "forgetPin"> ลืม PIN </string>
+    <string name = "resetPintxt"> คุณสามารถรีเซ็ต PIN ธุรกรรมของคุณได้ </string>
+    <string name = "forgetPintxt"> ตั้งค่า PIN ธุรกรรมของคุณในกรณีที่คุณลืม </string>
+
+    <string name = "currentPin"> พินปัจจุบัน </string>
+    <string name = "enter_currentPin"> ป้อน PIN ปัจจุบัน </string>
+    <string name = "newPin"> พินใหม่ </string>
+    <string name = "enter_newPin"> ป้อนพินใหม่ </string>
+    <string name = "update_pin"> PIN ธุรกรรมของคุณอัปเดตเรียบร้อยแล้ว </string>
+
+    <string name = "com_newPin"> ยืนยันพินใหม่ </string>
 </resources>

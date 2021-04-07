@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
+import com.crypto.croytowallet.SetTransactionPin.CuurentPin;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.database.RetrofitClient;
@@ -42,73 +43,72 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 public class Security extends AppCompatActivity implements View.OnClickListener {
-ActionBar actionBar;
-Toolbar toolbar;
-ImageView imageView;
-CardView Two_FA1,card_passcode;
-CheckBox passcode;
+    ActionBar actionBar;
+    Toolbar toolbar;
+    ImageView imageView;
+    CardView Two_FA1, card_passcode,backUp,resetPin,forgetPin;
+    CheckBox passcode;
     KProgressHUD progressDialog;
-CardView backUp;
 
     SharedPreferences sharedPreferences = null;
-UserData userData;
+    UserData userData;
     Animation slide_up;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_security);
-        imageView =findViewById(R.id.back);
-        Two_FA1 =findViewById(R.id.tofa);
+        imageView = findViewById(R.id.back);
+        Two_FA1 = findViewById(R.id.tofa);
         backUp = findViewById(R.id.backUp);
-        card_passcode  = findViewById(R.id.card_passcode);
-        passcode=findViewById(R.id.checkbox);
+        card_passcode = findViewById(R.id.card_passcode);
+        passcode = findViewById(R.id.checkbox);
+        resetPin = findViewById(R.id.resetPin);
+        forgetPin = findViewById(R.id.forgetPin);
+
 
 
         slide_up = AnimationUtils.loadAnimation(Security.this, R.anim.silde_up);
         backUp.startAnimation(slide_up);
         Two_FA1.startAnimation(slide_up);
         card_passcode.startAnimation(slide_up);
-
-
-
-
-       
-
-
+        resetPin.startAnimation(slide_up);
+        forgetPin.startAnimation(slide_up);
 
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
-        sharedPreferences = getSharedPreferences("myKey1",0);
+        sharedPreferences = getSharedPreferences("myKey1", 0);
 
-        Boolean booleanValue = sharedPreferences.getBoolean("passcode",false);
-        if (booleanValue){
+        Boolean booleanValue = sharedPreferences.getBoolean("passcode", false);
+        if (booleanValue) {
             passcode.setChecked(true);
         }
 
         passcode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-               if (isChecked){
-                   SharedPreferences.Editor editor = sharedPreferences.edit();
-                   editor.putBoolean("passcode",true);
-                   editor.commit();
+                if (isChecked) {
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean("passcode", true);
+                    editor.commit();
 
-                   passcode.setChecked(true);
-               }else{
-                   SharedPreferences.Editor editor = sharedPreferences.edit();
-                   editor.putBoolean("passcode",false);
-                   editor.commit();
+                    passcode.setChecked(true);
+                } else {
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean("passcode", false);
+                    editor.commit();
 
-                   passcode.setChecked(false);
-               }
+                    passcode.setChecked(false);
+                }
             }
         });
 
         Two_FA1.setOnClickListener(this);
         backUp.setOnClickListener(this);
+        resetPin.setOnClickListener(this);
+        forgetPin.setOnClickListener(this);
 
-         back();
+        back();
     }
 
     @Override
@@ -120,6 +120,7 @@ UserData userData;
         startActivity(intent);
         finish();*/
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -134,6 +135,7 @@ UserData userData;
         }
         return super.onOptionsItemSelected(item);
     }
+
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void actionBarSetup() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -141,15 +143,16 @@ UserData userData;
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
 
-         //   actionBar.setTitle("Price Action Strategy ");
+            //   actionBar.setTitle("Price Action Strategy ");
 
         }
     }
-    public void back(){
+
+    public void back() {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // onSaveInstanceState(new Bundle());
+                // onSaveInstanceState(new Bundle());
                 /*Intent intent = new Intent(Security.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);*/
@@ -162,25 +165,31 @@ UserData userData;
 
     @Override
     public void onClick(View v) {
-        int id=v.getId();
+        int id = v.getId();
 
-        switch (id){
+        switch (id) {
 
             case R.id.tofa:
                 startActivity(new Intent(Security.this, Two_FA.class));
 
                 break;
             case R.id.backUp:
-              /*  Snacky.builder()
-                        .setActivity(Security.this)
-                        .setText("Coming Up Features")
-                        .setTextColor(getResources().getColor(R.color.white))
-                        .setDuration(Snacky.LENGTH_SHORT)
-                        .success()
-                        .show();*/
                 resendOTP();
-                startActivity(new Intent(getApplicationContext(),BackVerification.class));
+                startActivity(new Intent(getApplicationContext(), BackVerification.class));
                 finish();
+                break;
+
+            case R.id.resetPin:
+                startActivity(new Intent(getApplicationContext(), CuurentPin.class));
+                break;
+            case R.id.forgetPin:
+                Snacky.builder()
+                        .setActivity(Security.this)
+                        .setText("Coming soon feature")
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
                 break;
         }
     }
@@ -200,7 +209,7 @@ UserData userData;
 
         showpDialog();
 
-        Call<ResponseBody> call=  RetrofitClient
+        Call<ResponseBody> call = RetrofitClient
                 .getInstance()
                 .getApi().sendOtp(usernames);
 
@@ -209,17 +218,17 @@ UserData userData;
             public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
                 hidepDialog();
 
-                String s=null;
-                if (response.code()==200){
+                String s = null;
+                if (response.code() == 200) {
 
                     Toast.makeText(Security.this, "Otp send in your register Email", Toast.LENGTH_SHORT).show();
-                   // OTPexpire();
-                }else if(response.code()==400){
+                    // OTPexpire();
+                } else if (response.code() == 400) {
                     try {
 
-                        s=response.errorBody().string();
-                        JSONObject jsonObject1=new JSONObject(s);
-                        String error =jsonObject1.getString("error");
+                        s = response.errorBody().string();
+                        JSONObject jsonObject1 = new JSONObject(s);
+                        String error = jsonObject1.getString("error");
 
                         Snacky.builder()
                                 .setActivity(Security.this)
@@ -258,7 +267,7 @@ UserData userData;
     }
 
 
-    public void OTPexpire(){
+    public void OTPexpire() {
         new Handler().postDelayed(new Runnable() {
 
 
@@ -270,11 +279,11 @@ UserData userData;
         }, 60000);
     }
 
-    public void expire(){
+    public void expire() {
         String usernames = userData.getUsername();
 
 
-        Call<ResponseBody> call=  RetrofitClient
+        Call<ResponseBody> call = RetrofitClient
                 .getInstance()
                 .getApi().expireOtp(usernames);
 
@@ -283,8 +292,8 @@ UserData userData;
             public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
                 hidepDialog();
 
-                String s=null;
-                if (response.code()==200){
+                String s = null;
+                if (response.code() == 200) {
                     Toast.makeText(Security.this, "Your Otp is expire", Toast.LENGTH_SHORT).show();
 
                 }
@@ -297,6 +306,7 @@ UserData userData;
         });
 
     }
+
     private void showpDialog() {
         if (!progressDialog.isShowing())
             progressDialog.show();

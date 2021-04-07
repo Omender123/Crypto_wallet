@@ -241,25 +241,25 @@
 
     <string name="imt_u">ImSmart Utility</string>
     <string name="reff">我没有推荐代码</string>
-    <string name ="noconnection">请连接到WIFI网络或启用移动数据</string>
+    <string name="noconnection">请连接到WIFI网络或启用移动数据</string>
     <string name="recent_txt">您没有任何近期交易</string>
     <string name="scan_txt">通过单击屏幕上的按钮扫描QR码</string>
 
-    <string name ="kyc"> KYC </string>
-    <string name ="kyc_txt">请完成您的kyc以获得更好的安全性</string>
-    <string name ="kyc_country">国家/地区</string>
-    <string name ="kyc_address">地址</string>
-    <string name ="doc_type">文档类型</string>
-    <string name ="docu_men">文档</string>
+    <string name="kyc"> KYC </string>
+    <string name="kyc_txt">请完成您的kyc以获得更好的安全性</string>
+    <string name="kyc_country">国家/地区</string>
+    <string name="kyc_address">地址</string>
+    <string name="doc_type">文档类型</string>
+    <string name="docu_men">文档</string>
 
     <string name="house_no">房屋/套房/公寓</string>
     <string name="street_add">街道地址</string>
     <string name="zip_code">邮政编码</string>
     <string name="doc_no">文档编号</string>
 
-    <string name ="choose">选择文件</string>
+    <string name="choose">选择文件</string>
 
-    <string name ="acko">致谢</string>
+    <string name="acko">致谢</string>
     <string name="Confirm">确认</string>
     <string name="Amt_in_cryto">加密货币数量</string>
     <string name="Amt_in_USD">美元金额</string>
@@ -267,5 +267,18 @@
     <string name="Trans_hsh">交易哈希</string>
     <string name="Trans_sts">交易状态</string>
 
-    <string name ="obtain">获得Google 2 FA </string>
+    <string name="obtain">获得Google 2 FA </string>
+
+    <string name="resetPin">重置密码</string>
+    <string name="forgetPin">忘记密码</string>
+    <string name="resetPintxt">您可以重置交易PIN。</string>
+    <string name="forgetPintxt">设置您的交易PIN码，以防万一您忘记了它。</string>
+
+    <string name="currentPin">当前引脚</string>
+    <string name="enter_currentPin">输入当前密码</string>
+    <string name="newPin">新密码</string>
+    <string name="enter_newPin">输入新的密码</string>
+    <string name="update_pin">您的交易别针已成功更新</string>
+
+    <string name ="com_newPin">确认新的密码</string>
 </resources>
