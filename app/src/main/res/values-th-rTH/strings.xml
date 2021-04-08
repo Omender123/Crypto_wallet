@@ -285,4 +285,8 @@
     <string name = "update_pin"> PIN ธุรกรรมของคุณอัปเดตเรียบร้อยแล้ว </string>
 
     <string name = "com_newPin"> ยืนยันพินใหม่ </string>
+
+    <string name ="txt_mnemonic"> ทำตามขั้นตอนนี้เพื่อรับ ช่วยในการจำ </string>
+    <string name ="follow_mnemonic"> การตั้งค่า >> การสำรองข้อมูล >> การยืนยัน >> ขั้นตอนลับ </string>
+
 </resources>

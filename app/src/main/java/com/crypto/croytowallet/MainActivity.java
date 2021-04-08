@@ -413,7 +413,6 @@ public void logout(){
     String username=user.getUsername();
     String token=user.getToken();
 
-    String url="http://13.233.136.56:8080/api/user/removeCurrentlyActiveDevices";
     showpDialog();
 
     StringRequest stringRequest =new StringRequest(Request.Method.POST, URLs.URL_LOGOUT, new Response.Listener<String>() {

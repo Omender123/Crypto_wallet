@@ -285,4 +285,8 @@
     <string name = "update_pin"> आपका लेन-देन पिन सफलतापूर्वक अपडेट है </string>
     <string name = "com_newPin"> नए पिन की पुष्टि करें </string>
 
+    <string name = "txt_mnemonic"> अपने स्मृति सहायक को प्राप्त करने के लिए इसका अनुसरण करें </string>
+    <string name = "follow_mnemonic"> सेटिंग >>  बैकअप >> सत्यापन >> सुरक्षित चरण </string>
+
+
 </resources>

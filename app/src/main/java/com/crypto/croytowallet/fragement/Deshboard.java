@@ -175,9 +175,9 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
                 getActivity().finish();
             }
         });
-      //  getImtDetails();
+       getImtDetails();
 
-        //
+
         overViewData();
         AirDropBalance();
 
@@ -423,8 +423,9 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
         UserData userData = SharedPrefManager.getInstance(getContext()).getUser();
 
         String Token =userData.getToken();
+        String currency = currency2.toUpperCase();
 
-        Call<ResponseBody>call = RetrofitClient.getInstance().getApi().getIMTDetails(Token);
+        Call<ResponseBody>call = RetrofitClient.getInstance().getApi().getIMTDetails(Token,currency);
 
         call.enqueue(new Callback<ResponseBody>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -441,12 +442,16 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
 
                         for (int i=0; i<=jsonArray.length();i++){
                             JSONObject object = jsonArray.getJSONObject(i);
-                            // imtPrices =object.getString("price");
-                            imtPrices1 =object.getString("price");
+                             imtPrices =object.getString("price");
+                           // imtPrices1 =object.getString("price");
                             increaseRate1=object.getString("percent_change_24h");
 
-                            //  imtPrice.setText("$"+imtPrices);
+                            imtPrice.setText("$"+imtPrices);
                             increaseRate.setText(increaseRate1);
+
+                            SharedPreferences.Editor editor=sharedPreferences1.edit();
+                            editor.putString("imtPrices",imtPrices);
+                            editor.commit();
 
                             try {
                                 increaseRate.setTextColor(increaseRate1.contains("-")?
@@ -586,103 +591,5 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
 
     }
 
-    public void GetImtPrice(){
-        String token = userData.getToken();
-
-        String currency = currency2.toUpperCase();
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().GET_IMT_PRICE(token,currency);
-
-        call.enqueue(new Callback<ResponseBody>() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                String s =null;
-
-
-                if (response.code()==200){
-                    try {
-                        s=response.body().string();
-                        JSONObject object = new JSONObject(s);
-
-                        try {
-
-                       /*     String price = object.getString("price");
-                            Double cp = Double.parseDouble(price);
-                            Double imi_p = Double.parseDouble(imtPrices1);
-
-                            Double total = imi_p*cp;
-
-                            imtPrices = String.valueOf(total);
-                            imtPrice.setText(CurrencySymbols+imtPrices);
-                            SharedPreferences.Editor editor=sharedPreferences1.edit();
-                            editor.putString("imtPrices",imtPrices);
-                            editor.commit();
-*/
-
-
-                        }catch (Exception e){
-
-                            Snacky.builder()
-                                    .setActivity(getActivity())
-                                    .setText("Imt Price not Found")
-                                    .setDuration(Snacky.LENGTH_SHORT)
-                                    .setActionText(android.R.string.ok)
-                                    .error()
-                                    .show();
-                        }
-
-
-                    } catch (IOException | JSONException   e) {
-                        e.printStackTrace();
-                    }
-
-                } else if(response.code()==400){
-                    try {
-                        s=response.errorBody().string();
-                        JSONObject jsonObject1=new JSONObject(s);
-                        String error =jsonObject1.getString("error");
-
-
-                        Snacky.builder()
-                                .setActivity(getActivity())
-                                .setText(error)
-                                .setDuration(Snacky.LENGTH_SHORT)
-                                .setActionText(android.R.string.ok)
-                                .error()
-                                .show();
-
-
-                    } catch (IOException | JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                } else if(response.code()==401){
-
-                    Snacky.builder()
-                            .setActivity(getActivity())
-                            .setText("unAuthorization Request")
-                            .setDuration(Snacky.LENGTH_SHORT)
-                            .setActionText(android.R.string.ok)
-                            .error()
-                            .show();
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                Snacky.builder()
-                        .setActivity(getActivity())
-                        .setText(t.getMessage())
-                        .setDuration(Snacky.LENGTH_SHORT)
-                        .setActionText(android.R.string.ok)
-                        .error()
-                        .show();
-            }
-        });
-
-    }
 }
 

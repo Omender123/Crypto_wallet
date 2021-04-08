@@ -285,5 +285,7 @@
     <string name = "enter_newPin"> Ipasok ang Bagong Pin </string>
     <string name = "update_pin"> Matagumpay na Ina-update ang iyong PIN ng Transaksyon </string>
     <string name = "com_newPin"> Kumpirmahin ang Bagong Pin </string>
+    <string name = "txt_mnemonic"> Sundin ito upang makuha ang iyong Mnemonic </string>
 
+    <string name="follow_mnemonic"> Pagtatakda >> I-back Up >> Pag-verify >> Lihim na Mga Phase</string>
 </resources>

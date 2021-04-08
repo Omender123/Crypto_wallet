@@ -279,6 +279,9 @@
     <string name="newPin">新しいピン</string>
     <string name="enter_newPin">新しいピンを入力</string>
     <string name="update_pin">トランザクションPINが正常に更新されました</string>
-    <string name = "com_newPin">新しいピンを確認</string>
+    <string name="com_newPin">新しいピンを確認</string>
+
+    <string name="txt_mnemonic">これに従ってニーモニックを取得します</string>
+    <string name="follow_mnemonic">設定>>バックアップ>>検証>>シークレットフェーズ</string>
 
 </resources>

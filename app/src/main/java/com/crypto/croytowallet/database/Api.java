@@ -313,15 +313,10 @@ public interface Api {
     );
 
     @FormUrlEncoded
-    @POST("currency/CurrencyPrice")
-    Call<ResponseBody> GET_IMT_PRICE(
+    @POST("currency/newIMT")
+    Call<ResponseBody> getIMTDetails(
             @Header("Authorization") String Authtoken,
             @Field("currency") String Currency
-    );
-
-    @GET("currency/IMT")
-    Call<ResponseBody> getIMTDetails(
-            @Header("Authorization") String token
     );
 
     @GET("all")
@@ -359,11 +354,40 @@ public interface Api {
 
 
     @FormUrlEncoded
-    @POST(" user/google2fa")
+    @POST("user/google2fa")
     Call<ResponseBody> Google_Obtain(
             @Header("Authorization") String Authtoken,
             @Field("password") String password,
             @Field("otp") String otp,
             @Field("transactionPin") String transactionPin
     );
+
+    @FormUrlEncoded
+    @POST("user/resetTransactionPin")
+    Call<ResponseBody>resetTransactionPin(
+            @Header("Authorization") String Authtoken,
+            @Field("otp") String otp,
+            @Field("transactionPin") String OldtransactionPin,
+            @Field("password") String password,
+            @Field("newtransactionPin") String NewtransactionPin
+    );
+
+    @FormUrlEncoded
+    @POST("user/forgetTransactionPin")
+    Call<ResponseBody>forgetTransactionPin(
+            @Header("Authorization") String Authtoken,
+            @Field("otp") String otp,
+            @Field("mnemonic") String mnemonic,
+            @Field("password") String password,
+            @Field("newtransactionPin") String NewtransactionPin
+    );
+
+    @FormUrlEncoded
+    @POST("user/removeCurrentlyActiveDevices")
+    Call<ResponseBody>LogOut(
+            @Header("Authorization") String Authtoken,
+            @Field("username") String username,
+            @Field("jwt") String jwtToken
+    );
+
 }

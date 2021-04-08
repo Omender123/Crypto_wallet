@@ -284,4 +284,7 @@
     <string name="enter_newPin">Enter New PIN</string>
     <string name="update_pin">Your Transaction PIN is Successfully Update </string>
 
+    <string name="txt_mnemonic">Follow this to get your Mnemonic</string>
+    <string name="follow_mnemonic">Setting >> BackUp >> Verification >> Secrete Phases </string>
+
 </resources>

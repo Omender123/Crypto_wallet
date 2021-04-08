@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SetTransactionPin.CuurentPin;
+import com.crypto.croytowallet.SetTransactionPin.EnterMnemonices;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.database.RetrofitClient;
@@ -183,13 +184,14 @@ public class Security extends AppCompatActivity implements View.OnClickListener 
                 startActivity(new Intent(getApplicationContext(), CuurentPin.class));
                 break;
             case R.id.forgetPin:
-                Snacky.builder()
+               /* Snacky.builder()
                         .setActivity(Security.this)
                         .setText("Coming soon feature")
                         .setDuration(Snacky.LENGTH_SHORT)
                         .setActionText(android.R.string.ok)
                         .error()
-                        .show();
+                        .show();*/
+                startActivity(new Intent(getApplicationContext(), EnterMnemonices.class));
                 break;
         }
     }

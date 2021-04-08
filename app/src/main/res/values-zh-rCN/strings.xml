@@ -280,5 +280,8 @@
     <string name="enter_newPin">输入新的密码</string>
     <string name="update_pin">您的交易别针已成功更新</string>
 
-    <string name ="com_newPin">确认新的密码</string>
+    <string name="com_newPin">确认新的密码</string>
+
+    <string name="txt_mnemonic">跟随此操作以获取助记符</string>
+    <string name="follow_mnemonic">设置>>备份>>验证>>秘密阶段</string>
 </resources>
