@@ -96,7 +96,7 @@
                     android:layout_below="@id/welcome"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/username"
+                    android:hint="@string/userEmail"
                     style="@style/OutlineBox"
                     android:layout_margin="20dp">
                     <EditText

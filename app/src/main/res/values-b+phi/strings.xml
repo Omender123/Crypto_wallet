@@ -288,4 +288,6 @@
     <string name = "txt_mnemonic"> Sundin ito upang makuha ang iyong Mnemonic </string>
 
     <string name="follow_mnemonic"> Pagtatakda >> I-back Up >> Pag-verify >> Lihim na Mga Phase</string>
+
+    <string name = "userEmail"> Username o Email </string>
 </resources>

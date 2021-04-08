@@ -446,7 +446,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
                            // imtPrices1 =object.getString("price");
                             increaseRate1=object.getString("percent_change_24h");
 
-                            imtPrice.setText("$"+imtPrices);
+                            imtPrice.setText(CurrencySymbols+imtPrices);
                             increaseRate.setText(increaseRate1);
 
                             SharedPreferences.Editor editor=sharedPreferences1.edit();

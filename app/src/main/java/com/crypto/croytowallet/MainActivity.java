@@ -36,18 +36,14 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.crypto.croytowallet.Activity.Setting;
+
 import com.crypto.croytowallet.Activity.StoryView;
+import com.crypto.croytowallet.SetTransactionPin.CompleteScreen;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.TransactionHistorySharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
-import com.crypto.croytowallet.VolleyDatabase.URLs;
-import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
+
+import com.crypto.croytowallet.database.RetrofitClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -56,10 +52,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
+import de.mateware.snacky.Snacky;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -414,70 +417,69 @@ public void logout(){
     String token=user.getToken();
 
     showpDialog();
+    Call<ResponseBody> call = RetrofitClient.getInstance().getApi().LogOut(token,username,token);
 
-    StringRequest stringRequest =new StringRequest(Request.Method.POST, URLs.URL_LOGOUT, new Response.Listener<String>() {
+    call.enqueue(new Callback<ResponseBody>() {
         @Override
-        public void onResponse(String response) {
+        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            String s=null;
             hidepDialog();
-            SharedPrefManager.getInstance(getApplicationContext()).logout();
-            TransactionHistorySharedPrefManager.getInstance(getApplicationContext()).clearPearData();
-            sharedPreferences1.edit().clear().commit();
-          //  deleteCache(MainActivity.this);
-            clearApplicationData();
-            Toast.makeText(MainActivity.this, "Logout Successfully", Toast.LENGTH_SHORT).show();
+            if (response.code()==200){
+                SharedPrefManager.getInstance(getApplicationContext()).logout();
+                TransactionHistorySharedPrefManager.getInstance(getApplicationContext()).clearPearData();
+                sharedPreferences1.edit().clear().commit();
+                //  deleteCache(MainActivity.this);
+                clearApplicationData();
+                Toast.makeText(MainActivity.this, "Logout Successfully", Toast.LENGTH_SHORT).show();
 
-         //   Toast.makeText(MainActivity.this, ""+response, Toast.LENGTH_SHORT).show();
-        }
-    }, new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            hidepDialog();
+            }else if(response.code()==400){
 
-            try{
-                parseVolleyError(error);
-            }catch (Exception e){
+                try {
 
+                    s=response.errorBody().string();
+                    JSONObject jsonObject1=new JSONObject(s);
+                    String error =jsonObject1.getString("error");
+
+                    Snacky.builder()
+                            .setActivity(MainActivity.this)
+                            .setText(error)
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+                    // Toast.makeText(SignUp.this, jsonObject1.getString("error")+"", Toast.LENGTH_SHORT).show();
+
+
+                } catch (IOException | JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }else if(response.code()==401){
+                Snacky.builder()
+                        .setActivity(MainActivity.this)
+                        .setText("unAuthorization Request")
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
             }
-
-           // Toast.makeText(MainActivity.this, ""+error.toString(), Toast.LENGTH_SHORT).show();
-        }
-    }){
-        @Override
-        protected Map<String, String> getParams() throws AuthFailureError {
-            Map<String, String> params = new HashMap<>();
-            params.put("username", username);
-            params.put("jwt", token);
-
-            return params;
         }
 
         @Override
-        public Map<String, String> getHeaders() throws AuthFailureError {
-            Map<String, String> headers = new HashMap<String, String>();
-
-            headers.put("Authorization", token);
-
-            return headers;
+        public void onFailure(Call<ResponseBody> call, Throwable t) {
+            hidepDialog();
+            Snacky.builder()
+                    .setActivity(MainActivity.this)
+                    .setText(t.getMessage())
+                    .setDuration(Snacky.LENGTH_SHORT)
+                    .setActionText(android.R.string.ok)
+                    .error()
+                    .show();
         }
+    });
 
-    };
-    VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
-
-   /* RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-    queue.add(stringRequest);
-*/
     }
 
-    public void parseVolleyError(VolleyError error) {
-        try {
-            String responseBody = new String(error.networkResponse.data, "utf-8");
-            JSONObject data = new JSONObject(responseBody);
-            String message=data.getString("error");
-            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-        } catch (JSONException e) {
-        } catch (UnsupportedEncodingException errorr) {
-        }
-    }
 
     private void showpDialog() {
         if (!progressDialog.isShowing())

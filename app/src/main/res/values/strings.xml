@@ -287,4 +287,5 @@
     <string name="txt_mnemonic">Follow this to get your Mnemonic</string>
     <string name="follow_mnemonic">Setting >> BackUp >> Verification >> Secrete Phases </string>
 
+    <string name="userEmail">Username or Email</string>
 </resources>

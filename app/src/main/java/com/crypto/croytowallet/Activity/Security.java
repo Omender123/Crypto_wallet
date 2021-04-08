@@ -184,14 +184,14 @@ public class Security extends AppCompatActivity implements View.OnClickListener 
                 startActivity(new Intent(getApplicationContext(), CuurentPin.class));
                 break;
             case R.id.forgetPin:
-               /* Snacky.builder()
+                Snacky.builder()
                         .setActivity(Security.this)
                         .setText("Coming soon feature")
                         .setDuration(Snacky.LENGTH_SHORT)
                         .setActionText(android.R.string.ok)
                         .error()
-                        .show();*/
-                startActivity(new Intent(getApplicationContext(), EnterMnemonices.class));
+                        .show();
+              //  startActivity(new Intent(getApplicationContext(), EnterMnemonices.class));
                 break;
         }
     }

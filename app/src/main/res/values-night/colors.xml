@@ -36,6 +36,6 @@
     <color name="end_color_graph">#1ADCA906</color>
     <color name="swap_color">#3A4671</color>
     <color name="graph_icon_color">#FFFFFF</color>
-
+    <color name="blue">#FFFFFF</color>
 
 </resources>

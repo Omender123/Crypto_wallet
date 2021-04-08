@@ -284,4 +284,6 @@
 
     <string name="txt_mnemonic">跟随此操作以获取助记符</string>
     <string name="follow_mnemonic">设置>>备份>>验证>>秘密阶段</string>
+
+    <string name ="userEmail">用户名或电子邮件</string>
 </resources>

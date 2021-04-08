@@ -287,6 +287,6 @@
 
     <string name = "txt_mnemonic"> अपने स्मृति सहायक को प्राप्त करने के लिए इसका अनुसरण करें </string>
     <string name = "follow_mnemonic"> सेटिंग >>  बैकअप >> सत्यापन >> सुरक्षित चरण </string>
-
+    <string name = "userEmail"> उपयोगकर्ता नाम या ईमेल </string>
 
 </resources>

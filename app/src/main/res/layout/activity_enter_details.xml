@@ -52,6 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint="@string/password"
+        app:passwordToggleEnabled="true"
         app:passwordToggleTint="@android:color/darker_gray">
 
         <EditText
@@ -61,7 +62,7 @@
             android:drawablePadding="10dp"
             android:drawableTint="@android:color/darker_gray"
             android:ems="10"
-            android:textColor="@color/toolbar_text_color"
+            android:textColor="@color/black"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
@@ -71,6 +72,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint="@string/enter_otp"
+        app:passwordToggleEnabled="true"
         app:passwordToggleTint="@android:color/darker_gray">
 
         <EditText
@@ -79,7 +81,7 @@
             android:layout_height="wrap_content"
             android:drawablePadding="10dp"
             android:drawableTint="@android:color/darker_gray"
-            android:textColor="@color/toolbar_text_color"
+            android:textColor="@color/black"
             android:ems="10"
             android:inputType="numberPassword" />
     </com.google.android.material.textfield.TextInputLayout>
