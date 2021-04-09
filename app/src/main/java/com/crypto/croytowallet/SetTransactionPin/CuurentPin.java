@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chaos.view.PinView;
@@ -32,15 +35,30 @@ public class CuurentPin extends AppCompatActivity {
     UserData userData;
     Button confirm;
     KProgressHUD progressDialog;
+    Animation slide_up,slide_right;
+    TextView textView,textView1,textView2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cuurent_pin);
         confirm = findViewById(R.id.skip_btn);
         pinView = findViewById(R.id.enterCurrent_pin);
+        textView = findViewById(R.id.ent_cur);
+        textView1 = findViewById(R.id.kind);
+        textView2 = findViewById(R.id.forget);
+
 
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
         pin = userData.getTransaction_Pin();
+
+        slide_up = AnimationUtils.loadAnimation(CuurentPin.this, R.anim.silde_up);
+        slide_right =AnimationUtils.loadAnimation(CuurentPin.this,R.anim.slide_in_right);
+
+        textView.startAnimation(slide_right);
+        textView1.startAnimation(slide_right);
+        textView2.startAnimation(slide_right);
+        confirm.startAnimation(slide_right);
+        pinView.startAnimation(slide_right);
 
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override

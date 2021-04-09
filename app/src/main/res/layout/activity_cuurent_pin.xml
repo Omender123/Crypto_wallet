@@ -45,6 +45,7 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/ent_cur"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -79,6 +80,7 @@
         app:viewType="rectangle" />
 
     <TextView
+        android:id="@+id/kind"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/txt_pin"
@@ -108,6 +110,7 @@
         android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/forget"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="textEnd"

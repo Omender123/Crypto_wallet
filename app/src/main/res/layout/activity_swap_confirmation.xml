@@ -64,9 +64,7 @@ tools:context=".ImtSmart.SwapConfirmation">
             android:layout_height="wrap_content"
             android:textSize="15dp"
             android:textStyle="bold"
-            android:text="Admin"
             android:textColor="@color/toolbar_text_color"
-
             android:fontFamily="@font/montserrat"/>
         <TextView
             android:id="@+id/transaction_Time"
