@@ -90,7 +90,7 @@ imtSwap extends AppCompatActivity implements View.OnClickListener {
     String[] coinId1 = {"airdrop","imt"};
     String[] PricecoinId1 = {"airdrop","imt"};
     int[] coinImage1 = {R.drawable.ic_imt__u, R.mipmap.imt};
-    int value;
+    int value,positions;
     SeekBar seekBar;
     KProgressHUD progressDialog;
     SharedPreferences sharedPreferences,sharedPreferences1;
@@ -155,6 +155,7 @@ imtSwap extends AppCompatActivity implements View.OnClickListener {
                 sendData = coinId[position];
                 priceCoinId = PricecoinId[position];
                 coinSymbol = coinSymbols[position];
+                positions = position;
                 AirDropBalance(token,sendData,currency2);
 
                 if(sendData.equals(receviedData)){
@@ -715,17 +716,19 @@ imtSwap extends AppCompatActivity implements View.OnClickListener {
 
     }
     public void AirDropBalance(String token,String coinType,String currency){
+        if (positions==0){
 
-        progressDialog = KProgressHUD.create(imtSwap.this)
-                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                .setLabel("Please wait.....")
-                .setCancellable(false)
-                .setAnimationSpeed(2)
-                .setDimAmount(0.5f)
-                .show();
+        }else {
+            progressDialog = KProgressHUD.create(imtSwap.this)
+                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setLabel("Please wait.....")
+                    .setCancellable(false)
+                    .setAnimationSpeed(2)
+                    .setDimAmount(0.5f)
+                    .show();
 
-        showpDialog();
-
+            showpDialog();
+        }
 
         Call<ResponseBody> call = RetrofitClient.getInstance().getApi().AirDropBalance(token,coinType,currency);
 
@@ -734,9 +737,11 @@ imtSwap extends AppCompatActivity implements View.OnClickListener {
             @Override
             public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
                 String s =null;
+                if (positions==0){
 
-                hidepDialog();
-
+                }else {
+                    hidepDialog();
+                }
                 if (response.code()==200){
                     try {
                         s=response.body().string();
@@ -786,7 +791,12 @@ imtSwap extends AppCompatActivity implements View.OnClickListener {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
 
-                hidepDialog();
+                if (positions==0){
+
+                }else{
+                    hidepDialog();
+                }
+
                 Snacky.builder()
                         .setActivity(imtSwap.this)
                         .setText(t.getMessage())

@@ -1,12 +1,13 @@
 package com.crypto.croytowallet.SharedPrefernce;
 
 public class SignUpData {
-    private String username,mnemonic,googleAuthKey;
+    private String username, mnemonic, googleAuthKey, Gmail;
 
-    public SignUpData(String username, String mnemonic,String googleAuthKey) {
+    public SignUpData(String username, String mnemonic, String googleAuthKey, String gmail) {
         this.username = username;
         this.mnemonic = mnemonic;
         this.googleAuthKey = googleAuthKey;
+        this.Gmail = gmail;
     }
 
     public SignUpData() {
@@ -34,5 +35,13 @@ public class SignUpData {
 
     public void setGoogleAuthKey(String googleAuthKey) {
         this.googleAuthKey = googleAuthKey;
+    }
+
+    public String getGmail() {
+        return Gmail;
+    }
+
+    public void setGmail(String gmail) {
+        Gmail = gmail;
     }
 }

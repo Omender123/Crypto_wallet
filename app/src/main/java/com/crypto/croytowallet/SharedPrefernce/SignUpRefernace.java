@@ -8,6 +8,7 @@ public class SignUpRefernace {
     private static final String KEY_USERNAME = "keyusername";
     private static final String KEY_MNEMONIC = "keymnemonic";
     private static final String KEY_GOOGLE_AUTH_KEY = "keyGoogle";
+    private static final String KEY_Email = "keyEmail";
 
     private static SignUpRefernace mInstance;
     private static Context mCtx;
@@ -29,6 +30,7 @@ public class SignUpRefernace {
         editor.putString(KEY_USERNAME, user.getUsername());
         editor.putString(KEY_MNEMONIC, user.getMnemonic());
         editor.putString(KEY_GOOGLE_AUTH_KEY, user.getGoogleAuthKey());
+        editor.putString(KEY_Email, user.getGmail());
         editor.apply();
     }
 
@@ -38,7 +40,8 @@ public class SignUpRefernace {
         return new SignUpData(
                 sharedPreferences.getString(KEY_USERNAME, null),
                 sharedPreferences.getString(KEY_MNEMONIC, null),
-                sharedPreferences.getString(KEY_GOOGLE_AUTH_KEY, null)
+                sharedPreferences.getString(KEY_GOOGLE_AUTH_KEY, null),
+                sharedPreferences.getString(KEY_Email, null)
                 );
     }
 }

@@ -78,7 +78,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
     String[] coinId1 = {"airdrop","imt"};
     String[] PricecoinId1 = {"airdrop","imt"};
     int[] coinImage1 = {R.drawable.ic_imt__u,R.mipmap.imt};
-    int value;
+    int value,positions;
     SeekBar seekBar;
 
     KProgressHUD progressDialog;
@@ -155,6 +155,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
                 sendData = coinId[position];
                 priceCoinId = PricecoinId[position];
                 coinSymbol = coinSymbols[position];
+                positions=position;
                 AirDropBalance(token,sendData,currency2);
 
                   if(sendData.equals(receviedData)){
@@ -807,15 +808,20 @@ public class Exchange extends Fragment implements View.OnClickListener {
     }
     public void AirDropBalance(String token,String coinType,String currency){
 
-        progressDialog = KProgressHUD.create(getActivity())
-                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                .setLabel("Please wait.....")
-                .setCancellable(false)
-                .setAnimationSpeed(2)
-                .setDimAmount(0.5f)
-                .show();
+        if (positions==0){
 
-        showpDialog();
+        }else{
+            progressDialog = KProgressHUD.create(getActivity())
+                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setLabel("Please wait.....")
+                    .setCancellable(false)
+                    .setAnimationSpeed(2)
+                    .setDimAmount(0.5f)
+                    .show();
+
+            showpDialog();
+        }
+
 
 
         Call<ResponseBody> call = RetrofitClient.getInstance().getApi().AirDropBalance(token,coinType,currency);
@@ -825,9 +831,11 @@ public class Exchange extends Fragment implements View.OnClickListener {
             @Override
             public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
                 String s =null;
+                if (positions==0){
 
-                hidepDialog();
-
+                }else {
+                    hidepDialog();
+                }
                 if (response.code()==200){
                     try {
                         s=response.body().string();
@@ -875,8 +883,11 @@ public class Exchange extends Fragment implements View.OnClickListener {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                if (positions==0){
 
-                hidepDialog();
+                }else {
+                    hidepDialog();
+                }
                 Snacky.builder()
                         .setActivity(getActivity())
                         .setText(t.getMessage())

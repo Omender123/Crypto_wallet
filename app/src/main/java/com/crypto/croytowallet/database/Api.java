@@ -390,4 +390,9 @@ public interface Api {
             @Field("jwt") String jwtToken
     );
 
+    @PUT("user/emailCorrection")
+    Call<ResponseBody>EmailCorrection(
+            @Body JsonObject object
+    );
+
 }

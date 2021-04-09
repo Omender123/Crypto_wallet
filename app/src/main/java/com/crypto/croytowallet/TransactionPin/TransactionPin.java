@@ -15,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crypto.croytowallet.R;
+import com.crypto.croytowallet.signup.GmailCorrection;
+import com.crypto.croytowallet.signup.SignUp;
 
 
 public class TransactionPin extends AppCompatActivity {
@@ -323,6 +325,13 @@ public class TransactionPin extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(TransactionPin.this, GmailCorrection.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
 }
 
 

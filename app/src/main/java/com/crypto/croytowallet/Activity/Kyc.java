@@ -490,7 +490,7 @@ public class Kyc extends AppCompatActivity implements View.OnClickListener {
                 hidepDialog();
                 Snacky.builder()
                         .setActivity(Kyc.this)
-                        .setText("Internet problem")
+                        .setText(t.getMessage())
                         .setDuration(Snacky.LENGTH_SHORT)
                         .setActionText(android.R.string.ok)
                         .error()

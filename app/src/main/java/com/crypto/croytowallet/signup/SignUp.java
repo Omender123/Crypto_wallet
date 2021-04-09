@@ -305,13 +305,14 @@ public class SignUp extends AppCompatActivity {
                         SignUpData user = new SignUpData(
                                 object1.getString("username"),
                                 object1.getString("mnemonic"),
-                                object2.getString("key")
+                                object2.getString("key"),
+                                object1.getString("email")
                         );
 
                         //storing the user in shared preferences
                         SignUpRefernace.getInstance(getApplicationContext()).UserSignUP(user);
 
-                       Intent intent = new Intent(getApplicationContext(), TransactionPin.class);
+                       Intent intent = new Intent(getApplicationContext(), GmailCorrection.class);
                        // Intent intent = new Intent(getApplicationContext(), Google_auth.class);
                         startActivity(intent);
 

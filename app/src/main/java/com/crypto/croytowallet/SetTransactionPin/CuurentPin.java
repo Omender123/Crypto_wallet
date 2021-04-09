@@ -172,13 +172,6 @@ public class CuurentPin extends AppCompatActivity {
     }
 
     public void forgetPIN(View view) {
-        Snacky.builder()
-                .setActivity(CuurentPin.this)
-                .setText("Coming soon feature")
-                .setDuration(Snacky.LENGTH_SHORT)
-                .setActionText(android.R.string.ok)
-                .error()
-                .show();
-       // startActivity(new Intent(getApplicationContext(),EnterMnemonices.class));
+        startActivity(new Intent(getApplicationContext(),EnterMnemonices.class));
     }
 }
