@@ -52,6 +52,7 @@ public class SwapEnterPin extends AppCompatActivity {
     SwapModel swapModel;
     UserData userData;
     String sendData,receivedData,coinAmount,Token,ethAddress;
+    String transIDs,statuss;
     int value;
 
     private Socket mSocket;
@@ -127,7 +128,7 @@ public class SwapEnterPin extends AppCompatActivity {
 
         mSocket.connect();
        // mSocket.on("hello", onNewMessage);
-      //  mSocket.on("pendingReport",PendingReport);
+      mSocket.on("pendingReport",PendingReport);
         mSocket.on("cryptoError",CryptoError);
        // mSocket.on("finalReport",FinalReport);
     }
@@ -141,14 +142,10 @@ public class SwapEnterPin extends AppCompatActivity {
                     JSONObject data = (JSONObject) args[0];
 
                     try {
-                        String transID = data.getString("transactionHash");
-                        String status = data.getString("status");
+                        transIDs = data.getString("transactionHash");
+                         statuss = data.getString("status");
 
-                        SwapRespoinseModel swapRespoinseModel = new SwapRespoinseModel(transID,status);
-                        SwapResponsePrefernce.getInstance(getApplicationContext()).SetData(swapRespoinseModel);
 
-                         Intent intent = new Intent(SwapEnterPin.this,SwapAcknowledgement.class);
-                            startActivity(intent);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -319,7 +316,13 @@ public class SwapEnterPin extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 hidepDialog();
-                mSocket.on("pendingReport",PendingReport);
+              //  mSocket.on("pendingReport",PendingReport);
+
+                SwapRespoinseModel swapRespoinseModel = new SwapRespoinseModel(transIDs,statuss);
+                SwapResponsePrefernce.getInstance(getApplicationContext()).SetData(swapRespoinseModel);
+
+                Intent intent = new Intent(SwapEnterPin.this,SwapAcknowledgement.class);
+                startActivity(intent);
 
             }
         });
