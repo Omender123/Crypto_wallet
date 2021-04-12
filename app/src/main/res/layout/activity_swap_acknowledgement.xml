@@ -330,8 +330,8 @@
                         android:layout_toEndOf="@+id/view4"
                         android:fontFamily="@font/montserrat"
                         android:textColor="@color/toolbar_text_color"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
+                        android:textSize="12dp"
+                        android:textStyle="normal" />
 
 
                     <View
@@ -379,12 +379,12 @@
 
                     <TextView
 
+                        android:id="@+id/status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/text5"
                         android:layout_marginStart="25dp"
                         android:fontFamily="@font/montserrat"
-                        android:text="Done"
                         android:textColor="@color/toolbar_text_color"
                         android:textSize="15dp"
                         android:textStyle="bold" />
@@ -399,6 +399,7 @@
                         android:background="@drawable/gradient" />
 
                     <ImageView
+                        android:id="@+id/statusImage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"

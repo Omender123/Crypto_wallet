@@ -6,12 +6,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.Model.SwapModel;
+import com.crypto.croytowallet.Model.SwapRespoinseModel;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.SwapResponsePrefernce;
 import com.crypto.croytowallet.SharedPrefernce.SwapSharedPrefernce;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -20,10 +23,12 @@ public class SwapAcknowledgement extends AppCompatActivity {
 Button okay;
     SwapModel swapModel;
     UserData userData;
-    String sendData,receivedData,coinPrice,currencyType,currencySymbols,enterAmount,coinAmount,Token,ethAddress;
+    String sendData,receivedData,coinPrice,currencyType,currencySymbols,enterAmount,coinAmount,Token,ethAddress,status;
     int value;
     KProgressHUD progressDialog;
-    TextView coinValue,showCoinAmount,showEnteredAmount,amount_in_crypto,amount_in_Currency,trans_hash;
+    TextView coinValue,showCoinAmount,showEnteredAmount,amount_in_crypto,amount_in_Currency,trans_hash,trans_status;
+    SwapRespoinseModel   swapRespoinseModel;
+    ImageView statusImage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,9 +41,12 @@ Button okay;
         amount_in_crypto = findViewById(R.id.amount_in_crypto);
         amount_in_Currency = findViewById(R.id.amount_in_currency);
         trans_hash = findViewById(R.id.trans_hash_id);
+        trans_status = findViewById(R.id.status);
+        statusImage = findViewById(R.id.statusImage);
 
         swapModel = SwapSharedPrefernce.getInstance(getApplicationContext()).getSwapData();
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
+        swapRespoinseModel = SwapResponsePrefernce.getInstance(getApplicationContext()).getData();
         Token = userData.getToken();
         ethAddress = userData.getETH();
 
@@ -50,15 +58,32 @@ Button okay;
         enterAmount = swapModel.getEnterAmount();
         coinAmount = swapModel.getCoinAmount();
         value = swapModel.getValue();
+        status = swapRespoinseModel.getStatus();
 
 
-        coinValue.setText("1 "+sendData.toUpperCase()+" = "+coinPrice+" "+currencyType.toUpperCase());
-        showCoinAmount.setText(coinAmount+" "+sendData.toUpperCase());
+     //   coinValue.setText("1 "+sendData.toUpperCase()+" = "+coinPrice+" "+currencyType.toUpperCase());
+      //  showCoinAmount.setText(coinAmount+" "+sendData.toUpperCase());
         showEnteredAmount.setText(enterAmount+" "+currencySymbols);
-        amount_in_crypto.setText(coinAmount+" "+sendData.toUpperCase());
+      //  amount_in_crypto.setText(coinAmount+" "+sendData.toUpperCase());
         amount_in_Currency.setText(enterAmount+" "+currencyType.toUpperCase());
-        trans_hash.setText("P2038ruqu5727q8q");
+        trans_hash.setText(swapRespoinseModel.getTransId());
 
+        if(sendData.equals("airdrop")){
+            showCoinAmount.setText(coinAmount+" IMT-U");
+            amount_in_crypto.setText(coinAmount+" IMT-U");
+            coinValue.setText("1 IMT-U = "+coinPrice+" "+currencyType.toUpperCase());
+        }else{
+            showCoinAmount.setText(coinAmount+" "+sendData.toUpperCase());
+            coinValue.setText("1 "+sendData.toUpperCase()+" = "+coinPrice+" "+currencyType.toUpperCase());
+            amount_in_crypto.setText(coinAmount+" "+sendData.toUpperCase());
+
+        }
+        if (status.equalsIgnoreCase("true")){
+            trans_status.setText("Done");
+        }else if(status.equalsIgnoreCase("Pending")){
+            trans_status.setText(status);
+            statusImage.setImageResource(R.drawable.ic_baseline_panding_24);
+        }
 
         okay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +91,7 @@ Button okay;
 
                 startActivity(new Intent(SwapAcknowledgement.this, MainActivity.class));
                 SwapSharedPrefernce.getInstance(getApplicationContext()).ClearSwapData();
+                SwapResponsePrefernce.getInstance(getApplicationContext()).ClearData();
             }
         });
     }

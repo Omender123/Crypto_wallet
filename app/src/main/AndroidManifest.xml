@@ -31,8 +31,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CroytoWallet"
         android:usesCleartextTraffic="true">
-        <activity android:name=".signup.GmailCorrection"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar"></activity>
+        <activity android:name=".ImtSmart.SwapEnterPin"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" ></activity>
+        <activity
+            android:name=".signup.GmailCorrection"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
         <activity
             android:name=".SetTransactionPin.EnterMnemonices"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />
@@ -242,7 +245,8 @@
         <activity
             android:name=".signup.SignUp"
             android:configChanges="uiMode"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+            android:theme="@style/Theme.CroytoWallet.NoActionBar"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".signup.Add_Verification"
             android:configChanges="uiMode"
@@ -258,7 +262,8 @@
         <activity
             android:name=".signup.Referral_code"
             android:configChanges="uiMode"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+            android:theme="@style/Theme.CroytoWallet.NoActionBar"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".login.Change_Password"
             android:configChanges="uiMode"
@@ -274,7 +279,8 @@
         <activity
             android:name=".login.Login"
             android:configChanges="uiMode"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+            android:theme="@style/Theme.CroytoWallet.NoActionBar"
+            android:windowSoftInputMode="adjustResize|adjustPan"/>
         <activity
             android:name=".Activity.Setting"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />

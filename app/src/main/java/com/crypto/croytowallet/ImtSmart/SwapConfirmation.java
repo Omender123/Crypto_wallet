@@ -122,7 +122,8 @@ public class SwapConfirmation extends AppCompatActivity {
                 }else {
 
 
-                    SwapApi();
+                    startActivity(new Intent(getApplicationContext(),SwapEnterPin.class));
+                    //SwapApi();
                 }
 
                 //
