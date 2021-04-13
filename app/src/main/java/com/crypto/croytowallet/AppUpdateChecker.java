@@ -12,7 +12,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.crypto.croytowallet.Activity.Setting;
+
 import org.jsoup.Jsoup;
+
+import de.mateware.snacky.Snacky;
+
 public class AppUpdateChecker {
     private Activity activity;
     public AppUpdateChecker(Activity activity) {
@@ -73,7 +78,14 @@ public class AppUpdateChecker {
                 builder.show();
             }else {
                 if (manualCheck) {
-                    Toast.makeText(activity, "No Update Available", Toast.LENGTH_SHORT).show();
+                    Snacky.builder()
+                            .setActivity(activity)
+                            .setText("No Update Available")
+                            .setTextColor(activity.getResources().getColor(R.color.white))
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .success()
+                            .show();
+                   // Toast.makeText(activity, "No Update Available", Toast.LENGTH_SHORT).show();
                 }
             }
         }
