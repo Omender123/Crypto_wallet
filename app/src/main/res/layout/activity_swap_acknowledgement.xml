@@ -321,17 +321,30 @@
 
                     <TextView
                         android:id="@+id/trans_hash_id"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/text4"
-                        android:layout_alignParentEnd="true"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="10dp"
+                        android:layout_toStartOf="@+id/btn_copy"
                         android:layout_toEndOf="@+id/view4"
                         android:fontFamily="@font/montserrat"
                         android:textColor="@color/toolbar_text_color"
                         android:textSize="12dp"
                         android:textStyle="normal" />
+                    <TextView
+                        android:id="@+id/btn_copy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:layout_below="@id/text4"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/copy"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/montserrat"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textColor="@color/purple_500"/>
 
 
                     <View

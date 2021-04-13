@@ -60,7 +60,7 @@
 
 
     <string name="notification">通知</string>
-    <string name="sound">声音</string>
+    <string name="sound">检查更新</string>
     <string name="currency">货币</string>
     <string name="advance">高级</string>
     <string name="sync">同步设备</string>
@@ -170,7 +170,7 @@
     <string name="txt_pin">请输入您的交易PIN。注册时创建的。</string>
 
     <string name="noti_text">我们希望与您联系有关iMX的最新事件。</string>
-    <string name="sound_text">我们正在提出新功能。</string>
+    <string name="sound_text">我们正在提出新的更新。</string>
     <string name="currency_text">您可以使用自己喜欢的条纹货币跟踪实时加密价格。</string>
     <string name="active_text">跟踪您的帐户登录活动。</string>
     <string name="cryto_text">享受iMX平台上的最新功能，以从应用程序中获得最佳收益。</string>

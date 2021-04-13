@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crypto.croytowallet.AppUpdateChecker;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.login.Login;
@@ -121,13 +122,11 @@ public class Setting extends AppCompatActivity implements View.OnClickListener {
 
                 break;
             case R.id.sound:
-                Snacky.builder()
-                        .setActivity(Setting.this)
-                        .setText("Coming Up Features")
-                        .setTextColor(getResources().getColor(R.color.white))
-                        .setDuration(Snacky.LENGTH_SHORT)
-                        .success()
-                        .show();
+                try {
+                    AppUpdateChecker appUpdateChecker = new AppUpdateChecker(this);  //pass the activity in constructure
+                    appUpdateChecker.checkForUpdate(true);
+                }catch (Exception e){}
+
                 break;
             case R.id.currency:
                 startActivity(new Intent(getApplicationContext(),SelectCurrency.class));

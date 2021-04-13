@@ -59,7 +59,7 @@
 
     <!--स्क्रीन सेट करने के लिए टेक्स्ट-->
     <string name="notification"> सूचनाएं </string>
-    <string name="sound"> ​​साउंड्स </string>
+    <string name="sound"> अद्यतन की जाँच करें </string>
     <string name="currency"> मुद्रा </string>
     <string name="advance"> उन्नत </string>
     <string name="sync"> सिंक डिवाइस </string>
@@ -173,7 +173,7 @@
     <string name="txt_pin"> कृपया अपना लेनदेन पिन दर्ज करें। जिसे आपने साइन अप करते समय बनाया है। </string>
     <!--  सामग्री पाठ सेट करना -->
     <string name="noti_text"> हम आपको नवीनतम घटनाओं से संबंधित iMX के संपर्क में रखना चाहते हैं। </string>
-    <string name="sound_text"> हम नई सुविधाएँ लेकर आ रहे हैं। </string>
+    <string name="sound_text"> हम नया अपडेट लेकर आ रहे हैं। </string>
     <string name="currency_text"> आप अपनी पसंद की स्ट्रिप करेंसी में लाइव क्रिप्टो कीमतों को ट्रैक कर सकते हैं। </string>
     <string name="active_text"> अपनी खाता लॉगिन गतिविधि ट्रैक करें। </string>
     <string name="cryto_text"> iMX प्लेटफॉर्म पर नवीनतम सुविधाओं का आनंद लें, आवेदन से सर्वश्रेष्ठ प्राप्त करने के लिए।</string>

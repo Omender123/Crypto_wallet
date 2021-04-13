@@ -59,7 +59,7 @@
 
     <!--text for setting screen-->
     <string name="notification">Notifications</string>
-    <string name="sound">Sounds</string>
+    <string name="sound">Check Update</string>
     <string name="currency">Currency</string>
     <string name="advance">Advanced</string>
     <string name="sync">Sync Devices</string>
@@ -171,7 +171,7 @@
 
     <!-- Setting content text-->
     <string name="noti_text"> We want to keep you in touch on the latest events related iMX.</string>
-    <string name="sound_text"> We are coming up with new features.</string>
+    <string name="sound_text"> We are coming up with new Update.</string>
     <string name="currency_text"> You can track the live crypto prices in your prefer stripe currency.</string>
     <string name="active_text"> Track your account login activity.</string>
     <string name="cryto_text"> Enjoy the latest features on iMX platform, to get the best from the application.</string>

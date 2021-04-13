@@ -59,7 +59,7 @@
 
     <!--<！-設定画面のテキスト->-->
     <string name="notification">通知</string>
-    <string name="sound">​​サウンド</string>
+    <string name="sound">​アップデートをチェックする</string>
     <string name="currency">通貨</string>
     <string name="advance">詳細</string>
     <string name="sync">デバイスの同期</string>
@@ -171,7 +171,7 @@
 
     <!--<！-コンテンツテキストの設定->-->
     <string name="noti_text"> iMXに関連する最新のイベントについてお知らせします。</string>
-    <string name="sound_text">新しい機能を考えています。</string>
+    <string name="sound_text">新しいアップデートを考えています。</string>
     <string name="currency_text">お好みのストライプ通貨でライブ暗号価格を追跡できます。</string>
     <string name="active_text">アカウントのログインアクティビティを追跡します。</string>
     <string name="cryto_text"> iMXプラットフォームの最新機能を楽しんで、アプリケーションを最大限に活用してください。</string>

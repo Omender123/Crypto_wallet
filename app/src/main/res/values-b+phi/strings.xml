@@ -61,7 +61,7 @@
 
     <!--<! - teksto para sa setting ng screen ->-->
     <string name = "notification"> Mga Notification </string>
-    <string name = "sound"> ​​Mga tunog </string>
+    <string name = "sound"> Pagsusuri ng update </string>
     <string name = "currency"> Pera </string>
     <string name = "advance"> Advanced </string>
     <string name = "sync"> Mga Device sa Pag-sync </string>
@@ -173,7 +173,7 @@
 
    <!-- <! - Ang pagtatakda ng teksto ng nilalaman ->-->
     <string name = "noti_text"> Gusto naming mapanatili kang makipag-ugnay sa pinakabagong mga kaganapan na nauugnay sa iMX. </string>
-    <string name = "sound_text"> Paparating kami ng mga bagong tampok. </string>
+    <string name = "sound_text"> Paparating kami ng bagong Update. </string>
     <string name = "currency_text"> Maaari mong subaybayan ang mga live na presyo ng crypto sa iyong ginustong stripe currency. </string>
     <string name = "active_text"> Subaybayan ang iyong aktibidad sa pag-login sa account. </string>
     <string name = "cryto_text"> Masiyahan sa mga pinakabagong tampok sa platform ng iMX, upang makuha ang pinakamahusay mula sa application. </string>

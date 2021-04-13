@@ -2,12 +2,15 @@ package com.crypto.croytowallet.ImtSmart;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.Model.SwapModel;
@@ -19,6 +22,8 @@ import com.crypto.croytowallet.SharedPrefernce.SwapSharedPrefernce;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
+import de.mateware.snacky.Snacky;
+
 public class SwapAcknowledgement extends AppCompatActivity {
 Button okay;
     SwapModel swapModel;
@@ -26,7 +31,7 @@ Button okay;
     String sendData,receivedData,coinPrice,currencyType,currencySymbols,enterAmount,coinAmount,Token,ethAddress,status;
     int value;
     KProgressHUD progressDialog;
-    TextView coinValue,showCoinAmount,showEnteredAmount,amount_in_crypto,amount_in_Currency,trans_hash,trans_status;
+    TextView coinValue,showCoinAmount,showEnteredAmount,amount_in_crypto,amount_in_Currency,trans_hash,trans_status,btncopy;
     SwapRespoinseModel   swapRespoinseModel;
     ImageView statusImage;
     @Override
@@ -42,6 +47,7 @@ Button okay;
         amount_in_Currency = findViewById(R.id.amount_in_currency);
         trans_hash = findViewById(R.id.trans_hash_id);
         trans_status = findViewById(R.id.status);
+        btncopy  =findViewById(R.id.btn_copy);
         statusImage = findViewById(R.id.statusImage);
 
         swapModel = SwapSharedPrefernce.getInstance(getApplicationContext()).getSwapData();
@@ -92,6 +98,22 @@ Button okay;
                 startActivity(new Intent(SwapAcknowledgement.this, MainActivity.class));
                 SwapSharedPrefernce.getInstance(getApplicationContext()).ClearSwapData();
                 SwapResponsePrefernce.getInstance(getApplicationContext()).ClearData();
+            }
+        });
+
+        btncopy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipboardManager cm = (ClipboardManager)getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                cm.setText(trans_hash.getText().toString());
+               // Toast.makeText(getApplicationContext(), "Copied ", Toast.LENGTH_SHORT).show();
+                Snacky.builder()
+                        .setActivity(SwapAcknowledgement.this)
+                        .setText("Copied")
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .success()
+                        .show();
             }
         });
     }

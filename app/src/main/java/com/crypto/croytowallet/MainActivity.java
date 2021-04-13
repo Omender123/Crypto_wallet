@@ -108,6 +108,8 @@ public class MainActivity extends AppCompatActivity {
         usergmail= (TextView) navHeader.findViewById(R.id.nav_usergmail);
 
 
+
+
         sharedPreferences1 =getApplicationContext().getSharedPreferences("currency",0);
         //getting the current user
         UserData user = SharedPrefManager.getInstance(this).getUser();
@@ -145,19 +147,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-      /*  sharedPreferences = getSharedPreferences("night",0);
-        Boolean booleanValue = sharedPreferences.getBoolean("night_mode",false);
-        if (booleanValue){
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            drawerSwitch.setChecked(true);
-
-
-
-        }else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            drawerSwitch.setChecked(false);
-        }
-*/
 
         status_img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,6 +154,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), StoryView.class));
             }
         });
+
+        // checking Update
+
+        try {
+            AppUpdateChecker appUpdateChecker = new AppUpdateChecker(this);  //pass the activity in constructure
+            appUpdateChecker.checkForUpdate(false);
+        }catch (Exception e){}
     }
 
     private void init() {

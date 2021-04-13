@@ -60,7 +60,7 @@
 
    <!-- <! - ข้อความสำหรับหน้าจอการตั้งค่า ->-->
     <string name = "notification"> การแจ้งเตือน </string>
-    <string name = "sound"> ​​เสียง </string>
+    <string name = "sound"> ตรวจสอบการอัปเดต </string>
     <string name = "currency"> สกุลเงิน </string>
     <string name = "advance"> ขั้นสูง </string>
     <string name = "sync"> ซิงค์อุปกรณ์ </string>
@@ -172,7 +172,7 @@
 
     <!--<! - การตั้งค่าข้อความเนื้อหา ->-->
     <string name = "noti_text"> เราต้องการแจ้งให้คุณทราบเกี่ยวกับเหตุการณ์ล่าสุดที่เกี่ยวข้องกับ iMX </string>
-    <string name = "sound_text"> เรากำลังมาพร้อมกับคุณสมบัติใหม่ </string>
+    <string name = "sound_text">เรากำลังมาพร้อมกับการอัปเดตใหม่ </string>
     <string name = "currency_text"> คุณสามารถติดตามราคา crypto สดในสกุลเงินที่คุณต้องการได้ </string>
     <string name = "active_text"> ติดตามกิจกรรมการเข้าสู่ระบบบัญชีของคุณ </string>
     <string name = "cryto_text"> เพลิดเพลินกับคุณสมบัติล่าสุดบนแพลตฟอร์ม iMX เพื่อรับสิ่งที่ดีที่สุดจากแอปพลิเคชัน </string>
