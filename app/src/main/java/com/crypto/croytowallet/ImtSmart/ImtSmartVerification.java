@@ -110,11 +110,22 @@ public class ImtSmartVerification extends AppCompatActivity {
                 String trans = userData.getTransaction_Pin();
 
                 if (enterPin.isEmpty()) {
-                    pinView.setError("Please enter transaction pin");
-                    pinView.requestFocus();
-                } else if (enterPin.equals(trans)) {
-                    pinView.setLineColor(getResources().getColor(R.color.green));
-                    Toast.makeText(ImtSmartVerification.this, ""+enterPin, Toast.LENGTH_SHORT).show();
+                    Snacky.builder()
+                            .setView(v)
+                            .setText("Please enter transaction pin")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .warning()
+                            .show();
+
+                } else if (!enterPin.equals(trans)) {
+                    Snacky.builder()
+                            .setView(v)
+                            .setText("Transaction Pin incorrect")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .error()
+                            .show();
+
+                }else{
                     sendcoin();
                 }
 

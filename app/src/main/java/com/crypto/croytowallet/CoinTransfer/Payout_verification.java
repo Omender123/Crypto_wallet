@@ -119,13 +119,23 @@ public class Payout_verification extends AppCompatActivity {
                 String trans = userData.getTransaction_Pin();
 
                 if (enterPin.isEmpty()) {
-                    pinView.setError("Please enter transaction pin");
-                    pinView.requestFocus();
+                    Snacky.builder()
+                            .setView(v)
+                            .setText("Please enter transaction pin")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .warning()
+                            .show();
 
-                } else if (enterPin.equals(trans)) {
-                    pinView.setLineColor(getResources().getColor(R.color.green));
-              //      Toast.makeText(Payout_verification.this, ""+enterPin, Toast.LENGTH_SHORT).show();
-                   sendcoin();
+
+                } else if (!enterPin.equals(trans)) {
+                    Snacky.builder()
+                            .setView(v)
+                            .setText("Transaction Pin incorrect")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .error()
+                            .show();
+                }else{
+                    sendcoin();
                 }
 
             }
