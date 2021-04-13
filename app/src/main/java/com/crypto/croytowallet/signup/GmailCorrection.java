@@ -82,9 +82,9 @@ SignUpData signUpData;
                           }
 
                 }else if (check.equalsIgnoreCase("1")){
-                     startActivity(new Intent(getApplicationContext(), TransactionPin.class));
+                     startActivity(new Intent(getApplicationContext(), Add_Verification.class));
                 }else if(check.equalsIgnoreCase("2")){
-                  startActivity(new Intent(getApplicationContext(), TransactionPin.class));
+                  startActivity(new Intent(getApplicationContext(), Add_Verification.class));
 
                 }
 
