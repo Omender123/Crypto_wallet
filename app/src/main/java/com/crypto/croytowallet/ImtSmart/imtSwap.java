@@ -264,7 +264,7 @@ imtSwap extends AppCompatActivity implements View.OnClickListener {
 
 
 
-                    SwapModel swapModel = new SwapModel(sendData,receviedData,imtPrice,currency2,CurrencySymbols,coinAmount,SwapAmount,userBalance,coinAmount,value);
+                    SwapModel swapModel = new SwapModel(sendData,receviedData,imtPrice,currency2,CurrencySymbols,coinAmount,SwapAmount,userBalance,coinAmount,value,"Swap");
                     SwapSharedPrefernce.getInstance(getApplicationContext()).SetData(swapModel);
 
 
@@ -288,7 +288,7 @@ imtSwap extends AppCompatActivity implements View.OnClickListener {
 
                     String coinAmount = String.valueOf(df.format(totalAmoumt));
 
-                    SwapModel swapModel = new SwapModel(sendData,receviedData,coinPrice,currency2,CurrencySymbols,coinAmount,SwapAmount,userBalance,coinAmount,value);
+                    SwapModel swapModel = new SwapModel(sendData,receviedData,coinPrice,currency2,CurrencySymbols,coinAmount,SwapAmount,userBalance,coinAmount,value,"Swap");
                     SwapSharedPrefernce.getInstance(getApplicationContext()).SetData(swapModel);
 
                     new Handler().postDelayed(new Runnable() {
@@ -759,7 +759,7 @@ imtSwap extends AppCompatActivity implements View.OnClickListener {
                         s=response.errorBody().string();
                         JSONObject jsonObject1=new JSONObject(s);
                         String error =jsonObject1.getString("error");
-
+                        userBalance="0";
 
                         Snacky.builder()
                                 .setActivity(imtSwap.this)

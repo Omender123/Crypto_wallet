@@ -268,9 +268,9 @@
                         android:layout_marginRight="10dp"
                         android:layout_toEndOf="@+id/view3"
                         android:fontFamily="@font/montserrat"
-                        android:text="Admin"
+
                         android:textColor="@color/toolbar_text_color"
-                        android:textSize="15dp"
+                        android:textSize="12dp"
                         android:textStyle="bold" />
 
 

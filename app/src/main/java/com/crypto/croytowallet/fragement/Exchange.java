@@ -259,7 +259,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
 
 
 
-                    SwapModel swapModel = new SwapModel(sendData,receviedData,imtPrice,currency2,CurrencySymbols,coinAmount,SwapAmount,userBalance,coinAmount,value);
+                    SwapModel swapModel = new SwapModel(sendData,receviedData,imtPrice,currency2,CurrencySymbols,coinAmount,SwapAmount,userBalance,coinAmount,value,"Swap");
                     SwapSharedPrefernce.getInstance(getContext()).SetData(swapModel);
 
 
@@ -286,7 +286,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
 
 
 
-                    SwapModel swapModel = new SwapModel(sendData,receviedData,coinPrice,currency2,CurrencySymbols,coinAmount,SwapAmount,userBalance,coinAmount,value);
+                    SwapModel swapModel = new SwapModel(sendData,receviedData,coinPrice,currency2,CurrencySymbols,coinAmount,SwapAmount,userBalance,coinAmount,value,"Swap");
                     SwapSharedPrefernce.getInstance(getContext()).SetData(swapModel);
 
 
@@ -853,6 +853,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
                         JSONObject jsonObject1=new JSONObject(s);
                         String error =jsonObject1.getString("error");
 
+                        userBalance="0";
 
                         Snacky.builder()
                                 .setActivity(getActivity())

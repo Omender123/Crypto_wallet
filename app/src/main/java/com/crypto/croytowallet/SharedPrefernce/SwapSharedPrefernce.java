@@ -21,7 +21,7 @@ public class SwapSharedPrefernce {
     private static final String KEY_VALUE = "keyValue";
     private static final String KEY_userBalance = "keyUserBalance";
     private static final String KEY_Total = "keyTotal";
-
+    private static final String KEY_TYPE = "KeyType";
 
     private SwapSharedPrefernce(Context context) {
         mCtx = context;
@@ -47,7 +47,7 @@ public class SwapSharedPrefernce {
         editor.putString(KEY_userBalance, user.getUserBalance());
         editor.putString(KEY_Total, user.getTotalAmount());
         editor.putInt(KEY_VALUE, user.getValue());
-
+        editor.putString(KEY_TYPE, user.getType());
         editor.apply();
     }
 
@@ -64,8 +64,10 @@ public class SwapSharedPrefernce {
                 sharedPreferences.getString(KEY_ENTER_AMOUNT, null),
                 sharedPreferences.getString(KEY_userBalance, null),
                 sharedPreferences.getString(KEY_Total, null),
-                sharedPreferences.getInt(KEY_VALUE, 1)
-        );
+                sharedPreferences.getInt(KEY_VALUE, 1),
+                sharedPreferences.getString(KEY_TYPE, null)
+
+                );
     }
     public void ClearSwapData() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);

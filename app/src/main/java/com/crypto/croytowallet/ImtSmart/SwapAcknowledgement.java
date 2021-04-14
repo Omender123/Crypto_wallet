@@ -28,10 +28,10 @@ public class SwapAcknowledgement extends AppCompatActivity {
 Button okay;
     SwapModel swapModel;
     UserData userData;
-    String sendData,receivedData,coinPrice,currencyType,currencySymbols,enterAmount,coinAmount,Token,ethAddress,status;
+    String sendData,receivedData,coinPrice,currencyType,currencySymbols,enterAmount,coinAmount,Token,ethAddress,status,type;
     int value;
     KProgressHUD progressDialog;
-    TextView coinValue,showCoinAmount,showEnteredAmount,amount_in_crypto,amount_in_Currency,trans_hash,trans_status,btncopy;
+    TextView coinValue,showCoinAmount,showEnteredAmount,amount_in_crypto,amount_in_Currency,trans_hash,trans_status,btncopy,reciverName;
     SwapRespoinseModel   swapRespoinseModel;
     ImageView statusImage;
     @Override
@@ -49,6 +49,7 @@ Button okay;
         trans_status = findViewById(R.id.status);
         btncopy  =findViewById(R.id.btn_copy);
         statusImage = findViewById(R.id.statusImage);
+        reciverName = findViewById(R.id.recriver_address);
 
         swapModel = SwapSharedPrefernce.getInstance(getApplicationContext()).getSwapData();
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
@@ -65,6 +66,8 @@ Button okay;
         coinAmount = swapModel.getCoinAmount();
         value = swapModel.getValue();
         status = swapRespoinseModel.getStatus();
+        type = swapModel.getType();
+
 
 
      //   coinValue.setText("1 "+sendData.toUpperCase()+" = "+coinPrice+" "+currencyType.toUpperCase());
@@ -84,6 +87,13 @@ Button okay;
             amount_in_crypto.setText(coinAmount+" "+sendData.toUpperCase());
 
         }
+
+        if (type.equalsIgnoreCase("Swap")){
+            reciverName.setText("Admin");
+        }else{
+            reciverName.setText(swapModel.getReceivedData());
+        }
+
         if (status.equalsIgnoreCase("true")){
             trans_status.setText("Done");
         }else if(status.equalsIgnoreCase("Pending")){

@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        } else  {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle(R.string.app_name);
             builder.setIcon(R.mipmap.ic_launcher);
@@ -209,11 +209,17 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
             AlertDialog alert = builder.create();
+            alert.setCancelable(false);
             alert.show();
-           // super.onBackPressed();
-        }
-    }
 
+
+        }
+
+
+
+
+
+    }
     private void changeStatusBarColor() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
@@ -274,31 +280,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-       /* drawerSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    drawerSwitch.setChecked(true);
-                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean("night_mode",true);
-                    editor.commit();
-
-                   // Toast.makeText(MainActivity.this, "Switch turned on", Toast.LENGTH_SHORT).show();
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    drawerSwitch.setChecked(false);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean("night_mode",false);
-                    editor.commit();
-
-                    //Toast.makeText(MainActivity.this, "Switch turned off", Toast.LENGTH_SHORT).show();
-                }
-
-
-            }
-        });
-*/
         MenuItem language = menu.findItem(R.id.langauge);
 
         language.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {

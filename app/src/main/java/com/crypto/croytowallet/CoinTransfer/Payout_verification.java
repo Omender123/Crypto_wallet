@@ -3,11 +3,13 @@ package com.crypto.croytowallet.CoinTransfer;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,11 +23,18 @@ import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.chaos.view.PinView;
+import com.crypto.croytowallet.AppUtils;
+import com.crypto.croytowallet.ImtSmart.SwapAcknowledgement;
+import com.crypto.croytowallet.ImtSmart.SwapEnterPin;
 import com.crypto.croytowallet.MainActivity;
+import com.crypto.croytowallet.Model.SwapModel;
+import com.crypto.croytowallet.Model.SwapRespoinseModel;
 import com.crypto.croytowallet.Payment.Complate_payment;
 import com.crypto.croytowallet.Payment.Enter_transaction_pin;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.SwapResponsePrefernce;
+import com.crypto.croytowallet.SharedPrefernce.SwapSharedPrefernce;
 import com.crypto.croytowallet.SharedPrefernce.Updated_data;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
@@ -39,11 +48,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import de.mateware.snacky.Snacky;
+import io.socket.client.IO;
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -70,8 +83,20 @@ public class Payout_verification extends AppCompatActivity {
     EditText ed_token,ed_otp;
     ImageView imageView;
     TextInputLayout lyt_emiail,lyt_Google;
+    SwapModel swapModel;
     private static CountDownTimer countDownTimer;
     Boolean click=false;
+    String transIDs,statuss;
+    private Socket mSocket;
+    {
+        try {
+            mSocket = IO.socket("https://api.imx.global");
+
+            // mSocket = IO.socket("http://13.233.136.56:8080");
+
+        } catch (URISyntaxException e) {}
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,21 +117,21 @@ public class Payout_verification extends AppCompatActivity {
         progressBarCircle = (ProgressBar) findViewById(R.id.progressBarCircle);
 
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
+        swapModel = SwapSharedPrefernce.getInstance(getApplicationContext()).getSwapData();
 
-      //  preferences=getApplicationContext().getSharedPreferences("symbols", Context.MODE_PRIVATE);
-        preferences=getSharedPreferences("coinScan", Context.MODE_PRIVATE);
-       // cryptoCurrency = preferences.getString("symbol1","");
-        cryptoCurrency = Updated_data.getInstans(getApplicationContext()).getmobile();
+        cryptoCurrency = swapModel.getSendData();
+        result = swapModel.getReceivedData();
+        Amount = swapModel.getCoinAmount();
 
-        Toast.makeText(this, ""+cryptoCurrency, Toast.LENGTH_SHORT).show();
-        result = preferences.getString("address","");
+      //  preferences=getSharedPreferences("coinScan", Context.MODE_PRIVATE);
+       // cryptoCurrency = Updated_data.getInstans(getApplicationContext()).getmobile();
+
+       // result = preferences.getString("address","");
 
     //    Toast.makeText(this, ""+result, Toast.LENGTH_SHORT).show();
 
-        Bundle bundle = getIntent().getExtras();
-        // position=bundle.getInt("position");
-       // result=bundle.getString("result1");
-        Amount = bundle.getString("amount1");
+       // Bundle bundle = getIntent().getExtras();
+        // Amount = bundle.getString("amount1");
 
 
         next.setOnClickListener(new View.OnClickListener() {
@@ -135,6 +160,9 @@ public class Payout_verification extends AppCompatActivity {
                             .error()
                             .show();
                 }else{
+
+                  //  Log.d("coinTranser",cryptoCurrency+result+Amount+enterPin);
+                   // Toast.makeText(Payout_verification.this, ""+cryptoCurrency+result+Amount+enterPin, Toast.LENGTH_SHORT).show();
                     sendcoin();
                 }
 
@@ -144,6 +172,11 @@ public class Payout_verification extends AppCompatActivity {
     //   Toast.makeText(this, ""+result+Amount+cryptoCurrency, Toast.LENGTH_SHORT).show();
         get2fa();
         back();
+
+        mSocket.connect();
+        mSocket.on("pendingReport",PendingReport);
+        mSocket.on("cryptoError",CryptoError);
+
     }
 
     public void get2fa(){
@@ -236,7 +269,66 @@ public class Payout_verification extends AppCompatActivity {
 
     }
 
+
+    private Emitter.Listener PendingReport = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    JSONObject data = (JSONObject) args[0];
+
+                    if(data==null){
+                        transIDs = "Not found";
+                        statuss = "Pending";
+                    }else{
+
+                        try {
+                            transIDs = data.getString("transactionHash");
+                            statuss = data.getString("status");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+
+                   // Toast.makeText(Payout_verification.this, ""+data.toString(), Toast.LENGTH_SHORT).show();
+
+                }
+            });
+        }
+    };
+
+    private Emitter.Listener CryptoError = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    JSONObject data = (JSONObject) args[0];
+
+
+                    AppUtils.showMessageOKCancel(data.toString(), Payout_verification.this, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
+
+                        }
+                    });
+
+                }
+            });
+
+
+        }
+    };
+
+
     public void sendcoin(){
+
+
+
         progressDialog = KProgressHUD.create(Payout_verification.this)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel("Please wait.....")
@@ -259,15 +351,38 @@ public class Payout_verification extends AppCompatActivity {
                 if (response.code()==200){
 
                     try {
-                        s=response.body().string();
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        Toast.makeText(Payout_verification.this, "Coin send Successfully", Toast.LENGTH_SHORT).show();
+                        s = response.body().string();
 
-                        pinView.setLineColor(getResources().getColor(R.color.light_gray));
-                      // Toast.makeText(Payout_verification.this, ""+s, Toast.LENGTH_SHORT).show();
-                    } catch (IOException e) {
+                        JSONObject object = new JSONObject(s);
+                        String responses = object.getString("response");
+
+                        if (responses.equalsIgnoreCase("null")){
+                            String transId = "Not Found";
+                            String status = "true";
+                            SwapRespoinseModel swapRespoinseModel = new SwapRespoinseModel(transId,status);
+                            SwapResponsePrefernce.getInstance(getApplicationContext()).SetData(swapRespoinseModel);
+
+                            startActivity(new Intent(getApplicationContext(),SwapAcknowledgement.class));
+
+                        }else{
+                            JSONObject  object1 = new JSONObject(responses);
+
+                            String transId = object1.getString("transactionHash");
+                            String status = object1.getString("status");
+
+                            SwapRespoinseModel swapRespoinseModel = new SwapRespoinseModel(transId,status);
+                            SwapResponsePrefernce.getInstance(getApplicationContext()).SetData(swapRespoinseModel);
+
+                            startActivity(new Intent(getApplicationContext(),SwapAcknowledgement.class));
+
+
+                        }
+
+                        // Toast.makeText(SwapEnterPin.this, ""+s, Toast.LENGTH_SHORT).show();
+                    } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }
+
                 }else if (response.code()==400){
                     try {
                         s=response.errorBody().string();
@@ -305,10 +420,11 @@ public class Payout_verification extends AppCompatActivity {
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 hidepDialog();
 
-                pinView.setLineColor(getResources().getColor(R.color.light_gray));
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                Toast.makeText(Payout_verification.this, "Your Transaction is Pending. And Please Check your Status in Coin Transaction History  ", Toast.LENGTH_SHORT).show();
+                SwapRespoinseModel swapRespoinseModel = new SwapRespoinseModel(transIDs,statuss);
+                SwapResponsePrefernce.getInstance(getApplicationContext()).SetData(swapRespoinseModel);
 
+                Intent intent = new Intent(Payout_verification.this,SwapAcknowledgement.class);
+                startActivity(intent);
             }
         });
     }

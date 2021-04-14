@@ -1,5 +1,6 @@
 package com.crypto.croytowallet.CoinTransfer;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -7,9 +8,13 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.icu.text.DecimalFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,12 +29,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.chaos.view.PinView;
 import com.crypto.croytowallet.Activity.Two_FA;
+import com.crypto.croytowallet.ImtSmart.SwapConfirmation;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.Model.CrptoInfoModel;
+import com.crypto.croytowallet.Model.SwapModel;
 import com.crypto.croytowallet.Payment.Complate_payment;
 import com.crypto.croytowallet.Payment.Enter_transaction_pin;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.SwapSharedPrefernce;
 import com.crypto.croytowallet.SharedPrefernce.Updated_data;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 
@@ -57,15 +65,15 @@ import retrofit2.Callback;
 
 public class Pay_Coin extends AppCompatActivity {
     int position;
-    String result,Amount,cryptoCurrency, email2fa1,google2fa1;
-    TextView toolbar_title;
+    String result,Amount,cryptoCurrency, email2fa1,userBalance,currency2,CurrencySymbols,price;
+    TextView toolbar_title,text_send;
     ImageView imageView;
     EditText enterAmount,token;
     TextInputLayout enterAmount1,token1;
     Button next;
     UserData userData;
     KProgressHUD progressDialog;
-    SharedPreferences preferences;
+    SharedPreferences preferences,sharedPreferences1;
 
 
     private AppCompatActivity activity;
@@ -76,29 +84,32 @@ public class Pay_Coin extends AppCompatActivity {
         imageView =findViewById(R.id.back);
         toolbar_title=findViewById(R.id.toolbar_title);
         enterAmount=findViewById(R.id.ed_enter_amount);
+        text_send = findViewById(R.id.txt_send_amount);
       //  token =findViewById(R.id.ed_token);
         enterAmount1=findViewById(R.id.user);
 
         next=findViewById(R.id.next);
+        preferences=getSharedPreferences("coinScan", Context.MODE_PRIVATE);
+        result = preferences.getString("address","");
 
-       /* Bundle bundle = getIntent().getExtras();
-       // position=bundle.getInt("position");
-        result=bundle.getString("result");
-*/
-       /* preferences=getApplicationContext().getSharedPreferences("symbols", Context.MODE_PRIVATE);
-        cryptoCurrency = preferences.getString("symbol1","");
+        sharedPreferences1 =getApplicationContext().getSharedPreferences("currency",0);
+        currency2 =sharedPreferences1.getString("currency1","usd");
+        CurrencySymbols =sharedPreferences1.getString("Currency_Symbols","$");
 
-          position = preferences.getInt("position", -1);
-*/
+
+
 
 
         cryptoCurrency = Updated_data.getInstans(getApplicationContext()).getmobile();
+        price =Updated_data.getInstans(getApplicationContext()).getprice();
+
         userData= SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
         toolbar_title.setText("Send "+cryptoCurrency);
 
 
         next.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
                 Amount = enterAmount.getText().toString().trim();
@@ -107,58 +118,154 @@ public class Pay_Coin extends AppCompatActivity {
                     enterAmount.requestFocus();
                 }else {
 
-                    Intent intent =new Intent(getApplicationContext(),Payout_verification.class);
-                 //  intent.putExtra("result1",result);
-                    intent.putExtra("amount1",Amount);
 
-                   startActivity(intent);
+                    DecimalFormat df = new DecimalFormat();
+                    df.setMaximumFractionDigits(8);
 
+                    Double coinprices,enterAmount,totalAmoumt;
+                    coinprices=Double.parseDouble(price);
+                    enterAmount=Double.parseDouble(Amount);
 
-                }
+                    totalAmoumt = enterAmount/coinprices;
 
+                    String coinAmount = String.valueOf(df.format(totalAmoumt));
 
-            }
-        });
+                    SwapModel swapModel = new SwapModel(cryptoCurrency,result,price,currency2,CurrencySymbols,coinAmount,Amount,userBalance,coinAmount,1,"CoinTransfer");
+                    SwapSharedPrefernce.getInstance(getApplicationContext()).SetData(swapModel);
 
-
-
-
-
-      /*  send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                enterPin=pinView.getText().toString();
-
-                String trans =userData.getTransaction_Pin();
-
-
-                if (enterPin.isEmpty()){
-                    pinView.setError("Please enter transaction pin");
-                    pinView.requestFocus();
-                }else if (enterPin.equals(trans)){
-                    pinView.setLineColor(getResources().getColor(R.color.green));
-
-            //   Toast.makeText(Pay_Coin.this, ""+Amount+cryptoCurrency+Token+result+enterPin, Toast.LENGTH_SHORT).show();
-
-                 done();
-
-                }else{
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            // This method will be executed once the timer is over
-                            pinView.setLineColor(getResources().getColor(R.color.light_gray));
+                            Intent intent = new Intent(getApplicationContext(), SwapConfirmation.class);
+                            startActivity(intent);
                         }
-                    }, 200);
-                    pinView.setLineColor(getResources().getColor(R.color.red));
+                    },1000);
+
+                      /*   Intent intent =new Intent(getApplicationContext(),Payout_verification.class);
+                 //  intent.putExtra("result1",result);
+                    intent.putExtra("amount1",Amount);
+
+                   startActivity(intent);*/
+
                 }
+
 
             }
         });
-     */ //  Toast.makeText(this, ""+position+result, Toast.LENGTH_SHORT).show();
-        back();
+
+
+        enterAmount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String msg = s.toString();
+
+                if (msg.isEmpty()){
+                        text_send.setText(" ");
+                    }else {
+                        DecimalFormat df = new DecimalFormat();
+                        df.setMaximumFractionDigits(8);
+
+                        Double coinprices,enterAmount,totalAmoumt;
+                        coinprices=Double.parseDouble(price);
+                        enterAmount=Double.parseDouble(msg);
+
+                        totalAmoumt = enterAmount/coinprices;
+
+                  text_send.setText(msg +" "+currency2.toUpperCase() +"="+df.format(totalAmoumt)+" " + cryptoCurrency.toUpperCase());
+                    }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+        AirDropBalance(userData.getToken(),cryptoCurrency,currency2);
+
+         back();
        get2fa();
+
     }
+
+    public void AirDropBalance(String token,String coinType,String currency){
+
+
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().AirDropBalance(token,coinType,currency);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                String s =null;
+                if (response.code()==200){
+                    try {
+                        s=response.body().string();
+
+                        JSONObject object = new JSONObject(s);
+                        userBalance = object.getString("balance");
+
+                        Toast.makeText(Pay_Coin.this, ""+userBalance, Toast.LENGTH_SHORT).show();
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if(response.code()==400){
+                    try {
+                        s=response.errorBody().string();
+                        JSONObject jsonObject1=new JSONObject(s);
+                        String error =jsonObject1.getString("error");
+
+                        userBalance="0";
+
+                        Snacky.builder()
+                                .setActivity(Pay_Coin.this)
+                                .setText(error)
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
+
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if(response.code()==401){
+
+                    Snacky.builder()
+                            .setActivity(Pay_Coin.this)
+                            .setText("unAuthorization Request")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Snacky.builder()
+                        .setActivity(Pay_Coin.this)
+                        .setText(t.getMessage())
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+            }
+        });
+    }
+
 
     public void get2fa(){
 
@@ -183,13 +290,12 @@ public class Pay_Coin extends AppCompatActivity {
                     JSONObject object1 = new JSONObject(result);
 
                     email2fa1 = object1.getString("email2fa");
-                    google2fa1 = object1.getString("google2fa");
 
 
                    if (email2fa1.equals("true")){
                        sendOTP();
                     }else {
-                       Toast.makeText(Pay_Coin.this, "Your Email 2FA OFF", Toast.LENGTH_SHORT).show();
+                     //  Toast.makeText(Pay_Coin.this, "Your Email 2FA OFF", Toast.LENGTH_SHORT).show();
                     }
 
 
@@ -267,13 +373,6 @@ public class Pay_Coin extends AppCompatActivity {
                 String s=null;
                 if (response.code()==200){
 
-                  /*  Snacky.builder()
-                            .setView(view)
-                            .setText("Otp send in your register Email")
-                            .setDuration(Snacky.LENGTH_SHORT)
-                            .success()
-                            .show();*/
-                     //  OTPexpire();
                     Toast.makeText(Pay_Coin.this, "Otp send in your registered Email", Toast.LENGTH_SHORT).show();
 
                 }else if(response.code()==400){
@@ -290,8 +389,6 @@ public class Pay_Coin extends AppCompatActivity {
                                 .setActionText(android.R.string.ok)
                                 .error()
                                 .show();
-                        // Toast.makeText(SignUp.this, jsonObject1.getString("error")+"", Toast.LENGTH_SHORT).show();
-
 
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
@@ -324,45 +421,7 @@ public class Pay_Coin extends AppCompatActivity {
         if (progressDialog.isShowing())
             progressDialog.dismiss();
     }
-    public void OTPexpire(){
-        new Handler().postDelayed(new Runnable() {
 
-
-            @Override
-            public void run() {
-                // This method will be executed once the timer is over
-                expire();
-            }
-        }, 60000);
-    }
-
-    public void expire(){
-        String username = userData.getUsername();
-
-
-        Call<ResponseBody> call=  RetrofitClient
-                .getInstance()
-                .getApi().expireOtp(username);
-
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                hidepDialog();
-
-                String s=null;
-                if (response.code()==200){
-                    Toast.makeText(Pay_Coin.this, "Your Otp is expire", Toast.LENGTH_SHORT).show();
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
-        });
-
-    }
 
     @Override
     public void onBackPressed() {

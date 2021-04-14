@@ -72,6 +72,7 @@ public class AppUpdateChecker {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //Cancel button action
+                        activity.finish();
                     }
                 });
                 builder.setCancelable(false);

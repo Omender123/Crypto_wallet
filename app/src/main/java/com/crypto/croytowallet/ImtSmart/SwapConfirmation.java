@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crypto.croytowallet.AppUtils;
+import com.crypto.croytowallet.CoinTransfer.Payout_verification;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.Model.SwapModel;
 import com.crypto.croytowallet.R;
@@ -35,7 +36,7 @@ public class SwapConfirmation extends AppCompatActivity {
     Button confirm;
     SwapModel swapModel;
     UserData userData;
-    String sendData,receivedData,coinPrice,currencyType,currencySymbols,enterAmount,coinAmount,Token,ethAddress;
+    String sendData,receivedData,coinPrice,currencyType,currencySymbols,enterAmount,coinAmount,Token,ethAddress,type;
     int value;
     KProgressHUD progressDialog;
     TextView coinValue,showCoinAmount,showEnteredAmount;
@@ -65,7 +66,7 @@ public class SwapConfirmation extends AppCompatActivity {
         value = swapModel.getValue();
         balance = swapModel.getUserBalance();
         total = swapModel.getTotalAmount();
-
+        type = swapModel.getType();
 
 
 
@@ -119,12 +120,19 @@ public class SwapConfirmation extends AppCompatActivity {
                             .setActionText(android.R.string.ok)
                             .error()
                             .show();
-                }else {
-
-
+                }else if (type.equalsIgnoreCase("Swap")){
                     startActivity(new Intent(getApplicationContext(),SwapEnterPin.class));
-                    //SwapApi();
+                   // Toast.makeText(SwapConfirmation.this, ""+type, Toast.LENGTH_SHORT).show();
+                }else {
+                    startActivity(new Intent(getApplicationContext(), Payout_verification.class));
+                   // Toast.makeText(SwapConfirmation.this, ""+type, Toast.LENGTH_SHORT).show();
                 }
+                    /*{
+
+
+
+                    //SwapApi();
+                }*/
 
                 //
 

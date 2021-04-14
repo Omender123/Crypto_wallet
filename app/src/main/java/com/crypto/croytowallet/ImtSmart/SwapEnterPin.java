@@ -128,7 +128,7 @@ public class SwapEnterPin extends AppCompatActivity {
 
         mSocket.connect();
        // mSocket.on("hello", onNewMessage);
-      mSocket.on("pendingReport",PendingReport);
+        mSocket.on("pendingReport",PendingReport);
         mSocket.on("cryptoError",CryptoError);
        // mSocket.on("finalReport",FinalReport);
     }
@@ -141,15 +141,21 @@ public class SwapEnterPin extends AppCompatActivity {
                 public void run() {
                     JSONObject data = (JSONObject) args[0];
 
-                    try {
-                        transIDs = data.getString("transactionHash");
-                         statuss = data.getString("status");
+                    if(data==null){
+                        transIDs = "Not found";
+                        statuss = "Pending";
+                    }else{
 
-
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        try {
+                            transIDs = data.getString("transactionHash");
+                            statuss = data.getString("status");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
+
+
+                    Toast.makeText(SwapEnterPin.this, ""+data.toString(), Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -252,26 +258,52 @@ public class SwapEnterPin extends AppCompatActivity {
                 hidepDialog();
                 if (response.code() == 200) {
 
-                    try {
-                        s = response.body().string();
+                    if (response!=null){
+                        try {
+                            s = response.body().string();
 
-                        JSONObject object = new JSONObject(s);
-                        String responses = object.getString("response");
+                            JSONObject object = new JSONObject(s);
+                            String responses = object.getString("response");
 
-                        JSONObject  object1 = new JSONObject(responses);
+                            if (responses.equalsIgnoreCase("null")){
+                                String transId = "Not Found";
+                                String status = "true";
+                                SwapRespoinseModel swapRespoinseModel = new SwapRespoinseModel(transId,status);
+                                SwapResponsePrefernce.getInstance(getApplicationContext()).SetData(swapRespoinseModel);
 
-                        String transId = object1.getString("transactionHash");
-                        String status = object1.getString("status");
+                                startActivity(new Intent(getApplicationContext(),SwapAcknowledgement.class));
+
+                            }else{
+                                JSONObject  object1 = new JSONObject(responses);
+
+                                String transId = object1.getString("transactionHash");
+                                String status = object1.getString("status");
+
+                                SwapRespoinseModel swapRespoinseModel = new SwapRespoinseModel(transId,status);
+                                SwapResponsePrefernce.getInstance(getApplicationContext()).SetData(swapRespoinseModel);
+
+                                startActivity(new Intent(getApplicationContext(),SwapAcknowledgement.class));
+
+
+                            }
+
+                            // Toast.makeText(SwapEnterPin.this, ""+s, Toast.LENGTH_SHORT).show();
+                        } catch (IOException | JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }else{
+
+                        String transId = "Not Found";
+                        String status = "true";
 
                         SwapRespoinseModel swapRespoinseModel = new SwapRespoinseModel(transId,status);
                         SwapResponsePrefernce.getInstance(getApplicationContext()).SetData(swapRespoinseModel);
 
                         startActivity(new Intent(getApplicationContext(),SwapAcknowledgement.class));
 
-                       // Toast.makeText(SwapEnterPin.this, ""+s, Toast.LENGTH_SHORT).show();
-                    } catch (IOException | JSONException e) {
-                        e.printStackTrace();
+
                     }
+
                 } else if (response.code() == 400) {
                     try {
                         s = response.errorBody().string();

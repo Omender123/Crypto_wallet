@@ -1,10 +1,17 @@
 package com.crypto.croytowallet.ImtSmart;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.icu.text.DecimalFormat;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,8 +26,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.crypto.croytowallet.CoinTransfer.Pay_Coin;
 import com.crypto.croytowallet.CoinTransfer.Payout_verification;
+import com.crypto.croytowallet.Model.SwapModel;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.SwapSharedPrefernce;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
@@ -42,14 +51,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 public class ImtSmartEnterAmout extends AppCompatActivity {
-    String result,Amount,cryptoCurrency, email2fa1,google2fa1;
-    TextView toolbar_title;
+    String result,Amount,cryptoCurrency="imt", email2fa1,google2fa1;
+    TextView toolbar_title,text_send;
     ImageView imageView;
     EditText enterAmount,token;
     TextInputLayout enterAmount1,token1;
     Button next;
     UserData userData;
     KProgressHUD progressDialog;
+    SharedPreferences sharedPreferences,sharedPreferences1,sharedPreferences2;
+    String currency2,CurrencySymbols,userBalance,imtPrice,coinSymbol;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,13 +70,20 @@ public class ImtSmartEnterAmout extends AppCompatActivity {
         imageView =findViewById(R.id.back);
         enterAmount=findViewById(R.id.ed_enter_amount);
         next=findViewById(R.id.next);
-     //   Bundle bundle = getIntent().getExtras();
-        // position=bundle.getInt("position");
-      //  result=bundle.getString("result1");
-
+        text_send = findViewById(R.id.txt_send_amount);
         userData= SharedPrefManager.getInstance(getApplicationContext()).getUser();
+        sharedPreferences  =getApplicationContext().getSharedPreferences("currency",0);
+        sharedPreferences1 = getApplicationContext().getSharedPreferences("imtInfo", Context.MODE_PRIVATE);
+        sharedPreferences2=getSharedPreferences("ImtScan", Context.MODE_PRIVATE);
+
+        currency2 =sharedPreferences.getString("currency1","usd");
+        CurrencySymbols =sharedPreferences.getString("Currency_Symbols","$");
+        imtPrice = sharedPreferences1.getString("imtPrices", "0.09");
+        result =sharedPreferences2.getString("Imtaddress","");
+
 
         next.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
                 Amount = enterAmount.getText().toString().trim();
@@ -73,11 +92,33 @@ public class ImtSmartEnterAmout extends AppCompatActivity {
                     enterAmount.requestFocus();
                 }else {
 
-                    Intent intent =new Intent(getApplicationContext(), ImtSmartVerification.class);
-                  //  intent.putExtra("result2",result);
+                    DecimalFormat df = new DecimalFormat();
+                    df.setMaximumFractionDigits(8);
+
+                    Double coinprices,enterAmount,totalAmoumt;
+                    coinprices=Double.parseDouble(imtPrice);
+                    enterAmount=Double.parseDouble(Amount);
+
+                    totalAmoumt = enterAmount/coinprices;
+
+                    String coinAmount = String.valueOf(df.format(totalAmoumt));
+
+                    SwapModel swapModel = new SwapModel(cryptoCurrency,result,imtPrice,currency2,CurrencySymbols,coinAmount,Amount,userBalance,coinAmount,1,"CoinTransfer");
+                    SwapSharedPrefernce.getInstance(getApplicationContext()).SetData(swapModel);
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent(getApplicationContext(), SwapConfirmation.class);
+                            startActivity(intent);
+                        }
+                    },1000);
+
+
+                 /*   Intent intent =new Intent(getApplicationContext(), ImtSmartVerification.class);
                     intent.putExtra("amount2",Amount);
 
-                    startActivity(intent);
+                    startActivity(intent);*/
 
 
                 }
@@ -86,9 +127,114 @@ public class ImtSmartEnterAmout extends AppCompatActivity {
             }
         });
 
+        enterAmount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String msg = s.toString();
+
+                if (msg.isEmpty()){
+                    text_send.setText(" ");
+                }else {
+                    DecimalFormat df = new DecimalFormat();
+                    df.setMaximumFractionDigits(8);
+
+                    Double coinprices,enterAmount,totalAmoumt;
+                    coinprices=Double.parseDouble(imtPrice);
+                    enterAmount=Double.parseDouble(msg);
+
+                    totalAmoumt = enterAmount/coinprices;
+
+                    text_send.setText(msg +" "+currency2.toUpperCase() +"="+df.format(totalAmoumt)+" " + cryptoCurrency.toUpperCase());
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+        AirDropBalance(userData.getToken(),"imt",currency2);
         back();
         get2fa();
+    }
+
+    public void AirDropBalance(String token,String coinType,String currency){
+
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().AirDropBalance(token,coinType,currency);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                String s =null;
+                if (response.code()==200){
+                    try {
+                        s=response.body().string();
+
+                        JSONObject object = new JSONObject(s);
+                        userBalance = object.getString("balance");
+
+                        Toast.makeText(ImtSmartEnterAmout.this, ""+userBalance, Toast.LENGTH_SHORT).show();
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if(response.code()==400){
+                    try {
+                        s=response.errorBody().string();
+                        JSONObject jsonObject1=new JSONObject(s);
+                        String error =jsonObject1.getString("error");
+
+
+                        Snacky.builder()
+                                .setActivity(ImtSmartEnterAmout.this)
+                                .setText(error)
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
+
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if(response.code()==401){
+
+                    Snacky.builder()
+                            .setActivity(ImtSmartEnterAmout.this)
+                            .setText("unAuthorization Request")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    Snacky.builder()
+                        .setActivity(ImtSmartEnterAmout.this)
+                        .setText(t.getMessage())
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+            }
+        });
     }
 
     public void get2fa(){
