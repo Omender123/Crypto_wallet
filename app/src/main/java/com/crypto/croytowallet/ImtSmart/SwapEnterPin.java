@@ -169,6 +169,8 @@ public class SwapEnterPin extends AppCompatActivity {
                 @Override
                 public void run() {
                     JSONObject data = (JSONObject) args[0];
+                    Log.d("hello",data.toString());
+                    Toast.makeText(SwapEnterPin.this, ""+data.toString(), Toast.LENGTH_SHORT).show();
 
 
                        AppUtils.showMessageOKCancel(data.toString(), SwapEnterPin.this, new DialogInterface.OnClickListener() {
