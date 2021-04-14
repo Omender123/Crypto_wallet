@@ -333,13 +333,11 @@ public class SwapEnterPin extends AppCompatActivity {
                             .error()
                             .show();
                 } else if (response.code() == 504) {
-                    Snacky.builder()
-                            .setActivity(SwapEnterPin.this)
-                            .setText("Gate Way Time Down")
-                            .setDuration(Snacky.LENGTH_SHORT)
-                            .setActionText(android.R.string.ok)
-                            .error()
-                            .show();
+                    SwapRespoinseModel swapRespoinseModel = new SwapRespoinseModel(transIDs,statuss);
+                    SwapResponsePrefernce.getInstance(getApplicationContext()).SetData(swapRespoinseModel);
+
+                    Intent intent = new Intent(SwapEnterPin.this,SwapAcknowledgement.class);
+                    startActivity(intent);
                 }
 
 

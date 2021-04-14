@@ -412,7 +412,14 @@ public class Payout_verification extends AppCompatActivity {
                             .error()
                             .show();
                     pinView.setLineColor(getResources().getColor(R.color.light_gray));
+                }else if (response.code()==504 ){
+                    SwapRespoinseModel swapRespoinseModel = new SwapRespoinseModel(transIDs,statuss);
+                    SwapResponsePrefernce.getInstance(getApplicationContext()).SetData(swapRespoinseModel);
+
+                    Intent intent = new Intent(Payout_verification.this,SwapAcknowledgement.class);
+                    startActivity(intent);
                 }
+
 
             }
 
