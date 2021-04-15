@@ -213,7 +213,7 @@ public class Pay_Coin extends AppCompatActivity {
                         JSONObject object = new JSONObject(s);
                         userBalance = object.getString("balance");
 
-                        Toast.makeText(Pay_Coin.this, ""+userBalance, Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(Pay_Coin.this, ""+userBalance, Toast.LENGTH_SHORT).show();
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }

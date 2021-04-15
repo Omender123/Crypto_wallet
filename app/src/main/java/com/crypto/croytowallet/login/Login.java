@@ -337,7 +337,7 @@ TextInputLayout layout_otp;
 
                 Snacky.builder()
                         .setView(view)
-                        .setText("Please Check Your Internet Connection")
+                        .setText(t.getLocalizedMessage())
                         .setDuration(Snacky.LENGTH_SHORT)
                         .setActionText(android.R.string.ok)
                         .error()

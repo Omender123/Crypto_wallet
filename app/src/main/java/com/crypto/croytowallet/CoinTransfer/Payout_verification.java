@@ -90,9 +90,9 @@ public class Payout_verification extends AppCompatActivity {
     private Socket mSocket;
     {
         try {
-            mSocket = IO.socket("https://api.imx.global");
+           mSocket = IO.socket("https://api.imx.global");
 
-            // mSocket = IO.socket("http://13.233.136.56:8080");
+           // mSocket = IO.socket("http://13.233.136.56:8080");
 
         } catch (URISyntaxException e) {}
     }
@@ -123,15 +123,6 @@ public class Payout_verification extends AppCompatActivity {
         result = swapModel.getReceivedData();
         Amount = swapModel.getCoinAmount();
 
-      //  preferences=getSharedPreferences("coinScan", Context.MODE_PRIVATE);
-       // cryptoCurrency = Updated_data.getInstans(getApplicationContext()).getmobile();
-
-       // result = preferences.getString("address","");
-
-    //    Toast.makeText(this, ""+result, Toast.LENGTH_SHORT).show();
-
-       // Bundle bundle = getIntent().getExtras();
-        // Amount = bundle.getString("amount1");
 
 
         next.setOnClickListener(new View.OnClickListener() {
@@ -162,8 +153,8 @@ public class Payout_verification extends AppCompatActivity {
                 }else{
 
                   //  Log.d("coinTranser",cryptoCurrency+result+Amount+enterPin);
-                   // Toast.makeText(Payout_verification.this, ""+cryptoCurrency+result+Amount+enterPin, Toast.LENGTH_SHORT).show();
-                    sendcoin();
+                //  Toast.makeText(Payout_verification.this, ""+cryptoCurrency+result+Amount+enterPin, Toast.LENGTH_SHORT).show();
+                  sendcoin();
                 }
 
             }
@@ -174,6 +165,7 @@ public class Payout_verification extends AppCompatActivity {
         back();
 
         mSocket.connect();
+       // mSocket.on("hello",helloEvent);
         mSocket.on("pendingReport",PendingReport);
         mSocket.on("cryptoError",CryptoError);
 
@@ -269,7 +261,21 @@ public class Payout_verification extends AppCompatActivity {
 
     }
 
+    private Emitter.Listener helloEvent = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    JSONObject data = (JSONObject) args[0];
 
+                 //   Log.d("hellooooo",data.toString());
+                  //  Toast.makeText(Payout_verification.this, ""+data.toString(), Toast.LENGTH_SHORT).show();
+
+                }
+            });
+        }
+    };
     private Emitter.Listener PendingReport = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
@@ -291,6 +297,7 @@ public class Payout_verification extends AppCompatActivity {
                         }
                     }
 
+                  //  Log.d("hellooooo",data.toString());
 
                    // Toast.makeText(Payout_verification.this, ""+data.toString(), Toast.LENGTH_SHORT).show();
 
@@ -413,6 +420,7 @@ public class Payout_verification extends AppCompatActivity {
                             .show();
                     pinView.setLineColor(getResources().getColor(R.color.light_gray));
                 }else if (response.code()==504 ){
+
                     SwapRespoinseModel swapRespoinseModel = new SwapRespoinseModel(transIDs,statuss);
                     SwapResponsePrefernce.getInstance(getApplicationContext()).SetData(swapRespoinseModel);
 
@@ -595,8 +603,6 @@ public class Payout_verification extends AppCompatActivity {
 
     public void OTPexpire(){
         new Handler().postDelayed(new Runnable() {
-
-
             @Override
             public void run() {
                 // This method will be executed once the timer is over

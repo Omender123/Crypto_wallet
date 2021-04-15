@@ -94,12 +94,15 @@ Button okay;
             reciverName.setText(swapModel.getReceivedData());
         }
 
+
+
         if (status.equalsIgnoreCase("true")){
             trans_status.setText("Done");
-        }else if(status.equalsIgnoreCase("Pending")){
-            trans_status.setText(status);
+        }else {
+            trans_status.setText("Pending");
             statusImage.setImageResource(R.drawable.ic_baseline_panding_24);
         }
+
 
         okay.setOnClickListener(new View.OnClickListener() {
             @Override

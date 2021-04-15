@@ -123,7 +123,7 @@ tools:context=".Chat.ChatOptions">
                     android:layout_marginTop="12dp"
                     android:layout_marginLeft="17dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_icon_material_chat_bubble_outline" />
+                    android:src="@drawable/ic_live_chat" />
 
             </RelativeLayout>
 
@@ -192,7 +192,7 @@ tools:context=".Chat.ChatOptions">
                     android:layout_marginTop="12dp"
                     android:layout_marginLeft="17dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_icon_material_chat_bubble_outline" />
+                    android:src="@drawable/ic_old_chat" />
 
             </RelativeLayout>
 

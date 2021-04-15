@@ -183,7 +183,7 @@ public class ImtSmartEnterAmout extends AppCompatActivity {
                         JSONObject object = new JSONObject(s);
                         userBalance = object.getString("balance");
 
-                        Toast.makeText(ImtSmartEnterAmout.this, ""+userBalance, Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(ImtSmartEnterAmout.this, ""+userBalance, Toast.LENGTH_SHORT).show();
 
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
@@ -266,7 +266,7 @@ public class ImtSmartEnterAmout extends AppCompatActivity {
                     if (email2fa1.equals("true")){
                         sendOTP();
                     }else {
-                        Toast.makeText(ImtSmartEnterAmout.this, "Your Email 2FA OFF", Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(ImtSmartEnterAmout.this, "Your Email 2FA OFF", Toast.LENGTH_SHORT).show();
                     }
 
 
