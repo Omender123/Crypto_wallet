@@ -86,6 +86,7 @@ tools:context=".Activity.Kyc">
 
 
         <LinearLayout
+            android:id="@+id/spin_cou"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:orientation="vertical"
@@ -104,6 +105,7 @@ tools:context=".Activity.Kyc">
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/state_spin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -135,6 +137,7 @@ tools:context=".Activity.Kyc">
 
 
         <LinearLayout
+            android:id="@+id/seldoc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -170,6 +173,7 @@ tools:context=".Activity.Kyc">
 
 
         <RelativeLayout
+            android:id="@+id/chosfil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"

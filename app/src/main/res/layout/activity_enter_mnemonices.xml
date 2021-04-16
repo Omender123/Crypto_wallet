@@ -88,6 +88,7 @@ android:orientation="vertical">
         android:textStyle="normal" />
 
     <TextView
+        android:id="@+id/fllw"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -98,6 +99,7 @@ android:orientation="vertical">
         android:text="@string/txt_mnemonic"/>
 
     <TextView
+        android:id="@+id/sset"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"

@@ -35,6 +35,7 @@
 
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/recbar"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:layout_marginTop="40dp"
@@ -65,6 +66,7 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
+        android:id="@+id/yurwall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/your_barcode"
@@ -76,6 +78,7 @@
         android:layout_marginTop="20dp"/>
 
     <TextView
+        android:id="@+id/tbwall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/tab_barcode"
@@ -85,6 +88,7 @@
         />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/baradd"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="30dp"
@@ -98,11 +102,13 @@
             android:id="@+id/barCodeAddress"
             android:layout_width="match_parent"
             android:layout_gravity="center"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@android:color/darker_gray"
-            android:text="@string/barcode"/>
+            android:text="@string/barcode"
+            tools:ignore="RtlCompat" />
     </androidx.cardview.widget.CardView>
 
 

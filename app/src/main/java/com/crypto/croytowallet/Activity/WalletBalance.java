@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +43,7 @@ import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
 import com.crypto.croytowallet.database.RetrofitClient;
 import com.crypto.croytowallet.fragement.Wallet;
 import com.crypto.croytowallet.login.Login;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.gson.JsonObject;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
@@ -71,6 +73,8 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
     TextView history_Empty;
    SharedPreferences sharedPreferences;
    String CurrencySymbols,currency2;
+   LinearLayout linearLayout;
+    private ShimmerFrameLayout mShimmerViewContainer,mShimmerViewContainer1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +88,9 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
         more=findViewById(R.id.moretransactions);
         recyclerView=findViewById(R.id.recyclerViewAddBalance);
         history_Empty =findViewById(R.id.txt_list_is_empty);
-
+        mShimmerViewContainer = findViewById(R.id.shimmer_view_container);
+        mShimmerViewContainer1 = findViewById(R.id.shimmer_view_container1);
+        linearLayout =  findViewById(R.id.linear);
 
 
         sharedPreferences =getApplicationContext().getSharedPreferences("currency",0);
@@ -96,12 +102,10 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                // This method will be executed once the timer is over
-            //   checkBalance();
-                AirDropBalance();
                 getHistory();
+                AirDropBalance();
             }
-        }, 50);
+        }, 2000);
 
 
         more.setOnClickListener(new View.OnClickListener() {
@@ -167,9 +171,14 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
 
                         //  Log.d("airDrop",s);
 
+
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }
+
+                    mShimmerViewContainer1.stopShimmerAnimation();
+                    mShimmerViewContainer1.setVisibility(View.GONE);
+                    linearLayout.setVisibility(View.VISIBLE);
 
                 } else if(response.code()==400){
                     try {
@@ -210,7 +219,7 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
                 hidepDialog();
                 Snacky.builder()
                         .setActivity(WalletBalance.this)
-                        .setText("Internet Problem ")
+                        .setText(t.getLocalizedMessage())
                         .setDuration(Snacky.LENGTH_SHORT)
                         .setActionText(android.R.string.ok)
                         .error()
@@ -227,6 +236,7 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
         StringRequest stringRequest=new StringRequest(Request.Method.POST, URLs.URL_TRANSACTION_HISTORY, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                transactionHistoryModels.clear();
                try {
                     JSONObject object  = new JSONObject(response);
                     String result =object.getString("result");
@@ -261,6 +271,12 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+
+                // stop animating Shimmer and hide the layout
+                mShimmerViewContainer.stopShimmerAnimation();
+                mShimmerViewContainer.setVisibility(View.GONE);
+
                 if(transactionHistoryModels!=null && transactionHistoryModels.size()>0){
                     transaaction_history_adapter = new Transaaction_history_adapter(transactionHistoryModels,getApplicationContext(),WalletBalance.this);
                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL,false);
@@ -320,24 +336,19 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
 
+        onSaveInstanceState(new Bundle());
     }
+
     public void back(){
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(WalletBalance.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                onBackPressed();
             }
         });
 
     }
-
     @Override
     public void onHistoryItemClickListener(int position) {
         Intent intent = new Intent(WalletBalance.this, Full_Transaction_History.class);
@@ -356,5 +367,19 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
         TransactionHistorySharedPrefManager.getInstance(getApplicationContext()).Transaction_History_Data(historyModel);
 
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mShimmerViewContainer.startShimmerAnimation();
+        mShimmerViewContainer1.startShimmerAnimation();
+    }
+
+    @Override
+    public void onPause() {
+        mShimmerViewContainer.stopShimmerAnimation();
+        mShimmerViewContainer1.stopShimmerAnimation();
+        super.onPause();
     }
 }

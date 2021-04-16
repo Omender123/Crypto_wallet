@@ -65,7 +65,7 @@ public class ImtSmartCoinScan extends AppCompatActivity {
                         editor.putString("Imtaddress",s);
                         editor.commit();
                         startActivity(intent);
-                        finish();
+
                     }
                 });
 

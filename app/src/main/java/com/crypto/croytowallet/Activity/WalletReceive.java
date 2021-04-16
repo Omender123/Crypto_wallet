@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,10 +26,10 @@ import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
 
 public class WalletReceive extends AppCompatActivity {
-TextView barcodeAddress;
+TextView barcodeAddress,yurwall,tabwall;
     ImageView qrImage,imageView;
-    CardView barCodeshare;
-
+    CardView barCodeshare,baradd,recbar;
+    Animation enterright,slide_right;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +40,23 @@ TextView barcodeAddress;
         barcodeAddress=findViewById(R.id.barCodeAddress);
         qrImage = findViewById(R.id.qrPlaceHolder);
         barCodeshare=findViewById(R.id.barCodeshare);
+        baradd=findViewById(R.id.baradd);
+        recbar=findViewById(R.id.recbar);
+        yurwall=findViewById(R.id.yurwall);
+        tabwall=findViewById(R.id.tbwall);
+
+        slide_right = AnimationUtils.loadAnimation(WalletReceive.this,R.anim.slide_in_right);
+        //set Animatoin
+        baradd.startAnimation(slide_right);
+
+        recbar.startAnimation(slide_right);
+        barCodeshare.startAnimation(slide_right);
+        yurwall.startAnimation(slide_right);
+        tabwall.startAnimation(slide_right);
+
+
+
+
         UserData userData= SharedPrefManager.getInstance(this).getUser();
 
       //  String barcodeText=barcodeAddress.getText().toString();
@@ -85,20 +104,15 @@ TextView barcodeAddress;
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
 
+        onSaveInstanceState(new Bundle());
     }
 
     public void back(){
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(WalletReceive.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+               onBackPressed();
             }
         });
 

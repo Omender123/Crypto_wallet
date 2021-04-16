@@ -157,7 +157,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.back:
-                startActivity(new Intent(ImtSmartGraphLayout.this, MainActivity.class));
+               onBackPressed();
                 break;
 
             case R.id.receive_coin:
@@ -247,10 +247,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
     public void onBackPressed() {
         super.onBackPressed();
 
-        //   onSaveInstanceState(new Bundle());
-        Intent intent = new Intent(ImtSmartGraphLayout.this, MainActivity.class);
-        startActivity(intent);
-        finish();
+        onSaveInstanceState(new Bundle());
     }
 
     public void getBalance() {

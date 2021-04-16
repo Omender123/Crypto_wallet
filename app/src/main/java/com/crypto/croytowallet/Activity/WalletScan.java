@@ -60,14 +60,6 @@ public class WalletScan extends AppCompatActivity {
         scannView = findViewById(R.id.scannerView);
         codeScanner = new CodeScanner(this,scannView);
         resultData = findViewById(R.id.resultsOfQr);
-        back=findViewById(R.id.back1);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(WalletScan.this,MainActivity.class));
-                finish();
-            }
-        });
 
         userData= SharedPrefManager.getInstance(this).getUser();
         sharedPreferences=getSharedPreferences("walletScan", Context.MODE_PRIVATE);
@@ -238,16 +230,16 @@ public class WalletScan extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
-
+       onSaveInstanceState(new Bundle());
     }
 
     public void next(View view) {
 
         Intent intent = new Intent(getApplicationContext(), ManualEnterUserName.class);
         startActivity(intent);
+    }
+
+    public void back(View view) {
+        onBackPressed();
     }
 }

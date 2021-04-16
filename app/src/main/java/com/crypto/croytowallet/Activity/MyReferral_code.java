@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,10 +24,11 @@ import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
 
 public class MyReferral_code extends AppCompatActivity {
-    TextView barcodeAddress;
+    TextView barcodeAddress,yurref,cpyref;
     ImageView qrImage,imageView;
-    CardView barCodeshare;
+    CardView barCodeshare,crdscan,whtsc;
     String myReferral_code;
+    Animation enterright,slide_right;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +37,22 @@ public class MyReferral_code extends AppCompatActivity {
         barcodeAddress=findViewById(R.id.barCodeAddress);
         qrImage = findViewById(R.id.qrPlaceHolder);
         barCodeshare=findViewById(R.id.barCodeshare);
+
+        crdscan=findViewById(R.id.crdscan);
+        whtsc=findViewById(R.id.whtsc);
+        yurref=findViewById(R.id.yurref);
+        cpyref=findViewById(R.id.cpyref);
+
+        //Animation
+        slide_right = AnimationUtils.loadAnimation(MyReferral_code.this,R.anim.slide_in_right);
+        //set Animatoin
+        crdscan.startAnimation(slide_right);
+        whtsc.startAnimation(slide_right);
+        yurref.startAnimation(slide_right);
+        cpyref.startAnimation(slide_right);
+        barCodeshare.startAnimation(slide_right);
+
+
         UserData userData= SharedPrefManager.getInstance(this).getUser();
 
         myReferral_code = userData.getReferral_code();

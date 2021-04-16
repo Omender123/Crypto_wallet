@@ -15,6 +15,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginLeft="30dp"
+        android:onClick="back"
         android:drawableLeft="@drawable/ic_baseline_close_24"
         android:text="@string/barcode_scan"
         android:textAlignment="center"

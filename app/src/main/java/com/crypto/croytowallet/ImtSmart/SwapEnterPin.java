@@ -155,7 +155,7 @@ public class SwapEnterPin extends AppCompatActivity {
                     }
 
 
-                    Toast.makeText(SwapEnterPin.this, ""+data.toString(), Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(SwapEnterPin.this, ""+data.toString(), Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -196,7 +196,7 @@ public class SwapEnterPin extends AppCompatActivity {
                 public void run() {
                     JSONObject data = (JSONObject) args[0];
 
-                    /*try {
+                    try {
                         String transID = data.getString("transactionHash");
                         String status = data.getString("status");
 
@@ -208,9 +208,9 @@ public class SwapEnterPin extends AppCompatActivity {
 
                     } catch (JSONException e) {
                         e.printStackTrace();
-                    }*/
-                    Log.d("hello",data.toString());
-                    Toast.makeText(SwapEnterPin.this, ""+data.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                  //  Log.d("hello",data.toString());
+                   // Toast.makeText(SwapEnterPin.this, ""+data.toString(), Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -268,9 +268,8 @@ public class SwapEnterPin extends AppCompatActivity {
                             String responses = object.getString("response");
 
                             if (responses.equalsIgnoreCase("null")){
-                                String transId = "Not Found";
                                 String status = "true";
-                                SwapRespoinseModel swapRespoinseModel = new SwapRespoinseModel(transId,status);
+                                SwapRespoinseModel swapRespoinseModel = new SwapRespoinseModel(transIDs,status);
                                 SwapResponsePrefernce.getInstance(getApplicationContext()).SetData(swapRespoinseModel);
 
                                 startActivity(new Intent(getApplicationContext(),SwapAcknowledgement.class));

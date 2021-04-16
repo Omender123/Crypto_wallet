@@ -15,11 +15,15 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
 
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -77,6 +81,10 @@ public class Kyc extends AppCompatActivity implements View.OnClickListener {
     File file;
     UserData user;
     EditText house,street,zipPin,document_no;
+    LinearLayout linearLayout,linearsst,lineardoc;
+    RelativeLayout relativeLayout;
+    Animation enterright,slide_right;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +100,23 @@ public class Kyc extends AppCompatActivity implements View.OnClickListener {
        // takeImge = findViewById(R.id.camra);
         ivImage = findViewById(R.id.setImageView);
         submit = findViewById(R.id.submit);
+        linearLayout = findViewById(R.id.spin_cou);
+        linearsst = findViewById(R.id.state_spin);
+        lineardoc = findViewById(R.id.seldoc);
+        relativeLayout = findViewById(R.id.chosfil);
+
+        slide_right = AnimationUtils.loadAnimation(Kyc.this,R.anim.slide_in_right);
+
+        house.startAnimation(slide_right);
+        street.startAnimation(slide_right);
+        linearLayout.startAnimation(slide_right);
+        linearsst.startAnimation(slide_right);
+        zipPin.startAnimation(slide_right);
+        lineardoc.startAnimation(slide_right);
+        document_no.startAnimation(slide_right);
+        relativeLayout.startAnimation(slide_right);
+        submit.startAnimation(slide_right);
+
         chooseFile.setOnClickListener(this);
         //takeImge.setOnClickListener(this);
 

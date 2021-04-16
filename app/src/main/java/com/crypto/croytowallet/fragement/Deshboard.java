@@ -357,21 +357,21 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
       if (id == R.id.lytScan) {
             deepChangeTextColor(1);
             startActivity(new Intent(getContext(), WalletScan.class));
-            getActivity().finish();
+
         } else if (id == R.id.lytPay) {
             deepChangeTextColor(2);
             startActivity(new Intent(getContext(), WalletReceive.class));
-            getActivity().finish();
+
 
         } else if (id == R.id.lytwallet) {
             deepChangeTextColor(3);
             startActivity(new Intent(getContext(), WalletBalance.class));
-            getActivity().finish();
+
 
         }else if (id == R.id.lytaddMoney) {
           deepChangeTextColor(4);
          startActivity(new Intent(getContext(), Top_up_Money.class));
-          getActivity().finish();
+
 
       }
 

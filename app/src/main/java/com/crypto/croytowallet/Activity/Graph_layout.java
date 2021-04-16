@@ -187,7 +187,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.back:
-                startActivity(new Intent(Graph_layout.this, MainActivity.class));
+               onBackPressed();
                 break;
 
             case R.id.receive_coin:

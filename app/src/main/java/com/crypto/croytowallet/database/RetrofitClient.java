@@ -23,7 +23,6 @@ public class RetrofitClient {
     private Context context;
 
 
-
     public RetrofitClient() {
         retrofit=new Retrofit.Builder()
                 .baseUrl(BASE_URL)

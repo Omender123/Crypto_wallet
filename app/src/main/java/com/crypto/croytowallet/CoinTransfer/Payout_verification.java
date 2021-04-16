@@ -364,7 +364,7 @@ public class Payout_verification extends AppCompatActivity {
                         String responses = object.getString("response");
 
                         if (responses.equalsIgnoreCase("null")){
-                            String transId = "Not Found";
+                            String transId = transIDs;
                             String status = "true";
                             SwapRespoinseModel swapRespoinseModel = new SwapRespoinseModel(transId,status);
                             SwapResponsePrefernce.getInstance(getApplicationContext()).SetData(swapRespoinseModel);

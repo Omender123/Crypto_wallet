@@ -60,7 +60,7 @@ public class EnterCoinAddressManual extends AppCompatActivity {
                     //  intent.putExtra("position",position);
                     //intent.putExtra("result",s);
                     startActivity(intent);
-                    finish();
+
 
                 }
             }
@@ -73,21 +73,15 @@ public class EnterCoinAddressManual extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(EnterCoinAddressManual.this, CoinScan.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+      onSaveInstanceState(new Bundle());
     }
 
     public void back(){
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             Intent intent = new Intent(EnterCoinAddressManual.this, CoinScan.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
 
-
-              //  onBackPressed();
+                onBackPressed();
             }
         });
 

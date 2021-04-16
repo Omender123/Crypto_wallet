@@ -42,18 +42,9 @@ public class CoinScan extends AppCompatActivity {
         codeScanner = new CodeScanner(this,scannView);
         resultData = findViewById(R.id.resultsOfQr);
 
-     /*   Bundle bundle = getIntent().getExtras();
-        position=bundle.getInt("position");
-*/
+
         sharedPreferences=getSharedPreferences("coinScan", Context.MODE_PRIVATE);
 
-        back=findViewById(R.id.back1);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               onBackPressed();
-            }
-        });
 
 
         codeScanner.setDecodeCallback(new DecodeCallback() {
@@ -72,7 +63,7 @@ public class CoinScan extends AppCompatActivity {
                      //  intent.putExtra("position",position);
                        //intent.putExtra("result",s);
                         startActivity(intent);
-                        finish();
+
                     }
                 });
 
@@ -119,15 +110,16 @@ public class CoinScan extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-      /*  Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();*/
+
         onSaveInstanceState(new Bundle());
 
     }
 
     public void next1(View view) {
         startActivity(new Intent(CoinScan.this,EnterCoinAddressManual.class));
+    }
+
+    public void back(View view) {
+        onBackPressed();
     }
 }

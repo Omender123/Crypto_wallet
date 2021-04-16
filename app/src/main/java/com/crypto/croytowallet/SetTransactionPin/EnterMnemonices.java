@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crypto.croytowallet.R;
@@ -31,12 +34,28 @@ String mnemonic,getMemonics;
 Button done;
 UserData userData;
     KProgressHUD progressDialog;
+    TextView entr,fllw,sset;
+    Animation slide_right;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter_mnemonices);
         ed_mnemonic = findViewById(R.id.description);
         done = findViewById(R.id.skip_btn);
+
+        entr =findViewById(R.id.entr_meno);
+        fllw=findViewById(R.id.fllw);
+        sset=findViewById(R.id.sset);
+
+        //Animation
+        slide_right = AnimationUtils.loadAnimation(EnterMnemonices.this,R.anim.slide_in_right);
+
+        entr.startAnimation(slide_right);
+        ed_mnemonic.startAnimation(slide_right);
+        fllw.startAnimation(slide_right);
+        sset.startAnimation(slide_right);
+        done.startAnimation(slide_right);
+
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
         getMemonics = userData.getMnemonic();
 

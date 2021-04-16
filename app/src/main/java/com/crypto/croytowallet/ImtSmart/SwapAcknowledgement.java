@@ -89,7 +89,7 @@ Button okay;
         }
 
         if (type.equalsIgnoreCase("Swap")){
-            reciverName.setText("Admin");
+            reciverName.setText("Swap");
         }else{
             reciverName.setText(swapModel.getReceivedData());
         }

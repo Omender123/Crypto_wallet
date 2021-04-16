@@ -23,6 +23,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import com.crypto.croytowallet.Activity.Graph_layout;
 import com.crypto.croytowallet.Activity.MyReferral_code;
 import com.crypto.croytowallet.Activity.Security;
 import com.crypto.croytowallet.Activity.Setting;
@@ -56,7 +57,7 @@ public class Profile extends Fragment {
     Animation down, blink, right, left;
     ImageView share;
     TextView get, send;
-
+    KProgressHUD progressDialog;
     public Profile() {
         // Required empty public constructor
     }
@@ -204,6 +205,17 @@ public class Profile extends Fragment {
 
 
     public void resendOTP() {
+
+        progressDialog = KProgressHUD.create(getActivity())
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Please wait.....")
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
+
+        showpDialog();
+
         UserData userData = SharedPrefManager.getInstance(getContext()).getUser();
         String usernames = userData.getUsername();
 
@@ -215,6 +227,7 @@ public class Profile extends Fragment {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                hidepDialog();
                 String s = null;
                 if (response.code() == 200) {
 
@@ -246,6 +259,7 @@ public class Profile extends Fragment {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                hidepDialog();
                 Snacky.builder()
                         .setActivity(getActivity())
                         .setText(t.getMessage())
@@ -257,6 +271,15 @@ public class Profile extends Fragment {
         });
 
 
+    }
+    private void showpDialog() {
+        if (!progressDialog.isShowing())
+            progressDialog.show();
+    }
+
+    private void hidepDialog() {
+        if (progressDialog.isShowing())
+            progressDialog.dismiss();
     }
 
 }
