@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -56,6 +57,10 @@ import com.crypto.croytowallet.TransactionHistory.Transaction_history;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.database.RetrofitClient;
 import com.crypto.croytowallet.login.Login;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONArray;
@@ -175,7 +180,27 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
                 getActivity().finish();
             }
         });
-       getImtDetails();
+
+
+      /*  FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (task.isSuccessful()) {
+
+                        String    Devicetoken = task.getResult().getToken();
+                        //    SharedPrefManager.getInstance(getActivity()).storeToken(Devicetoken);
+                         //   Log.d("Devicetoken", Devicetoken);
+                         //  Toast.makeText(getActivity(), Devicetoken + "", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getActivity(), "Devicetoken is not generated", Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }
+                });
+*/
+        getImtDetails();
 
 
         overViewData();
