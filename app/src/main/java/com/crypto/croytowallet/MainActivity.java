@@ -15,13 +15,15 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ShortcutInfo;
+import android.content.pm.ShortcutManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,7 +40,8 @@ import android.widget.Toast;
 
 
 import com.crypto.croytowallet.Activity.StoryView;
-import com.crypto.croytowallet.SetTransactionPin.CompleteScreen;
+import com.crypto.croytowallet.ImtSmart.ImtSmartCoinScan;
+import com.crypto.croytowallet.ImtSmart.ImtSmartRecevied;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.TransactionHistorySharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
@@ -53,10 +56,8 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Locale;
-import java.util.Map;
 
 import de.mateware.snacky.Snacky;
 import okhttp3.ResponseBody;
@@ -80,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
     Switch drawerSwitch;
     SharedPreferences sharedPreferences1;
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -161,6 +161,51 @@ public class MainActivity extends AppCompatActivity {
             AppUpdateChecker appUpdateChecker = new AppUpdateChecker(this);  //pass the activity in constructure
             appUpdateChecker.checkForUpdate(false);
         }catch (Exception e){}
+
+        androidAppLauncherShortcut();
+    }
+
+    private void androidAppLauncherShortcut() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+                ShortcutManager  mshortcutManager = getSystemService(ShortcutManager.class);
+
+                Intent imt_scan = new Intent(this, ImtSmartCoinScan.class);
+                imt_scan.setAction(Intent.ACTION_VIEW);
+
+                Intent imt_received = new Intent(this, ImtSmartRecevied.class);
+                imt_received.setAction(Intent.ACTION_VIEW);
+
+
+                ShortcutInfo shortcutScan = new ShortcutInfo.Builder(this,"scan")
+                        .setShortLabel("Shortcut ImtScan")
+                        .setLongLabel("Long Shortcut ImtScan")
+                        .setIcon(Icon.createWithResource(this,R.drawable.ic_scan))
+                        .setIntent(imt_scan)
+                        .build();
+
+                ShortcutInfo shortcutBarcode = new ShortcutInfo.Builder(this,"barcode")
+                        .setShortLabel("Shortcut ImtReceived")
+                        .setLongLabel("Long Shortcut ImtReceived")
+                        .setIcon(Icon.createWithResource(this,R.drawable.ic_pay))
+                        .setIntent(imt_received)
+                        .build();
+                ArrayList<ShortcutInfo> arrayList = new ArrayList();
+                arrayList.add(shortcutScan);
+                arrayList.add(shortcutBarcode);
+
+
+                mshortcutManager.setDynamicShortcuts(arrayList);
+
+            }else{
+                Toast.makeText(this, "Your Android Version is low", Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            Toast.makeText(this, "Your Android Version is low", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
     private void init() {

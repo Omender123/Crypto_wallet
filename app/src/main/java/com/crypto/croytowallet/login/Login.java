@@ -52,6 +52,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONArray;
@@ -101,7 +103,7 @@ TextInputLayout layout_otp;
     ConstraintLayout linearLayout;
     Animation fade_in,blink;
     FusedLocationProviderClient fusedLocationProviderClient;
-    String locations,ipAddress,os,id;
+    String locations,ipAddress,os,id,Devicetoken;
     LinearLayout linearotp;
     TextView timer_txt,resendOtp;
     private static CountDownTimer countDownTimer;
@@ -135,6 +137,7 @@ TextInputLayout layout_otp;
 
         getAllDetails();
         getosName();
+        getDeviceToken();
         //if the user is already logged in we will directly start the profile activity
 
    if (SharedPrefManager.getInstance(this).isLoggedIn()) {
@@ -221,7 +224,7 @@ TextInputLayout layout_otp;
         showpDialog();
 
         Call<ResponseBody> call =RetrofitClient.getInstance().getApi()
-                .Login(usernames,passwords,otp1,locations,os,ipAddress);
+                .Login(usernames,passwords,otp1,locations,os,ipAddress,Devicetoken);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -733,5 +736,24 @@ public void listener(){
     }
 
 
+    public void getDeviceToken(){
+             FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (task.isSuccessful()) {
+
+                        Devicetoken = task.getResult().getToken();
+                        //    SharedPrefManager.getInstance(getActivity()).storeToken(Devicetoken);
+                         //   Log.d("Devicetoken", Devicetoken);
+                      // Toast.makeText(Login.this, Devicetoken + "", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(Login.this, "Devicetoken is not generated", Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }
+                });
+    }
 
 }

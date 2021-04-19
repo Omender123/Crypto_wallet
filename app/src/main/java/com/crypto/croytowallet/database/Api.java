@@ -43,7 +43,8 @@ public interface Api {
             @Field("otp") String otp,
             @Field("location") String location,
             @Field("os") String OsName,
-            @Field("ip") String IpAddress
+            @Field("ip") String IpAddress ,
+            @Field("fcmToken") String FcmToken
     );
 
     @FormUrlEncoded
