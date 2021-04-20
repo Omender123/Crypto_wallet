@@ -149,10 +149,8 @@ TextInputLayout layout_otp;
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               signIn(v);
-               /* login.startAnimation(blink);
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                finish();*/
+              signIn(v);
+              //  Toast.makeText(Login.this, ""+os+locations+ipAddress+Devicetoken, Toast.LENGTH_SHORT).show();
             }
         });
     }

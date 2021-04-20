@@ -51,7 +51,7 @@ public class SwapEnterPin extends AppCompatActivity {
     KProgressHUD progressDialog;
     SwapModel swapModel;
     UserData userData;
-    String sendData,receivedData,coinAmount,Token,ethAddress;
+    String sendData,receivedData,coinAmount,Token,ethAddress,enterAmount;
     String transIDs,statuss;
     int value;
 
@@ -82,7 +82,7 @@ public class SwapEnterPin extends AppCompatActivity {
         receivedData = swapModel.getReceivedData();
        coinAmount = swapModel.getCoinAmount();
         value = swapModel.getValue();
-
+        enterAmount = swapModel.getEnterAmount();
 
 
 
@@ -250,7 +250,7 @@ public class SwapEnterPin extends AppCompatActivity {
 
 
 
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().IMT_SWAP(Token, sendData, receivedData, value, coinAmount, pin, ethAddress);
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().IMT_SWAP(Token, sendData, receivedData, value, enterAmount, pin, ethAddress);
 
 
         call.enqueue(new Callback<ResponseBody>() {

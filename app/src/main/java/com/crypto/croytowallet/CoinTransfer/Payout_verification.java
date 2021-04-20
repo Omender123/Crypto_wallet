@@ -121,7 +121,7 @@ public class Payout_verification extends AppCompatActivity {
 
         cryptoCurrency = swapModel.getSendData();
         result = swapModel.getReceivedData();
-        Amount = swapModel.getCoinAmount();
+        Amount = swapModel.getEnterAmount();
 
 
 

@@ -112,6 +112,8 @@ public class SwapConfirmation extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+              //  Toast.makeText(SwapConfirmation.this, ""+swapModel.getEnterAmount(), Toast.LENGTH_SHORT).show();
+
                 if(TotalAmount>=userBalance){
                     Snacky.builder()
                             .setActivity(SwapConfirmation.this)
@@ -127,16 +129,6 @@ public class SwapConfirmation extends AppCompatActivity {
                     startActivity(new Intent(getApplicationContext(), Payout_verification.class));
                    // Toast.makeText(SwapConfirmation.this, ""+type, Toast.LENGTH_SHORT).show();
                 }
-                    /*{
-
-
-
-                    //SwapApi();
-                }*/
-
-                //
-
-               // Toast.makeText(SwapConfirmation.this, total+" <= "+balance, Toast.LENGTH_SHORT).show();
 
 
             }

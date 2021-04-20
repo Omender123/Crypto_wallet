@@ -65,7 +65,7 @@ public class CoinHistory extends AppCompatActivity implements HistoryClickLister
     String sendData,receivedData;
     String [] coinName ={"ImSmart","Bitcoin","Ethereum","Tether","XRP","Litecoin","USD Coin"};
     String [] coinSymbols ={"imt","btc","eth","usdt","xrp","ltc","usdc"};
-    String [] coinImage ={"https://imtradeonline.com/wp-content/uploads/2019/09/imt.png",
+    String [] coinImage ={"https://assets.coingecko.com/coins/images/11770/large/qUaSWQys_400x400.png?1593744621",
             "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579",
             "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
             "https://assets.coingecko.com/coins/images/325/large/Tether-logo.png?1598003707",
@@ -73,13 +73,13 @@ public class CoinHistory extends AppCompatActivity implements HistoryClickLister
             "https://assets.coingecko.com/coins/images/2/large/litecoin.png?1547033580",
             "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042389"};
 
-    String [] coinName1 ={"Bitcoin","Ethereum","XRP","Litecoin","ERC20"};
+    String [] coinName1 ={"Bitcoin","Ethereum","XRP","Litecoin","ALT-Coin"};
     String [] coinSymbols1 ={"btc","eth","xrp","ltc","erc20"};
     String [] coinImage1 ={"https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579",
             "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
             "https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png?1605778731",
             "https://assets.coingecko.com/coins/images/2/large/litecoin.png?1547033580",
-           "https://ethereumico.io/wp-content/uploads/2018/04/ERC20.png"};
+           "https://assets.coingecko.com/coins/images/11770/large/qUaSWQys_400x400.png?1593744621"};
 
     TextView sendTxt,receivedTxt;
     LinearLayout lyt_send,lyt_received;

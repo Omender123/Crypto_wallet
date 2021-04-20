@@ -360,9 +360,9 @@ imtSwap extends AppCompatActivity implements View.OnClickListener {
                         coinprices=Double.parseDouble(imtPrice);
                         enterAmount=Double.parseDouble(msg);
 
-                        totalAmoumt = enterAmount/coinprices;
+                        totalAmoumt = enterAmount*coinprices;
 
-                        text_send.setText(msg +" "+currency2.toUpperCase() +"="+df.format(totalAmoumt)+" " + coinSymbol);        }
+                        text_send.setText(msg +" "+ coinSymbol +"="+df.format(totalAmoumt)+" " +currency2.toUpperCase());        }
 
                 }else{
 
@@ -376,9 +376,9 @@ imtSwap extends AppCompatActivity implements View.OnClickListener {
                         coinprices=Double.parseDouble(coinPrice);
                         enterAmount=Double.parseDouble(msg);
 
-                        totalAmoumt = enterAmount/coinprices;
+                        totalAmoumt = enterAmount*coinprices;
 
-                        text_send.setText(msg +" "+currency2.toUpperCase() +"="+df.format(totalAmoumt)+" " + coinSymbol);
+                        text_send.setText(msg +" "+ coinSymbol +"="+df.format(totalAmoumt)+" " +currency2.toUpperCase());
                     }
                 }
             }

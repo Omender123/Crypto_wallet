@@ -57,6 +57,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Locale;
 
 import de.mateware.snacky.Snacky;
@@ -191,12 +192,10 @@ public class MainActivity extends AppCompatActivity {
                         .setIcon(Icon.createWithResource(this,R.drawable.ic_pay))
                         .setIntent(imt_received)
                         .build();
-                ArrayList<ShortcutInfo> arrayList = new ArrayList();
-                arrayList.add(shortcutScan);
-                arrayList.add(shortcutBarcode);
 
 
-                mshortcutManager.setDynamicShortcuts(arrayList);
+
+                mshortcutManager.setDynamicShortcuts(Arrays.asList(shortcutScan,shortcutBarcode));
 
             }else{
                 Toast.makeText(this, "Your Android Version is low", Toast.LENGTH_SHORT).show();
