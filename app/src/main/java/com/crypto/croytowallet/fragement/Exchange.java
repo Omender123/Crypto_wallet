@@ -843,6 +843,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
                         JSONObject object = new JSONObject(s);
                         userBalance = object.getString("balance");
 
+                       // Toast.makeText(getContext(), ""+use, Toast.LENGTH_SHORT).show();
                      } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }

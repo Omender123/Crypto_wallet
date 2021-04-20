@@ -334,7 +334,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Snacky.builder()
                         .setActivity(ImtSmartGraphLayout.this)
-                        .setText("Internet Problem ")
+                        .setText(t.getLocalizedMessage())
                         .setDuration(Snacky.LENGTH_SHORT)
                         .setActionText(android.R.string.ok)
                         .error()

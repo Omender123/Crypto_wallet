@@ -65,7 +65,7 @@ public class SwapConfirmation extends AppCompatActivity {
         coinAmount = swapModel.getCoinAmount();
         value = swapModel.getValue();
         balance = swapModel.getUserBalance();
-        total = swapModel.getTotalAmount();
+        total = swapModel.getEnterAmount();
         type = swapModel.getType();
 
 
@@ -111,7 +111,15 @@ public class SwapConfirmation extends AppCompatActivity {
             public void onClick(View v) {
 
            try{
-               if(TotalAmount>=userBalance){
+               if(TotalAmount==null || balance==null){
+                   Snacky.builder()
+                           .setActivity(SwapConfirmation.this)
+                           .setText(" User Balance Not Found ")
+                           .setDuration(Snacky.LENGTH_SHORT)
+                           .setActionText(android.R.string.ok)
+                           .error()
+                           .show();
+               }else if(TotalAmount>=userBalance){
                    Snacky.builder()
                            .setActivity(SwapConfirmation.this)
                            .setText(" Inefficient balance")
