@@ -126,7 +126,7 @@ public class Pay_Coin extends AppCompatActivity {
                     coinprices=Double.parseDouble(price);
                     enterAmount=Double.parseDouble(Amount);
 
-                    totalAmoumt = enterAmount/coinprices;
+                    totalAmoumt = enterAmount*coinprices;
 
                     String coinAmount = String.valueOf(df.format(totalAmoumt));
 
@@ -177,7 +177,7 @@ public class Pay_Coin extends AppCompatActivity {
 
                         totalAmoumt = enterAmount*coinprices;
 
-                  text_send.setText(msg +" "+currency2.toUpperCase() +"="+df.format(totalAmoumt)+" " + cryptoCurrency.toUpperCase());
+                  text_send.setText(msg +" "+cryptoCurrency.toUpperCase() +"="+df.format(totalAmoumt)+" " +currency2.toUpperCase() );
                     }
 
             }

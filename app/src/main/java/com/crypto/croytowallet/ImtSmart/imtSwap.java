@@ -258,7 +258,7 @@ imtSwap extends AppCompatActivity implements View.OnClickListener {
                     coinprices=Double.parseDouble(imtPrice);
                     enterAmount=Double.parseDouble(SwapAmount);
 
-                    totalAmoumt = enterAmount/coinprices;
+                    totalAmoumt = enterAmount*coinprices;
 
                     String coinAmount = String.valueOf(df.format(totalAmoumt));
 
@@ -284,7 +284,7 @@ imtSwap extends AppCompatActivity implements View.OnClickListener {
                     coinprices=Double.parseDouble(coinPrice);
                     enterAmount=Double.parseDouble(SwapAmount);
 
-                    totalAmoumt = enterAmount/coinprices;
+                    totalAmoumt = enterAmount*coinprices;
 
                     String coinAmount = String.valueOf(df.format(totalAmoumt));
 

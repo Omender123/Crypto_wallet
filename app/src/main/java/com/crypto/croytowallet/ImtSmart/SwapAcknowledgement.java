@@ -72,19 +72,24 @@ Button okay;
 
      //   coinValue.setText("1 "+sendData.toUpperCase()+" = "+coinPrice+" "+currencyType.toUpperCase());
       //  showCoinAmount.setText(coinAmount+" "+sendData.toUpperCase());
-        showEnteredAmount.setText(enterAmount+" "+currencySymbols);
+
       //  amount_in_crypto.setText(coinAmount+" "+sendData.toUpperCase());
-        amount_in_Currency.setText(enterAmount+" "+currencyType.toUpperCase());
         trans_hash.setText(swapRespoinseModel.getTransId());
 
         if(sendData.equals("airdrop")){
-            showCoinAmount.setText(coinAmount+" IMT-U");
-            amount_in_crypto.setText(coinAmount+" IMT-U");
+            showCoinAmount.setText(coinAmount+" "+currencyType.toUpperCase());
+            amount_in_Currency.setText(coinAmount+currencyType.toUpperCase());
             coinValue.setText("1 IMT-U = "+coinPrice+" "+currencyType.toUpperCase());
+            showEnteredAmount.setText(enterAmount+" IMT-U");
+            amount_in_crypto.setText(enterAmount+" "+" IMT-U");
+
+
         }else{
-            showCoinAmount.setText(coinAmount+" "+sendData.toUpperCase());
+            showCoinAmount.setText(coinAmount+" "+currencyType.toUpperCase());
             coinValue.setText("1 "+sendData.toUpperCase()+" = "+coinPrice+" "+currencyType.toUpperCase());
-            amount_in_crypto.setText(coinAmount+" "+sendData.toUpperCase());
+            amount_in_Currency.setText(coinAmount+" "+currencyType.toUpperCase());
+            showEnteredAmount.setText(enterAmount+" "+sendData.toUpperCase());
+            amount_in_crypto.setText(enterAmount+" "+sendData.toUpperCase());
 
         }
 
