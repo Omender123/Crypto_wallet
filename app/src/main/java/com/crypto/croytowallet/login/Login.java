@@ -7,6 +7,7 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -22,6 +23,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -42,9 +44,12 @@ import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.CrashDataModel;
 import com.crypto.croytowallet.SharedPrefernce.CreshSharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.SignUpData;
+import com.crypto.croytowallet.SharedPrefernce.SignUpRefernace;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.database.RetrofitClient;
+import com.crypto.croytowallet.signup.GmailCorrection;
 import com.crypto.croytowallet.signup.Referral_code;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -54,6 +59,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.google.gson.JsonObject;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONArray;
@@ -137,7 +143,6 @@ TextInputLayout layout_otp;
 
         getAllDetails();
         getosName();
-        getDeviceToken();
         //if the user is already logged in we will directly start the profile activity
 
    if (SharedPrefManager.getInstance(this).isLoggedIn()) {
@@ -222,12 +227,13 @@ TextInputLayout layout_otp;
         showpDialog();
 
         Call<ResponseBody> call =RetrofitClient.getInstance().getApi()
-                .Login(usernames,passwords,otp1,locations,os,ipAddress,Devicetoken);
+                .Login(usernames,passwords,otp1,locations,os,ipAddress);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 String s=null;
+                hideKeyboard(view);
                 hidepDialog();
                 if (response.code()==200){
 
@@ -264,6 +270,7 @@ TextInputLayout layout_otp;
                         startActivity(new Intent(getApplicationContext(),MainActivity.class));
                         finish();
                        Toast.makeText(Login.this, "Login Successfully", Toast.LENGTH_SHORT).show();
+
 
 
                         new Handler().postDelayed(new Runnable() {
@@ -334,7 +341,7 @@ TextInputLayout layout_otp;
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 hidepDialog();
-
+                hideKeyboard(view);
 
                 Snacky.builder()
                         .setView(view)
@@ -345,6 +352,17 @@ TextInputLayout layout_otp;
                         .show();
             }
         });
+    }
+
+
+
+
+    public void hideKeyboard(View view) {
+        try {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        } catch (Exception ignored) {
+        }
     }
 
     public void sendEmail(){
@@ -734,24 +752,6 @@ public void listener(){
     }
 
 
-    public void getDeviceToken(){
-             FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                        if (task.isSuccessful()) {
 
-                        Devicetoken = task.getResult().getToken();
-                        //    SharedPrefManager.getInstance(getActivity()).storeToken(Devicetoken);
-                         //   Log.d("Devicetoken", Devicetoken);
-                      // Toast.makeText(Login.this, Devicetoken + "", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(Login.this, "Devicetoken is not generated", Toast.LENGTH_SHORT).show();
-                        }
-
-
-                    }
-                });
-    }
 
 }

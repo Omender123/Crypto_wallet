@@ -143,7 +143,6 @@ public class ManualEnterUserName extends AppCompatActivity {
                     editor.commit();
 
                     startActivity(new Intent(ManualEnterUserName.this, Pay_money.class));
-                    finish();
 
                 } catch (JSONException e) {
                     e.printStackTrace();

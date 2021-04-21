@@ -1,14 +1,18 @@
 package com.crypto.croytowallet.ImtSmart;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,13 +38,24 @@ Button okay;
     TextView coinValue,showCoinAmount,showEnteredAmount,amount_in_crypto,amount_in_Currency,trans_hash,trans_status,btncopy,reciverName;
     SwapRespoinseModel   swapRespoinseModel;
     ImageView statusImage;
+    RelativeLayout relat;
+    CardView realcry,realusd,realadd,realhash,realstats;
+    Animation slide_right;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swap_acknowledgement);
 
         okay = findViewById(R.id.okay_btn);
-       coinValue = findViewById(R.id.price_show);
+        relat=findViewById(R.id.relat);
+        realcry=findViewById(R.id.realcry);
+        realusd=findViewById(R.id.realusd);
+        realadd=findViewById(R.id.realadd);
+        realhash=findViewById(R.id.realhash);
+        realstats=findViewById(R.id.realstats);
+
+        coinValue = findViewById(R.id.price_show);
         showCoinAmount = findViewById(R.id.cryto_amount);
         showEnteredAmount = findViewById(R.id.amount);
         amount_in_crypto = findViewById(R.id.amount_in_crypto);
@@ -50,6 +65,17 @@ Button okay;
         btncopy  =findViewById(R.id.btn_copy);
         statusImage = findViewById(R.id.statusImage);
         reciverName = findViewById(R.id.recriver_address);
+
+
+        //Animation
+        slide_right = AnimationUtils.loadAnimation(SwapAcknowledgement.this,R.anim.slide_in_right);
+        okay.startAnimation(slide_right);
+        relat.startAnimation(slide_right);
+        realcry.startAnimation(slide_right);
+        realusd.startAnimation(slide_right);
+        realadd.startAnimation(slide_right);
+        realhash.startAnimation(slide_right);
+        realstats.startAnimation(slide_right);
 
         swapModel = SwapSharedPrefernce.getInstance(getApplicationContext()).getSwapData();
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();

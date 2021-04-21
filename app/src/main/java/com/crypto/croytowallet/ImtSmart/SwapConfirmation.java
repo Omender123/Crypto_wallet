@@ -6,7 +6,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +35,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SwapConfirmation extends AppCompatActivity {
+public class
+SwapConfirmation extends AppCompatActivity {
     Button confirm;
     SwapModel swapModel;
     UserData userData;
@@ -42,6 +46,10 @@ public class SwapConfirmation extends AppCompatActivity {
     TextView coinValue,showCoinAmount,showEnteredAmount;
     String balance,total;
     Double userBalance,TotalAmount;
+
+    TextView textView;
+    RelativeLayout relat;
+    Animation slide_right;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +58,14 @@ public class SwapConfirmation extends AppCompatActivity {
         coinValue = findViewById(R.id.price_show);
         showCoinAmount = findViewById(R.id.cryto_amount);
         showEnteredAmount = findViewById(R.id.amount);
+
+        textView=findViewById(R.id.textView);
+        relat=findViewById(R.id.relat);
+        //Animation
+        slide_right = AnimationUtils.loadAnimation(SwapConfirmation.this,R.anim.slide_in_right);
+        confirm.startAnimation(slide_right);
+        relat.startAnimation(slide_right);
+        textView.startAnimation(slide_right);
 
         swapModel = SwapSharedPrefernce.getInstance(getApplicationContext()).getSwapData();
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();

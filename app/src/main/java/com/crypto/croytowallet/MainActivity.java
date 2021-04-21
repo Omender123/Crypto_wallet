@@ -1,5 +1,6 @@
 package com.crypto.croytowallet;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +27,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -47,8 +49,13 @@ import com.crypto.croytowallet.SharedPrefernce.TransactionHistorySharedPrefManag
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 
 import com.crypto.croytowallet.database.RetrofitClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.gson.JsonObject;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONException;
@@ -81,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView status_img;
     Switch drawerSwitch;
     SharedPreferences sharedPreferences1;
+    String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
         //getting the current user
         UserData user = SharedPrefManager.getInstance(this).getUser();
 
+        token = user.getToken();
         //setting the values to the textviews
         username.setText(user.getUsername());
         usergmail.setText(user.getEmail());
@@ -164,6 +173,7 @@ public class MainActivity extends AppCompatActivity {
         }catch (Exception e){}
 
         androidAppLauncherShortcut();
+        PutDeviceToken(token);
     }
 
     private void androidAppLauncherShortcut() {
@@ -180,15 +190,15 @@ public class MainActivity extends AppCompatActivity {
 
 
                 ShortcutInfo shortcutScan = new ShortcutInfo.Builder(this,"scan")
-                        .setShortLabel("Shortcut ImtScan")
-                        .setLongLabel("Long Shortcut ImtScan")
+                        .setShortLabel("ImSmart Scan")
+                        .setLongLabel("ImSmart Scan")
                         .setIcon(Icon.createWithResource(this,R.drawable.ic_scan))
                         .setIntent(imt_scan)
                         .build();
 
                 ShortcutInfo shortcutBarcode = new ShortcutInfo.Builder(this,"barcode")
-                        .setShortLabel("Shortcut ImtReceived")
-                        .setLongLabel("Long Shortcut ImtReceived")
+                        .setShortLabel("ImSmart Received")
+                        .setLongLabel("ImSmart Received")
                         .setIcon(Icon.createWithResource(this,R.drawable.ic_pay))
                         .setIntent(imt_received)
                         .build();
@@ -571,5 +581,84 @@ public void logout(){
         return dir.delete();
     }
 
+    private void PutDeviceToken(String token) {
+
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (task.isSuccessful()) {
+
+                         String    Devicetoken = task.getResult().getToken();
+                            new Handler().postDelayed(new Runnable() {
+
+
+                                @Override
+                                public void run() {
+                                    // This method will be executed once the timer is over
+                                    SendDeviceToken(token,Devicetoken);
+
+                              //       Toast.makeText(getApplicationContext(), token+" & "+Devicetoken, Toast.LENGTH_SHORT).show();
+                                }
+                            }, 2000);
+
+
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Devicetoken is not generated", Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }
+                });
+
+    }
+
+    private void SendDeviceToken(String token, String devicetoken) {
+
+        JsonObject bodyParameters = new JsonObject();
+        bodyParameters.addProperty("jwt",token);
+        bodyParameters.addProperty("fcmToken",devicetoken);
+
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().PutDevice(token,bodyParameters);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                String s=null;
+
+                if (response.code()==200){
+                    try {
+                        s= response.body().string();
+
+                     //  Toast.makeText(getApplicationContext(), ""+s, Toast.LENGTH_SHORT).show();
+
+
+                    } catch (IOException  e) {
+                        e.printStackTrace();
+                    }
+
+                }else if(response.code()==400){
+                    try {
+                        s = response.errorBody().string();
+                        JSONObject jsonObject1 = new JSONObject(s);
+                        String error = jsonObject1.getString("error");
+                        Toast.makeText(getApplicationContext(), ""+error, Toast.LENGTH_SHORT).show();
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), ""+t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
 
 }

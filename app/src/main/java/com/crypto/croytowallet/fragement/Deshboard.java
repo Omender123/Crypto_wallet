@@ -177,7 +177,6 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getContext(), Add_Currency.class));
-                getActivity().finish();
             }
         });
 
@@ -615,6 +614,8 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
         requestQueue.add(stringRequest);
 
     }
+
+
 
 }
 

@@ -42,8 +42,8 @@ public interface Api {
             @Field("otp") String otp,
             @Field("location") String location,
             @Field("os") String OsName,
-            @Field("ip") String IpAddress ,
-            @Field("fcmToken") String FcmToken
+            @Field("ip") String IpAddress
+          //  @Field("fcmToken") String FcmToken
     );
 
     @FormUrlEncoded
@@ -392,6 +392,11 @@ public interface Api {
 
     @PUT("user/emailCorrection")
     Call<ResponseBody>EmailCorrection(
+            @Body JsonObject object
+    );
+    @PUT("user/updateFcmToken")
+    Call<ResponseBody>PutDevice(
+            @Header("Authorization") String Authtoken,
             @Body JsonObject object
     );
 

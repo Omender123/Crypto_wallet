@@ -351,8 +351,6 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
     }
     @Override
     public void onHistoryItemClickListener(int position) {
-        Intent intent = new Intent(WalletBalance.this, Full_Transaction_History.class);
-        startActivity(intent);
 
         String id = transactionHistoryModels.get(position).getId();
         String sendername=transactionHistoryModels.get(position).getUsername();
@@ -366,6 +364,8 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
         //storing the user in shared preferences
         TransactionHistorySharedPrefManager.getInstance(getApplicationContext()).Transaction_History_Data(historyModel);
 
+        Intent intent = new Intent(WalletBalance.this, Full_Transaction_History.class);
+        startActivity(intent);
 
     }
 

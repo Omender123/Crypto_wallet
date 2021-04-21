@@ -10,7 +10,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chaos.view.PinView;
@@ -55,6 +58,9 @@ public class SwapEnterPin extends AppCompatActivity {
     String transIDs,statuss;
     int value;
 
+    TextView txttran,Text_value;
+    Animation slide_right;
+
     private Socket mSocket;
     {
         try {
@@ -70,6 +76,19 @@ public class SwapEnterPin extends AppCompatActivity {
         setContentView(R.layout.activity_swap_enter_pin);
         pinView = findViewById(R.id.enter_pin);
         pay_money = findViewById(R.id.pay_money);
+
+
+        txttran =findViewById(R.id.text1);
+        Text_value=findViewById(R.id.Text_value);
+
+        //Animation
+        slide_right = AnimationUtils.loadAnimation(SwapEnterPin.this,R.anim.slide_in_right);
+        pinView.startAnimation(slide_right);
+        pay_money.startAnimation(slide_right);
+        txttran.startAnimation(slide_right);
+        Text_value.startAnimation(slide_right);
+
+
         userData= SharedPrefManager.getInstance(getApplicationContext()).getUser();
         String trans =userData.getTransaction_Pin();
 

@@ -160,7 +160,7 @@ public class WalletScan extends AppCompatActivity {
                     editor.commit();
 
                     startActivity(new Intent(WalletScan.this, Pay_money.class));
-                    finish();
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();

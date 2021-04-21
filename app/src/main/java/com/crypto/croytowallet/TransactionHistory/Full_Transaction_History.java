@@ -96,7 +96,7 @@ SharedPreferences sharedPreferences;
          imageView.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 if (back.equals("Done")){
+                /* if (back.equals("Done")){
                      startActivity(new Intent(getApplicationContext(),Transaction_history.class));
                  }else if(back.equals("OK")){
                      startActivity(new Intent(getApplicationContext(), WalletBalance.class));
@@ -108,7 +108,8 @@ SharedPreferences sharedPreferences;
 
                      startActivity(new Intent(getApplicationContext(), CoinHistory.class));
                  }
-
+*/
+                 onBackPressed();
 
              }
          });
@@ -144,7 +145,7 @@ SharedPreferences sharedPreferences;
     public void onBackPressed() {
         super.onBackPressed();
 
-        if (back.equals("Done")){
+       /* if (back.equals("Done")){
             startActivity(new Intent(getApplicationContext(),Transaction_history.class));
         }else if(back.equals("OK")){
             startActivity(new Intent(getApplicationContext(), WalletBalance.class));
@@ -155,8 +156,9 @@ SharedPreferences sharedPreferences;
         }else{
 
             startActivity(new Intent(getApplicationContext(), CoinHistory.class));
-        }
+        }*/
 
 
+        onSaveInstanceState(new Bundle());
     }
 }

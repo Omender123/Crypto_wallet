@@ -533,17 +533,12 @@ public class CoinHistory extends AppCompatActivity implements HistoryClickLister
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-        Intent intent = new Intent(CoinHistory.this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+    onSaveInstanceState(new Bundle());
     }
 
 
     public void back(View view) {
-        Intent intent = new Intent(CoinHistory.this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+       onBackPressed();
     }
 
 
