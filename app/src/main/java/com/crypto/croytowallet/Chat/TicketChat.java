@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -75,6 +76,7 @@ String message,sendername,messageId;
 
     SharedPreferences sharedPreferences = null;
 
+    RelativeLayout bottom_layout;
 
     private Socket mSocket;
     {
@@ -98,6 +100,7 @@ String message,sendername,messageId;
         fullName = findViewById(R.id.username);
         deleteMessage = findViewById(R.id.message_delete);
         chatRecyclerView = findViewById(R.id.recycler_view);
+        bottom_layout = findViewById(R.id.bottom);
 
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
@@ -259,125 +262,6 @@ String message,sendername,messageId;
     };
 
 
-    public void getChat(){
-        UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
-        String token=user.getToken();
-
-        /*progressDialog = KProgressHUD.create(TicketChat.this)
-                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                .setLabel("Loading.........")
-                .setCancellable(false)
-                .setAnimationSpeed(2)
-                .setDimAmount(0.5f)
-                .show();
-
-        showpDialog();
-*/
-        Call<ResponseBody>call = RetrofitClient.getInstance().getApi().getChat(token);
-
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-           //     hidepDialog();
-                String s = null;
-                if (response.code()==200){
-                    try {
-                        s=response.body().string();
-
-                        JSONObject object = new JSONObject(s);
-
-                        String array = object.getString("array");
-                        JSONArray jsonArray = new JSONArray(array);
-                        ticketChatModels.clear();
-                        for (int i=0;i<=jsonArray.length();i++){
-                            JSONObject  object1 =jsonArray.getJSONObject(i);
-                            TicketChatModel ticketChatModel1 = new TicketChatModel();
-                            String role= object1.getString("role");
-                            String id = object1.getString("_id");
-                            String time= object1.getString("createdAt");
-
-                            ticketChatModel1.setRoleId(role);
-                            ticketChatModel1.setTime(time);
-                            ticketChatModel1.setMessageId(id);
-
-                            if (role.equals("incomingMessages")){
-                                String in_message= object1.getString("incomingMessage");
-                                sendername = object1.getString("senderName");
-                                first_textUsername.setText(sendername);
-                                fullName.setText(sendername);
-                                ticketChatModel1.setMessage(in_message);
-                            }else {
-                                String out_message= object1.getString("outgoingMessage");
-                                ticketChatModel1.setMessage(out_message);
-                            }
-
-                            ticketChatModels.add(ticketChatModel1);
-                          //  Log.d("s1",role);
-
-                        }
-
-                    } catch (IOException | JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    tickectChatAdapter = new TickectChatAdapter(getApplicationContext(),ticketChatModels,TicketChat.this);
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
-                    linearLayoutManager.setStackFromEnd(true);
-                    tickectChatAdapter.notifyDataSetChanged();
-                    tickectChatAdapter.update(ticketChatModels);
-                    chatRecyclerView.setLayoutManager(linearLayoutManager);
-                    chatRecyclerView.setHasFixedSize(true);
-                    chatRecyclerView.setAdapter(tickectChatAdapter);
-
-
-                } else if(response.code()==400){
-                    try {
-                        s=response.errorBody().string();
-                        JSONObject jsonObject1=new JSONObject(s);
-                        String error =jsonObject1.getString("error");
-
-
-                        Snacky.builder()
-                                .setActivity(TicketChat.this)
-                                .setText(error)
-                                .setDuration(Snacky.LENGTH_SHORT)
-                                .setActionText(android.R.string.ok)
-                                .error()
-                                .show();
-
-
-                    } catch (IOException | JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                } else if(response.code()==401){
-
-                    Snacky.builder()
-                            .setActivity(TicketChat.this)
-                            .setText("unAuthorization Request")
-                            .setDuration(Snacky.LENGTH_SHORT)
-                            .setActionText(android.R.string.ok)
-                            .error()
-                            .show();
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-               // hidepDialog();
-                Snacky.builder()
-                        .setActivity(TicketChat.this)
-                        .setText("Internet Problem ")
-                        .setDuration(Snacky.LENGTH_SHORT)
-                        .setActionText(android.R.string.ok)
-                        .error()
-                        .show();
-            }
-        });
-    }
 
 
     private void sendMessage() {
@@ -465,7 +349,7 @@ String message,sendername,messageId;
                 //hidepDialog();
                 Snacky.builder()
                         .setActivity(TicketChat.this)
-                        .setText("Internet Problem ")
+                        .setText(t.getLocalizedMessage())
                         .setDuration(Snacky.LENGTH_SHORT)
                         .setActionText(android.R.string.ok)
                         .error()
@@ -507,8 +391,9 @@ String message,sendername,messageId;
                 .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         ChatUnActive();
-                        send.setVisibility(View.GONE);
-                        textView_Send.setVisibility(View.GONE);
+                       // send.setVisibility(View.GONE);
+                       // textView_Send.setVisibility(View.GONE);
+                        bottom_layout.setVisibility(View.GONE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("status","true");
                         editor.commit();
