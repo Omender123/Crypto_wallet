@@ -147,7 +147,7 @@ public interface Api {
     @FormUrlEncoded
     @POST("user/appCrashed/transactionPin")
     Call<ResponseBody> setTransactionPin(
-            @Field("username") String username,
+           @Field("username") String username,
             @Field("transactionPin") String transactionPin,
             @Field("password") String password);
 
@@ -285,13 +285,6 @@ public interface Api {
             @Query("interval") String interval
     );
 
-    @GET("simple/price")
-    Call<ResponseBody>getCoinPrice(
-            @Query("ids") String coinId,
-            @Query("vs_currency")String currency
-
-    );
-
 
     @GET("notification/user/allNotification")
     Call<ResponseBody> getNotification(
@@ -400,4 +393,10 @@ public interface Api {
             @Body JsonObject object
     );
 
+    @GET("coins/markets")
+    Call<ResponseBody>getAllCoin(
+            @Query("ids") String coinId,
+            @Query("vs_currency")String currency
+
+    );
 }

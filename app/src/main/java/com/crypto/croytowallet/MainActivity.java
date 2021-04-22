@@ -1,7 +1,6 @@
 package com.crypto.croytowallet;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -63,7 +62,6 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 
@@ -87,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     ImageView status_img;
     Switch drawerSwitch;
-    SharedPreferences sharedPreferences1;
+    SharedPreferences sharedPreferences1,sharedPreferences2;
     String token;
 
     @Override
@@ -120,6 +118,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         sharedPreferences1 =getApplicationContext().getSharedPreferences("currency",0);
+        sharedPreferences2 =getApplicationContext().getSharedPreferences("PROJECT_NAME",0);
+
         //getting the current user
         UserData user = SharedPrefManager.getInstance(this).getUser();
 
@@ -459,7 +459,8 @@ public void logout(){
                 SharedPrefManager.getInstance(getApplicationContext()).logout();
                 TransactionHistorySharedPrefManager.getInstance(getApplicationContext()).clearPearData();
                 sharedPreferences1.edit().clear().commit();
-                //  deleteCache(MainActivity.this);
+                sharedPreferences2.edit().clear().commit();
+               //  deleteCache(MainActivity.this);
                 clearApplicationData();
                 Toast.makeText(MainActivity.this, "Logout Successfully", Toast.LENGTH_SHORT).show();
 

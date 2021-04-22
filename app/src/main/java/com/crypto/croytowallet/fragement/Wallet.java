@@ -32,13 +32,19 @@ import com.crypto.croytowallet.Model.CrptoInfoModel;
 import com.crypto.croytowallet.Model.OverViewModel;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.Updated_data;
+import com.crypto.croytowallet.database.RetrofitGraph;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 
 /**
@@ -79,7 +85,7 @@ public class Wallet extends Fragment implements  CryptoClickListner{
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getContext(), Add_Currency.class));
-                getActivity().finish();
+
             }
         });
         CryptoInfoRecyclerView();
@@ -179,63 +185,69 @@ public class Wallet extends Fragment implements  CryptoClickListner{
             progressDialog.dismiss();
     }
     public void overViewData(){
-        String url="https://api.coingecko.com/api/v3/coins/markets?vs_currency="+currency2+"&ids=bitcoin%2Cethereum&order=market_cap_desc&sparkline=false&price_change_percentage=24h";
-        StringRequest stringRequest=new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+
+        String CoinId= "bitcoin,ethereum,ripple,tether,litecoin,usd-coin";
+
+        Call<ResponseBody> call = RetrofitGraph.getInstance().getApi().getAllCoin(CoinId,currency2.toLowerCase());
+
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(String response) {
-                //   hidepDialog();
-                try {
-                    JSONArray jsonArray=new JSONArray(response);
-                    for (int i=0;i<=jsonArray.length();i++){
-                        OverViewModel  overViewModel1= new OverViewModel();
-                        JSONObject jsonObject1=jsonArray.getJSONObject(i);
-                        String id=jsonObject1.getString("id");
-                        String symbol =jsonObject1.getString("symbol");
-                        String image=jsonObject1.getString("image");
-                        String name=jsonObject1.getString("name");
-                        String rate=jsonObject1.getString("price_change_percentage_24h");
-                        String price=jsonObject1.getString("current_price");
-                        String high_price=jsonObject1.getString("high_24h");
-                        String low_price=jsonObject1.getString("low_24h");
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                String  s =null;
+                if (response.isSuccessful()){
+                    try {
+                        s=response.body().string();
+                        JSONArray jsonArray = new JSONArray(s);
+                        for (int i=0;i<=jsonArray.length();i++){
+                            OverViewModel  overViewModel1= new OverViewModel();
 
-                        // Log.d("data",id+symbol+image+name+rate+price);
+                            JSONObject jsonObject1=jsonArray.getJSONObject(i);
+                            String id=jsonObject1.getString("id");
+                            String symbol =jsonObject1.getString("symbol");
+                            String image=jsonObject1.getString("image");
+                            String name=jsonObject1.getString("name");
+                            String rate=jsonObject1.getString("price_change_percentage_24h");
+                            String price=jsonObject1.getString("current_price");
+                            String high_price=jsonObject1.getString("high_24h");
+                            String low_price=jsonObject1.getString("low_24h");
 
-                        overViewModel1.setId(id);
-                        overViewModel1.setImage(image);
-                        overViewModel1.setName(name);
-                        overViewModel1.setCurrencyRate(rate);
-                        overViewModel1.setCurrentPrice(price);
-                        overViewModel1.setHigh_price(high_price);
-                        overViewModel1.setLow_price(low_price);
-                        overViewModel1.setSymbol(symbol);
-                        overViewModels.add(overViewModel1);
+                            // Log.d("data",id+symbol+image+name+rate+price);
 
+                            overViewModel1.setId(id);
+                            overViewModel1.setImage(image);
+                            overViewModel1.setName(name);
+                            overViewModel1.setCurrencyRate(rate);
+                            overViewModel1.setCurrentPrice(price);
+                            overViewModel1.setHigh_price(high_price);
+                            overViewModel1.setLow_price(low_price);
+                            overViewModel1.setSymbol(symbol);
+                            overViewModels.add(overViewModel1);
 
+                        }
+
+                        //  Toast.makeText(Add_Currency.this, ""+s, Toast.LENGTH_SHORT).show();
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
                     }
 
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    overViewAdapter = new OverViewAdapter(overViewModels,getContext());
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false);
+                    overviewRecycler.setLayoutManager(mLayoutManager);
+                    overviewRecycler.setItemAnimator(new DefaultItemAnimator());
+                    overviewRecycler.setAdapter(overViewAdapter);
+
+
+
                 }
 
-                overViewAdapter = new OverViewAdapter(overViewModels,getContext());
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false);
-                overviewRecycler.setLayoutManager(mLayoutManager);
-                overviewRecycler.setItemAnimator(new DefaultItemAnimator());
-                overviewRecycler.setAdapter(overViewAdapter);
-                //  Toast.makeText(getContext(), ""+response.toString(), Toast.LENGTH_SHORT).show();
-
             }
 
-        }, new Response.ErrorListener() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                // hidepDialog();
-                // Toast.makeText(getContext(), ""+error.toString(), Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
             }
         });
-        requestQueue = Volley.newRequestQueue(getContext());
-        requestQueue.add(stringRequest);
 
     }
 

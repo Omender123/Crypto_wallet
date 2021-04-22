@@ -7,8 +7,6 @@ import android.content.SharedPreferences;
 import android.icu.text.DecimalFormat;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -27,7 +23,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -45,22 +40,14 @@ import com.crypto.croytowallet.ImtSmart.ImtSmartGraphLayout;
 import com.crypto.croytowallet.Interface.CryptoClickListner;
 import com.crypto.croytowallet.Model.CrptoInfoModel;
 import com.crypto.croytowallet.Model.OverViewModel;
-import com.crypto.croytowallet.Payment.Complate_payment;
-import com.crypto.croytowallet.Payment.Enter_transaction_pin;
 import com.crypto.croytowallet.Payment.Top_up_Money;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.Updated_data;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
-import com.crypto.croytowallet.TransactionHistory.Full_Transaction_History;
-import com.crypto.croytowallet.TransactionHistory.Transaction_history;
-import com.crypto.croytowallet.VolleyDatabase.URLs;
+
 import com.crypto.croytowallet.database.RetrofitClient;
-import com.crypto.croytowallet.login.Login;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
+import com.crypto.croytowallet.database.RetrofitGraph;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONArray;
@@ -69,8 +56,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import de.mateware.snacky.Snacky;
 import okhttp3.ResponseBody;
@@ -99,6 +84,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
     String currency2,CurrencySymbols;
    UserData userData;
     Animation enterright,rightin,right;
+
     public Deshboard() {
         // Required empty public constructor
     }
@@ -180,30 +166,15 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
             }
         });
 
-
-      /*  FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                        if (task.isSuccessful()) {
-
-                        String    Devicetoken = task.getResult().getToken();
-                        //    SharedPrefManager.getInstance(getActivity()).storeToken(Devicetoken);
-                         //   Log.d("Devicetoken", Devicetoken);
-                         //  Toast.makeText(getActivity(), Devicetoken + "", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(getActivity(), "Devicetoken is not generated", Toast.LENGTH_SHORT).show();
-                        }
-
-
-                    }
-                });
-*/
-        getImtDetails();
+       getImtDetails();
 
 
         overViewData();
         AirDropBalance();
+
+
+
+
 
         return view;
     }
@@ -556,62 +527,72 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
     }
 
     public void overViewData(){
-        String url="https://api.coingecko.com/api/v3/coins/markets?vs_currency="+currency2+"&ids=bitcoin%2Cethereum&order=market_cap_desc&sparkline=false&price_change_percentage=24h";
-        StringRequest stringRequest=new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+
+        String CoinId= "bitcoin,ethereum,ripple,tether,litecoin,usd-coin";
+
+
+
+
+        Call<ResponseBody> call = RetrofitGraph.getInstance().getApi().getAllCoin(CoinId,currency2.toLowerCase());
+
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(String response) {
-                //   hidepDialog();
-                try {
-                    JSONArray jsonArray=new JSONArray(response);
-                    for (int i=0;i<=jsonArray.length();i++){
-                        OverViewModel  overViewModel1= new OverViewModel();
-                        JSONObject jsonObject1=jsonArray.getJSONObject(i);
-                        String id=jsonObject1.getString("id");
-                        String symbol =jsonObject1.getString("symbol");
-                        String image=jsonObject1.getString("image");
-                        String name=jsonObject1.getString("name");
-                        String rate=jsonObject1.getString("price_change_percentage_24h");
-                        String price=jsonObject1.getString("current_price");
-                        String high_price=jsonObject1.getString("high_24h");
-                        String low_price=jsonObject1.getString("low_24h");
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                String  s =null;
+                if (response.isSuccessful()){
+                    try {
+                        s=response.body().string();
+                        JSONArray jsonArray = new JSONArray(s);
+                        for (int i=0;i<=jsonArray.length();i++){
+                            OverViewModel  overViewModel1= new OverViewModel();
 
-                       // Log.d("data",id+symbol+image+name+rate+price);
+                            JSONObject jsonObject1=jsonArray.getJSONObject(i);
+                            String id=jsonObject1.getString("id");
+                            String symbol =jsonObject1.getString("symbol");
+                            String image=jsonObject1.getString("image");
+                            String name=jsonObject1.getString("name");
+                            String rate=jsonObject1.getString("price_change_percentage_24h");
+                            String price=jsonObject1.getString("current_price");
+                            String high_price=jsonObject1.getString("high_24h");
+                            String low_price=jsonObject1.getString("low_24h");
 
-                        overViewModel1.setId(id);
-                        overViewModel1.setImage(image);
-                        overViewModel1.setName(name);
-                        overViewModel1.setCurrencyRate(rate);
-                        overViewModel1.setCurrentPrice(price);
-                        overViewModel1.setHigh_price(high_price);
-                        overViewModel1.setLow_price(low_price);
-                        overViewModel1.setSymbol(symbol);
-                        overViewModels.add(overViewModel1);
+                            // Log.d("data",id+symbol+image+name+rate+price);
 
+                            overViewModel1.setId(id);
+                            overViewModel1.setImage(image);
+                            overViewModel1.setName(name);
+                            overViewModel1.setCurrencyRate(rate);
+                            overViewModel1.setCurrentPrice(price);
+                            overViewModel1.setHigh_price(high_price);
+                            overViewModel1.setLow_price(low_price);
+                            overViewModel1.setSymbol(symbol);
+                            overViewModels.add(overViewModel1);
 
+                        }
+
+                        //  Toast.makeText(Add_Currency.this, ""+s, Toast.LENGTH_SHORT).show();
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
                     }
 
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    overViewAdapter = new OverViewAdapter(overViewModels,getContext());
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false);
+                    overviewRecycler.setLayoutManager(mLayoutManager);
+                    overviewRecycler.setItemAnimator(new DefaultItemAnimator());
+                    overviewRecycler.setAdapter(overViewAdapter);
+
+
+
                 }
 
-                overViewAdapter = new OverViewAdapter(overViewModels,getContext());
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false);
-                overviewRecycler.setLayoutManager(mLayoutManager);
-                overviewRecycler.setItemAnimator(new DefaultItemAnimator());
-                overviewRecycler.setAdapter(overViewAdapter);
-
             }
 
-        }, new Response.ErrorListener() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                // hidepDialog();
-                // Toast.makeText(getContext(), ""+error.toString(), Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
             }
         });
-        requestQueue = Volley.newRequestQueue(getContext());
-        requestQueue.add(stringRequest);
 
     }
 

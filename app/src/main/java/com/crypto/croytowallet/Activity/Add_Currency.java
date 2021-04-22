@@ -29,14 +29,21 @@ import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
+import com.crypto.croytowallet.database.RetrofitGraph;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class Add_Currency extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -44,6 +51,7 @@ public class Add_Currency extends AppCompatActivity {
     EditText search;
     ImageView imageView;
     CharSequence search1 = "";
+    KProgressHUD progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,87 +60,13 @@ public class Add_Currency extends AppCompatActivity {
         imageView =findViewById(R.id.back);
         item_data = new ArrayList<Model_Class_Add_Currency>();
         recyclerView=findViewById(R.id.recyclerView_add_currenecy);
-        Coin_setdata();
+
+        getAllCoins();
 
         back();
-    }
-
-    public void Coin_setdata() {
-        UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
-         String token = user.getToken();
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_GET_COIN, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray jsonArray = new JSONArray(response);
-                    for (int i = 0; i <= jsonArray.length(); i++) {
-
-                        Model_Class_Add_Currency currency_model = new Model_Class_Add_Currency();
-                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                        String id = jsonObject1.getString("_id");
-                         String name = jsonObject1.getString("name");
-                        currency_model.setCurrency_Title(name);
-                        currency_model.setTitle_Des(id);
-
-                        item_data.add(currency_model);
-
-                    }
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                Add_Currency_Adapter adapter = new Add_Currency_Adapter(item_data);
-                RecyclerView.LayoutManager mLayoutManager1 = new LinearLayoutManager(Add_Currency.this, LinearLayoutManager.VERTICAL, false);
-                recyclerView.setLayoutManager(mLayoutManager1);
-                recyclerView.setItemAnimator(new DefaultItemAnimator());
-                recyclerView.setAdapter(adapter);
-
-                search.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        adapter.getFilter().filter(s);
-                        search1 = s;
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-
-                    }
-                });
-
-
-
-            }
-
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-               // Toast.makeText(Add_Currency.this, "" + error.toString(), Toast.LENGTH_SHORT).show();
-            }
-        }){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<String, String>();
-
-                 headers.put("Authorization", token);
-
-                return headers;
-            }
-
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-
 
     }
+
 
 
     public void back(){
@@ -150,4 +84,99 @@ public class Add_Currency extends AppCompatActivity {
         super.onBackPressed();
        onSaveInstanceState(new Bundle());
     }
+
+    public void getAllCoins(){
+        progressDialog = KProgressHUD.create(Add_Currency.this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Please wait.....")
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
+
+        showpDialog();
+
+        String coinid="ripple,ethereum,bitcoin,litecoin,tether,link,okb,cdai,binancecoin,usd-coin,wrapped-bitcoin,crypto-com-chain,leo-token,wrapped-filecoin";
+
+        Call<ResponseBody> call = RetrofitGraph.getInstance().getApi().getAllCoin(coinid,"usd");
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                hidepDialog();
+                String  s =null;
+                item_data.clear();
+                if (response.isSuccessful()){
+                    try {
+                        s=response.body().string();
+                        JSONArray jsonArray = new JSONArray(s);
+                        for (int i=0;i<=jsonArray.length();i++){
+                            Model_Class_Add_Currency currency_model = new Model_Class_Add_Currency();
+                            JSONObject jsonObject1=jsonArray.getJSONObject(i);
+                            String id=jsonObject1.getString("id");
+                            String symbol =jsonObject1.getString("symbol");
+                            String image=jsonObject1.getString("image");
+                            String name=jsonObject1.getString("name");
+
+                            currency_model.setCurrency_Title(name);
+                            currency_model.setTitle_Des(symbol);
+                            currency_model.setCoinId(id);
+                            currency_model.setImage(image);
+
+                            item_data.add(currency_model);
+
+                        }
+
+                      //  Toast.makeText(Add_Currency.this, ""+s, Toast.LENGTH_SHORT).show();
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    Add_Currency_Adapter adapter = new Add_Currency_Adapter(item_data,getApplicationContext());
+                    RecyclerView.LayoutManager mLayoutManager1 = new LinearLayoutManager(Add_Currency.this, LinearLayoutManager.VERTICAL, false);
+                    recyclerView.setLayoutManager(mLayoutManager1);
+                    recyclerView.setItemAnimator(new DefaultItemAnimator());
+                    recyclerView.setAdapter(adapter);
+
+                    search.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            adapter.getFilter().filter(s);
+                            search1 = s;
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+
+                        }
+                    });
+
+
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                hidepDialog();
+            }
+        });
+    }
+
+    private void showpDialog() {
+        if (!progressDialog.isShowing())
+            progressDialog.show();
+    }
+
+    private void hidepDialog() {
+        if (progressDialog.isShowing())
+            progressDialog.dismiss();
+    }
+
 }

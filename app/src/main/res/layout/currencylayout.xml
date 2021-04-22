@@ -35,13 +35,12 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/toolbar_text_color"
                 android:textSize="16dp"
-                android:textStyle="bold" />
+               android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/Image_cuurency"
                 android:layout_width="34dp"
                 android:layout_height="34dp"
-
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="17dp"
                 android:layout_marginLeft="17dp"
@@ -59,7 +58,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/Image_cuurency"
                 android:justificationMode="inter_word"
-                android:text="BTC"
+                android:fontFamily="@font/montserrat"
                 android:textSize="11dp" />
             <CheckBox
                 android:id="@+id/checkbox_passcode"

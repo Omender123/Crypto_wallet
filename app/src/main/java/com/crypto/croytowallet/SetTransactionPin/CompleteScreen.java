@@ -8,10 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
-import com.crypto.croytowallet.Activity.Threat_Mode;
-import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.TransactionHistorySharedPrefManager;
@@ -33,7 +30,7 @@ import retrofit2.Response;
 
 public class CompleteScreen extends AppCompatActivity {
     CardView done;
-    SharedPreferences sharedPreferences1;
+    SharedPreferences sharedPreferences1,sharedPreferences2;
     KProgressHUD progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +39,7 @@ public class CompleteScreen extends AppCompatActivity {
         done=findViewById(R.id.done);
 
         sharedPreferences1 =getApplicationContext().getSharedPreferences("currency",0);
-
+        sharedPreferences2=getApplicationContext().getSharedPreferences("PROJECT_NAME",0);
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +82,9 @@ public class CompleteScreen extends AppCompatActivity {
                 if (response.code()==200){
                     SharedPrefManager.getInstance(getApplicationContext()).logout();
                     TransactionHistorySharedPrefManager.getInstance(getApplicationContext()).clearPearData();
+
                     sharedPreferences1.edit().clear().commit();
+                    sharedPreferences2.edit().clear().commit();
                     //  deleteCache(MainActivity.this);
                     clearApplicationData();
                    // Toast.makeText(CompleteScreen.this, "Logout Successfully", Toast.LENGTH_SHORT).show();

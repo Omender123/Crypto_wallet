@@ -33,6 +33,8 @@ Received_Coin extends AppCompatActivity {
     CardView barCodeshare;
     SharedPreferences preferences;
     int position;
+    String coinId;
+    UserData userData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,14 +52,145 @@ Received_Coin extends AppCompatActivity {
 */
 
         position = Updated_data.getInstans(getApplicationContext()).getUserId();
+        coinId = Updated_data.getInstans(getApplicationContext()).getmobile();
 
         back();
 
-        UserData userData= SharedPrefManager.getInstance(this).getUser();
+         userData= SharedPrefManager.getInstance(this).getUser();
+
+
+         if (coinId.toLowerCase().equalsIgnoreCase("btc")){
+             String id = userData.getBTC();
+             barcodeAddress.setText(id);
+             toolbar_title.setText("Receive BTC");
+             QRGEncoder qrgEncoder = new QRGEncoder(id, null, QRGContents.Type.TEXT, 500);
+             try {
+                 Bitmap qrBits = qrgEncoder.encodeAsBitmap();
+                 qrImage.setImageBitmap(qrBits);
+             } catch (WriterException e) {
+                 e.printStackTrace();
+             }
+             barcodeAddress.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     ClipboardManager cm = (ClipboardManager) getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                     cm.setText(id);
+                     Toast.makeText(getApplicationContext(), "Copied ", Toast.LENGTH_SHORT).show();
+
+                 }
+             });
+
+             barCodeshare.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     Intent i = new Intent(Intent.ACTION_SEND);
+                     i.setType("text/plain");
+                     i.putExtra(Intent.EXTRA_TEXT, id);
+                     startActivity(Intent.createChooser(i, "Share With"));
+                 }
+             });
+
+         }else  if (coinId.toLowerCase().equalsIgnoreCase("xrp")){
+             String id3 = userData.getXRP();
+             barcodeAddress.setText(id3);
+             toolbar_title.setText("Receive XRP");
+             QRGEncoder qrgEncoder3 = new QRGEncoder(id3, null, QRGContents.Type.TEXT, 500);
+             try {
+                 Bitmap qrBits = qrgEncoder3.encodeAsBitmap();
+                 qrImage.setImageBitmap(qrBits);
+             } catch (WriterException e) {
+                 e.printStackTrace();
+             }
+
+             barcodeAddress.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     ClipboardManager cm = (ClipboardManager) getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                     cm.setText(id3);
+                     Toast.makeText(getApplicationContext(), "Copied ", Toast.LENGTH_SHORT).show();
+
+                 }
+             });
+
+             barCodeshare.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     Intent i = new Intent(Intent.ACTION_SEND);
+                     i.setType("text/plain");
+                     i.putExtra(Intent.EXTRA_TEXT, id3);
+                     startActivity(Intent.createChooser(i, "Share With"));
+                 }
+             });
+         }else  if (coinId.toLowerCase().equalsIgnoreCase("ltc")){
+             String id4 = userData.getLITE();
+             barcodeAddress.setText(id4);
+             toolbar_title.setText("Receive LITE");
+             QRGEncoder qrgEncoder5 = new QRGEncoder(id4, null, QRGContents.Type.TEXT, 500);
+             try {
+                 Bitmap qrBits = qrgEncoder5.encodeAsBitmap();
+                 qrImage.setImageBitmap(qrBits);
+             } catch (WriterException e) {
+                 e.printStackTrace();
+             }
+
+
+             barcodeAddress.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     ClipboardManager cm = (ClipboardManager) getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                     cm.setText(id4);
+                     Toast.makeText(getApplicationContext(), "Copied ", Toast.LENGTH_SHORT).show();
+
+                 }
+             });
+
+
+             barCodeshare.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     Intent i = new Intent(Intent.ACTION_SEND);
+                     i.setType("text/plain");
+                     i.putExtra(Intent.EXTRA_TEXT, id4);
+                     startActivity(Intent.createChooser(i, "Share With"));
+                 }
+             });
+
+         }else  {
+             String id1 = userData.getETH();
+             barcodeAddress.setText(id1);
+             toolbar_title.setText("Receive "+coinId.toUpperCase());
+             QRGEncoder qrgEncoder1 = new QRGEncoder(id1, null, QRGContents.Type.TEXT, 500);
+             try {
+                 Bitmap qrBits = qrgEncoder1.encodeAsBitmap();
+                 qrImage.setImageBitmap(qrBits);
+             } catch (WriterException e) {
+                 e.printStackTrace();
+             }
+
+             barcodeAddress.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     ClipboardManager cm = (ClipboardManager) getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                     cm.setText(id1);
+                     Toast.makeText(getApplicationContext(), "Copied ", Toast.LENGTH_SHORT).show();
+
+                 }
+             });
+
+             barCodeshare.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     Intent i = new Intent(Intent.ACTION_SEND);
+                     i.setType("text/plain");
+                     i.putExtra(Intent.EXTRA_TEXT, id1);
+                     startActivity(Intent.createChooser(i, "Share With"));
+                 }
+             });
+         }
 
 
 
-            switch (position) {
+            /*switch (position) {
                 case 0:
                     String id = userData.getBTC();
                     barcodeAddress.setText(id);
@@ -258,7 +391,7 @@ Received_Coin extends AppCompatActivity {
                     break;
 
 
-            }
+            }*/
 
         }
 

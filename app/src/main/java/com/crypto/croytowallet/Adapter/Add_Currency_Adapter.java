@@ -1,9 +1,12 @@
 package com.crypto.croytowallet.Adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -12,7 +15,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.crypto.croytowallet.Model.CurrencyModel;
 import com.crypto.croytowallet.Model.Model_Class_Add_Currency;
 import com.crypto.croytowallet.R;
 import com.squareup.picasso.Picasso;
@@ -23,12 +25,15 @@ import java.util.List;
 public class Add_Currency_Adapter extends RecyclerView.Adapter<Add_Currency_Adapter.Myviewholder> implements Filterable {
     ArrayList<Model_Class_Add_Currency> currency;
     private List<Model_Class_Add_Currency> exampleListFull;
-    public Add_Currency_Adapter() {
+
+    Context context;
+     public Add_Currency_Adapter() {
     }
 
-    public Add_Currency_Adapter(ArrayList<Model_Class_Add_Currency> currency) {
+    public Add_Currency_Adapter(ArrayList<Model_Class_Add_Currency> currency,Context context) {
         this.currency = currency;
         exampleListFull = new ArrayList<>(currency);
+        this.context =context;
     }
 
 
@@ -42,13 +47,27 @@ public class Add_Currency_Adapter extends RecyclerView.Adapter<Add_Currency_Adap
 
     @Override
     public void onBindViewHolder(@NonNull Myviewholder holder, int position) {
-        // String Icom = currency.get(position).getImage();
+       String Icom = currency.get(position).getImage();
         String title = currency.get(position).getCurrency_Title();
         String des = currency.get(position).getTitle_Des();
 
         holder.Title.setText(title);
         holder.Descrition.setText(des);
-        //  Picasso.get().load(Icom).into(holder.imageView);
+        Picasso.get().load(Icom).into(holder.imageView);
+
+
+        holder.checkBox.setChecked(getFromSP("checked"+position));
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                String CoinId = currency.get(position).getCoinId();
+                if (isChecked){
+                    saveInSp("checked"+position,true);
+                 }else{
+                    saveInSp("checked"+position,false);
+                }
+            }
+        });
     }
 
     @Override
@@ -58,13 +77,15 @@ public class Add_Currency_Adapter extends RecyclerView.Adapter<Add_Currency_Adap
 
     public class Myviewholder extends RecyclerView.ViewHolder {
         TextView Title, Descrition;
-        //      ImageView imageView;
+           ImageView imageView;
+           CheckBox checkBox;
 
         public Myviewholder(@NonNull View itemView) {
             super(itemView);
             Title = itemView.findViewById(R.id.Currency_Title);
             Descrition = itemView.findViewById(R.id.Currency_Des);
-            //    imageView = itemView.findViewById(R.id.Image_cuurency);
+            imageView = itemView.findViewById(R.id.Image_cuurency);
+            checkBox = itemView.findViewById(R.id.checkbox_passcode);
         }
     }
 
@@ -98,4 +119,16 @@ public class Add_Currency_Adapter extends RecyclerView.Adapter<Add_Currency_Adap
             notifyDataSetChanged();
         }
     };
+
+    private boolean getFromSP(String key) {
+        SharedPreferences preferences = context.getSharedPreferences("PROJECT_NAME", android.content.Context.MODE_PRIVATE);
+        return preferences.getBoolean(key, false);
+    }
+
+    private void saveInSp(String key,boolean value){
+        SharedPreferences preferences = context.getSharedPreferences("PROJECT_NAME", android.content.Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(key, value);
+        editor.commit();
+    }
 }

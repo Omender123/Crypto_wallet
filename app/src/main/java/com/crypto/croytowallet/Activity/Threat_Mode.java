@@ -3,19 +3,15 @@ package com.crypto.croytowallet.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.TransactionHistorySharedPrefManager;
@@ -41,7 +37,7 @@ EditText ed_pass,ed_otp,ed_pin;
 String password,otp,pin;
 CardView submit;
     KProgressHUD progressDialog;
-    SharedPreferences sharedPreferences1;
+    SharedPreferences sharedPreferences1,sharedPreferences2;
     Animation slide_up;
     TextInputLayout enterpss,enterotp,enterpin;
     TextView textt,textC;
@@ -66,6 +62,7 @@ CardView submit;
         textC = findViewById(R.id.textC);
 
         sharedPreferences1 =getApplicationContext().getSharedPreferences("currency",0);
+        sharedPreferences2 =getApplicationContext().getSharedPreferences("PROJECT_NAME",0);
         slide_up = AnimationUtils.loadAnimation(Threat_Mode.this, R.anim.silde_up);
 
         enterpss.setAnimation(slide_up);
@@ -132,7 +129,7 @@ CardView submit;
                     SharedPrefManager.getInstance(getApplicationContext()).logout();
                     TransactionHistorySharedPrefManager.getInstance(getApplicationContext()).clearPearData();
                     sharedPreferences1.edit().clear().commit();
-
+                    sharedPreferences2.edit().clear().commit();
 
                 }else if(response.code()==400){
                     try {

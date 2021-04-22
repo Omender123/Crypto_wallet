@@ -1,18 +1,24 @@
 package com.crypto.croytowallet.Model;
 
 public class Model_Class_Add_Currency {
-    String Currency_Title;
-    String Title_Des;
-    String Image;
+    String Currency_Title,Title_Des,Image,CoinId;
 
-    public Model_Class_Add_Currency(String currency_Title, String title_Des, String image) {
-        Currency_Title = currency_Title;
-        Title_Des = title_Des;
-        Image = image;
+    public Model_Class_Add_Currency(String currency_Title, String title_Des, String image, String coinId) {
+        this.Currency_Title = currency_Title;
+        this.Title_Des = title_Des;
+        this.Image = image;
+        this.CoinId = coinId;
     }
 
     public Model_Class_Add_Currency() {
+    }
 
+    public String getCurrency_Title() {
+        return Currency_Title;
+    }
+
+    public void setCurrency_Title(String currency_Title) {
+        Currency_Title = currency_Title;
     }
 
     public String getTitle_Des() {
@@ -31,11 +37,11 @@ public class Model_Class_Add_Currency {
         Image = image;
     }
 
-    public String getCurrency_Title() {
-        return Currency_Title;
+    public String getCoinId() {
+        return CoinId;
     }
 
-    public void setCurrency_Title(String currency_Title) {
-        Currency_Title = currency_Title;
+    public void setCoinId(String coinId) {
+        CoinId = coinId;
     }
 }
