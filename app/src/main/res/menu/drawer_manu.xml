@@ -24,32 +24,46 @@
             android:icon="@drawable/ic_profile"
             android:title="@string/profile" />
         <item
+            android:checkable="false"
+            android:checked="false"
             android:id="@+id/security"
             android:icon="@drawable/ic_security"
             android:title="@string/security" />
         <item
+            android:checkable="false"
+            android:checked="false"
             android:id="@+id/setting"
             android:icon="@drawable/ic_settings"
             android:title="@string/setting" />
         <item
+            android:checkable="false"
+            android:checked="false"
             android:id="@+id/support"
             android:icon="@drawable/ic_support"
             android:title="@string/support" />
         <item
+            android:checkable="false"
+            android:checked="false"
             android:id="@+id/dark_mode"
             android:icon="@drawable/ic_dark_mode"
             android:title="@string/dark_mode"
             app:actionLayout="@layout/customswitchbutton"
             />
         <item
+            android:checkable="false"
+            android:checked="false"
             android:id="@+id/pay_history"
             android:icon="@drawable/ic_history"
             android:title="@string/pay_history" />
         <item
+            android:checkable="false"
+            android:checked="false"
             android:id="@+id/coin_history"
             android:icon="@drawable/ic_cryptocurrency"
             android:title="@string/coin_history" />
         <item
+            android:checkable="false"
+            android:checked="false"
             android:id="@+id/our_Offer"
             android:icon="@drawable/ic_icon_feather_percent"
             android:title="@string/our_offer" />
@@ -60,11 +74,11 @@
             <group
 
                 android:checkableBehavior="single">
-                <item
+               <!-- <item
                     android:id="@+id/customer"
                     android:icon="@drawable/ic_customer_support"
                     android:title="@string/customer_support" />
-                <item
+            -->    <item
                     android:checkable="false"
                     android:checked="false"
                     android:id="@+id/langauge"
