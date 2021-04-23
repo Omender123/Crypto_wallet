@@ -29,7 +29,7 @@ public class WalletReceive extends AppCompatActivity {
 TextView barcodeAddress,yurwall,tabwall;
     ImageView qrImage,imageView;
     CardView barCodeshare,baradd,recbar;
-    Animation enterright,slide_right;
+    Animation slide_right;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

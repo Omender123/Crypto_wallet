@@ -9,8 +9,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chaos.view.PinView;
@@ -41,6 +44,8 @@ CardView pay_money;
     String url="http://13.233.136.56:8080/api/transaction/peerToPeer";
     UserData userData;
     SharedPreferences preferences;
+    TextView textView;
+    Animation slide_right;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +54,22 @@ CardView pay_money;
         imageView =findViewById(R.id.back);
         pinView = findViewById(R.id.enter_pin);
         pay_money = findViewById(R.id.pay_money);
-       // enter_token = findViewById(R.id.enter_token);
-         userData= SharedPrefManager.getInstance(getApplicationContext()).getUser();
+        textView = findViewById(R.id. textview);
+
+        slide_right = AnimationUtils.loadAnimation(Enter_transaction_pin.this,R.anim.slide_in_right);
+
+        textView.setAnimation(slide_right);
+        pinView.setAnimation(slide_right);
+        pay_money.setAnimation(slide_right);
+
+
+        userData= SharedPrefManager.getInstance(getApplicationContext()).getUser();
         String trans =userData.getTransaction_Pin();
 
      //   Toast.makeText(this, ""+trans, Toast.LENGTH_SHORT).show();
         preferences=getApplicationContext().getSharedPreferences("walletScan", Context.MODE_PRIVATE);
+
+
 
         pay_money.setOnClickListener(new View.OnClickListener() {
             @Override

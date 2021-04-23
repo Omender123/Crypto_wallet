@@ -10,23 +10,28 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crypto.croytowallet.Activity.WalletReceive;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
 
 public class Pay_money extends AppCompatActivity {
     ImageView imageView;
-    CardView pay;
+    CardView pay,cardView;
     EditText pay_enter_amount;
-    TextView go_top_up,payUsername,payname,payEmail;
+    TextView go_top_up,payUsername,payname,payEmail,paytransactionId;
     SharedPreferences preferences,sharedPreferences1,sharedPreferences;
     TextView textView;
     String imtPrice,currency2,CurrencySymbols;
     Double imtP;
+    Animation slide_right;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,14 +40,22 @@ public class Pay_money extends AppCompatActivity {
         pay_enter_amount=findViewById(R.id.pay_enter_amount);
         go_top_up=findViewById(R.id.go_top_up);
         pay=findViewById(R.id.pay);
-
+        paytransactionId =findViewById(R.id.paytransactionId);
         textView  = findViewById(R.id.balance);
         payUsername=findViewById(R.id.payUsername);
         payname=findViewById(R.id.name);
         payEmail=findViewById(R.id.email);
+        cardView=findViewById(R.id.cardView);
+
+        slide_right = AnimationUtils.loadAnimation(Pay_money.this,R.anim.slide_in_right);
+        payUsername.setAnimation(slide_right);
+        paytransactionId.setAnimation(slide_right);
+        pay.setAnimation(slide_right);
+        cardView.setAnimation(slide_right);
+
+
         sharedPreferences1 = getApplicationContext().getSharedPreferences("imtInfo", Context.MODE_PRIVATE);
         preferences=getApplicationContext().getSharedPreferences("walletScan", Context.MODE_PRIVATE);
-
         sharedPreferences = getApplicationContext().getSharedPreferences("currency", 0);
         currency2 = sharedPreferences.getString("currency1", "usd");
         CurrencySymbols = sharedPreferences.getString("Currency_Symbols", "$");

@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,6 +31,7 @@ import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
 import com.crypto.croytowallet.login.Login;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONException;
@@ -48,14 +51,24 @@ public class ManualEnterUserName extends AppCompatActivity {
     UserData userData;
     KProgressHUD progressDialog;
     SharedPreferences sharedPreferences;
+    TextInputLayout textInputLayout;
+    Animation slide_right;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manual_enter_user_name);
         imageView =findViewById(R.id.back);
         ed_username = findViewById(R.id.ed_username1);
+        textInputLayout = findViewById(R.id.user);
        // ed_userid  = findViewById(R.id.ed_userID);
         comfirm  = findViewById(R.id.confirm);
+
+        slide_right = AnimationUtils.loadAnimation(ManualEnterUserName.this,R.anim.slide_in_right);
+        //set Animatoin
+        textInputLayout.startAnimation(slide_right);
+        comfirm.startAnimation(slide_right);
+
+
         userData= SharedPrefManager.getInstance(this).getUser();
 
 
