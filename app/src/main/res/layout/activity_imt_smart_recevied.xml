@@ -69,7 +69,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/your_barcode"
+            android:text="Your IMT Address"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textStyle="bold"
             android:textSize="15dp"
@@ -80,11 +80,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/tab_barcode"
+            android:text="Tab IMT address to Copy"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@color/toolbar_text_color"
-            android:textAlignment="center"
-            />
+            android:textAlignment="center" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"

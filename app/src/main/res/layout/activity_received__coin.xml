@@ -65,10 +65,10 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
+        android:id="@+id/address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/your_barcode"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textStyle="bold"
         android:textSize="15dp"
         android:textColor="@color/toolbar_text_color"
@@ -76,9 +76,9 @@
         android:layout_marginTop="20dp"/>
 
     <TextView
+        android:id="@+id/address1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/tab_barcode"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/toolbar_text_color"
         android:textAlignment="center"

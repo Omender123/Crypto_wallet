@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,20 +16,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.crypto.croytowallet.AppUtils;
 import com.crypto.croytowallet.Interface.HistoryClickLister;
+import com.crypto.croytowallet.Model.CurrencyModel;
 import com.crypto.croytowallet.Model.TransactionHistoryModel;
 import com.crypto.croytowallet.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class Transaaction_history_adapter extends RecyclerView.Adapter<Transaaction_history_adapter.myViewHolder> {
+public class Transaaction_history_adapter extends RecyclerView.Adapter<Transaaction_history_adapter.myViewHolder> implements Filterable {
 ArrayList<TransactionHistoryModel>transactionHistoryModels;
 Context context;
 private HistoryClickLister historyClickLister;
     SharedPreferences sharedPreferences;
+    private List<TransactionHistoryModel> exampleListFull;
     public Transaaction_history_adapter(ArrayList<TransactionHistoryModel> transactionHistoryModels, Context context,HistoryClickLister historyClickLister) {
         this.transactionHistoryModels = transactionHistoryModels;
         this.context = context;
         this.historyClickLister=historyClickLister;
+        exampleListFull = new ArrayList<>(transactionHistoryModels);
     }
 
     public Transaaction_history_adapter() {
@@ -99,4 +105,35 @@ private HistoryClickLister historyClickLister;
 
         }
     }
+
+    @Override
+    public Filter getFilter() {
+        return exampleFilter;
+    }
+
+    private Filter exampleFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<TransactionHistoryModel> filteredList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(exampleListFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (TransactionHistoryModel item : exampleListFull) {
+                    if (item.getRecivedName().toLowerCase().contains(filterPattern)|| item.getId().toLowerCase().contains(filterPattern) || item.getId().toLowerCase().contains(filterPattern) /*|| item.getAmountTrans().toLowerCase().contains(filterPattern)*/ || item.getUsername().toLowerCase().contains(filterPattern) || item.getSearchDate().toLowerCase().contains(filterPattern)  ) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            transactionHistoryModels.clear();
+            transactionHistoryModels.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
 }

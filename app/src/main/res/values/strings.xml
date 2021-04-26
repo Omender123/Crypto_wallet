@@ -83,6 +83,8 @@
     <string name="add_trem_and_condition">accept our Terms &amp; Privacy policy</string>
     <string name="your_barcode">Your Wallet Address</string>
     <string name="tab_barcode">Tab Wallet address to Copy</string>
+
+
     <string name="barcode">Barcode Addrees</string>
     <!--text for Login and Signup screen-->
     <string name="login">Login</string>

@@ -28,7 +28,7 @@ import androidmads.library.qrgenearator.QRGEncoder;
 
 public class
 Received_Coin extends AppCompatActivity {
-    TextView barcodeAddress,toolbar_title;
+    TextView barcodeAddress,toolbar_title,address,address1;
     ImageView qrImage,imageView;
     CardView barCodeshare;
     SharedPreferences preferences;
@@ -45,6 +45,8 @@ Received_Coin extends AppCompatActivity {
         qrImage = findViewById(R.id.qrPlaceHolder);
         barCodeshare=findViewById(R.id.barCodeshare);
         toolbar_title=findViewById(R.id.toolbar_title);
+        address=findViewById(R.id.address);
+        address1=findViewById(R.id.address1);
 
 
       /*  preferences=getApplicationContext().getSharedPreferences("symbols", Context.MODE_PRIVATE);
@@ -58,7 +60,8 @@ Received_Coin extends AppCompatActivity {
 
          userData= SharedPrefManager.getInstance(this).getUser();
 
-
+         address.setText("Your "+coinId.toUpperCase()+" Address");
+         address1.setText("Tab "+coinId.toUpperCase()+" Address to Copy");
          if (coinId.toLowerCase().equalsIgnoreCase("btc")){
              String id = userData.getBTC();
              barcodeAddress.setText(id);

@@ -9,7 +9,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +24,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.crypto.croytowallet.Activity.WalletBalance;
 import com.crypto.croytowallet.Adapter.Transaaction_history_adapter;
+import com.crypto.croytowallet.AppUtils;
 import com.crypto.croytowallet.Interface.HistoryClickLister;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.Model.TransactionHistoryModel;
@@ -50,12 +54,16 @@ public class Transaction_history extends AppCompatActivity implements HistoryCli
     KProgressHUD progressDialog;
     SharedPreferences sharedPreferences;
     TextView history_Empty;
+    EditText search_input;
+
+    CharSequence search = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_history);
         imageView =findViewById(R.id.back);
+        search_input = findViewById(R.id.search_currency);
 
         back();
         recyclerView=findViewById(R.id.recyclerTransation);
@@ -108,6 +116,8 @@ public class Transaction_history extends AppCompatActivity implements HistoryCli
                         transactionHistoryModel1.setUsername(sendername);
                         transactionHistoryModel1.setAmountTrans(amount);
                         transactionHistoryModel1.setDate(time);
+                        transactionHistoryModel1.setSearchDate(AppUtils.getDate(time));
+
 
 
 
@@ -132,7 +142,25 @@ public class Transaction_history extends AppCompatActivity implements HistoryCli
 
                 }
 
-                //  Toast.makeText(WalletBalance.this, ""+response, Toast.LENGTH_SHORT).show();
+                search_input.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        transaaction_history_adapter.getFilter().filter(s);
+                        search = s;
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+
+
             }
         }, new Response.ErrorListener() {
             @Override

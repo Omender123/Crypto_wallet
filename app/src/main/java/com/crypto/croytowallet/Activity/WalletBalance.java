@@ -63,7 +63,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 public class WalletBalance extends AppCompatActivity implements HistoryClickLister {
-    ImageView imageView;
+    ImageView imageView,sreach;
     TextView textView,textView1,more;
     RequestQueue requestQueue;
     RecyclerView recyclerView;
@@ -81,6 +81,7 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet_balance);
         imageView =findViewById(R.id.back);
+        sreach =findViewById(R.id.sreach);
         back();
         textView  =findViewById(R.id.balance);
         textView1  =findViewById(R.id.balance1);
@@ -116,6 +117,16 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
                 startActivity(intent);
             }
         });
+
+        sreach.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WalletBalance.this, Transaction_history.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
+
     }
 
     public void AirDropBalance(){

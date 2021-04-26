@@ -35,6 +35,21 @@
             android:id="@+id/toolbar_title" />
     </LinearLayout>
 
+    <EditText
+        android:id="@+id/search_currency"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/layout_title"
+        android:layout_margin="10dp"
+        android:hint="@string/search"
+        android:textColorHint="@color/toolbar_text_color"
+        android:textColor="@color/toolbar_text_color"
+        android:drawableLeft="@drawable/ic_baseline_search_24"
+        android:drawableTint="?attr/colorControlNormal"
+        android:drawablePadding="10dp"
+        android:paddingLeft="10dp"
+        android:background="@drawable/verifying_textview"
+        />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

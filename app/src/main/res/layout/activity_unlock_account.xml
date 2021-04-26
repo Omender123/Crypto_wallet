@@ -63,7 +63,7 @@
                 android:layout_marginTop="20dp"
                 android:textStyle="normal"
                 android:fontFamily="@font/montserrat"
-                android:textColor="@color/light_gray"
+                android:textColor="@color/toolbar_text_color"
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="20dp"/>
             <EditText
@@ -74,6 +74,9 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="5dp"
                 android:inputType="text"
+                android:paddingStart="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 android:textAlignment="textStart"
                 android:textColor="@color/toolbar_text_color"
                 android:ems="10"
@@ -85,7 +88,7 @@
                 android:text="@string/transaction"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/montserrat"
-                android:textColor="@color/light_gray"
+                android:textColor="@color/toolbar_text_color"
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="20dp"/>
             <EditText
@@ -95,6 +98,9 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="5dp"
+                android:paddingStart="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 android:inputType="numberPassword"
                 android:textAlignment="textStart"
                 android:textColor="@color/toolbar_text_color"
@@ -108,7 +114,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="25dp"
                 android:fontFamily="@font/montserrat"
-                android:textColor="@color/light_gray"
+                android:textColor="@color/toolbar_text_color"
                 android:layout_marginRight="20dp"/>
             <EditText
                 android:id="@+id/otp"
@@ -120,6 +126,9 @@
                 android:inputType="numberPassword"
                 android:textAlignment="textStart"
                 android:lineSpacingExtra="10dp"
+                android:paddingStart="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 android:background="@drawable/verifying_textview"/>
 
             <TextView
@@ -130,7 +139,7 @@
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="20dp"
                 android:fontFamily="@font/montserrat"
-                android:textColor="@color/light_gray"
+                android:textColor="@color/toolbar_text_color"
                 />
             <EditText
                 android:id="@+id/new_password"
@@ -139,7 +148,10 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="5dp"
-                android:inputType="numberPassword"
+                android:inputType="textPassword"
+                android:paddingStart="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 android:textAlignment="textStart"
                 android:textColor="@color/toolbar_text_color"
                 android:ems="10"
@@ -153,7 +165,7 @@
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="20dp"
                 android:fontFamily="@font/montserrat"
-                android:textColor="@color/light_gray"
+                android:textColor="@color/toolbar_text_color"
                 />
             <EditText
                 android:id="@+id/mnemonic"
@@ -162,6 +174,11 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="5dp"
+                android:paddingStart="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingEnd="10dp"
+                android:justificationMode="inter_word"
                 android:textAlignment="textStart"
                 android:ems="10"
                 android:gravity="start|top"

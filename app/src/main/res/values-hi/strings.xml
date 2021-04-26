@@ -82,7 +82,9 @@
     <string name="add_text"> अपने वॉलेट में पैसे जोड़ने से पहले, आप हमारी शर्तें स्वीकार करते हैं &amp; गोपनीयता नीति </string>
     <string name="add_trem_and_condition"> हमारी शर्तें स्वीकार करें &amp; गोपनीयता नीति </string>
     <string name="your_barcode"> आपका बटुआ पता </string>
+    <string name="your_barcode1"> आपका बटुआ पता </string>
     <string name="tab_barcode"> टैब वॉलेट का पता कॉपी करने के लिए </string>
+    <string name="tab_barcode1"> टैब वॉलेट का पता कॉपी करने के लिए </string>
     <string name="barcode"> बारकोड पता </string>
     <!--लॉगिन और साइनअप स्क्रीन के लिए पाठ -->
     <string name="login"> लॉगिन </string>

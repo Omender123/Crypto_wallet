@@ -2,16 +2,17 @@ package com.crypto.croytowallet.Model;
 
 public class TransactionHistoryModel {
     String id;
-   String username,status,recivedName,amountTrans,date;
+   String username,status,recivedName,amountTrans,date,searchDate;
 
 
-    public TransactionHistoryModel(String username, String status, String recivedName, String amountTrans, String date, String id) {
+    public TransactionHistoryModel(String username, String status, String recivedName, String amountTrans, String date, String id,String searchDate) {
         this.username = username;
         this.status = status;
         this.recivedName = recivedName;
         this.amountTrans = amountTrans;
         this.date = date;
         this.id =id;
+        this.searchDate =searchDate;
     }
 
     public TransactionHistoryModel() {
@@ -65,4 +66,11 @@ public class TransactionHistoryModel {
         this.recivedName = recivedName;
     }
 
+    public String getSearchDate() {
+        return searchDate;
+    }
+
+    public void setSearchDate(String searchDate) {
+        this.searchDate = searchDate;
+    }
 }
