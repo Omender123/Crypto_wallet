@@ -1,7 +1,9 @@
 package com.crypto.croytowallet.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,13 +22,17 @@ import com.crypto.croytowallet.Interface.HistoryClickLister;
 import com.crypto.croytowallet.Model.CurrencyModel;
 import com.crypto.croytowallet.Model.TransactionHistoryModel;
 import com.crypto.croytowallet.R;
+import com.crypto.croytowallet.TransactionHistory.CoinHistory;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.mateware.snacky.Snacky;
+
 public class Transaaction_history_adapter extends RecyclerView.Adapter<Transaaction_history_adapter.myViewHolder> implements Filterable {
 ArrayList<TransactionHistoryModel>transactionHistoryModels;
 Context context;
+Activity activity;
 private HistoryClickLister historyClickLister;
     SharedPreferences sharedPreferences;
     private List<TransactionHistoryModel> exampleListFull;
@@ -120,7 +127,7 @@ private HistoryClickLister historyClickLister;
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
                 for (TransactionHistoryModel item : exampleListFull) {
-                    if (item.getRecivedName().toLowerCase().contains(filterPattern)|| item.getId().toLowerCase().contains(filterPattern) || item.getId().toLowerCase().contains(filterPattern) /*|| item.getAmountTrans().toLowerCase().contains(filterPattern)*/ || item.getUsername().toLowerCase().contains(filterPattern) || item.getSearchDate().toLowerCase().contains(filterPattern)  ) {
+                    if (item.getRecivedName().toLowerCase().contains(filterPattern)|| item.getId().toLowerCase().contains(filterPattern) || item.getId().toLowerCase().contains(filterPattern)|| item.getUsername().toLowerCase().contains(filterPattern) || item.getSearchDate().toLowerCase().contains(filterPattern)  ) {
                         filteredList.add(item);
                     }
                 }
