@@ -85,10 +85,6 @@ public class ShowTop_UP extends AppCompatActivity {
 
                    ResponseBankDetails   responseBankDetails = response.body();
 
-
-
-
-
                    barcodeAddress.setText(responseBankDetails.getUpi());
 
                     barcodeAddress.setOnClickListener(new View.OnClickListener() {
