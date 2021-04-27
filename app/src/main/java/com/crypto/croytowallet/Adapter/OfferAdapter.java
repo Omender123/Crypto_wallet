@@ -14,6 +14,7 @@ import com.crypto.croytowallet.AppUtils;
 import com.crypto.croytowallet.Interface.HistoryClickLister;
 import com.crypto.croytowallet.Model.OfferModel;
 import com.crypto.croytowallet.R;
+import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ Context context;
         if(offerModels.get(position).getImageUrl().equals("https://imsmart.s3.ap-south-1.amazonaws.com/logo.png")){
             holder.image.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_artboard___5));
         }else {
-            Picasso.get().load(offerModels.get(position).getImageUrl()).into(holder.image);
+            Picasso.get().load(URLs.URL_Image +offerModels.get(position).getImageUrl()).into(holder.image);
         }
     }
 

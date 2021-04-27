@@ -20,6 +20,7 @@ import com.crypto.croytowallet.Offer.Offer;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
+import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.database.RetrofitClient;
 import com.google.gson.JsonObject;
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -175,7 +176,7 @@ public class StoryView extends AppCompatActivity implements StoriesProgressView.
 
                                 String imageUrl = object1.getString("url");
 
-                                String fullImage ="https://imxtest.s3.ap-south-1.amazonaws.com/"+imageUrl;
+                                String fullImage = URLs.URL_Image+imageUrl;
 
                                 Log.d("imagesss",imageUrl);
 
@@ -184,26 +185,7 @@ public class StoryView extends AppCompatActivity implements StoriesProgressView.
 
                         }
 
-                      /*  JSONArray jsonArray = new JSONArray(s);
-                        for (int i = 0; i <= jsonArray.length(); i++) {
-                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                            String imagess = jsonObject1.getString("images");
 
-                            JSONArray jsonArray1 = new JSONArray(imagess);
-                            for (int j = 0; j <= jsonArray1.length(); j++) {
-
-                                JSONObject jsonObjec2 = jsonArray1.getJSONObject(j);
-                               String  imageUrl = jsonObjec2.getString("url");
-
-                               String fullImage ="https://imxtest.s3.ap-south-1.amazonaws.com/"+imageUrl;
-
-                               Log.d("imagesss",imageUrl);
-
-                                images.add(fullImage);
-
-
-                            }
-                        }*/
 
 
 

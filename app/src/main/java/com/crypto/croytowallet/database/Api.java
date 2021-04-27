@@ -1,5 +1,6 @@
 package com.crypto.croytowallet.database;
 
+import com.crypto.croytowallet.TopUp.ResponseBankDetails;
 import com.google.gson.JsonObject;
 
 import java.util.Map;
@@ -399,4 +400,10 @@ public interface Api {
             @Query("vs_currency")String currency
 
     );
+
+    @GET("bankD")
+    Call<ResponseBankDetails>getBankDetails(
+            @Header("Authorization") String Authtoken
+    );
+
 }

@@ -2,12 +2,8 @@ package com.crypto.croytowallet.ImtSmart;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.icu.text.DecimalFormat;
@@ -16,10 +12,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -32,16 +26,9 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.crypto.croytowallet.Activity.SelectCurrency;
-import com.crypto.croytowallet.Activity.Setting;
-import com.crypto.croytowallet.Activity.Sync_device;
 import com.crypto.croytowallet.Adapter.CustomSpinnerAdapter;
-import com.crypto.croytowallet.Adapter.SelectCurrencyAdapter;
-import com.crypto.croytowallet.AppUtils;
 import com.crypto.croytowallet.MainActivity;
-import com.crypto.croytowallet.Model.CurrencyModel;
 import com.crypto.croytowallet.Model.SwapModel;
-import com.crypto.croytowallet.Payment.Top_up_Money;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.SwapSharedPrefernce;
@@ -49,26 +36,20 @@ import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
 import com.crypto.croytowallet.database.RetrofitClient;
-import com.crypto.croytowallet.database.RetrofitGraph;
-import com.crypto.croytowallet.login.Login;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import de.mateware.snacky.Snacky;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 
 public class
 imtSwap extends AppCompatActivity implements View.OnClickListener {

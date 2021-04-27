@@ -291,4 +291,16 @@
 
     <string name = "userEmail"> ชื่อผู้ใช้หรืออีเมล </string>
 
+    <string name = "top_money"> เติมเงิน </string>
+    <string name = "top_money1"> เลือกวิธีการเติมเงินเพื่อเติมเงิน </string>
+    <string name = "paypal"> จ่ายเพื่อน </string>
+    <string name = "bank"> ธนาคาร </string>
+    <string name = "account_no"> หมายเลขบัญชีธนาคาร </string>
+    <string name = "transfer"> โอน </string>
+    <string name = "bank_name"> ชื่อธนาคาร </string>
+    <string name = "transaction_id"> รหัสธุรกรรม </string>
+    <string name = "upi_id"> รหัส UPI </string>
+    <string name = "ifsc"> รหัส IFSC </string>
+    <string name = "bank_hol"> ชื่อเจ้าของธนาคาร </string>
+    <string name = "bank_show"> แสดงรายละเอียดธนาคาร </string>
 </resources>

@@ -14,13 +14,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.crypto.croytowallet.Activity.WalletReceive;
-import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
+import com.crypto.croytowallet.TopUp.Top_up_Money;
 
 public class Pay_money extends AppCompatActivity {
     ImageView imageView;
@@ -133,7 +130,7 @@ public class Pay_money extends AppCompatActivity {
         go_top_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),Top_up_Money.class));
+                startActivity(new Intent(getApplicationContext(), Top_up_Money.class));
                 finish();
             }
         });

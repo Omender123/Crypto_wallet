@@ -34,7 +34,7 @@ public class URLs {
     //GET GAS FEES
     public static final String URL_DELETE_MESSAGE = ROOT_URL + "chat/removeMessage?id=";
     //Image Urls
-    public static final String URL_Image = "https://imxtest.s3.ap-south-1.amazonaws.com/";
+    public static final String URL_Image = "https://imxapp1.s3-ap-southeast-1.amazonaws.com/";
 
 
 }

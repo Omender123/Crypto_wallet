@@ -290,4 +290,19 @@
     <string name="follow_mnemonic"> Pagtatakda >> I-back Up >> Pag-verify >> Lihim na Mga Phase</string>
 
     <string name = "userEmail"> Username o Email </string>
+
+    <string name = "top_money"> Topup Pera </string>
+    <string name = "top_money1"> Piliin ang iyong paraan ng Top Up upang magdagdag ng pera </string>
+    <string name = "paypal"> Magbayad pal </string>
+    <string name = "bank"> bangko </string>
+    <string name = "account_no"> Numero ng bangko Account </string>
+    <string name = "transfer"> Paglipat </string>
+    <string name = "bank_name"> Pangalan ng bangko </string>
+    <string name = "transaction_id"> Id ng Transaksyon </string>
+    <string name = "upi_id"> UPI Id </string>
+    <string name = "ifsc"> IFSC Code </string>
+    <string name = "bank_hol"> Pangalan ng May-ari ng bangko </string>
+
+    <string name = "bank_show"> Ipakita ang Mga Detalye ng bangko </string>
+
 </resources>

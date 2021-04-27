@@ -9,11 +9,8 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
-
-    <uses-permission
-        android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
-    <uses-permission
-        android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -36,8 +33,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CroytoWallet"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ImtSmart.SwapEnterPin"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar" ></activity>
+        <activity android:name=".TopUp.EnterTop_Up"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar"></activity>
+        <activity android:name=".TopUp.ShowTop_UP"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar"/>
+        <activity
+            android:name=".ImtSmart.SwapEnterPin"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
         <activity
             android:name=".signup.GmailCorrection"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />
@@ -222,7 +224,7 @@
             android:name=".Payment.Complate_payment"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />
         <activity
-            android:name=".Payment.Top_up_Money"
+            android:name=".TopUp.Top_up_Money"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />
         <activity
             android:name=".Payment.Pay_money"
@@ -251,7 +253,7 @@
             android:name=".signup.SignUp"
             android:configChanges="uiMode"
             android:theme="@style/Theme.CroytoWallet.NoActionBar"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".signup.Add_Verification"
             android:configChanges="uiMode"
@@ -268,7 +270,7 @@
             android:name=".signup.Referral_code"
             android:configChanges="uiMode"
             android:theme="@style/Theme.CroytoWallet.NoActionBar"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".login.Change_Password"
             android:configChanges="uiMode"
@@ -285,7 +287,7 @@
             android:name=".login.Login"
             android:configChanges="uiMode"
             android:theme="@style/Theme.CroytoWallet.NoActionBar"
-            android:windowSoftInputMode="adjustResize|adjustPan"/>
+            android:windowSoftInputMode="adjustResize|adjustPan" />
         <activity
             android:name=".Activity.Setting"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />
@@ -305,8 +307,9 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
         <service
-            android:name="com.crypto.croytowallet.notification_services.MyFireBaseMessagingService"
+            android:name=".notification_services.MyFireBaseMessagingService"
             android:enabled="true"
             android:exported="true"
             tools:ignore="ExportedService">
@@ -327,10 +330,6 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@mipmap/noti_icon" />
-       <!-- <meta-data
-            android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/background" />-->
-
     </application>
 
 </manifest>

@@ -284,6 +284,18 @@
     <string name="txt_mnemonic">これに従ってニーモニックを取得します</string>
     <string name="follow_mnemonic">設定>>バックアップ>>検証>>シークレットフェーズ</string>
 
-    <string name ="userEmail">ユーザー名またはメールアドレス</string>
+    <string name="userEmail">ユーザー名またはメールアドレス</string>
 
+    <string name="top_money">チャージマネー</string>
+    <string name="top_money1">お金を追加するためのトップアップ方法を選択してください</string>
+    <string name="paypal">ペイパル</string>
+    <string name="bank">銀行</string>
+    <string name="account_no">銀行口座番号</string>
+    <string name="transfer">転送</string>
+    <string name="bank_name">銀行名</string>
+    <string name="transaction_id">トランザクションID </string>
+    <string name="upi_id"> UPI ID </string>
+    <string name="ifsc"> IFSC</string>
+    <string name="bank_hol">銀行名</string>
+    <string name = "bank_show">銀行の詳細を表示</string>
 </resources>

@@ -82,9 +82,7 @@
     <string name="add_text"> अपने वॉलेट में पैसे जोड़ने से पहले, आप हमारी शर्तें स्वीकार करते हैं &amp; गोपनीयता नीति </string>
     <string name="add_trem_and_condition"> हमारी शर्तें स्वीकार करें &amp; गोपनीयता नीति </string>
     <string name="your_barcode"> आपका बटुआ पता </string>
-    <string name="your_barcode1"> आपका बटुआ पता </string>
-    <string name="tab_barcode"> टैब वॉलेट का पता कॉपी करने के लिए </string>
-    <string name="tab_barcode1"> टैब वॉलेट का पता कॉपी करने के लिए </string>
+     <string name="tab_barcode"> टैब वॉलेट का पता कॉपी करने के लिए </string>
     <string name="barcode"> बारकोड पता </string>
     <!--लॉगिन और साइनअप स्क्रीन के लिए पाठ -->
     <string name="login"> लॉगिन </string>
@@ -291,4 +289,16 @@
     <string name = "follow_mnemonic"> सेटिंग >>  बैकअप >> सत्यापन >> सुरक्षित चरण </string>
     <string name = "userEmail"> उपयोगकर्ता नाम या ईमेल </string>
 
+    <string name = "top_money"> टॉपअप मनी </string>
+    <string name = "top_money1"> पैसे जोड़ने के लिए अपना टॉप अप तरीका चुनें </string>
+    <string name = "paypal"> पे पाल </string>
+    <string name = "bank"> बैंक </string>
+    <string name = "account_no"> बैंक खाता संख्या </string>
+    <string name = "transfer"> स्थानांतरण </string>
+    <string name = "bank_name"> बैंक नाम </string>
+    <string name = "transaction_id"> लेनदेन आईडी </string>
+    <string name = "upi_id"> यूपीआई आईडी </string>
+    <string name = "ifsc"> IFSC कोड </string>
+    <string name = "bank_hol"> बैंक होल्डर का नाम </string>
+    <string name = "bank_show"> बैंक विवरण दिखाएं </string>
 </resources>
