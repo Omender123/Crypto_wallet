@@ -149,6 +149,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
         CustomSpinnerAdapter customAdapter = new CustomSpinnerAdapter(getContext(), coinImage, coinName, coinSymbols,coinId,PricecoinId);
         sendSpinner.setAdapter(customAdapter);
         sendSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -167,7 +168,19 @@ public class Exchange extends Fragment implements View.OnClickListener {
                             .error()
                             .show();
                 }else if(priceCoinId.equals("airdrop")){
+                      SwapAmount = enter_Swap_Amount.getText().toString().trim();
+                      if (!SwapAmount.isEmpty()){
+                          DecimalFormat df = new DecimalFormat();
+                          df.setMaximumFractionDigits(8);
 
+                          Double coinprices,enterAmount,totalAmoumt;
+                          coinprices=Double.parseDouble(imtPrice);
+                          enterAmount=Double.parseDouble(SwapAmount);
+
+                          totalAmoumt = enterAmount*coinprices;
+
+                          text_send.setText(SwapAmount +" "+ coinSymbol +"="+df.format(totalAmoumt)+" " +currency2.toUpperCase());
+                      }
                   }else{
 
                       String coinid=priceCoinId.toLowerCase();
@@ -398,6 +411,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new com.android.volley.Response.Listener<String>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onResponse(String response) {
 
@@ -412,7 +426,19 @@ public class Exchange extends Fragment implements View.OnClickListener {
                     e.printStackTrace();
                 }
 
+                SwapAmount = enter_Swap_Amount.getText().toString().trim();
+                if (!SwapAmount.isEmpty()){
+                    DecimalFormat df = new DecimalFormat();
+                    df.setMaximumFractionDigits(8);
 
+                    Double coinprices,enterAmount,totalAmoumt;
+                    coinprices=Double.parseDouble(coinPrice);
+                    enterAmount=Double.parseDouble(SwapAmount);
+
+                    totalAmoumt = enterAmount*coinprices;
+
+                    text_send.setText(SwapAmount +" "+ coinSymbol +"="+df.format(totalAmoumt)+" " +currency2.toUpperCase());
+                }
 
             }
         }, new com.android.volley.Response.ErrorListener() {

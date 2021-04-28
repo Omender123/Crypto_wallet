@@ -405,5 +405,25 @@ public interface Api {
     Call<ResponseBankDetails>getBankDetails(
             @Header("Authorization") String Authtoken
     );
+    @GET("user/allCurrencyData")
+    Call<ResponseBody>getAllCurrency(
+            @Header("Authorization") String Authtoken
+    );
+
+    @FormUrlEncoded
+    @POST("pending/pendingtransfer")
+    Call<ResponseBody>SendAddAmountRequest(
+            @Header("Authorization") String Authtoken,
+            @Field("accountName") String Bankname,
+            @Field("accountNo") String Acc_no,
+            @Field("customerName") String Holder_name,
+            @Field("transactionId") String TransId,
+            @Field("upiId") String Upi_Id,
+            @Field("amount") String Amount,
+            @Field("paymentMode") String PaymentMode,
+            @Field("currency") String Currency
+
+
+    );
 
 }

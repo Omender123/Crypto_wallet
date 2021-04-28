@@ -33,10 +33,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CroytoWallet"
         android:usesCleartextTraffic="true">
-        <activity android:name=".TopUp.EnterTop_Up"
+        <activity android:name=".TopUp.Enter_TopUp_Amount"
             android:theme="@style/Theme.CroytoWallet.NoActionBar"></activity>
-        <activity android:name=".TopUp.ShowTop_UP"
-            android:theme="@style/Theme.CroytoWallet.NoActionBar"/>
+        <activity
+            android:name=".TopUp.EnterTop_Up"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+        <activity
+            android:name=".TopUp.ShowTop_UP"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
         <activity
             android:name=".ImtSmart.SwapEnterPin"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />

@@ -86,7 +86,7 @@ CardView card_paypal,card_bank;
           switch (v.getId()){
 
               case R.id.card_bank:
-                  startActivity(new Intent(Top_up_Money.this,ShowTop_UP.class));
+                  startActivity(new Intent(Top_up_Money.this,Enter_TopUp_Amount.class));
                   break;
 
               case R.id.card_paypal:

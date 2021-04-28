@@ -297,14 +297,11 @@
     <string name="account_no">Bank Account Number</string>
     <string name="transfer">Transfer</string>
     <string name="bank_name">Bank Name</string>
-    <string name="transaction_id">Transaction Id</string>
+    <string name="transaction_id">Transaction ID</string>
     <string name="upi_id">UPI ID</string>
     <string name="ifsc">IFSC Code</string>
     <string name="bank_hol">Bank Holder Name</string>
     <string name="bank_show">Show Bank Details</string>
-
-
-
 
 
 </resources>

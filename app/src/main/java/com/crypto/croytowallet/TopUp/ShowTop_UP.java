@@ -1,11 +1,14 @@
 package com.crypto.croytowallet.TopUp;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.icu.text.DecimalFormat;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -40,7 +43,9 @@ public class ShowTop_UP extends AppCompatActivity {
     TextView barcodeAddress;
     KProgressHUD progressDialog;
     Button transfer;
+    TextView text_send;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +53,7 @@ public class ShowTop_UP extends AppCompatActivity {
         barcodeAddress = findViewById(R.id.barCodeAddress);
         qrImage = findViewById(R.id.qrPlaceHolder);
         transfer = findViewById(R.id.show_dailog);
+        text_send = findViewById(R.id.txt_send_amount);
         myBottomSheet = MyBottomSheetDialogFragment.newInstance("Modal Bottom Sheet");
 
 
@@ -60,6 +66,15 @@ public class ShowTop_UP extends AppCompatActivity {
 
         Show_Details();
 
+        try{
+            Bundle bundle = getIntent().getExtras();
+            Double totalAmount = bundle.getDouble("totalAmount");
+
+            DecimalFormat df = new DecimalFormat();
+            df.setMaximumFractionDigits(2);
+
+            text_send.setText("You will receive "+df.format(totalAmount)+" IMT-Utility in the wallet");
+        }catch (Exception e){}
     }
 
     private void Show_Details() {
