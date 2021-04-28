@@ -56,11 +56,7 @@ public class ForgetPassword extends AppCompatActivity {
         enter_username = findViewById(R.id.enter_user);
         welcome = findViewById(R.id.welcome);
 
-       /* try {
 
-        }catch (Exception e){
-
-        }*/
         Bundle bundle = getIntent().getExtras();
         options = bundle.getString("options");
         if (options.equals("1")){
@@ -230,10 +226,7 @@ public class ForgetPassword extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-        Intent intent = new Intent(ForgetPassword.this, Login.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        onSaveInstanceState(new Bundle());
     }
 
 
