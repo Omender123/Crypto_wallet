@@ -72,30 +72,7 @@ public class ForgetPassword extends AppCompatActivity {
             public void onClick(View v) {
                 String usernames = enter_username.getText().toString().trim();
 
-              /*  if (options.equals("0") && !usernames.isEmpty() ){
-                    Intent intent= new Intent(getApplicationContext(), OTP_Activity.class);
-                    intent.putExtra("username",usernames);
-                    startActivity(intent);
-                    finish();
-                    sendOtp(v);
-                    hideKeyboard(v);
-                }else if (options.equals("1") && !usernames.isEmpty() ){
-                    Intent intent= new Intent(getApplicationContext(), Unlock_Account.class);
-                    intent.putExtra("username",usernames);
-                    startActivity(intent);
-                    finish();
-                    sendOtp(v);
-                    hideKeyboard(v);
-                }else{
-                    Snackbar warningSnackBar = Snacky.builder()
-                            .setActivity(ForgetPassword.this)
-                            .setText("Please enter the username")
-                            .setTextColor(getResources().getColor(R.color.white))
-                            .setDuration(Snacky.LENGTH_SHORT)
-                            .warning();
-                    warningSnackBar.show();
-                }
-*/
+
 
                 sendOtp(v);
             }
@@ -183,7 +160,7 @@ public class ForgetPassword extends AppCompatActivity {
                         finish();
 
                     }
-                        Toast.makeText(ForgetPassword.this, "Otp send in your registered Email", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Otp send in your registered Email", Toast.LENGTH_SHORT).show();
 
                 }else if(response.code()==400){
                     hideKeyboard(view);
@@ -217,7 +194,7 @@ public class ForgetPassword extends AppCompatActivity {
                 hideKeyboard(view);
                 Snacky.builder()
                         .setView(view)
-                        .setText("Please Check Your Internet Connection")
+                        .setText(t.getLocalizedMessage())
                         .setDuration(Snacky.LENGTH_SHORT)
                         .setActionText(android.R.string.ok)
                         .error()
@@ -259,43 +236,5 @@ public class ForgetPassword extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void OTPexpire(){
-        new Handler().postDelayed(new Runnable() {
 
-
-            @Override
-            public void run() {
-                // This method will be executed once the timer is over
-                expire();
-            }
-        }, 60000);
-    }
-
-    public void expire(){
-        String usernames = enter_username.getText().toString().trim();
-
-
-        Call<ResponseBody> call=  RetrofitClient
-                .getInstance()
-                .getApi().expireOtp(usernames);
-
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                hidepDialog();
-
-                String s=null;
-                if (response.code()==200){
-                    Toast.makeText(ForgetPassword.this, "Your Otp is expire", Toast.LENGTH_SHORT).show();
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
-        });
-
-    }
 }

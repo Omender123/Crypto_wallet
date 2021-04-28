@@ -166,7 +166,7 @@ public class OTP_Activity extends AppCompatActivity {
                 hideKeyboard(view);
                 Snacky.builder()
                         .setView(view)
-                        .setText(t.getMessage())
+                        .setText(t.getLocalizedMessage())
                         .setDuration(Snacky.LENGTH_SHORT)
                         .setActionText(android.R.string.ok)
                         .error()
