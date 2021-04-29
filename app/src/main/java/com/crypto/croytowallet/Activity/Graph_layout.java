@@ -52,6 +52,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.Utils;
+import com.google.android.material.snackbar.Snackbar;
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.squareup.picasso.Picasso;
 
@@ -72,18 +73,19 @@ import retrofit2.Response;
 
 public class Graph_layout extends AppCompatActivity implements View.OnClickListener, HistoryClickLister {
 
-    TextView swap,price,balance,coinname,coinsymbols,coinprice,sync,increaseRate,null1,more;
-    LinearLayout h_24,d_7,m_1,m_3,m_6,y_1;
+    TextView swap, price, balance, coinname, coinsymbols, coinprice, sync, increaseRate, null1, more;
+    LinearLayout h_24, d_7, m_1, m_3, m_6, y_1;
     private Exchange exchange;
     int position;
-    String symbol,image,coinName,change,CurrencySymbols,coinId,currency2;
-    ImageView back,received,send;
+    String symbol, image, coinName, change, CurrencySymbols, coinId, currency2;
+    ImageView back, received, send;
     KProgressHUD progressDialog;
-    SharedPreferences preferences,sharedPreferences;;
+    SharedPreferences preferences, sharedPreferences;
+    ;
     private LineChart chart;
     UserData userData;
     CircleImageView circleImageView;
-    String balance1,  price1;
+    String balance1, price1;
     ArrayList<CoinModal> coinModals;
     Coin_History_Adapter coin_history_adapter;
     RecyclerView recyclerView;
@@ -93,23 +95,23 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_layout);
-        chart =  findViewById(R.id.cubiclinechart);
-         swap =findViewById(R.id.swap_btc_btn);
-         back =findViewById(R.id.back);
-          received =findViewById(R.id.receive_coin);
-          price = findViewById(R.id.price);
-          balance =findViewById(R.id.balance);
-        coinname= findViewById(R.id.coinName);
-        coinsymbols= findViewById(R.id.coinsymbols);
-        coinprice= findViewById(R.id.coinPrice);
+        chart = findViewById(R.id.cubiclinechart);
+        swap = findViewById(R.id.swap_btc_btn);
+        back = findViewById(R.id.back);
+        received = findViewById(R.id.receive_coin);
+        price = findViewById(R.id.price);
+        balance = findViewById(R.id.balance);
+        coinname = findViewById(R.id.coinName);
+        coinsymbols = findViewById(R.id.coinsymbols);
+        coinprice = findViewById(R.id.coinPrice);
         circleImageView = findViewById(R.id.coinImage);
         // sync = findViewById(R.id.sync);
-        increaseRate  =findViewById(R.id.increaseRate);
-        recyclerView=findViewById(R.id.recyclerView);
-        history_Empty =findViewById(R.id.txt_list_is_empty);
+        increaseRate = findViewById(R.id.increaseRate);
+        recyclerView = findViewById(R.id.recyclerView);
+        history_Empty = findViewById(R.id.txt_list_is_empty);
         more = findViewById(R.id.moretransactions);
 
-        null1  = findViewById(R.id.null1);
+        null1 = findViewById(R.id.null1);
         h_24 = findViewById(R.id.h_24);
         d_7 = findViewById(R.id.d_7);
         m_1 = findViewById(R.id.m_1);
@@ -117,9 +119,9 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         m_6 = findViewById(R.id.m_6);
         y_1 = findViewById(R.id.y_1);
         more.setOnClickListener(this);
-        send=findViewById(R.id.send_coin);
-         swap.setOnClickListener(this);
-         back.setOnClickListener(this);
+        send = findViewById(R.id.send_coin);
+        swap.setOnClickListener(this);
+        back.setOnClickListener(this);
         received.setOnClickListener(this);
         send.setOnClickListener(this);
         h_24.setOnClickListener(this);
@@ -129,23 +131,22 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         m_6.setOnClickListener(this);
         y_1.setOnClickListener(this);
 
-        coinModals =new ArrayList<CoinModal>();
+        coinModals = new ArrayList<CoinModal>();
 
         position = Updated_data.getInstans(getApplicationContext()).getUserId();
-        price1 =Updated_data.getInstans(getApplicationContext()).getprice();
+        price1 = Updated_data.getInstans(getApplicationContext()).getprice();
         symbol = Updated_data.getInstans(getApplicationContext()).getmobile();
         image = Updated_data.getInstans(getApplicationContext()).getImage();
-        coinName =Updated_data.getInstans(getApplicationContext()).getUsername();
-        change =Updated_data.getInstans(getApplicationContext()).getChange();
+        coinName = Updated_data.getInstans(getApplicationContext()).getUsername();
+        change = Updated_data.getInstans(getApplicationContext()).getChange();
 
-      //  Toast.makeText(this, ""+symbol, Toast.LENGTH_SHORT).show();
+        //  Toast.makeText(this, ""+symbol, Toast.LENGTH_SHORT).show();
 
-        sharedPreferences =getApplicationContext().getSharedPreferences("currency",0);
+        sharedPreferences = getApplicationContext().getSharedPreferences("currency", 0);
 
-        CurrencySymbols =sharedPreferences.getString("Currency_Symbols","$");
+        CurrencySymbols = sharedPreferences.getString("Currency_Symbols", "$");
         coinId = Updated_data.getInstans(getApplicationContext()).getCoinId();
-         currency2 =sharedPreferences.getString("currency1","usd");
-
+        currency2 = sharedPreferences.getString("currency1", "usd");
 
 
         //   Log.d("price",getString(price1));
@@ -153,26 +154,22 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
 
-
-
-
-
         Picasso.get().load(image).into(circleImageView);
-        price.setText(CurrencySymbols+price1);
+        price.setText(CurrencySymbols + price1);
         coinname.setText(coinName);
-        coinsymbols.setText("("+symbol+")");
-     //   sync.setText(symbol+" Price");
+        coinsymbols.setText("(" + symbol + ")");
+        //   sync.setText(symbol+" Price");
         increaseRate.setText(change);
-        increaseRate.setTextColor(change.contains("-")?
-                getApplicationContext().getResources().getColor(R.color.red): getApplicationContext().getResources().getColor(R.color.green)  );
+        increaseRate.setTextColor(change.contains("-") ?
+                getApplicationContext().getResources().getColor(R.color.red) : getApplicationContext().getResources().getColor(R.color.green));
 
-        null1.setTextColor(change.contains("-")?
-                getApplicationContext().getResources().getColor(R.color.red): getApplicationContext().getResources().getColor(R.color.green)  );
+        null1.setTextColor(change.contains("-") ?
+                getApplicationContext().getResources().getColor(R.color.red) : getApplicationContext().getResources().getColor(R.color.green));
 
-        if(change.contains("-")){
+        if (change.contains("-")) {
             increaseRate.setText(change);
-        }else{
-            increaseRate.setText("+"+change);
+        } else {
+            increaseRate.setText("+" + change);
         }
         getBalance();
         getGraph();
@@ -182,27 +179,26 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.back:
-               onBackPressed();
+                onBackPressed();
                 break;
 
             case R.id.receive_coin:
-               Intent intent=new Intent(getApplicationContext(), Received_Coin.class);
-              // intent.putExtra("position",position);
-               startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), Received_Coin.class);
+                // intent.putExtra("position",position);
+                startActivity(intent);
                 break;
 
             case R.id.send_coin:
-                Intent intent1=new Intent(getApplicationContext(), CoinScan.class);
-              //  intent1.putExtra("position",position);
+                Intent intent1 = new Intent(getApplicationContext(), CoinScan.class);
+                //  intent1.putExtra("position",position);
                 startActivity(intent1);
                 break;
             case R.id.swap_btc_btn:
-                Intent intent2=new Intent(getApplicationContext(), imtSwap.class);
+                Intent intent2 = new Intent(getApplicationContext(), imtSwap.class);
                 startActivity(intent2);
                 break;
 
@@ -213,68 +209,68 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
 
             case R.id.h_24:
                 h_24.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                d_7.setBackgroundColor(getResources().getColor(R.color. background));
-                m_1.setBackgroundColor(getResources().getColor(R.color. background));
-                m_3.setBackgroundColor(getResources().getColor(R.color. background));
-                m_6.setBackgroundColor(getResources().getColor(R.color. background));
-                y_1.setBackgroundColor(getResources().getColor(R.color. background));
+                d_7.setBackgroundColor(getResources().getColor(R.color.background));
+                m_1.setBackgroundColor(getResources().getColor(R.color.background));
+                m_3.setBackgroundColor(getResources().getColor(R.color.background));
+                m_6.setBackgroundColor(getResources().getColor(R.color.background));
+                y_1.setBackgroundColor(getResources().getColor(R.color.background));
                 getGraph();
 
                 break;
 
             case R.id.d_7:
-                h_24.setBackgroundColor(getResources().getColor(R.color. background));
+                h_24.setBackgroundColor(getResources().getColor(R.color.background));
                 d_7.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                m_1.setBackgroundColor(getResources().getColor(R.color. background));
-                m_3.setBackgroundColor(getResources().getColor(R.color. background));
-                m_6.setBackgroundColor(getResources().getColor(R.color. background));
-                y_1.setBackgroundColor(getResources().getColor(R.color. background));
-                getGraphData(coinId,currency2,"7","daily");
+                m_1.setBackgroundColor(getResources().getColor(R.color.background));
+                m_3.setBackgroundColor(getResources().getColor(R.color.background));
+                m_6.setBackgroundColor(getResources().getColor(R.color.background));
+                y_1.setBackgroundColor(getResources().getColor(R.color.background));
+                getGraphData(coinId, currency2, "7", "daily");
                 break;
 
             case R.id.m_1:
-                h_24.setBackgroundColor(getResources().getColor(R.color. background));
-                d_7.setBackgroundColor(getResources().getColor(R.color. background));
+                h_24.setBackgroundColor(getResources().getColor(R.color.background));
+                d_7.setBackgroundColor(getResources().getColor(R.color.background));
                 m_1.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                m_3.setBackgroundColor(getResources().getColor(R.color. background));
-                m_6.setBackgroundColor(getResources().getColor(R.color. background));
-                y_1.setBackgroundColor(getResources().getColor(R.color. background));
-                getGraphData(coinId,currency2,"30","daily");
+                m_3.setBackgroundColor(getResources().getColor(R.color.background));
+                m_6.setBackgroundColor(getResources().getColor(R.color.background));
+                y_1.setBackgroundColor(getResources().getColor(R.color.background));
+                getGraphData(coinId, currency2, "30", "daily");
 
                 break;
 
             case R.id.m_3:
-                h_24.setBackgroundColor(getResources().getColor(R.color. background));
-                d_7.setBackgroundColor(getResources().getColor(R.color. background));
-                m_1.setBackgroundColor(getResources().getColor(R.color. background));
+                h_24.setBackgroundColor(getResources().getColor(R.color.background));
+                d_7.setBackgroundColor(getResources().getColor(R.color.background));
+                m_1.setBackgroundColor(getResources().getColor(R.color.background));
                 m_3.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                m_6.setBackgroundColor(getResources().getColor(R.color. background));
-                y_1.setBackgroundColor(getResources().getColor(R.color. background));
-                getGraphData(coinId,currency2,"90","daily");
+                m_6.setBackgroundColor(getResources().getColor(R.color.background));
+                y_1.setBackgroundColor(getResources().getColor(R.color.background));
+                getGraphData(coinId, currency2, "90", "daily");
 
                 break;
 
             case R.id.m_6:
-                h_24.setBackgroundColor(getResources().getColor(R.color. background));
-                d_7.setBackgroundColor(getResources().getColor(R.color. background));
-                m_1.setBackgroundColor(getResources().getColor(R.color. background));
-                m_3.setBackgroundColor(getResources().getColor(R.color. background));
+                h_24.setBackgroundColor(getResources().getColor(R.color.background));
+                d_7.setBackgroundColor(getResources().getColor(R.color.background));
+                m_1.setBackgroundColor(getResources().getColor(R.color.background));
+                m_3.setBackgroundColor(getResources().getColor(R.color.background));
                 m_6.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                y_1.setBackgroundColor(getResources().getColor(R.color. background));
-                getGraphData(coinId,currency2,"180","daily");
+                y_1.setBackgroundColor(getResources().getColor(R.color.background));
+                getGraphData(coinId, currency2, "180", "daily");
 
 
                 break;
 
             case R.id.y_1:
-                h_24.setBackgroundColor(getResources().getColor(R.color. background));
-                d_7.setBackgroundColor(getResources().getColor(R.color. background));
-                m_1.setBackgroundColor(getResources().getColor(R.color. background));
-                m_3.setBackgroundColor(getResources().getColor(R.color. background));
-                m_6.setBackgroundColor(getResources().getColor(R.color. background));
+                h_24.setBackgroundColor(getResources().getColor(R.color.background));
+                d_7.setBackgroundColor(getResources().getColor(R.color.background));
+                m_1.setBackgroundColor(getResources().getColor(R.color.background));
+                m_3.setBackgroundColor(getResources().getColor(R.color.background));
+                m_6.setBackgroundColor(getResources().getColor(R.color.background));
                 y_1.setBackgroundColor(getResources().getColor(R.color.purple_500));
 
-                getGraphData(coinId,currency2,"365","daily");
+                getGraphData(coinId, currency2, "365", "daily");
 
                 break;
 
@@ -289,21 +285,21 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         onSaveInstanceState(new Bundle());
     }
 
-    public void getBalance(){
+    public void getBalance() {
 
         String token = userData.getToken();
-       String  symbols = Updated_data.getInstans(getApplicationContext()).getmobile();
-          Call<ResponseBody> call = RetrofitClient.getInstance().getApi().Balance(token,symbols);
+        String symbols = Updated_data.getInstans(getApplicationContext()).getmobile();
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().Balance(token, symbols);
 
         call.enqueue(new Callback<ResponseBody>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                String s =null;
+                String s = null;
 
-                if (response.code()==200){
+                if (response.code() == 200) {
                     try {
-                        s=response.body().string();
+                        s = response.body().string();
 
                         JSONObject jsonObject = new JSONObject(s);
                         balance1 = jsonObject.getString("balance");
@@ -311,40 +307,60 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
 
                         double balance2 = Double.parseDouble(balance1);
                         double price = Double.parseDouble(price1);
-                        double total = balance2*price;
+                        double total = balance2 * price;
                         DecimalFormat df = new DecimalFormat();
                         df.setMaximumFractionDigits(2);
 
-                        balance.setText(CurrencySymbols+df.format(total));
-                        coinprice.setText(""+df.format(balance2));
+                        balance.setText(CurrencySymbols + df.format(total));
+                        coinprice.setText("" + df.format(balance2));
 
-                       // Log.d("bal",df.format(total));
+                        // Log.d("bal",df.format(total));
 
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }
 
-                } else if(response.code()==400){
+                } else if (response.code() == 400) {
                     try {
-                        s=response.errorBody().string();
-                        JSONObject jsonObject1=new JSONObject(s);
-                        String error =jsonObject1.getString("error");
+                        s = response.errorBody().string();
+                        JSONObject jsonObject1 = new JSONObject(s);
+                        String error = jsonObject1.getString("error");
 
 
-                        Snacky.builder()
-                                .setActivity(Graph_layout.this)
-                                .setText(error)
-                                .setDuration(Snacky.LENGTH_SHORT)
-                                .setActionText(android.R.string.ok)
-                                .error()
-                                .show();
+                        if (error.equalsIgnoreCase("Account not found.")) {
+
+                            Snacky.builder()
+                                    .setActivity(Graph_layout.this)
+                                    .setText("You need to activate the Ripple account by transferring the 25 XRP")
+                                    .setDuration(Snacky.LENGTH_INDEFINITE)
+                                    .setActionText(android.R.string.ok)
+                                    .setActionClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+
+                                            
+                                        }
+                                    })
+                                    .error()
+                                    .show();
+
+                        } else {
+                            Snacky.builder()
+                                    .setActivity(Graph_layout.this)
+                                    .setText(error)
+                                    .setDuration(Snacky.LENGTH_SHORT)
+                                    .setActionText(android.R.string.ok)
+                                    .error()
+                                    .show();
+
+                        }
 
 
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }
 
-                } else if(response.code()==401){
+                } else if (response.code() == 401) {
 
                     Snacky.builder()
                             .setActivity(Graph_layout.this)
@@ -394,34 +410,34 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         showpDialog();
 
 
-        Call<ResponseBody>call = RetrofitGraph.getInstance().getApi().getGraphData(coinId,currency2,"1");
+        Call<ResponseBody> call = RetrofitGraph.getInstance().getApi().getGraphData(coinId, currency2, "1");
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                String s =null;
+                String s = null;
                 hidepDialog();
-                if (response.code()==200){
+                if (response.code() == 200) {
                     ArrayList<Entry> yvalue = new ArrayList<>();
                     yvalue.clear();
                     try {
-                        s=response.body().string();
+                        s = response.body().string();
 
                         JSONObject object = new JSONObject(s);
 
                         String prices = object.getString("prices");
                         JSONArray jsonArray = new JSONArray(prices);
 
-                        for (int i=0;i<=jsonArray.length();i++){
+                        for (int i = 0; i <= jsonArray.length(); i++) {
 
                             String peice1 = jsonArray.getString(i);
 
                             JSONArray jsonArray1 = new JSONArray(peice1);
-                            for (int j=0; j<=jsonArray1.length();j++){
+                            for (int j = 0; j <= jsonArray1.length(); j++) {
                                 String lowPrices = jsonArray1.getString(1);
 
                                 Float aFloat = Float.parseFloat(lowPrices);
-                                yvalue.add(new Entry(i,aFloat));
+                                yvalue.add(new Entry(i, aFloat));
                             }
 
                         }
@@ -440,7 +456,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                     // Set the marker to the chart
                     mv.setChartView(chart);
                     chart.setMarker(mv);
-                    chart.animateXY(2000,200);
+                    chart.animateXY(2000, 200);
                     chart.getXAxis().setDrawGridLines(false);
                     chart.getAxisLeft().setDrawGridLinesBehindData(false);
                     chart.getAxisLeft().setDrawGridLines(false);
@@ -461,7 +477,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                     x.setDrawGridLines(false);
 
 
-                    LineDataSet set1=new LineDataSet(yvalue,"");
+                    LineDataSet set1 = new LineDataSet(yvalue, "");
                     set1.setFillAlpha(110);
                     ArrayList<ILineDataSet> dataSets = new ArrayList<>();
                     dataSets.add(set1);
@@ -483,11 +499,11 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                     chart.setBackgroundColor(getResources().getColor(R.color.graph));
 
 
-                } else if(response.code()==400){
+                } else if (response.code() == 400) {
                     try {
-                        s=response.errorBody().string();
-                        JSONObject jsonObject1=new JSONObject(s);
-                        String error =jsonObject1.getString("error");
+                        s = response.errorBody().string();
+                        JSONObject jsonObject1 = new JSONObject(s);
+                        String error = jsonObject1.getString("error");
                         Snacky.builder()
                                 .setActivity(Graph_layout.this)
                                 .setText(error)
@@ -520,7 +536,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    public void getGraphData(String id,String currency,String days,String interval){
+    public void getGraphData(String id, String currency, String days, String interval) {
 
         progressDialog = KProgressHUD.create(Graph_layout.this)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
@@ -533,34 +549,34 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         showpDialog();
 
 
-        Call<ResponseBody>call = RetrofitGraph.getInstance().getApi().getGraphData1(id,currency,days,interval);
+        Call<ResponseBody> call = RetrofitGraph.getInstance().getApi().getGraphData1(id, currency, days, interval);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                String s =null;
+                String s = null;
                 hidepDialog();
-                if (response.code()==200){
-                    ArrayList<Entry> yvalue=new ArrayList<>();
+                if (response.code() == 200) {
+                    ArrayList<Entry> yvalue = new ArrayList<>();
                     yvalue.clear();
                     try {
-                        s=response.body().string();
+                        s = response.body().string();
 
                         JSONObject object = new JSONObject(s);
 
                         String prices = object.getString("prices");
                         JSONArray jsonArray = new JSONArray(prices);
 
-                        for (int i=0;i<=jsonArray.length();i++){
+                        for (int i = 0; i <= jsonArray.length(); i++) {
 
                             String peice1 = jsonArray.getString(i);
 
                             JSONArray jsonArray1 = new JSONArray(peice1);
-                            for (int j=0; j<=jsonArray1.length();j++){
+                            for (int j = 0; j <= jsonArray1.length(); j++) {
                                 String lowPrices = jsonArray1.getString(1);
 
                                 Float aFloat = Float.parseFloat(lowPrices);
-                                yvalue.add(new Entry(i,aFloat));
+                                yvalue.add(new Entry(i, aFloat));
                             }
 
                         }
@@ -579,7 +595,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                     // Set the marker to the chart
                     mv.setChartView(chart);
                     chart.setMarker(mv);
-                    chart.animateXY(2000,200);
+                    chart.animateXY(2000, 200);
                     chart.getXAxis().setDrawGridLines(false);
                     chart.getAxisLeft().setDrawGridLinesBehindData(false);
                     chart.getAxisLeft().setDrawGridLines(false);
@@ -600,7 +616,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                     x.setDrawGridLines(false);
 
 
-                    LineDataSet set1=new LineDataSet(yvalue,"");
+                    LineDataSet set1 = new LineDataSet(yvalue, "");
                     set1.setFillAlpha(110);
                     ArrayList<ILineDataSet> dataSets = new ArrayList<>();
                     dataSets.add(set1);
@@ -622,11 +638,11 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                     chart.setBackgroundColor(getResources().getColor(R.color.graph));
 
 
-                } else if(response.code()==400){
+                } else if (response.code() == 400) {
                     try {
-                        s=response.errorBody().string();
-                        JSONObject jsonObject1=new JSONObject(s);
-                        String error =jsonObject1.getString("error");
+                        s = response.errorBody().string();
+                        JSONObject jsonObject1 = new JSONObject(s);
+                        String error = jsonObject1.getString("error");
                         Snacky.builder()
                                 .setActivity(Graph_layout.this)
                                 .setText(error)
@@ -663,24 +679,24 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
     public void getSendCoinHistory() {
 
         UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
-        String token=user.getToken();
+        String token = user.getToken();
 
 
-        Call<ResponseBody> call= RetrofitClient.getInstance().getApi().get_SendHistory(token,coinId);
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().get_SendHistory(token, coinId);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 hidepDialog();
-                String s=null;
-                if (response.code()==200){
+                String s = null;
+                if (response.code() == 200) {
                     coinModals.clear();
                     try {
-                        s=response.body().string();
-                        JSONObject object  = new JSONObject(s);
-                        String result =object.getString("result");
-                        JSONArray jsonArray  =  new JSONArray(result);
-                        for (int i=0;i<=jsonArray.length();i++){
+                        s = response.body().string();
+                        JSONObject object = new JSONObject(s);
+                        String result = object.getString("result");
+                        JSONArray jsonArray = new JSONArray(result);
+                        for (int i = 0; i <= jsonArray.length(); i++) {
                             JSONObject object1 = jsonArray.getJSONObject(i);
 
                             CoinModal modal = new CoinModal();
@@ -691,11 +707,8 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                             String userData = object1.getString("userId");
 
 
-
-
                             JSONObject object2 = new JSONObject(userData);
-                            String username =object2.getString("username");
-
+                            String username = object2.getString("username");
 
 
                             modal.setUsername(username);
@@ -706,34 +719,30 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                             coinModals.add(modal);
 
 
-
                         }
-
 
 
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }
-                    if(coinModals!=null && coinModals.size()>0){
-                        coin_history_adapter = new Coin_History_Adapter(coinModals,getApplicationContext(), Graph_layout.this);
-                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL,false);
+                    if (coinModals != null && coinModals.size() > 0) {
+                        coin_history_adapter = new Coin_History_Adapter(coinModals, getApplicationContext(), Graph_layout.this);
+                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
                         recyclerView.setLayoutManager(mLayoutManager);
                         recyclerView.setItemAnimator(new DefaultItemAnimator());
                         recyclerView.setAdapter(coin_history_adapter);
-                    }else{
-
-
+                    } else {
 
 
                         history_Empty.setVisibility(View.VISIBLE);
 
                     }
 
-                }else if (response.code()==400){
+                } else if (response.code() == 400) {
                     try {
-                        s=response.errorBody().string();
-                        JSONObject jsonObject1=new JSONObject(s);
-                        String error =jsonObject1.getString("error");
+                        s = response.errorBody().string();
+                        JSONObject jsonObject1 = new JSONObject(s);
+                        String error = jsonObject1.getString("error");
 
 
                         Snacky.builder()
@@ -749,7 +758,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                         e.printStackTrace();
                     }
 
-                } else if (response.code()==401){
+                } else if (response.code() == 401) {
                     Snacky.builder()
                             .setActivity(Graph_layout.this)
                             .setText("unAuthorization Request")
@@ -778,13 +787,13 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onHistoryItemClickListener(int position) {
-        String username =coinModals.get(position).getUsername();
-        String transaction =coinModals.get(position).getId();
-        String type =coinModals.get(position).getType();
-        String date =coinModals.get(position).getTime();
-        String amount =coinModals.get(position).getAmount();
+        String username = coinModals.get(position).getUsername();
+        String transaction = coinModals.get(position).getId();
+        String type = coinModals.get(position).getType();
+        String date = coinModals.get(position).getTime();
+        String amount = coinModals.get(position).getAmount();
 
-        Transaction_HistoryModel historyModel=new Transaction_HistoryModel(transaction,coinId,amount,type,username,date);
+        Transaction_HistoryModel historyModel = new Transaction_HistoryModel(transaction, coinId, amount, type, username, date);
 
         //storing the user in shared preferences
         TransactionHistorySharedPrefManager.getInstance(getApplicationContext()).Transaction_History_Data(historyModel);

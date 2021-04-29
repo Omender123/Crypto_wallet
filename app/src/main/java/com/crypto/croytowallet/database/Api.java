@@ -12,6 +12,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -44,7 +45,7 @@ public interface Api {
             @Field("location") String location,
             @Field("os") String OsName,
             @Field("ip") String IpAddress
-          //  @Field("fcmToken") String FcmToken
+            //  @Field("fcmToken") String FcmToken
     );
 
     @FormUrlEncoded
@@ -148,7 +149,7 @@ public interface Api {
     @FormUrlEncoded
     @POST("user/appCrashed/transactionPin")
     Call<ResponseBody> setTransactionPin(
-           @Field("username") String username,
+            @Field("username") String username,
             @Field("transactionPin") String transactionPin,
             @Field("password") String password);
 
@@ -346,7 +347,6 @@ public interface Api {
     );
 
 
-
     @FormUrlEncoded
     @POST("user/google2fa")
     Call<ResponseBody> Google_Obtain(
@@ -358,7 +358,7 @@ public interface Api {
 
     @FormUrlEncoded
     @POST("user/resetTransactionPin")
-    Call<ResponseBody>resetTransactionPin(
+    Call<ResponseBody> resetTransactionPin(
             @Header("Authorization") String Authtoken,
             @Field("otp") String otp,
             @Field("transactionPin") String OldtransactionPin,
@@ -368,7 +368,7 @@ public interface Api {
 
     @FormUrlEncoded
     @POST("user/forgetTransactionPin")
-    Call<ResponseBody>forgetTransactionPin(
+    Call<ResponseBody> forgetTransactionPin(
             @Header("Authorization") String Authtoken,
             @Field("otp") String otp,
             @Field("mnemonic") String mnemonic,
@@ -378,39 +378,41 @@ public interface Api {
 
     @FormUrlEncoded
     @POST("user/removeCurrentlyActiveDevices")
-    Call<ResponseBody>LogOut(
+    Call<ResponseBody> LogOut(
             @Header("Authorization") String Authtoken,
             @Field("username") String username,
             @Field("jwt") String jwtToken
     );
 
     @PUT("user/emailCorrection")
-    Call<ResponseBody>EmailCorrection(
+    Call<ResponseBody> EmailCorrection(
             @Body JsonObject object
     );
+
     @PUT("user/updateFcmToken")
-    Call<ResponseBody>PutDevice(
+    Call<ResponseBody> PutDevice(
             @Header("Authorization") String Authtoken,
             @Body JsonObject object
     );
 
     @GET("coins/markets")
-    Call<ResponseBody>getAllCoin(
+    Call<ResponseBody> getAllCoin(
             @Query("ids") String coinId,
-            @Query("vs_currency")String currency
+            @Query("vs_currency") String currency
 
     );
 
     @GET("bankD")
-    Call<ResponseBankDetails>getBankDetails(
-            @Header("Authorization") String Authtoken
-    );
-    @GET("user/allCurrencyData")
-    Call<ResponseBody>getAllCurrency(
+    Call<ResponseBankDetails> getBankDetails(
             @Header("Authorization") String Authtoken
     );
 
-    @FormUrlEncoded
+    @GET("user/allCurrencyData")
+    Call<ResponseBody> getAllCurrency(
+            @Header("Authorization") String Authtoken
+    );
+
+    /*@FormUrlEncoded
     @POST("pending/pendingtransfer")
     Call<ResponseBody>SendAddAmountRequest(
             @Header("Authorization") String Authtoken,
@@ -418,12 +420,22 @@ public interface Api {
             @Field("accountNo") String Acc_no,
             @Field("customerName") String Holder_name,
             @Field("transactionId") String TransId,
-            @Field("upiId") String Upi_Id,
             @Field("amount") String Amount,
-            @Field("paymentMode") String PaymentMode,
             @Field("currency") String Currency
 
 
-    );
+    );*/
+    @Multipart
+    @POST("pending/pendingtransfer")
+    Call<ResponseBody> SendAddAmountRequest(
+            @Header("Authorization") String authorization,
+            @Part("accountName") RequestBody Bankname,
+            @Part("accountNo") RequestBody Acc_no,
+            @Part("customerName") RequestBody Holder_name,
+            @Part("transactionId") RequestBody TransId,
+            @Part("amount") RequestBody Amount,
+            @Part("currency") RequestBody Currency,
+            @Part MultipartBody.Part image
 
+           );
 }

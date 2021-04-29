@@ -111,7 +111,7 @@ public class Enter_TopUp_Amount extends AppCompatActivity {
                     coinprices=Double.parseDouble(imtPrices);
                     enterAmount=Double.parseDouble(msg);
 
-                    totalAmoumt = enterAmount*coinprices;
+                    totalAmoumt = enterAmount/coinprices;
 
                     text_send.setText(msg +" "+currencyType.toUpperCase() +"="+df.format(totalAmoumt)+" IMT-Utility"  );
                 }
@@ -277,7 +277,7 @@ public class Enter_TopUp_Amount extends AppCompatActivity {
                             coinprices=Double.parseDouble(imtPrices);
                             enterAmount=Double.parseDouble(Amount);
 
-                            totalAmoumt = enterAmount*coinprices;
+                            totalAmoumt = enterAmount/coinprices;
 
                             text_send.setText(Amount +" "+currencyType.toUpperCase() +"="+df.format(totalAmoumt)+" IMT-Utility"  );
                         }

@@ -1,24 +1,41 @@
 package com.crypto.croytowallet.TopUp;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.icu.text.DecimalFormat;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crypto.croytowallet.Activity.Kyc;
 import com.crypto.croytowallet.Activity.SelectCurrency;
+import com.crypto.croytowallet.ImagePath;
 import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.Model.CurrencyModel;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.SharedRequestResponse;
+import com.crypto.croytowallet.SharedPrefernce.Updated_data;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
+import com.crypto.croytowallet.Utility;
 import com.crypto.croytowallet.database.RetrofitClient;
 import com.crypto.croytowallet.signup.SignUp;
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -27,10 +44,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import de.mateware.snacky.Snacky;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,13 +61,19 @@ import retrofit2.Response;
 
 public class EnterTop_Up extends AppCompatActivity {
     EditText ed_bank_name, ed_acc_no, ed_holder_name, ed_transactionId, ed_upi_id, ed_Amount;
-    Spinner sp_mode, sp_currency;
+    Spinner sp_currency;
     ArrayList<String> Currency;
     Button done;
     String BankName, Acc_no, Holder_name, trans_id, Upi_Id, Amount, Payment_mode, currencyType;
     UserData userData;
-    String[] country = {"Select Payment Mode ", "UPI Mode", "Bank Mode"};
     KProgressHUD progressDialog;
+    TextView chooseFile;
+    private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
+    private ImageView ivImage;
+    private String userChoosenTask;
+    File file;
+    String total;
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,19 +84,29 @@ public class EnterTop_Up extends AppCompatActivity {
         ed_transactionId = findViewById(R.id.trans_id);
         ed_upi_id = findViewById(R.id.upi_id);
         ed_Amount = findViewById(R.id.enter_amount);
-        sp_mode = findViewById(R.id.mode);
         sp_currency = findViewById(R.id.select_currency);
         done = findViewById(R.id.show_dailog);
+        chooseFile = findViewById(R.id.chooseFile);
+        ivImage = findViewById(R.id.setImageView);
 
-        ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, country);
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //Setting the ArrayAdapter data on the Spinner
-        sp_mode.setAdapter(aa);
 
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
         Currency = new ArrayList<String>();
         getCurrency();
+
+        try{
+            Bundle bundle = getIntent().getExtras();
+            Double totalAmount = bundle.getDouble("totalAmount");
+
+            DecimalFormat df = new DecimalFormat();
+            df.setMaximumFractionDigits(8);
+
+            total =df.format(totalAmount);
+
+        }catch (Exception e){}
+
+
 
         done.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +118,7 @@ public class EnterTop_Up extends AppCompatActivity {
                 Upi_Id = ed_upi_id.getText().toString().trim();
                 Amount = ed_Amount.getText().toString().trim();
 
-                if (BankName.isEmpty() || Acc_no.isEmpty() || Holder_name.isEmpty() || trans_id.isEmpty() || Amount.isEmpty()){
+                if (BankName.isEmpty() || Acc_no.isEmpty() || Holder_name.isEmpty() || trans_id.isEmpty() || Amount.isEmpty()) {
                     Snacky.builder()
                             .setActivity(EnterTop_Up.this)
                             .setText("Please filled all required details")
@@ -88,54 +127,24 @@ public class EnterTop_Up extends AppCompatActivity {
                             .warning()
                             .show();
 
-                }else{
-
-                    if (Payment_mode.equalsIgnoreCase("UPI Mode")){
-                        
-                        if (Upi_Id.isEmpty()){
-                            Snacky.builder()
-                                    .setActivity(EnterTop_Up.this)
-                                    .setText("Please Enter Your UPI ID ")
-                                    .setDuration(Snacky.LENGTH_SHORT)
-                                    .setActionText(android.R.string.ok)
-                                    .warning()
-                                    .show();
-
-                        }else{
-                            PaymentDone(BankName, Acc_no, Holder_name, trans_id, Upi_Id, Amount, Payment_mode, currencyType);
-                        }
-                       
-                    }else {
-                        PaymentDone(BankName, Acc_no, Holder_name, trans_id, "NA", Amount, Payment_mode, currencyType);
-                    }
-
+                } else {
+                    PaymentDone(BankName, Acc_no, Holder_name, trans_id, Amount, currencyType,file);
                 }
 
 
             }
+
         });
-
-        sp_mode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        chooseFile.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Payment_mode = parent.getItemAtPosition(position).toString();
-                if (Payment_mode.equalsIgnoreCase("UPI Mode")){
-                    ed_upi_id.setVisibility(View.VISIBLE);
-                }else {
-                    ed_upi_id.setVisibility(View.GONE);
-                }
-
-              }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+            public void onClick(View v) {
+                selectImage();
             }
         });
 
     }
 
-    public void PaymentDone(String bankName, String acc_no, String holder_name, String trans_id, String upi_id, String amount, String payment_mode, String currencyType) {
+    public void PaymentDone(String bankName, String acc_no, String holder_name, String trans_id, String amount, String currencyType,File file) {
 
         String token = userData.getToken();
 
@@ -149,22 +158,70 @@ public class EnterTop_Up extends AppCompatActivity {
 
         showpDialog();
 
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().SendAddAmountRequest(token,bankName,acc_no,holder_name,trans_id,upi_id,amount,payment_mode,currencyType);
+
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part image =
+                MultipartBody.Part.createFormData("attachement", file.getName(), requestFile);
+
+        RequestBody bank_Name =
+                RequestBody.create(
+                        MediaType.parse("multipart/form-data"), bankName);
+        RequestBody Acc_no =
+                RequestBody.create(
+                        MediaType.parse("multipart/form-data"),acc_no);
+
+        RequestBody Holder_name1 =
+                RequestBody.create(
+                        MediaType.parse("multipart/form-data"), holder_name);
+        RequestBody Trans_id =
+                RequestBody.create(
+                        MediaType.parse("multipart/form-data"),trans_id);
+        RequestBody Amount1 =
+                RequestBody.create(
+                        MediaType.parse("multipart/form-data"), amount);
+        RequestBody Currency_Type =
+                RequestBody.create(
+                        MediaType.parse("multipart/form-data"),currencyType);
+
+
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().SendAddAmountRequest(token,bank_Name,Acc_no,Holder_name1,Trans_id,Amount1,Currency_Type,image);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 hidepDialog();
-                String s=null;
-                if (response.isSuccessful()){
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    Toast.makeText(getApplicationContext(), "Your request is successfully send to our team.", Toast.LENGTH_SHORT).show();
-                }else{
+                String s = null;
+                if (response.isSuccessful()) {
+                    try {
+                        s = response.body().string();
+                        JSONObject  object = new JSONObject(s);
+                        String trans_id =object.getString("transactionId");
+                        String request_id =object.getString("_id");
+                        String EnterAmount =object.getString("amount");
+                        String Status =object.getString("status");
+                        String currency =object.getString("currency");
+
+                        SharedRequestResponse.getInstans(getApplicationContext()).SetData(trans_id,request_id,EnterAmount,total,Status,currency);
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                startActivity(new Intent(getApplicationContext(), TopUp_Acknowlegement.class));
+                            }
+                        },500);
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+
+                } else {
                     try {
 
-                        s=response.errorBody().string();
-                        JSONObject jsonObject1=new JSONObject(s);
-                        String error =jsonObject1.getString("error");
+                        s = response.errorBody().string();
+                        JSONObject jsonObject1 = new JSONObject(s);
+                        String error = jsonObject1.getString("error");
 
 
                         Snacky.builder()
@@ -195,7 +252,7 @@ public class EnterTop_Up extends AppCompatActivity {
                         .show();
             }
         });
-        
+
 
     }
 
@@ -208,6 +265,7 @@ public class EnterTop_Up extends AppCompatActivity {
         super.onBackPressed();
         onSaveInstanceState(new Bundle());
     }
+
     public void getCurrency() {
         String token = userData.getToken();
 
@@ -227,9 +285,9 @@ public class EnterTop_Up extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 hidepDialog();
-                String s=null;
+                String s = null;
                 Currency.clear();
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     try {
                         s = response.body().string();
 
@@ -238,19 +296,18 @@ public class EnterTop_Up extends AppCompatActivity {
                         JSONArray jsonArray = new JSONArray(result);
 
                         for (int i = 0; i <= jsonArray.length(); i++) {
-                           JSONObject object1 = jsonArray.getJSONObject(i);
+                            JSONObject object1 = jsonArray.getJSONObject(i);
                             String currency = object1.getString("currency");
 
                             Currency.add(currency);
 
                         }
 
-                    }
-                    catch (IOException | JSONException e) {
+                    } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }
 
-                    ArrayAdapter<String> adp = new ArrayAdapter<String> (EnterTop_Up.this,android.R.layout.simple_spinner_dropdown_item,Currency);
+                    ArrayAdapter<String> adp = new ArrayAdapter<String>(EnterTop_Up.this, android.R.layout.simple_spinner_dropdown_item, Currency);
                     sp_currency.setAdapter(adp);
 
                     sp_currency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -266,13 +323,12 @@ public class EnterTop_Up extends AppCompatActivity {
                     });
 
 
-
-                }else {
+                } else {
                     try {
 
-                        s=response.errorBody().string();
-                        JSONObject jsonObject1=new JSONObject(s);
-                        String error =jsonObject1.getString("error");
+                        s = response.errorBody().string();
+                        JSONObject jsonObject1 = new JSONObject(s);
+                        String error = jsonObject1.getString("error");
 
 
                         Snacky.builder()
@@ -307,6 +363,7 @@ public class EnterTop_Up extends AppCompatActivity {
             }
         });
     }
+
     private void showpDialog() {
         if (!progressDialog.isShowing())
             progressDialog.show();
@@ -316,4 +373,87 @@ public class EnterTop_Up extends AppCompatActivity {
         if (progressDialog.isShowing())
             progressDialog.dismiss();
     }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case Utility.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if(userChoosenTask.equals("Choose from Library"))
+                        galleryIntent();
+                } else {
+                    //code for deny
+                }
+                break;
+        }
+    }
+
+    private void selectImage() {
+        final CharSequence[] items = { "Choose from Library",
+                "Cancel" };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(EnterTop_Up.this);
+        builder.setTitle("Add Photo!");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                boolean result= Utility.checkPermission(EnterTop_Up.this);
+                if (items[item].equals("Choose from Library")) {
+                    userChoosenTask ="Choose from Library";
+                    if(result)
+                        galleryIntent();
+
+                } else if (items[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    private void galleryIntent()
+    {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);//
+        startActivityForResult(Intent.createChooser(intent, "Select File"),SELECT_FILE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == SELECT_FILE)
+                onSelectFromGalleryResult(data);
+        }
+    }
+
+
+    @SuppressWarnings("deprecation")
+    private void onSelectFromGalleryResult(Intent data) {
+
+        Bitmap bm=null;
+        if (data != null) {
+            try {
+                bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        ivImage.setImageBitmap(bm);
+        Uri uri = data.getData();
+        System.out.println("urii  "+uri +" "+uri.getPath());
+        String path  = ImagePath.getPath(EnterTop_Up.this,uri);
+        System.out.println("urii path "+path );
+        if(path!=null && !path.equals("")) {
+            file = new File(path);
+
+        }
+
+    }
+
+
 }

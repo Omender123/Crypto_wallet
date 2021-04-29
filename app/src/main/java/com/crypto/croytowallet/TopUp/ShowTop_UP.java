@@ -45,6 +45,7 @@ public class ShowTop_UP extends AppCompatActivity {
     Button transfer;
     TextView text_send;
 
+    Double totalAmount;
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,25 +57,29 @@ public class ShowTop_UP extends AppCompatActivity {
         text_send = findViewById(R.id.txt_send_amount);
         myBottomSheet = MyBottomSheetDialogFragment.newInstance("Modal Bottom Sheet");
 
+        try{
+            Bundle bundle = getIntent().getExtras();
+             totalAmount = bundle.getDouble("totalAmount");
+
+            DecimalFormat df = new DecimalFormat();
+            df.setMaximumFractionDigits(2);
+
+           String total =df.format(totalAmount);
+            text_send.setText("You will receive "+total+" IMT-Utility in the wallet");
+        }catch (Exception e){}
+
+
 
         transfer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),EnterTop_Up.class));
+                startActivity(new Intent(getApplicationContext(),EnterTop_Up.class).putExtra("totalAmount",totalAmount));
             }
         });
 
         Show_Details();
 
-        try{
-            Bundle bundle = getIntent().getExtras();
-            Double totalAmount = bundle.getDouble("totalAmount");
 
-            DecimalFormat df = new DecimalFormat();
-            df.setMaximumFractionDigits(2);
-
-            text_send.setText("You will receive "+df.format(totalAmount)+" IMT-Utility in the wallet");
-        }catch (Exception e){}
     }
 
     private void Show_Details() {
