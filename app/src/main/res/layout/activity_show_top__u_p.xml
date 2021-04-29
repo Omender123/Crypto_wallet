@@ -76,23 +76,21 @@
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-          <!--  <TextView
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:text="@string/upi_id"
+                android:text="Qrcode Id"
                 android:textAlignment="center"
                 android:fontFamily="@font/montserrat"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/toolbar_text_color"
                 android:textStyle="bold" />
--->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
-                android:visibility="gone"
                 android:layout_marginRight="20dp"
                 app:cardBackgroundColor="@color/card_background"
                 app:cardCornerRadius="20dp"
@@ -104,6 +102,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:layout_margin="5dp"
+                    android:text="bnxczlndvdKLv93627zXk,vLKJvcC"
                     android:textSize="8dp"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@android:color/darker_gray" />
