@@ -81,6 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:text="Qrcode Id"
+                android:visibility="gone"
                 android:textAlignment="center"
                 android:fontFamily="@font/montserrat"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -94,6 +95,7 @@
                 android:layout_marginRight="20dp"
                 app:cardBackgroundColor="@color/card_background"
                 app:cardCornerRadius="20dp"
+                android:visibility="gone"
                 app:cardElevation="05dp">
 
                 <TextView
@@ -113,7 +115,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="30dp"
                 android:textAlignment="center"
                 android:textStyle="normal"
                 android:textColor="@color/toolbar_text_color"
@@ -135,9 +137,9 @@
                 android:layout_marginTop="3dp"
                 android:text="@string/bank_show"
                 android:textAlignment="textEnd"
-                android:onClick="show_Bank_details"
                 android:textSize="10dp"
                 android:fontFamily="@font/montserrat"
+                android:visibility="gone"
                 android:layout_marginRight="20dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="#044B7F"

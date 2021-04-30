@@ -15,18 +15,15 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.crypto.croytowallet.Activity.WalletBalance;
 import com.crypto.croytowallet.Adapter.Transaaction_history_adapter;
-import com.crypto.croytowallet.AppUtils;
+import com.crypto.croytowallet.Extra_Class.AppUtils;
 import com.crypto.croytowallet.Interface.HistoryClickLister;
-import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.Model.TransactionHistoryModel;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
@@ -42,7 +39,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 

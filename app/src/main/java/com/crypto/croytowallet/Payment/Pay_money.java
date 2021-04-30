@@ -76,8 +76,7 @@ public class Pay_money extends AppCompatActivity {
             public void onClick(View v) {
                 String enter_amount=pay_enter_amount.getText().toString().trim();
 
-              //  Toast.makeText(Pay_money.this, ""+enter_amount, Toast.LENGTH_SHORT).show();
-               if (enter_amount.isEmpty()){
+                if (enter_amount.isEmpty()){
                     pay_enter_amount.setError("Please enter Amount to Pay");
                     pay_enter_amount.requestFocus();
                 }else{
@@ -131,7 +130,7 @@ public class Pay_money extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), Top_up_Money.class));
-                finish();
+
             }
         });
 
@@ -149,9 +148,7 @@ public class Pay_money extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 onBackPressed();
-                /*Intent intent = new Intent(Pay_money.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);*/
+
             }
         });
 

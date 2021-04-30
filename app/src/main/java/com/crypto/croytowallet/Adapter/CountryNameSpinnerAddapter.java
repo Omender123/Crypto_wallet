@@ -1,9 +1,6 @@
 package com.crypto.croytowallet.Adapter;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +10,8 @@ import android.widget.TextView;
 
 import com.crypto.croytowallet.Model.CountryModel;
 import com.crypto.croytowallet.R;
-import com.crypto.croytowallet.Utils;
-import com.squareup.picasso.Picasso;
+import com.crypto.croytowallet.Extra_Class.Utils;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class CountryNameSpinnerAddapter extends BaseAdapter {

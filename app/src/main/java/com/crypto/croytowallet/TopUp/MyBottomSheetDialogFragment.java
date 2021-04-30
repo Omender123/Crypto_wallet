@@ -2,24 +2,33 @@ package com.crypto.croytowallet.TopUp;
 
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
+import com.crypto.croytowallet.Extra_Class.MyPreferences;
+import com.crypto.croytowallet.Extra_Class.PrefConf;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedBankDetails;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class MyBottomSheetDialogFragment extends BottomSheetDialogFragment implements View.OnClickListener {
 
-    String mString;
+    String mString,received_Amount;
     TextView bank_name, bank_acc_no, bank_ifsc, bank_ho_name;
     ResponseBankDetails responseBankDetails;
+    Button transfer;
+
+    Double totalAmount;
 
 
 
@@ -37,6 +46,7 @@ public class MyBottomSheetDialogFragment extends BottomSheetDialogFragment imple
         mString = getArguments().getString("string");
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -45,13 +55,20 @@ public class MyBottomSheetDialogFragment extends BottomSheetDialogFragment imple
         bank_acc_no = v.findViewById(R.id.bank_account_no);
         bank_ho_name = v.findViewById(R.id.bank_holder_name);
         bank_ifsc = v.findViewById(R.id.Ifsc_code);
+        transfer = v.findViewById(R.id.show_dailog);
 
         responseBankDetails = SharedBankDetails.getInstance(getContext()).getBankDetails();
+        received_Amount = MyPreferences.getInstance(getActivity()).getString(PrefConf.RECEIVED_AMOUNT,"0");
+
+
 
         bank_name.setOnClickListener(this);
         bank_acc_no.setOnClickListener(this);
         bank_ho_name.setOnClickListener(this);
         bank_ifsc.setOnClickListener(this);
+        transfer.setOnClickListener(this);
+
+
 
         bank_name.setText(responseBankDetails.getBankName());
         bank_acc_no.setText(responseBankDetails.getAccountNo());
@@ -85,7 +102,12 @@ public class MyBottomSheetDialogFragment extends BottomSheetDialogFragment imple
                 ClipboardManager cm4 = (ClipboardManager)getContext().getSystemService(Context.CLIPBOARD_SERVICE);
                 cm4.setText(responseBankDetails.getIFSCcode());
                 Toast.makeText(getContext(), "Copied ", Toast.LENGTH_SHORT).show();
+                break;
 
+            case R.id.show_dailog:
+                totalAmount = Double.valueOf(received_Amount);
+
+                startActivity(new Intent(getContext(),EnterTop_Up.class).putExtra("totalAmount",totalAmount));
                 break;
         }
 

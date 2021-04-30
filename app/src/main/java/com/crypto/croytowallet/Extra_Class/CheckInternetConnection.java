@@ -1,4 +1,4 @@
-package com.crypto.croytowallet;
+package com.crypto.croytowallet.Extra_Class;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.view.View;
 
+import com.crypto.croytowallet.R;
 import com.geniusforapp.fancydialog.FancyAlertDialog;
 
 public class CheckInternetConnection {

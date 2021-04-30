@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.crypto.croytowallet.AppUtils;
+import com.crypto.croytowallet.Extra_Class.AppUtils;
 import com.crypto.croytowallet.Interface.HistoryClickLister;
 import com.crypto.croytowallet.Model.CoinModal;
 import com.crypto.croytowallet.R;

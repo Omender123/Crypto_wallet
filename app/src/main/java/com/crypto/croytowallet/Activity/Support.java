@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -18,26 +17,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.crypto.croytowallet.Chat.ChatOptions;
-import com.crypto.croytowallet.Chat.TicketChat;
-import com.crypto.croytowallet.MainActivity;
+import com.crypto.croytowallet.LunchActivity.MainActivity;
 import com.crypto.croytowallet.R;
-import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
-import com.crypto.croytowallet.SharedPrefernce.UserData;
-import com.crypto.croytowallet.database.RetrofitClient;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-
-import de.mateware.snacky.Snacky;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class Support extends AppCompatActivity {
 ImageView imageView;

@@ -38,7 +38,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ShowTop_UP extends AppCompatActivity {
-    BottomSheetDialogFragment myBottomSheet;
     ImageView qrImage;
     TextView barcodeAddress;
     KProgressHUD progressDialog;
@@ -55,7 +54,7 @@ public class ShowTop_UP extends AppCompatActivity {
         qrImage = findViewById(R.id.qrPlaceHolder);
         transfer = findViewById(R.id.show_dailog);
         text_send = findViewById(R.id.txt_send_amount);
-        myBottomSheet = MyBottomSheetDialogFragment.newInstance("Modal Bottom Sheet");
+
 
         try{
             Bundle bundle = getIntent().getExtras();
@@ -188,8 +187,5 @@ public class ShowTop_UP extends AppCompatActivity {
         onSaveInstanceState(new Bundle());
     }
 
-    public void show_Bank_details(View view) {
 
-        myBottomSheet.show(getSupportFragmentManager(), myBottomSheet.getTag());
-    }
 }

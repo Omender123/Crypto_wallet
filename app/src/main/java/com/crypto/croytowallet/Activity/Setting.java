@@ -1,18 +1,11 @@
 package com.crypto.croytowallet.Activity;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,15 +14,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.crypto.croytowallet.AppUpdateChecker;
-import com.crypto.croytowallet.MainActivity;
+import com.crypto.croytowallet.Extra_Class.AppUpdateChecker;
+import com.crypto.croytowallet.LunchActivity.MainActivity;
 import com.crypto.croytowallet.R;
-import com.crypto.croytowallet.login.Login;
-
-import java.util.Locale;
-import java.util.Set;
 
 import de.mateware.snacky.Snacky;
 

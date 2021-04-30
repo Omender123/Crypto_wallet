@@ -23,21 +23,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.crypto.croytowallet.Activity.Kyc;
-import com.crypto.croytowallet.Activity.SelectCurrency;
-import com.crypto.croytowallet.ImagePath;
-import com.crypto.croytowallet.MainActivity;
-import com.crypto.croytowallet.Model.CurrencyModel;
+import com.crypto.croytowallet.Extra_Class.ImagePath;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.SharedRequestResponse;
-import com.crypto.croytowallet.SharedPrefernce.Updated_data;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
-import com.crypto.croytowallet.Utility;
+import com.crypto.croytowallet.Extra_Class.Utility;
 import com.crypto.croytowallet.database.RetrofitClient;
-import com.crypto.croytowallet.signup.SignUp;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONArray;
@@ -47,8 +40,6 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import de.mateware.snacky.Snacky;
 import okhttp3.MediaType;

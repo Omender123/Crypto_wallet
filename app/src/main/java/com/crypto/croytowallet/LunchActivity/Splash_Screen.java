@@ -1,4 +1,4 @@
-package com.crypto.croytowallet;
+package com.crypto.croytowallet.LunchActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.crypto.croytowallet.Activity.Security;
+import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.login.Login;
 
 import de.mateware.snacky.Snacky;

@@ -165,7 +165,7 @@
                 android:layout_marginTop="40dp"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/verifying_textview"
-                android:drawableStart="@drawable/dollar_24"
+                android:drawableStart="@drawable/ic_coin_stack"
                 android:drawablePadding="10dp"
                 android:hint="@string/add"
                 android:inputType="numberDecimal"

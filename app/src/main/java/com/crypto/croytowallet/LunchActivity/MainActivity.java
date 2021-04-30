@@ -1,4 +1,4 @@
-package com.crypto.croytowallet;
+package com.crypto.croytowallet.LunchActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -41,8 +41,12 @@ import android.widget.Toast;
 
 
 import com.crypto.croytowallet.Activity.StoryView;
+import com.crypto.croytowallet.Extra_Class.AppUpdateChecker;
+import com.crypto.croytowallet.Extra_Class.CheckInternetConnection;
 import com.crypto.croytowallet.ImtSmart.ImtSmartCoinScan;
 import com.crypto.croytowallet.ImtSmart.ImtSmartRecevied;
+import com.crypto.croytowallet.Extra_Class.InitApplication;
+import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.TransactionHistorySharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;

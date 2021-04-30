@@ -13,10 +13,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.login.Login;
 
@@ -86,10 +83,7 @@ public class Referral_code extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-        Intent intent = new Intent(getApplicationContext(), Login.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+       
     }
 
     public void referral_login(View view) {

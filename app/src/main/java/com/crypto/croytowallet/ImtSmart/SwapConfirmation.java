@@ -13,9 +13,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.crypto.croytowallet.AppUtils;
+import com.crypto.croytowallet.Extra_Class.AppUtils;
 import com.crypto.croytowallet.CoinTransfer.Payout_verification;
-import com.crypto.croytowallet.MainActivity;
+import com.crypto.croytowallet.LunchActivity.MainActivity;
 import com.crypto.croytowallet.Model.SwapModel;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;

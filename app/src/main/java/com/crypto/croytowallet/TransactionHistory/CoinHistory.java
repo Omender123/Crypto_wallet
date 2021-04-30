@@ -7,36 +7,26 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.crypto.croytowallet.Activity.Setting;
 import com.crypto.croytowallet.Adapter.CoinSpinnerAdapter;
 import com.crypto.croytowallet.Adapter.Coin_History_Adapter;
-import com.crypto.croytowallet.Adapter.Transaaction_history_adapter;
-import com.crypto.croytowallet.ImtSmart.ImtSmartGraphLayout;
-import com.crypto.croytowallet.ImtSmart.imtSwap;
 import com.crypto.croytowallet.Interface.HistoryClickLister;
-import com.crypto.croytowallet.MainActivity;
+import com.crypto.croytowallet.LunchActivity.MainActivity;
 import com.crypto.croytowallet.Model.CoinModal;
-import com.crypto.croytowallet.Model.TransactionHistoryModel;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.TransactionHistorySharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.Transaction_HistoryModel;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
-import com.crypto.croytowallet.Splash_Screen;
 import com.crypto.croytowallet.database.RetrofitClient;
-import com.crypto.croytowallet.login.Login;
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.zcw.togglebutton.ToggleButton;
 
@@ -46,8 +36,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import de.mateware.snacky.Snacky;
 import okhttp3.ResponseBody;

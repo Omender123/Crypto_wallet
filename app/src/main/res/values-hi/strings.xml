@@ -292,7 +292,7 @@
     <string name = "top_money"> टॉपअप मनी </string>
     <string name = "top_money1"> पैसे जोड़ने के लिए अपना टॉप अप तरीका चुनें </string>
     <string name = "paypal"> पे पाल </string>
-    <string name = "bank"> बैंक </string>
+    <string name = "bank"> बैंक स्थानांतरण</string>
     <string name = "account_no"> बैंक खाता संख्या </string>
     <string name = "transfer"> स्थानांतरण </string>
     <string name = "bank_name"> बैंक नाम </string>
@@ -301,4 +301,5 @@
     <string name = "ifsc"> IFSC कोड </string>
     <string name = "bank_hol"> बैंक होल्डर का नाम </string>
     <string name = "bank_show"> बैंक विवरण दिखाएं </string>
+    <string name="qr_code">थाई क्यूआर कोड</string>
 </resources>

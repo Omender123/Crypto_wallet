@@ -1,7 +1,6 @@
 package com.crypto.croytowallet.fragement;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.icu.text.DecimalFormat;
@@ -10,7 +9,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,10 +29,7 @@ import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.crypto.croytowallet.Adapter.CustomSpinnerAdapter;
-import com.crypto.croytowallet.AppUtils;
-import com.crypto.croytowallet.ImtSmart.ImtSmartGraphLayout;
 import com.crypto.croytowallet.ImtSmart.SwapConfirmation;
-import com.crypto.croytowallet.ImtSmart.imtSwap;
 import com.crypto.croytowallet.Model.SwapModel;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
@@ -43,7 +38,6 @@ import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
 import com.crypto.croytowallet.database.RetrofitClient;
-import com.crypto.croytowallet.database.RetrofitGraph;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONException;
@@ -58,7 +52,6 @@ import de.mateware.snacky.Snacky;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 
 public class Exchange extends Fragment implements View.OnClickListener {
     Spinner sendSpinner, reciveSpinner;

@@ -1,4 +1,4 @@
-package com.crypto.croytowallet;
+package com.crypto.croytowallet.fragement;
 
 import android.os.Bundle;
 
@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
 import com.crypto.croytowallet.Adapter.ExpandableListAdapter;
+import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.database.RetrofitClient;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
@@ -28,7 +29,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Payment_Pager extends Fragment {
+
+public class About_Pager extends Fragment {
     KProgressHUD progressDialog;
 
     private HashMap<String, String> listDataChild;
@@ -39,14 +41,17 @@ public class Payment_Pager extends Fragment {
     private ExpandableListView expandableListView;
     private int lastExpandedPosition = -1;
 
-    public Payment_Pager() {
+   public About_Pager() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view= inflater.inflate(R.layout.fragment_payment__pager, container, false);
+
+
         // Inflate the layout for this fragment
+        View view=inflater.inflate(R.layout.fragment_about__pager, container, false);;
+
 
         expandableListView = view.findViewById(R.id.expandableListView);
 
@@ -55,13 +60,12 @@ public class Payment_Pager extends Fragment {
         answers = new ArrayList<>();
 
         getFAQ();
+
         return view;
     }
-
     private void getFAQ() {
 
-/*
-        progressDialog = KProgressHUD.create(getContext())
+       /* progressDialog = KProgressHUD.create(getContext())
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel("Please wait.....")
                 .setCancellable(false)
@@ -73,13 +77,12 @@ public class Payment_Pager extends Fragment {
 */
 
 
-
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().GetFAQ("Payment");
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().GetFAQ("About");
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-               // hidepDialog();
+              //  hidepDialog();
                 String s=null;
 
                 if (response.code()==200){
@@ -153,7 +156,7 @@ public class Payment_Pager extends Fragment {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                //hidepDialog();
+              //  hidepDialog();
 
                 Snacky.builder()
                         .setActivity(getActivity())

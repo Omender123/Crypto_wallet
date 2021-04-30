@@ -1,4 +1,4 @@
-package com.crypto.croytowallet;
+package com.crypto.croytowallet.Extra_Class;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 
 import com.crypto.croytowallet.Activity.Setting;
+import com.crypto.croytowallet.R;
 
 import org.jsoup.Jsoup;
 

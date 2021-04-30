@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.icu.text.DecimalFormat;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,16 +13,18 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.crypto.croytowallet.Extra_Class.MyPreferences;
+import com.crypto.croytowallet.Extra_Class.PrefConf;
 import com.crypto.croytowallet.R;
+import com.crypto.croytowallet.SharedPrefernce.SharedBankDetails;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.database.RetrofitClient;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONArray;
@@ -44,11 +45,12 @@ public class Enter_TopUp_Amount extends AppCompatActivity {
     Spinner  sp_currency;
     ArrayList<String> Currency;
     CardView done;
-    String  Amount, currencyType,imtPrices,token;
+    String  Amount, currencyType,imtPrices,token,options;
     UserData userData;
     KProgressHUD progressDialog;
     TextView text_send;
     Double totalAmoumt;
+    BottomSheetDialogFragment myBottomSheet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,10 +63,19 @@ public class Enter_TopUp_Amount extends AppCompatActivity {
         Currency = new ArrayList<String>();
 
 
+
+        try{
+            Bundle bundle = getIntent().getExtras();
+            options =bundle.getString("options");
+
+        }catch (Exception e){}
+
+
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
+        myBottomSheet = MyBottomSheetDialogFragment.newInstance("Modal Bottom Sheet");
 
         token = userData.getToken();
-
+        Show_Details();
         getCurrency();
 
       done.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +92,15 @@ public class Enter_TopUp_Amount extends AppCompatActivity {
                           .show();
 
               }else{
-                  startActivity(new Intent(getApplicationContext(),ShowTop_UP.class).putExtra("totalAmount",totalAmoumt));
+                  if (options.equalsIgnoreCase("bank")){
+                      myBottomSheet.show(getSupportFragmentManager(), myBottomSheet.getTag());
+
+                      MyPreferences.getInstance(getApplicationContext()).putString(PrefConf.RECEIVED_AMOUNT, String.valueOf(totalAmoumt));
+
+                  }else {
+                      startActivity(new Intent(getApplicationContext(),ShowTop_UP.class).putExtra("totalAmount",totalAmoumt));
+                  }
+
               }
           }
       });
@@ -136,6 +155,64 @@ public class Enter_TopUp_Amount extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         onSaveInstanceState(new Bundle());
+    }
+
+    private void Show_Details() {
+
+        UserData userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
+        Call<ResponseBankDetails> bankDetailsCall = RetrofitClient.getInstance().getApi().getBankDetails(userData.getToken());
+        bankDetailsCall.enqueue(new Callback<ResponseBankDetails>() {
+            @Override
+            public void onResponse(Call<ResponseBankDetails> call, Response<ResponseBankDetails> response) {
+
+                String  s = null;
+                if (response.isSuccessful()){
+
+                    ResponseBankDetails   responseBankDetails = response.body();
+
+
+                    ResponseBankDetails  responseBankDetails1 =new ResponseBankDetails(responseBankDetails.getAccountName(),responseBankDetails.getAccountNo(),responseBankDetails.getBankName(),responseBankDetails.getIFSCcode());
+
+                    SharedBankDetails.getInstance(getApplicationContext()).SetBankDetails(responseBankDetails1);
+
+
+
+
+                }else{
+
+                    try {
+                        s=response.errorBody().string();
+                        JSONObject jsonObject1=new JSONObject(s);
+                        String error =jsonObject1.getString("error");
+
+                        Snacky.builder()
+                                .setActivity(Enter_TopUp_Amount.this)
+                                .setText(error)
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBankDetails> call, Throwable t) {
+                Snacky.builder()
+                        .setActivity(Enter_TopUp_Amount.this)
+                        .setText(t.getLocalizedMessage())
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+
+            }
+        });
+
     }
 
     public void getCurrency() {
@@ -225,8 +302,6 @@ public class Enter_TopUp_Amount extends AppCompatActivity {
             }
         });
     }
-
-
 
     public  void getImtDetails(String currency){
 
@@ -331,6 +406,8 @@ public class Enter_TopUp_Amount extends AppCompatActivity {
 
 
     }
+
+
     private void showpDialog() {
         if (!progressDialog.isShowing())
             progressDialog.show();

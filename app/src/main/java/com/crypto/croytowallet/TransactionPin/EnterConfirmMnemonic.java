@@ -12,19 +12,14 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SignUpData;
 import com.crypto.croytowallet.SharedPrefernce.SignUpRefernace;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
-import com.crypto.croytowallet.login.Login;
-import com.crypto.croytowallet.signup.Add_Verification;
 import com.crypto.croytowallet.signup.GmailCorrection;
 import com.kaopiz.kprogresshud.KProgressHUD;
 

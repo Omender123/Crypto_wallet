@@ -14,9 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.crypto.croytowallet.Activity.Graph_layout;
-import com.crypto.croytowallet.Activity.WalletReceive;
-import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.Updated_data;

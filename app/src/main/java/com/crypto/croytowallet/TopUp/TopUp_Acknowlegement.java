@@ -10,13 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.crypto.croytowallet.ImtSmart.SwapAcknowledgement;
-import com.crypto.croytowallet.MainActivity;
-import com.crypto.croytowallet.Model.CurrencyModel;
+import com.crypto.croytowallet.LunchActivity.MainActivity;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedRequestResponse;
-import com.crypto.croytowallet.SharedPrefernce.SwapResponsePrefernce;
-import com.crypto.croytowallet.SharedPrefernce.SwapSharedPrefernce;
 
 import de.mateware.snacky.Snacky;
 

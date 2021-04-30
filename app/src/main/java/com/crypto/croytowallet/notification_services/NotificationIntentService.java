@@ -3,7 +3,7 @@ package com.crypto.croytowallet.notification_services;
 import android.app.IntentService;
 import android.content.Intent;
 
-import com.crypto.croytowallet.MainActivity;
+import com.crypto.croytowallet.LunchActivity.MainActivity;
 
 public class NotificationIntentService extends IntentService {
     /**

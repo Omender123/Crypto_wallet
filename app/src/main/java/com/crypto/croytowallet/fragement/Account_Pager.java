@@ -1,4 +1,4 @@
-package com.crypto.croytowallet;
+package com.crypto.croytowallet.fragement;
 
 import android.os.Bundle;
 
@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
 import com.crypto.croytowallet.Adapter.ExpandableListAdapter;
+import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.database.RetrofitClient;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
@@ -29,7 +30,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class About_Pager extends Fragment {
+public class Account_Pager extends Fragment {
     KProgressHUD progressDialog;
 
     private HashMap<String, String> listDataChild;
@@ -40,7 +41,7 @@ public class About_Pager extends Fragment {
     private ExpandableListView expandableListView;
     private int lastExpandedPosition = -1;
 
-   public About_Pager() {
+    public Account_Pager() {
     }
 
     @Override
@@ -49,19 +50,21 @@ public class About_Pager extends Fragment {
 
 
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_about__pager, container, false);;
+        View view =inflater.inflate(R.layout.account_pager, container, false);
+         expandableListView = view.findViewById(R.id.expandableListView);
 
-
-        expandableListView = view.findViewById(R.id.expandableListView);
 
         questions = new ArrayList<>();
         listDataChild = new HashMap<>();
         answers = new ArrayList<>();
 
-        getFAQ();
 
+
+
+        getFAQ();
         return view;
     }
+
     private void getFAQ() {
 
        /* progressDialog = KProgressHUD.create(getContext())
@@ -76,7 +79,7 @@ public class About_Pager extends Fragment {
 */
 
 
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().GetFAQ("About");
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().GetFAQ("Account");
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -120,7 +123,7 @@ public class About_Pager extends Fragment {
                         }
                     });
 
-                    expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+                   expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
                         @Override
                         public void onGroupExpand(int i) {
                             if (lastExpandedPosition != -1
@@ -177,5 +180,4 @@ public class About_Pager extends Fragment {
         if (progressDialog.isShowing())
             progressDialog.dismiss();
     }
-
 }

@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.crypto.croytowallet.AppUtils;
+import com.crypto.croytowallet.Extra_Class.AppUtils;
 import com.crypto.croytowallet.Interface.MessageClickListner;
 import com.crypto.croytowallet.Model.TicketChatModel;
 import com.crypto.croytowallet.R;

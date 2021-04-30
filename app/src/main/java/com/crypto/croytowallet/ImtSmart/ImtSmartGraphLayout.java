@@ -19,16 +19,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.crypto.croytowallet.Activity.Graph_layout;
-import com.crypto.croytowallet.Activity.MyMarkerView;
 import com.crypto.croytowallet.Activity.MyMarkerView1;
 import com.crypto.croytowallet.Adapter.Coin_History_Adapter;
-import com.crypto.croytowallet.CoinTransfer.CoinScan;
-import com.crypto.croytowallet.CoinTransfer.Received_Coin;
 import com.crypto.croytowallet.Interface.HistoryClickLister;
-import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.Model.CoinModal;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;

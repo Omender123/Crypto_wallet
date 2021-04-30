@@ -1,4 +1,4 @@
-package com.crypto.croytowallet;
+package com.crypto.croytowallet.Extra_Class;
 
 import android.content.ContentUris;
 import android.content.Context;

@@ -19,18 +19,16 @@ import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 
-import com.crypto.croytowallet.MainActivity;
+import com.crypto.croytowallet.LunchActivity.MainActivity;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SetTransactionPin.CuurentPin;
 import com.crypto.croytowallet.SetTransactionPin.EnterMnemonices;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.database.RetrofitClient;
-import com.crypto.croytowallet.login.Login;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONException;

@@ -6,14 +6,12 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.crypto.croytowallet.About_Pager;
-import com.crypto.croytowallet.Account_Pager;
+import com.crypto.croytowallet.fragement.About_Pager;
+import com.crypto.croytowallet.fragement.Account_Pager;
 import com.crypto.croytowallet.Adapter.Pager_Adapter;
-import com.crypto.croytowallet.MainActivity;
-import com.crypto.croytowallet.Payment_Pager;
+import com.crypto.croytowallet.fragement.Payment_Pager;
 import com.crypto.croytowallet.R;
 import com.google.android.material.tabs.TabLayout;
 

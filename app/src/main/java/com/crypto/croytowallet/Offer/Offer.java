@@ -1,7 +1,6 @@
 package com.crypto.croytowallet.Offer;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,35 +8,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.airbnb.lottie.L;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.crypto.croytowallet.Adapter.OfferAdapter;
-import com.crypto.croytowallet.Adapter.Transaaction_history_adapter;
 import com.crypto.croytowallet.Interface.HistoryClickLister;
-import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.Model.OfferModel;
 
-import com.crypto.croytowallet.Model.TransactionHistoryModel;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.OfferSharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
-import com.crypto.croytowallet.TransactionHistory.Transaction_history;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
 import com.kaopiz.kprogresshud.KProgressHUD;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import org.json.JSONArray;
 import org.json.JSONException;

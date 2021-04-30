@@ -14,9 +14,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.crypto.croytowallet.MainActivity;
+import com.crypto.croytowallet.LunchActivity.MainActivity;
 import com.crypto.croytowallet.Model.SwapModel;
 import com.crypto.croytowallet.Model.SwapRespoinseModel;
 import com.crypto.croytowallet.R;

@@ -5,30 +5,17 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.crypto.croytowallet.Adapter.Add_Currency_Adapter;
 
-import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.Model.Model_Class_Add_Currency;
 import com.crypto.croytowallet.R;
-import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
-import com.crypto.croytowallet.SharedPrefernce.UserData;
-import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.database.RetrofitGraph;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
@@ -38,8 +25,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;

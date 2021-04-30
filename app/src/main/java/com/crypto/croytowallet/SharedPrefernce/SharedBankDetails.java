@@ -7,10 +7,11 @@ import com.crypto.croytowallet.TopUp.ResponseBankDetails;
 
 public class SharedBankDetails {
     private static final String SHARED_PREF_NAME = "Prebhat";
-    private static final String KEY_USERNAME = "keyusername";
-    private static final String KEY_MNEMONIC = "keymnemonic";
-    private static final String KEY_GOOGLE_AUTH_KEY = "keyGoogle";
-    private static final String KEY_Email = "keyEmail";
+    private static final String KEY_USERNAME = "keybankname";
+    private static final String KEY_MNEMONIC = "keyAccountNo";
+    private static final String KEY_GOOGLE_AUTH_KEY = "Ifsc Code";
+    private static final String KEY_Email = "Key_HorlderName";
+    private static final String KEY_Amount = "Key_Amount";
 
     private static SharedBankDetails mInstance;
     private static Context mCtx;

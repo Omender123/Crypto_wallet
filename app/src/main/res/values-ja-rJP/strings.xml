@@ -289,7 +289,7 @@
     <string name="top_money">チャージマネー</string>
     <string name="top_money1">お金を追加するためのトップアップ方法を選択してください</string>
     <string name="paypal">ペイパル</string>
-    <string name="bank">銀行</string>
+    <string name="bank">銀行 転送</string>
     <string name="account_no">銀行口座番号</string>
     <string name="transfer">転送</string>
     <string name="bank_name">銀行名</string>
@@ -298,4 +298,5 @@
     <string name="ifsc"> IFSC</string>
     <string name="bank_hol">銀行名</string>
     <string name = "bank_show">銀行の詳細を表示</string>
+    <string name = "qr_code">タイのQRコード</string>
 </resources>

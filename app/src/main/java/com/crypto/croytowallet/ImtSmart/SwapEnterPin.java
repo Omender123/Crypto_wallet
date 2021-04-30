@@ -2,7 +2,6 @@ package com.crypto.croytowallet.ImtSmart;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,18 +11,14 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chaos.view.PinView;
-import com.crypto.croytowallet.Adapter.TickectChatAdapter;
-import com.crypto.croytowallet.AppUtils;
-import com.crypto.croytowallet.Chat.TicketChat;
-import com.crypto.croytowallet.MainActivity;
+import com.crypto.croytowallet.Extra_Class.AppUtils;
+import com.crypto.croytowallet.LunchActivity.MainActivity;
 import com.crypto.croytowallet.Model.SwapModel;
 import com.crypto.croytowallet.Model.SwapRespoinseModel;
-import com.crypto.croytowallet.Model.TicketChatModel;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.SwapResponsePrefernce;
@@ -32,7 +27,6 @@ import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.database.RetrofitClient;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 

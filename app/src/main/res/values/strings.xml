@@ -293,7 +293,7 @@
     <string name="top_money">Topup Money</string>
     <string name="top_money1">Select your Top Up method to add money</string>
     <string name="paypal">Paypal</string>
-    <string name="bank">Bank</string>
+    <string name="bank">Bank Transfer</string>
     <string name="account_no">Bank Account Number</string>
     <string name="transfer">Transfer</string>
     <string name="bank_name">Bank Name</string>
@@ -302,6 +302,7 @@
     <string name="ifsc">IFSC Code</string>
     <string name="bank_hol">Bank Holder Name</string>
     <string name="bank_show">Show Bank Details</string>
+    <string name="qr_code">Thai QR code</string>
 
 
 </resources>

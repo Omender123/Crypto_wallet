@@ -3,26 +3,19 @@ package com.crypto.croytowallet.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.icu.text.DecimalFormat;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
-import com.bumptech.glide.Glide;
-import com.crypto.croytowallet.Interface.BannerResponeDone;
-import com.crypto.croytowallet.MainActivity;
-import com.crypto.croytowallet.Offer.Offer;
+import com.crypto.croytowallet.LunchActivity.MainActivity;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.database.RetrofitClient;
-import com.google.gson.JsonObject;
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.squareup.picasso.Picasso;
 

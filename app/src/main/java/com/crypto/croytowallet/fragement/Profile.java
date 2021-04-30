@@ -23,13 +23,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
-import com.crypto.croytowallet.Activity.Graph_layout;
 import com.crypto.croytowallet.Activity.MyReferral_code;
 import com.crypto.croytowallet.Activity.Security;
 import com.crypto.croytowallet.Activity.Setting;
 import com.crypto.croytowallet.Activity.Support;
 import com.crypto.croytowallet.Activity.Threat_Mode;
-import com.crypto.croytowallet.MainActivity;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;

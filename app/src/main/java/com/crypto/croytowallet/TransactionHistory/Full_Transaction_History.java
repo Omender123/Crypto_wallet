@@ -5,7 +5,6 @@ import androidx.cardview.widget.CardView;
 
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -14,10 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.crypto.croytowallet.Activity.Graph_layout;
-import com.crypto.croytowallet.Activity.WalletBalance;
-import com.crypto.croytowallet.AppUtils;
-import com.crypto.croytowallet.ImtSmart.ImtSmartGraphLayout;
+import com.crypto.croytowallet.Extra_Class.AppUtils;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.TransactionHistorySharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.Transaction_HistoryModel;

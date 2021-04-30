@@ -21,13 +21,13 @@ android {
 
     defaultConfig {
         applicationId "com.crypto.croytowallet"
-      //  minSdkVersion 21
+        //  minSdkVersion 21
         minSdkVersion project.ext.minimumSdkVersion
         targetSdkVersion 30
         versionCode generateVersionCode() // 190010203
         versionName generateVersionName() // 1.2.3-SNAPSHOT
-       // versionCode 12
-       // versionName "0.1"
+        // versionCode 12
+        // versionName "0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -104,7 +104,7 @@ dependencies {
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.8'
 
     // graph
-   // implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
+    // implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
     //circle Image
@@ -116,7 +116,7 @@ dependencies {
 
     implementation 'com.geniusforapp.fancydialog:FancyDialog:0.1.4'
 
-    implementation ('io.socket:socket.io-client:2.0.0') {
+    implementation('io.socket:socket.io-client:2.0.0') {
         exclude group: 'org.json', module: 'json'
     }
 
@@ -126,6 +126,11 @@ dependencies {
 
     // Shimmer
     implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
+
+    // Scratch view library
+
+    implementation 'com.github.cooltechworks:ScratchView:v1.1'
+
 }
 
 private Integer generateVersionCode() {
@@ -134,12 +139,6 @@ private Integer generateVersionCode() {
 
 private String generateVersionName() {
     String versionName = "${ext.versionMajor}.${ext.versionMinor}.${ext.versionPatch}"
-    /*if (ext.versionClassifier == null && ext.isSnapshot) {
-        ext.versionClassifier = ""
-    }
 
-    if (ext.versionClassifier != null) {
-        versionName += "" + ext.versionClassifier
-    }*/
     return versionName;
 }

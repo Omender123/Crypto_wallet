@@ -1,4 +1,4 @@
-package com.crypto.croytowallet;
+package com.crypto.croytowallet.Extra_Class;
 
 import android.app.Application;
 import android.content.SharedPreferences;

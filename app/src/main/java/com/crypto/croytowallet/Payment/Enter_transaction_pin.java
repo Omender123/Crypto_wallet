@@ -199,7 +199,7 @@ CardView pay_money;
                 hidepDialog();
                 Snacky.builder()
                         .setActivity(Enter_transaction_pin.this)
-                        .setText("Please Check Your Internet Connection")
+                        .setText(t.getLocalizedMessage())
                         .setDuration(Snacky.LENGTH_SHORT)
                         .setActionText(android.R.string.ok)
                         .error()

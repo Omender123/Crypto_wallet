@@ -290,7 +290,7 @@
     <string name="top_money">充值钱</string>
     <string name="top_money1">选择您的充值方法以充值</string>
     <string name="paypal"> 付款朋友 </string>
-    <string name="bank">银行</string>
+    <string name="bank">银行 转让</string>
     <string name="account_no">银行帐号</string>
     <string name="transfer">转让</string>
     <string name="bank_name">银行名称</string>
@@ -299,4 +299,6 @@
     <string name="ifsc"> IFSC 代码</string>
     <string name="bank_hol">银行持有人名称</string>
     <string name ="bank_show">显示银行详细信息</string>
+    <string name ="qr_code">泰国 二维码 码</string>
+
 </resources>

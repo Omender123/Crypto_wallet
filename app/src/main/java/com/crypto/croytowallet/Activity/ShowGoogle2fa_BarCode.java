@@ -17,15 +17,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.crypto.croytowallet.MainActivity;
+import com.crypto.croytowallet.LunchActivity.MainActivity;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
-import com.crypto.croytowallet.SharedPrefernce.SignUpData;
-import com.crypto.croytowallet.SharedPrefernce.SignUpRefernace;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.database.RetrofitClient;
-import com.crypto.croytowallet.signup.Google_auth;
-import com.crypto.croytowallet.signup.sucessfullverification;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.zxing.WriterException;
 import com.kaopiz.kprogresshud.KProgressHUD;

@@ -129,6 +129,15 @@
         android:fontFamily="@font/montserrat"
         tools:ignore="RtlCompat" />
 
+    <Button
+        android:id="@+id/show_dailog"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="50dp"
+        android:text="@string/transfer"
+        android:textAllCaps="false"
+        android:layout_marginBottom="20dp"
+        android:textStyle="bold" />
 
 
 </LinearLayout>

@@ -28,8 +28,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,17 +37,13 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.crypto.croytowallet.MainActivity;
+import com.crypto.croytowallet.LunchActivity.MainActivity;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.CrashDataModel;
 import com.crypto.croytowallet.SharedPrefernce.CreshSharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
-import com.crypto.croytowallet.SharedPrefernce.SignUpData;
-import com.crypto.croytowallet.SharedPrefernce.SignUpRefernace;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
-import com.crypto.croytowallet.VolleyDatabase.URLs;
 import com.crypto.croytowallet.database.RetrofitClient;
-import com.crypto.croytowallet.signup.GmailCorrection;
 import com.crypto.croytowallet.signup.Referral_code;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -57,26 +51,19 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
-import com.google.gson.JsonObject;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import de.mateware.snacky.Snacky;
@@ -656,14 +643,13 @@ public void listener(){
         @Override
         public void onClick(View v) {
             startActivity(new Intent(getApplicationContext(), ForgetPassword.class).putExtra("options","0"));
-            finish();
+
         }
     });
     signup.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             startActivity(new Intent(getApplicationContext(), Referral_code.class));
-            finish();
         }
     });
 

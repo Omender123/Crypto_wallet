@@ -1,4 +1,4 @@
-package com.crypto.croytowallet;
+package com.crypto.croytowallet.Extra_Class;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 
 
+import com.crypto.croytowallet.R;
 
 import java.text.DateFormat;
 import java.text.ParseException;

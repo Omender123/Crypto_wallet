@@ -10,9 +10,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Base64;
 import android.view.View;
 
 import android.view.animation.Animation;
@@ -29,17 +27,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crypto.croytowallet.Adapter.CountryNameSpinnerAddapter;
-import com.crypto.croytowallet.Chat.TicketChat;
-import com.crypto.croytowallet.ImagePath;
-import com.crypto.croytowallet.MainActivity;
+import com.crypto.croytowallet.Extra_Class.ImagePath;
+import com.crypto.croytowallet.LunchActivity.MainActivity;
 import com.crypto.croytowallet.Model.CountryModel;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
-import com.crypto.croytowallet.Utility;
+import com.crypto.croytowallet.Extra_Class.Utility;
 import com.crypto.croytowallet.database.RetrofitClient;
 import com.crypto.croytowallet.database.RetrofitCountryName;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
@@ -48,14 +44,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import de.mateware.snacky.Snacky;
 import okhttp3.MediaType;
