@@ -41,6 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/coin_address"
+        app:hintTextColor="@color/toolbar_text_color"
         style="@style/OutlineBox"
         android:layout_margin="20dp">
         <EditText
@@ -48,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:textColor="@color/toolbar"
+            android:textColor="@color/toolbar_text_color"
             android:inputType="text"
             android:drawableLeft="@drawable/ic_user_name"
             android:drawableStart="@drawable/ic_user_name"

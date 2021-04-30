@@ -167,6 +167,7 @@
                     android:drawablePadding="10dp"
                     android:background="@drawable/verifying_textview"
                     android:drawableTint="@android:color/darker_gray"
+                    android:textColor="@color/toolbar_text_color"
                     android:ems="10"
                     android:inputType="numberDecimal" />
             </com.google.android.material.textfield.TextInputLayout>

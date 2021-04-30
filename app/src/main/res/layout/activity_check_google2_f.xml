@@ -68,6 +68,7 @@
             android:drawablePadding="10dp"
             android:drawableTint="@android:color/darker_gray"
             android:ems="10"
+            android:textColor="@color/black"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -89,6 +90,7 @@
             android:drawablePadding="10dp"
             android:drawableTint="@android:color/darker_gray"
             android:ems="10"
+            android:textColor="@color/black"
             android:inputType="numberPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -110,6 +112,7 @@
             android:drawablePadding="10dp"
             android:drawableTint="@android:color/darker_gray"
             android:ems="10"
+            android:textColor="@color/black"
             android:inputType="numberPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 

@@ -185,7 +185,7 @@ tools:context=".TransactionHistory.Full_Transaction_History">
                 android:layout_toStartOf="@+id/btn_copy"
                 android:layout_toEndOf="@+id/view"
                 android:fontFamily="@font/montserrat"
-                android:textColor="#000"
+                android:textColor="@color/toolbar_text_color"
                 android:textSize="15dp" />
 
             <TextView
@@ -255,7 +255,7 @@ tools:context=".TransactionHistory.Full_Transaction_History">
                 android:layout_toEndOf="@+id/view1"
                 android:fontFamily="@font/montserrat"
                 android:justificationMode="inter_word"
-                android:textColor="#000"
+                android:textColor="@color/toolbar_text_color"
                 android:textSize="17dp" />
 
             <View
@@ -308,7 +308,7 @@ tools:context=".TransactionHistory.Full_Transaction_History">
                 android:fontFamily="@font/montserrat"
                 android:justificationMode="inter_word"
                 android:text="@string/done"
-                android:textColor="#000"
+                android:textColor="@color/toolbar_text_color"
                 android:textSize="17dp" />
 
             <ImageView

@@ -95,6 +95,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawablePadding="10dp"
+                    android:textColor="@color/black"
                     android:drawableTint="@android:color/darker_gray"
                     android:ems="10"
                     android:inputType="textPassword" />
@@ -116,6 +117,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawablePadding="10dp"
+                    android:textColor="@color/black"
                     android:drawableTint="@android:color/darker_gray"
                     android:ems="10"
                     android:inputType="numberPassword" />
@@ -137,6 +139,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawablePadding="10dp"
+                    android:textColor="@color/black"
                     android:drawableTint="@android:color/darker_gray"
                     android:ems="10"
                     android:inputType="numberPassword" />

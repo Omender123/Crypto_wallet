@@ -103,7 +103,7 @@
                 android:textStyle="bold"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/black"/>
+                android:textColor="@color/toolbar_text_color"/>
         </LinearLayout>
         <TextView
             android:id="@+id/go_top_up"
