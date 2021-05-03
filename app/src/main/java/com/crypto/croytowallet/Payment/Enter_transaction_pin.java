@@ -14,11 +14,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chaos.view.PinView;
+import com.crypto.croytowallet.Extra_Class.ApiResponse.PearToPearResponse;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.SharedRequestResponse;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.database.RetrofitClient;
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -29,7 +30,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 import de.mateware.snacky.Snacky;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -118,48 +118,44 @@ CardView pay_money;
         showpDialog();
 
         String userAddressID=userData.getId();
-        String cryptoCurrency="airDropIMT";
         Bundle bundle = getIntent().getExtras();
         String  Amount = bundle.getString("amount12");
-      //  int amout = Integer.parseInt(Amount);
 
         String enterPin=pinView.getText().toString();
         String username = preferences.getString("username","");
-        String to_addressID=preferences.getString("id","");
         String token=userData.getToken();
 
 
-       // Toast.makeText(this, ""+amout, Toast.LENGTH_SHORT).show();
 
 
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().P2P(token,Amount,enterPin,userAddressID,username);
 
-        call.enqueue(new Callback<ResponseBody>() {
+        Call<PearToPearResponse> call = RetrofitClient.getInstance().getApi().P2P(token,Amount,enterPin,userAddressID,username);
+
+        call.enqueue(new Callback<PearToPearResponse>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<PearToPearResponse> call, Response<PearToPearResponse> response) {
                 String s =null;
                 hidepDialog();
                 if (response.code()==200){
+                    pinView.setLineColor(getResources().getColor(R.color.light_gray));
 
-                    try {
-                        s=response.body().string();
-                        JSONObject object=new JSONObject(s);
-                        String result=object.getString("result");
-                        JSONObject object1=new JSONObject(result);
-                        String id=object1.getString("_id");
-                        String status=object1.getString("status");
-                        String amtOfCrypto=object1.getString("amount");
+                    PearToPearResponse pearToPearResponse = response.body();
 
-                        Intent intent = new Intent(Enter_transaction_pin.this, Complate_payment.class);
-                        intent.putExtra("status",status);
-                        intent.putExtra("amt",amtOfCrypto);
-                        startActivity(intent);
+                    SharedRequestResponse.getInstans(getApplicationContext()).SetData(
+                            pearToPearResponse.getResult().getId(),
+                            pearToPearResponse.getResult().getReceiverName(),
+                            pearToPearResponse.getResult().getSenderName(),
+                            String.valueOf(pearToPearResponse.getResult().getAmount()),
+                            pearToPearResponse.getResult().getStatus(),
+                            "");
 
-                        pinView.setLineColor(getResources().getColor(R.color.light_gray));
-                        // Toast.makeText(Enter_transaction_pin.this, ""+s, Toast.LENGTH_SHORT).show();
-                    } catch (IOException | JSONException e) {
-                        e.printStackTrace();
-                    }
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            startActivity(new Intent(getApplicationContext(), Complate_payment.class));
+                        }
+                    },500);
+
                  }else if (response.code()==400){
                     try {
                         s=response.errorBody().string();
@@ -195,7 +191,7 @@ CardView pay_money;
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<PearToPearResponse> call, Throwable t) {
                 hidepDialog();
                 Snacky.builder()
                         .setActivity(Enter_transaction_pin.this)

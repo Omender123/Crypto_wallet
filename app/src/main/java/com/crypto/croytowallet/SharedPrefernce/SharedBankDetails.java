@@ -3,7 +3,7 @@ package com.crypto.croytowallet.SharedPrefernce;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.crypto.croytowallet.TopUp.ResponseBankDetails;
+import com.crypto.croytowallet.Extra_Class.ApiResponse.ResponseBankDetails;
 
 public class SharedBankDetails {
     private static final String SHARED_PREF_NAME = "Prebhat";

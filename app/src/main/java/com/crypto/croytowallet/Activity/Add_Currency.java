@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -81,7 +82,7 @@ public class Add_Currency extends AppCompatActivity {
 
         showpDialog();
 
-        String coinid="ripple,ethereum,bitcoin,litecoin,tether,link,okb,cdai,binancecoin,usd-coin,wrapped-bitcoin,crypto-com-chain,leo-token,wrapped-filecoin";
+        String coinid="ripple,ethereum,bitcoin,litecoin,tether,link,okb,cdai,binancecoin,usd-coin,wrapped-bitcoin,crypto-com-chain,leo-token,wrapped-filecoin,tron";
 
         Call<ResponseBody> call = RetrofitGraph.getInstance().getApi().getAllCoin(coinid,"usd");
 

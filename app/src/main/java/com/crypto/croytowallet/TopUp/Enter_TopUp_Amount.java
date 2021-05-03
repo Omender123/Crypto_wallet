@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.crypto.croytowallet.Extra_Class.ApiResponse.ResponseBankDetails;
 import com.crypto.croytowallet.Extra_Class.MyPreferences;
 import com.crypto.croytowallet.Extra_Class.PrefConf;
 import com.crypto.croytowallet.R;

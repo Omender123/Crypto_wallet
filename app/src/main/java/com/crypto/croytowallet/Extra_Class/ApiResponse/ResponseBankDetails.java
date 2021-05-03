@@ -1,4 +1,4 @@
-package com.crypto.croytowallet.TopUp;
+package com.crypto.croytowallet.Extra_Class.ApiResponse;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

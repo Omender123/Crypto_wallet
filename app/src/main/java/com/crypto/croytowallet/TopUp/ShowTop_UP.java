@@ -16,12 +16,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crypto.croytowallet.Extra_Class.ApiResponse.ResponseBankDetails;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedBankDetails;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.database.RetrofitClient;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.zxing.WriterException;
 import com.kaopiz.kprogresshud.KProgressHUD;
 

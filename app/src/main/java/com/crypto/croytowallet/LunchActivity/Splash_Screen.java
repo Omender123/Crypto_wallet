@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.crypto.croytowallet.R;
+import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.login.Login;
 
 import de.mateware.snacky.Snacky;
@@ -55,8 +56,15 @@ public class Splash_Screen extends AppCompatActivity {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    startActivity(new Intent(Splash_Screen.this, Login.class));
-                    finish();
+                    if (SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()) {
+                        startActivity(new Intent(Splash_Screen.this, MainActivity.class));
+                        finish();
+
+                    }else{
+                        startActivity(new Intent(Splash_Screen.this, Login.class));
+                        finish();
+                    }
+
                 }
             },SPLASH_SCREEN);
         }

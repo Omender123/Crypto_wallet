@@ -4,7 +4,7 @@ plugins {
 }
 ext.versionMajor = 12
 ext.versionMinor = 0
-ext.versionPatch = 5
+ext.versionPatch = 6
 ext.versionClassifier = null
 ext.isSnapshot = true
 ext.minimumSdkVersion = 21
@@ -100,7 +100,7 @@ dependencies {
     implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.3'
     implementation 'com.budiyev.android:code-scanner:2.1.0'
     implementation 'com.karumi:dexter:6.0.0'
-// gif libary
+    // gif libary
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.8'
 
     // graph

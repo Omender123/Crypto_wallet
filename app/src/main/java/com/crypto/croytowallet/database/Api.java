@@ -1,9 +1,9 @@
 package com.crypto.croytowallet.database;
 
-import com.crypto.croytowallet.TopUp.ResponseBankDetails;
+import com.crypto.croytowallet.Extra_Class.ApiResponse.PublicKeyResponse;
+import com.crypto.croytowallet.Extra_Class.ApiResponse.PearToPearResponse;
+import com.crypto.croytowallet.Extra_Class.ApiResponse.ResponseBankDetails;
 import com.google.gson.JsonObject;
-
-import java.util.Map;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -12,7 +12,6 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
-import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -20,7 +19,6 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
-import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -97,7 +95,7 @@ public interface Api {
 
     @FormUrlEncoded
     @POST("transaction/peerToPeer")
-    Call<ResponseBody> P2P(
+    Call<PearToPearResponse> P2P(
             @Header("Authorization") String token,
             @Field("amount") String amount,
             @Field("transactionPin") String transactionPin,
@@ -412,19 +410,13 @@ public interface Api {
             @Header("Authorization") String Authtoken
     );
 
-    /*@FormUrlEncoded
-    @POST("pending/pendingtransfer")
-    Call<ResponseBody>SendAddAmountRequest(
+    @FormUrlEncoded
+    @POST("user/cryptoKey")
+    Call<PublicKeyResponse>GetPublicKey(
             @Header("Authorization") String Authtoken,
-            @Field("accountName") String Bankname,
-            @Field("accountNo") String Acc_no,
-            @Field("customerName") String Holder_name,
-            @Field("transactionId") String TransId,
-            @Field("amount") String Amount,
-            @Field("currency") String Currency
+            @Field("crypto") String CoinId
+    );
 
-
-    );*/
     @Multipart
     @POST("pending/pendingtransfer")
     Call<ResponseBody> SendAddAmountRequest(

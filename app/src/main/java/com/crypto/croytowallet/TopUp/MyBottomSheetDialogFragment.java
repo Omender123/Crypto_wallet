@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
+import com.crypto.croytowallet.Extra_Class.ApiResponse.ResponseBankDetails;
 import com.crypto.croytowallet.Extra_Class.MyPreferences;
 import com.crypto.croytowallet.Extra_Class.PrefConf;
 import com.crypto.croytowallet.R;

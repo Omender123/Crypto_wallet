@@ -132,11 +132,7 @@ TextInputLayout layout_otp;
         getosName();
         //if the user is already logged in we will directly start the profile activity
 
-   if (SharedPrefManager.getInstance(this).isLoggedIn()) {
-            finish();
-            startActivity(new Intent(this, MainActivity.class));
-            return;
-        }
+
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
