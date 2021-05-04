@@ -15,11 +15,14 @@ import android.graphics.drawable.Drawable;
 import android.icu.text.DecimalFormat;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.crypto.croytowallet.Activity.Graph_layout;
 import com.crypto.croytowallet.Activity.MyMarkerView1;
 import com.crypto.croytowallet.Adapter.Coin_History_Adapter;
 import com.crypto.croytowallet.Interface.HistoryClickLister;
@@ -41,6 +44,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.Utils;
+import com.google.gson.JsonObject;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONArray;
@@ -58,7 +62,7 @@ import retrofit2.Response;
 
 public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnClickListener, HistoryClickLister {
     ImageView back, received, send;
-    TextView price, balances, coinprice, increaseRate, null1,more;
+    TextView price, balances, coinprice, increaseRate, null1, more;
     KProgressHUD progressDialog;
     UserData userData;
     private LineChart chart;
@@ -84,8 +88,8 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
         price = findViewById(R.id.price);
         balances = findViewById(R.id.balance);
         coinprice = findViewById(R.id.coinPrice);
-        recyclerView=findViewById(R.id.recyclerView);
-        history_Empty =findViewById(R.id.txt_list_is_empty);
+        recyclerView = findViewById(R.id.recyclerView);
+        history_Empty = findViewById(R.id.txt_list_is_empty);
         more = findViewById(R.id.moretransactions);
 
         increaseRate = findViewById(R.id.increaseRate);
@@ -114,7 +118,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
 
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
         sharedPreferences1 = getSharedPreferences("imtInfo", Context.MODE_PRIVATE);
-        coinModals =new ArrayList<CoinModal>();
+        coinModals = new ArrayList<CoinModal>();
         sharedPreferences = getApplicationContext().getSharedPreferences("currency", 0);
         currency2 = sharedPreferences.getString("currency1", "usd");
         CurrencySymbols = sharedPreferences.getString("Currency_Symbols", "$");
@@ -123,7 +127,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
         price1 = sharedPreferences1.getString("price", null);
         String increaseRate1 = sharedPreferences1.getString("chanage", null);
         increaseRate.setText(increaseRate1);
-        price.setText(CurrencySymbols+price1);
+        price.setText(CurrencySymbols + price1);
 
         try {
             increaseRate.setTextColor(increaseRate1.contains("-") ?
@@ -151,7 +155,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.back:
-               onBackPressed();
+                onBackPressed();
                 break;
 
             case R.id.receive_coin:
@@ -295,15 +299,30 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                         s = response.errorBody().string();
                         JSONObject jsonObject1 = new JSONObject(s);
                         String error = jsonObject1.getString("error");
+                        String body1 = jsonObject1.getString("body");
+                        JSONObject object = new JSONObject(body1);
+                        String data = object.getString("data");
+
+                        Toast.makeText(ImtSmartGraphLayout.this, ""+data, Toast.LENGTH_SHORT).show();
+                        if (!data.equalsIgnoreCase("null")){
+                            Snacky.builder()
+                                    .setActivity(ImtSmartGraphLayout.this)
+                                    .setText(error)
+                                    .setDuration(Snacky.LENGTH_SHORT)
+                                    .setActionText(android.R.string.ok)
+                                    .error()
+                                    .show();
+                        }else{
+                            Snacky.builder()
+                                    .setActivity(ImtSmartGraphLayout.this)
+                                    .setText("Failed to Load Balance kindly try again.")
+                                    .setDuration(Snacky.LENGTH_SHORT)
+                                    .setActionText(android.R.string.ok)
+                                    .error()
+                                    .show();
+                        }
 
 
-                        Snacky.builder()
-                                .setActivity(ImtSmartGraphLayout.this)
-                                .setText(error)
-                                .setDuration(Snacky.LENGTH_SHORT)
-                                .setActionText(android.R.string.ok)
-                                .error()
-                                .show();
 
 
                     } catch (IOException | JSONException e) {
@@ -324,6 +343,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
 
             }
 
+            //"Failed to Load Balance kindly try again."
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Snacky.builder()
@@ -605,24 +625,24 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
     public void getSendCoinHistory() {
 
         UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
-        String token=user.getToken();
+        String token = user.getToken();
 
 
-        Call<ResponseBody> call= RetrofitClient.getInstance().getApi().get_SendHistory(token,"imt");
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().get_SendHistory(token, "imt");
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 hidepDialog();
-                String s=null;
-                if (response.code()==200){
+                String s = null;
+                if (response.code() == 200) {
                     coinModals.clear();
                     try {
-                        s=response.body().string();
-                        JSONObject object  = new JSONObject(s);
-                        String result =object.getString("result");
-                        JSONArray jsonArray  =  new JSONArray(result);
-                        for (int i=0;i<=jsonArray.length();i++){
+                        s = response.body().string();
+                        JSONObject object = new JSONObject(s);
+                        String result = object.getString("result");
+                        JSONArray jsonArray = new JSONArray(result);
+                        for (int i = 0; i <= jsonArray.length(); i++) {
                             JSONObject object1 = jsonArray.getJSONObject(i);
 
                             CoinModal modal = new CoinModal();
@@ -633,11 +653,8 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                             String userData = object1.getString("userId");
 
 
-
-
                             JSONObject object2 = new JSONObject(userData);
-                            String username =object2.getString("username");
-
+                            String username = object2.getString("username");
 
 
                             modal.setUsername(username);
@@ -648,34 +665,30 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                             coinModals.add(modal);
 
 
-
                         }
-
 
 
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }
-                    if(coinModals!=null && coinModals.size()>0){
-                        coin_history_adapter = new Coin_History_Adapter(coinModals,getApplicationContext(),ImtSmartGraphLayout.this);
-                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL,false);
+                    if (coinModals != null && coinModals.size() > 0) {
+                        coin_history_adapter = new Coin_History_Adapter(coinModals, getApplicationContext(), ImtSmartGraphLayout.this);
+                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
                         recyclerView.setLayoutManager(mLayoutManager);
                         recyclerView.setItemAnimator(new DefaultItemAnimator());
                         recyclerView.setAdapter(coin_history_adapter);
-                    }else{
-
-
+                    } else {
 
 
                         history_Empty.setVisibility(View.VISIBLE);
 
                     }
 
-                }else if (response.code()==400){
+                } else if (response.code() == 400) {
                     try {
-                        s=response.errorBody().string();
-                        JSONObject jsonObject1=new JSONObject(s);
-                        String error =jsonObject1.getString("error");
+                        s = response.errorBody().string();
+                        JSONObject jsonObject1 = new JSONObject(s);
+                        String error = jsonObject1.getString("error");
 
 
                         Snacky.builder()
@@ -685,13 +698,13 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                                 .setActionText(android.R.string.ok)
                                 .error()
                                 .show();
-
+                        Log.d("errror", error);
 
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }
 
-                } else if (response.code()==401){
+                } else if (response.code() == 401) {
                     Snacky.builder()
                             .setActivity(ImtSmartGraphLayout.this)
                             .setText("unAuthorization Request")
@@ -708,11 +721,12 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Snacky.builder()
                         .setActivity(ImtSmartGraphLayout.this)
-                        .setText(t.getMessage())
+                        .setText(t.getLocalizedMessage())
                         .setDuration(Snacky.LENGTH_SHORT)
                         .setActionText(android.R.string.ok)
                         .error()
                         .show();
+
 
             }
         });
@@ -720,13 +734,13 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onHistoryItemClickListener(int position) {
-        String username =coinModals.get(position).getUsername();
-        String transaction =coinModals.get(position).getId();
-        String type =coinModals.get(position).getType();
-        String date =coinModals.get(position).getTime();
-        String amount =coinModals.get(position).getAmount();
+        String username = coinModals.get(position).getUsername();
+        String transaction = coinModals.get(position).getId();
+        String type = coinModals.get(position).getType();
+        String date = coinModals.get(position).getTime();
+        String amount = coinModals.get(position).getAmount();
 
-        Transaction_HistoryModel historyModel=new Transaction_HistoryModel(transaction,"imt",amount,type,username,date);
+        Transaction_HistoryModel historyModel = new Transaction_HistoryModel(transaction, "imt", amount, type, username, date);
 
         //storing the user in shared preferences
         TransactionHistorySharedPrefManager.getInstance(getApplicationContext()).Transaction_History_Data(historyModel);

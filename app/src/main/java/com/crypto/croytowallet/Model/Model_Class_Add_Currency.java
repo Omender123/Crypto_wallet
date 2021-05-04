@@ -2,12 +2,14 @@ package com.crypto.croytowallet.Model;
 
 public class Model_Class_Add_Currency {
     String Currency_Title,Title_Des,Image,CoinId;
+    Boolean checked;
 
-    public Model_Class_Add_Currency(String currency_Title, String title_Des, String image, String coinId) {
+    public Model_Class_Add_Currency(String currency_Title, String title_Des, String image, String coinId, Boolean checked) {
         this.Currency_Title = currency_Title;
         this.Title_Des = title_Des;
         this.Image = image;
         this.CoinId = coinId;
+        this.checked = checked;
     }
 
     public Model_Class_Add_Currency() {
@@ -43,5 +45,13 @@ public class Model_Class_Add_Currency {
 
     public void setCoinId(String coinId) {
         CoinId = coinId;
+    }
+
+    public Boolean getChecked() {
+        return checked;
+    }
+
+    public void setChecked(Boolean checked) {
+        this.checked = checked;
     }
 }

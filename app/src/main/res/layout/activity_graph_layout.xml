@@ -365,7 +365,6 @@
                    android:textSize="25dp"
                    android:fontFamily="@font/montserrat"
                    android:layout_marginTop="5dp"
-                   android:maxLength="6"
                     android:textColor="@color/toolbar_text_color"
                    android:textStyle="bold"
                    />
@@ -377,7 +376,7 @@
                    android:textAlignment="center"
                    android:textStyle="normal"
                     android:textColor="@color/toolbar_text_color"
-                          
+
                    android:textSize="15dp"
                    />
            </LinearLayout>
@@ -401,7 +400,6 @@
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:background="@color/card_background"
-
                    android:textSize="25dp"
                    android:fontFamily="@font/montserrat"
                    android:layout_marginTop="5dp"

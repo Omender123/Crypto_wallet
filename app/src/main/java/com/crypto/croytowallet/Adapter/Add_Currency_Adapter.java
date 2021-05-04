@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.crypto.croytowallet.Interface.EnabledClickedListner;
 import com.crypto.croytowallet.Model.Model_Class_Add_Currency;
 import com.crypto.croytowallet.R;
 import com.squareup.picasso.Picasso;
@@ -27,12 +28,15 @@ public class Add_Currency_Adapter extends RecyclerView.Adapter<Add_Currency_Adap
     private List<Model_Class_Add_Currency> exampleListFull;
 
     Context context;
+    Boolean aBoolean;
+    private EnabledClickedListner enabledClickedListner;
      public Add_Currency_Adapter() {
     }
 
-    public Add_Currency_Adapter(ArrayList<Model_Class_Add_Currency> currency,Context context) {
+    public Add_Currency_Adapter(ArrayList<Model_Class_Add_Currency> currency,Context context,EnabledClickedListner enabledClickedListner) {
         this.currency = currency;
         exampleListFull = new ArrayList<>(currency);
+        this.enabledClickedListner = enabledClickedListner;
         this.context =context;
     }
 
@@ -51,13 +55,19 @@ public class Add_Currency_Adapter extends RecyclerView.Adapter<Add_Currency_Adap
         String title = currency.get(position).getCurrency_Title();
         String des = currency.get(position).getTitle_Des();
 
-        holder.Title.setText(title);
+        holder.Title.setText(title.toUpperCase());
         holder.Descrition.setText(des);
         Picasso.get().load(Icom).into(holder.imageView);
+        aBoolean =currency.get(position).getChecked();
+
+        if (aBoolean==true){
+            holder.checkBox.setChecked(true);
+        }else {
+            holder.checkBox.setChecked(false);
+        }
 
 
-        holder.checkBox.setChecked(getFromSP("checked"+position));
-        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+       /* holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 String CoinId = currency.get(position).getCoinId();
@@ -67,7 +77,7 @@ public class Add_Currency_Adapter extends RecyclerView.Adapter<Add_Currency_Adap
                     saveInSp("checked"+position,false);
                 }
             }
-        });
+        });*/
     }
 
     @Override
@@ -86,6 +96,13 @@ public class Add_Currency_Adapter extends RecyclerView.Adapter<Add_Currency_Adap
             Descrition = itemView.findViewById(R.id.Currency_Des);
             imageView = itemView.findViewById(R.id.Image_cuurency);
             checkBox = itemView.findViewById(R.id.checkbox_passcode);
+
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    enabledClickedListner.onEnabledItemClickListener(getAdapterPosition(),isChecked);
+                }
+            });
         }
     }
 

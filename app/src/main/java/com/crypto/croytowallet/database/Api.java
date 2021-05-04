@@ -400,6 +400,11 @@ public interface Api {
 
     );
 
+    @GET("EC")
+    Call<ResponseBody> getAllCoinDataBase(
+            @Header("Authorization") String Authtoken
+            );
+
     @GET("bankD")
     Call<ResponseBankDetails> getBankDetails(
             @Header("Authorization") String Authtoken
@@ -430,4 +435,13 @@ public interface Api {
             @Part MultipartBody.Part image
 
            );
+
+    @FormUrlEncoded
+    @POST("EC/editEC")
+    Call<ResponseBody>EditCoin(
+            @Header("Authorization") String Authtoken,
+            @Field("crypto") String symbol,
+            @Field("enabled") String  aBoolean
+
+            );
 }

@@ -182,6 +182,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
     public void CryptoInfoRecyclerView(){
             String url="https://api.coingecko.com/api/v3/coins/markets?vs_currency="+currency2+"&ids=bitcoin%2Cethereum%2Ctether%2Cripple%2Clitecoin%2Cusd-coin&order=market_cap_desc&sparkline=false&price_change_percentage=24h";
         StringRequest stringRequest=new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onResponse(String response) {
              //   hidepDialog();
@@ -198,7 +199,6 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
                        String price=jsonObject1.getString("current_price");
                         String high_price=jsonObject1.getString("high_24h");
                         String low_price=jsonObject1.getString("low_24h");
-
 
 
                         crptoInfoModel1.setId(id);

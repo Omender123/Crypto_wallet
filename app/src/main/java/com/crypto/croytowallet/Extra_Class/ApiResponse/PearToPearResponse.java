@@ -30,16 +30,16 @@ public class PearToPearResponse {
         private String receiverId;
         @SerializedName("closingBalance")
         @Expose
-        private Integer closingBalance;
+        private Double closingBalance;
         @SerializedName("status")
         @Expose
         private String status;
         @SerializedName("amount")
         @Expose
-        private Integer amount;
+        private Double amount;
         @SerializedName("withdrawlFees")
         @Expose
-        private Integer withdrawlFees;
+        private Double withdrawlFees;
         @SerializedName("senderName")
         @Expose
         private String senderName;
@@ -85,11 +85,11 @@ public class PearToPearResponse {
             this.receiverId = receiverId;
         }
 
-        public Integer getClosingBalance() {
+        public Double getClosingBalance() {
             return closingBalance;
         }
 
-        public void setClosingBalance(Integer closingBalance) {
+        public void setClosingBalance(Double closingBalance) {
             this.closingBalance = closingBalance;
         }
 
@@ -101,19 +101,19 @@ public class PearToPearResponse {
             this.status = status;
         }
 
-        public Integer getAmount() {
+        public Double getAmount() {
             return amount;
         }
 
-        public void setAmount(Integer amount) {
+        public void setAmount(Double amount) {
             this.amount = amount;
         }
 
-        public Integer getWithdrawlFees() {
+        public Double getWithdrawlFees() {
             return withdrawlFees;
         }
 
-        public void setWithdrawlFees(Integer withdrawlFees) {
+        public void setWithdrawlFees(Double withdrawlFees) {
             this.withdrawlFees = withdrawlFees;
         }
 

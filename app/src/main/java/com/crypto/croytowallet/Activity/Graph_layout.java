@@ -14,10 +14,12 @@ import android.graphics.drawable.Drawable;
 import android.icu.text.DecimalFormat;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.crypto.croytowallet.Adapter.Coin_History_Adapter;
 import com.crypto.croytowallet.CoinTransfer.CoinScan;
@@ -146,6 +148,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
 
 
         Picasso.get().load(image).into(circleImageView);
+
         price.setText(CurrencySymbols + price1);
         coinname.setText(coinName);
         coinsymbols.setText("(" + symbol + ")");
@@ -296,6 +299,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                         balance1 = jsonObject.getString("balance");
 
 
+
                         double balance2 = Double.parseDouble(balance1);
                         double price = Double.parseDouble(price1);
                         double total = balance2 * price;
@@ -316,7 +320,9 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                         s = response.errorBody().string();
                         JSONObject jsonObject1 = new JSONObject(s);
                         String error = jsonObject1.getString("error");
-
+                        String body1 = jsonObject1.getString("body");
+                        JSONObject object = new JSONObject(body1);
+                        String data = object.getString("data");
 
                         if (error.equalsIgnoreCase("Account not found.")) {
 
@@ -329,11 +335,45 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                                         @Override
                                         public void onClick(View v) {
 
-                                            
+
                                         }
                                     })
                                     .error()
                                     .show();
+
+                        } else if (!data.equalsIgnoreCase("null")) {
+                            Snacky.builder()
+                                    .setActivity(Graph_layout.this)
+                                    .setText(error)
+                                    .setDuration(Snacky.LENGTH_SHORT)
+                                    .setActionText(android.R.string.ok)
+                                    .error()
+                                    .show();
+                        }
+
+                        else {
+                            Snacky.builder()
+                                    .setActivity(Graph_layout.this)
+                                    .setText("Failed to Load Balance kindly try again.")
+                                    .setDuration(Snacky.LENGTH_SHORT)
+                                    .setActionText(android.R.string.ok)
+                                    .error()
+                                    .show();
+                        }
+
+
+
+                        /* else if (error.equalsIgnoreCase("Returned error: getDeleteStateObject (14c60f4ffe33587b95cebfff0af75422945ea992) error: no suitable peers available") ||
+                                   error.equalsIgnoreCase("Returned error: getDeleteStateObject (dac17f958d2ee523a2206206994597c13d831ec7) error: no suitable peers available")
+                                || error.equalsIgnoreCase("Returned error: getDeleteStateObject (a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48) error: no suitable peers available")) {
+                            Snacky.builder()
+                                    .setActivity(Graph_layout.this)
+                                    .setText("Failed to Load Balance kindly try again.")
+                                    .setDuration(Snacky.LENGTH_SHORT)
+                                    .setActionText(android.R.string.ok)
+                                    .error()
+                                    .show();
+
 
                         } else {
                             Snacky.builder()
@@ -345,7 +385,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                                     .show();
 
                         }
-
+*/
 
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
@@ -370,11 +410,14 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                 hidepDialog();
                 Snacky.builder()
                         .setActivity(Graph_layout.this)
-                        .setText(t.getMessage())
+                        .setText(t.getLocalizedMessage())
                         .setDuration(Snacky.LENGTH_SHORT)
                         .setActionText(android.R.string.ok)
                         .error()
                         .show();
+
+                //    Log.d("errrrp",t.getLocalizedMessage());
+
             }
         });
     }
