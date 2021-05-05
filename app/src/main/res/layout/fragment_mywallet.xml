@@ -32,7 +32,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/overviewRecycler"
             android:layout_width="match_parent"
-            android:layout_height="550dp"/>
+            android:layout_height="700dp"/>
 
         <TextView
             android:id="@+id/Add_more_Currency"
@@ -43,6 +43,7 @@
             android:layout_marginBottom="20dp"
             android:background="@drawable/custom_border"
             android:gravity="center"
+            android:visibility="gone"
             android:paddingBottom="0dp"
             android:text="@string/add_more"
             android:textAlignment="center"

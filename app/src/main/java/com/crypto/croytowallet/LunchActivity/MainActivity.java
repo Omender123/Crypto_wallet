@@ -82,14 +82,14 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
     AppBarConfiguration appBarConfiguration;
     BottomNavigationView bottomNavigationView;
-    private View navHeader,navDrawer;
-    TextView username,usergmail;
+    private View navHeader, navDrawer;
+    TextView username, usergmail;
     Toolbar toolbar;
     KProgressHUD progressDialog;
     SharedPreferences sharedPreferences;
     ImageView status_img;
     Switch drawerSwitch;
-    SharedPreferences sharedPreferences1,sharedPreferences2;
+    SharedPreferences sharedPreferences1, sharedPreferences2;
     String token;
 
     @Override
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        toolbar=findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         status_img = findViewById(R.id.status_user);
 
@@ -116,13 +116,11 @@ public class MainActivity extends AppCompatActivity {
 
         navHeader = navigationView.getHeaderView(0);
         username = (TextView) navHeader.findViewById(R.id.nav_username);
-        usergmail= (TextView) navHeader.findViewById(R.id.nav_usergmail);
+        usergmail = (TextView) navHeader.findViewById(R.id.nav_usergmail);
 
 
-
-
-        sharedPreferences1 =getApplicationContext().getSharedPreferences("currency",0);
-        sharedPreferences2 =getApplicationContext().getSharedPreferences("PROJECT_NAME",0);
+        sharedPreferences1 = getApplicationContext().getSharedPreferences("currency", 0);
+        sharedPreferences2 = getApplicationContext().getSharedPreferences("PROJECT_NAME", 0);
 
         //getting the current user
         UserData user = SharedPrefManager.getInstance(this).getUser();
@@ -136,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
-      //  NavigationView();
+        //  NavigationView();
 
         Menu menu = navigationView.getMenu();
         MenuItem share = menu.findItem(R.id.share);
@@ -145,15 +143,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
-                String code =user.getReferral_code();
+                String code = user.getReferral_code();
 
                 try {
                     Intent i = new Intent(Intent.ACTION_SEND);
                     i.setType("text/plain");
-                    String sAux = "Hey,\n \n" + "Its amazing install iMX which offer 0% transaction fees on crypto Assets \n Referral code : "+code +"\n Download "+ getResources().getString(R.string.app_name) + "\n";
+                    String sAux = "Hey,\n \n" + "Its amazing install iMX which offer 0% transaction fees on crypto Assets \n Referral code : " + code + "\n Download " + getResources().getString(R.string.app_name) + "\n";
                     sAux = sAux + "https://play.google.com/store/apps/details?id=" + getPackageName() + "\n";
                     i.putExtra(Intent.EXTRA_TEXT, sAux);
-                   startActivity(Intent.createChooser(i, "choose one"));
+                    startActivity(Intent.createChooser(i, "choose one"));
                 } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -174,17 +172,19 @@ public class MainActivity extends AppCompatActivity {
         try {
             AppUpdateChecker appUpdateChecker = new AppUpdateChecker(this);  //pass the activity in constructure
             appUpdateChecker.checkForUpdate(false);
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
 
         androidAppLauncherShortcut();
         PutDeviceToken(token);
+
     }
 
     private void androidAppLauncherShortcut() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-                ShortcutManager  mshortcutManager = getSystemService(ShortcutManager.class);
+                ShortcutManager mshortcutManager = getSystemService(ShortcutManager.class);
 
                 Intent imt_scan = new Intent(this, ImtSmartCoinScan.class);
                 imt_scan.setAction(Intent.ACTION_VIEW);
@@ -193,28 +193,27 @@ public class MainActivity extends AppCompatActivity {
                 imt_received.setAction(Intent.ACTION_VIEW);
 
 
-                ShortcutInfo shortcutScan = new ShortcutInfo.Builder(this,"scan")
+                ShortcutInfo shortcutScan = new ShortcutInfo.Builder(this, "scan")
                         .setShortLabel("ImSmart Scan")
                         .setLongLabel("ImSmart Scan")
-                        .setIcon(Icon.createWithResource(this,R.drawable.ic_scan))
+                        .setIcon(Icon.createWithResource(this, R.drawable.ic_scan))
                         .setIntent(imt_scan)
                         .build();
 
-                ShortcutInfo shortcutBarcode = new ShortcutInfo.Builder(this,"barcode")
+                ShortcutInfo shortcutBarcode = new ShortcutInfo.Builder(this, "barcode")
                         .setShortLabel("ImSmart Received")
                         .setLongLabel("ImSmart Received")
-                        .setIcon(Icon.createWithResource(this,R.drawable.ic_pay))
+                        .setIcon(Icon.createWithResource(this, R.drawable.ic_pay))
                         .setIntent(imt_received)
                         .build();
 
 
+                mshortcutManager.setDynamicShortcuts(Arrays.asList(shortcutScan, shortcutBarcode));
 
-                mshortcutManager.setDynamicShortcuts(Arrays.asList(shortcutScan,shortcutBarcode));
-
-            }else{
+            } else {
                 Toast.makeText(this, "Your Android Version is low", Toast.LENGTH_SHORT).show();
             }
-        }else{
+        } else {
             Toast.makeText(this, "Your Android Version is low", Toast.LENGTH_SHORT).show();
         }
 
@@ -227,15 +226,15 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_support, getApplicationContext().getTheme());
 
-        navController = Navigation.findNavController(this,R.id.main);
-        appBarConfiguration = new AppBarConfiguration.Builder(new int[]{R.id.deshboard,R.id.myWallet,R.id.exchange,R.id.profile,R.id.security,R.id.support,R.id.setting,R.id.pay_history,R.id.coin_history,R.id.our_Offer})
+        navController = Navigation.findNavController(this, R.id.main);
+        appBarConfiguration = new AppBarConfiguration.Builder(new int[]{R.id.deshboard, R.id.myWallet, R.id.exchange, R.id.profile, R.id.security, R.id.support, R.id.setting, R.id.pay_history, R.id.coin_history, R.id.our_Offer})
                 .setDrawerLayout(drawer)
                 .build();
 
 
     }
 
-    public void change_menu_icon(){
+    public void change_menu_icon() {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_support);
@@ -243,14 +242,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        return NavigationUI.navigateUp(navController,appBarConfiguration );
+        return NavigationUI.navigateUp(navController, appBarConfiguration);
     }
 
     @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else  {
+        } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle(R.string.app_name);
             builder.setIcon(R.mipmap.ic_launcher);
@@ -274,10 +273,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
-
-
     }
+
     private void changeStatusBarColor() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
@@ -287,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void moreOptions(){
+    public void moreOptions() {
 
         Menu menu = navigationView.getMenu();
         MenuItem logout = menu.findItem(R.id.logout);
@@ -303,7 +300,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         MenuItem theme = menu.findItem(R.id.dark_mode);
-         drawerSwitch = (Switch) theme.getActionView().findViewById(R.id.drawer_switch);
+        drawerSwitch = (Switch) theme.getActionView().findViewById(R.id.drawer_switch);
 
 
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
@@ -314,19 +311,19 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     InitApplication.getInstance().setIsNightModeEnabled(true);
-                  //  Intent intent = getIntent();
+                    //  Intent intent = getIntent();
                     //intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 
-                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     finish();
                     startActivity(intent);
 
                 } else {
                     InitApplication.getInstance().setIsNightModeEnabled(false);
-                  //  Intent intent = getIntent();
+                    //  Intent intent = getIntent();
                     //intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     finish();
                     startActivity(intent);
@@ -335,7 +332,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
 
 
         MenuItem language = menu.findItem(R.id.langauge);
@@ -350,7 +346,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showChangeLanguageDialod() {
-        final  String[] listItem={"English","Hindi","Japanese","ThaiLand","Chinese","Philippines"};
+        final String[] listItem = {"English", "Hindi", "Japanese", "ThaiLand", "Chinese", "Philippines"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Choose Language.......");
@@ -358,22 +354,22 @@ public class MainActivity extends AppCompatActivity {
         builder.setSingleChoiceItems(listItem, -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
-                if (i==0){
+                if (i == 0) {
                     setLocale("en");
                     recreate();
-                }else if(i==1){
+                } else if (i == 1) {
                     setLocale("hi");
                     recreate();
-                }else if(i==2){
+                } else if (i == 2) {
                     setLocale("ja");
                     recreate();
-                }else if(i==3){
+                } else if (i == 3) {
                     setLocale("th");
                     recreate();
-                }else if(i==4){
+                } else if (i == 4) {
                     setLocale("zh");
                     recreate();
-                }else if(i==5){
+                } else if (i == 5) {
                     setLocale("phi");
                     recreate();
                 }
@@ -382,7 +378,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        AlertDialog alertDialog =builder.create();
+        AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
 
@@ -391,23 +387,24 @@ public class MainActivity extends AppCompatActivity {
         Locale locale = new Locale(lang);
         Locale.setDefault(locale);
 
-        Configuration configuration= new Configuration();
-        configuration.locale=locale;
-        getBaseContext().getResources().updateConfiguration(configuration,getBaseContext().getResources().getDisplayMetrics());
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+        getBaseContext().getResources().updateConfiguration(configuration, getBaseContext().getResources().getDisplayMetrics());
 
-        SharedPreferences.Editor editor = getSharedPreferences("settings",MODE_PRIVATE).edit();
-        editor.putString("My_Lang",lang);
+        SharedPreferences.Editor editor = getSharedPreferences("settings", MODE_PRIVATE).edit();
+        editor.putString("My_Lang", lang);
         editor.apply();
 
     }
     // load lanage saved in sharedPreference
 
-    public void loadLocale(){
-        SharedPreferences sharedPreferences =getSharedPreferences("settings", Activity.MODE_PRIVATE);
-        String Language = sharedPreferences.getString("My_Lang","");
+    public void loadLocale() {
+        SharedPreferences sharedPreferences = getSharedPreferences("settings", Activity.MODE_PRIVATE);
+        String Language = sharedPreferences.getString("My_Lang", "");
         setLocale(Language);
     }
-    public void AlertDialogBox(){
+
+    public void AlertDialogBox() {
 
         //Logout
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
@@ -425,7 +422,7 @@ public class MainActivity extends AppCompatActivity {
                         logout();
                     }
                 })
-                .setNegativeButton(R.string.no,new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
                         dialog.cancel();
@@ -439,80 +436,81 @@ public class MainActivity extends AppCompatActivity {
         // show it
         alertDialog.show();
     }
-public void logout(){
-    progressDialog = KProgressHUD.create(MainActivity.this)
-            .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-            .setLabel("Please wait.....")
-            .setCancellable(false)
-            .setAnimationSpeed(2)
-            .setDimAmount(0.5f)
-            .show();
-    UserData user = SharedPrefManager.getInstance(this).getUser();
-    String username=user.getUsername();
-    String token=user.getToken();
 
-    showpDialog();
-    Call<ResponseBody> call = RetrofitClient.getInstance().getApi().LogOut(token,username,token);
+    public void logout() {
+        progressDialog = KProgressHUD.create(MainActivity.this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Please wait.....")
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
+        UserData user = SharedPrefManager.getInstance(this).getUser();
+        String username = user.getUsername();
+        String token = user.getToken();
 
-    call.enqueue(new Callback<ResponseBody>() {
-        @Override
-        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-            String s=null;
-            hidepDialog();
-            if (response.code()==200){
-                SharedPrefManager.getInstance(getApplicationContext()).logout();
-                TransactionHistorySharedPrefManager.getInstance(getApplicationContext()).clearPearData();
-                sharedPreferences1.edit().clear().commit();
-                sharedPreferences2.edit().clear().commit();
-               //  deleteCache(MainActivity.this);
-                clearApplicationData();
-                Toast.makeText(MainActivity.this, "Logout Successfully", Toast.LENGTH_SHORT).show();
+        showpDialog();
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().LogOut(token, username, token);
 
-            }else if(response.code()==400){
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String s = null;
+                hidepDialog();
+                if (response.code() == 200) {
+                    SharedPrefManager.getInstance(getApplicationContext()).logout();
+                    TransactionHistorySharedPrefManager.getInstance(getApplicationContext()).clearPearData();
+                    sharedPreferences1.edit().clear().commit();
+                    sharedPreferences2.edit().clear().commit();
+                    //  deleteCache(MainActivity.this);
+                    clearApplicationData();
+                    Toast.makeText(MainActivity.this, "Logout Successfully", Toast.LENGTH_SHORT).show();
 
-                try {
+                } else if (response.code() == 400) {
 
-                    s=response.errorBody().string();
-                    JSONObject jsonObject1=new JSONObject(s);
-                    String error =jsonObject1.getString("error");
+                    try {
 
+                        s = response.errorBody().string();
+                        JSONObject jsonObject1 = new JSONObject(s);
+                        String error = jsonObject1.getString("error");
+
+                        Snacky.builder()
+                                .setActivity(MainActivity.this)
+                                .setText(error)
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
+                        // Toast.makeText(SignUp.this, jsonObject1.getString("error")+"", Toast.LENGTH_SHORT).show();
+
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if (response.code() == 401) {
                     Snacky.builder()
                             .setActivity(MainActivity.this)
-                            .setText(error)
+                            .setText("unAuthorization Request")
                             .setDuration(Snacky.LENGTH_SHORT)
                             .setActionText(android.R.string.ok)
                             .error()
                             .show();
-                    // Toast.makeText(SignUp.this, jsonObject1.getString("error")+"", Toast.LENGTH_SHORT).show();
-
-
-                } catch (IOException | JSONException e) {
-                    e.printStackTrace();
                 }
+            }
 
-            }else if(response.code()==401){
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                hidepDialog();
                 Snacky.builder()
                         .setActivity(MainActivity.this)
-                        .setText("unAuthorization Request")
+                        .setText(t.getMessage())
                         .setDuration(Snacky.LENGTH_SHORT)
                         .setActionText(android.R.string.ok)
                         .error()
                         .show();
             }
-        }
-
-        @Override
-        public void onFailure(Call<ResponseBody> call, Throwable t) {
-            hidepDialog();
-            Snacky.builder()
-                    .setActivity(MainActivity.this)
-                    .setText(t.getMessage())
-                    .setDuration(Snacky.LENGTH_SHORT)
-                    .setActionText(android.R.string.ok)
-                    .error()
-                    .show();
-        }
-    });
+        });
 
     }
 
@@ -533,30 +531,7 @@ public void logout(){
         new CheckInternetConnection(this).checkConnection();
 
     }
-  /*  public static void deleteCache(Context context) {
-        try {
-            File dir = context.getCacheDir();
-            deleteDir(dir);
-        } catch (Exception e) { e.printStackTrace();}
-    }
 
-    public static boolean deleteDir(File dir) {
-        if (dir != null && dir.isDirectory()) {
-            String[] children = dir.list();
-            for (int i = 0; i < children.length; i++) {
-                boolean success = deleteDir(new File(dir, children[i]));
-                if (!success) {
-                    return false;
-                }
-            }
-            return dir.delete();
-        } else if(dir!= null && dir.isFile()) {
-            return dir.delete();
-        } else {
-            return false;
-        }
-    }
-*/
     @SuppressLint("LongLogTag")
     public void clearApplicationData() {
         File cache = getCacheDir();
@@ -594,16 +569,16 @@ public void logout(){
                     public void onComplete(@NonNull Task<InstanceIdResult> task) {
                         if (task.isSuccessful()) {
 
-                         String    Devicetoken = task.getResult().getToken();
+                            String Devicetoken = task.getResult().getToken();
                             new Handler().postDelayed(new Runnable() {
 
 
                                 @Override
                                 public void run() {
                                     // This method will be executed once the timer is over
-                                    SendDeviceToken(token,Devicetoken);
+                                    SendDeviceToken(token, Devicetoken);
 
-                              //       Toast.makeText(getApplicationContext(), token+" & "+Devicetoken, Toast.LENGTH_SHORT).show();
+                                    //       Toast.makeText(getApplicationContext(), token+" & "+Devicetoken, Toast.LENGTH_SHORT).show();
                                 }
                             }, 2000);
 
@@ -621,34 +596,34 @@ public void logout(){
     private void SendDeviceToken(String token, String devicetoken) {
 
         JsonObject bodyParameters = new JsonObject();
-        bodyParameters.addProperty("jwt",token);
-        bodyParameters.addProperty("fcmToken",devicetoken);
+        bodyParameters.addProperty("jwt", token);
+        bodyParameters.addProperty("fcmToken", devicetoken);
 
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().PutDevice(token,bodyParameters);
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().PutDevice(token, bodyParameters);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-                String s=null;
+                String s = null;
 
-                if (response.code()==200){
+                if (response.code() == 200) {
                     try {
-                        s= response.body().string();
+                        s = response.body().string();
 
-                     //  Toast.makeText(getApplicationContext(), ""+s, Toast.LENGTH_SHORT).show();
+                        //  Toast.makeText(getApplicationContext(), ""+s, Toast.LENGTH_SHORT).show();
 
 
-                    } catch (IOException  e) {
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
 
-                }else if(response.code()==400){
+                } else if (response.code() == 400) {
                     try {
                         s = response.errorBody().string();
                         JSONObject jsonObject1 = new JSONObject(s);
                         String error = jsonObject1.getString("error");
-                        Toast.makeText(getApplicationContext(), ""+error, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "" + error, Toast.LENGTH_SHORT).show();
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }
@@ -659,11 +634,13 @@ public void logout(){
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), ""+t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "" + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
 
     }
+
+
 
 }

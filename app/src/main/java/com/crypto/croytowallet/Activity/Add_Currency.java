@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 import com.crypto.croytowallet.Adapter.Add_Currency_Adapter;
 
 import com.crypto.croytowallet.Interface.EnabledClickedListner;
+import com.crypto.croytowallet.LunchActivity.MainActivity;
 import com.crypto.croytowallet.Model.Model_Class_Add_Currency;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
@@ -35,7 +37,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Add_Currency extends AppCompatActivity implements EnabledClickedListner {
+public class
+Add_Currency extends AppCompatActivity implements EnabledClickedListner {
     RecyclerView recyclerView;
     ArrayList<Model_Class_Add_Currency> item_data;
     EditText search;
@@ -75,7 +78,10 @@ public class Add_Currency extends AppCompatActivity implements EnabledClickedLis
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        onSaveInstanceState(new Bundle());
+        //onSaveInstanceState(new Bundle());
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     public void getAllCoins() {
@@ -106,6 +112,7 @@ public class Add_Currency extends AppCompatActivity implements EnabledClickedLis
                         JSONObject object = new JSONObject(s);
 
                         String account = object.getString("Account");
+
                         JSONArray jsonArray = new JSONArray(account);
 
 

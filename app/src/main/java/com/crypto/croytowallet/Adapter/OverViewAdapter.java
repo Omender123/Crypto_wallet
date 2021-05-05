@@ -67,6 +67,7 @@ public class OverViewAdapter extends RecyclerView.Adapter<OverViewAdapter.MyHold
         }else{
             holder.increaseRate.setText("+"+currencyRate);
         }
+        holder.coinSmybols.setText(overViewModels.get(position).getSymbol());
     }
 
     @Override
@@ -77,12 +78,13 @@ public class OverViewAdapter extends RecyclerView.Adapter<OverViewAdapter.MyHold
 
     public class MyHolder extends RecyclerView.ViewHolder{
         ImageView imageView;
-        TextView increaseRate,name,currencyPrice,percentage;
+        TextView increaseRate,name,currencyPrice,percentage,coinSmybols;
         public MyHolder(@NonNull View itemView) {
             super(itemView);
             imageView=itemView.findViewById(R.id.image);
             increaseRate=itemView.findViewById(R.id.increaseRate);
             name=itemView.findViewById(R.id.coinName);
+            coinSmybols=itemView.findViewById(R.id.coinsymbols);
             currencyPrice=itemView.findViewById(R.id.price);
             percentage = itemView.findViewById(R.id.null1);
 

@@ -15,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
@@ -70,20 +71,22 @@ public class
 Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
     ArrayList<CrptoInfoModel> crptoInfoModels;
     ArrayList<OverViewModel> overViewModels;
-    RecyclerView cryptoInfoRecyclerView,overviewRecycler;
+    RecyclerView cryptoInfoRecyclerView, overviewRecycler;
     RequestQueue requestQueue;
     Crypto_currencyInfo crypto_currencyInfo;
     OverViewAdapter overViewAdapter;
-    LinearLayout lytscan,lytPay,lytWalletBalance,lytaddMoney,amt_pic;
-    SharedPreferences sharedPreferences,sharedPreferences1;
-    TextView textView,textView1;
-    CardView imtsmart,multi_option;;
-    TextView add_currency,increaseRate,null1,imtPrice;
-    String imtPrices,imtPrices1,increaseRate1;
+    LinearLayout lytscan, lytPay, lytWalletBalance, lytaddMoney, amt_pic;
+    SharedPreferences sharedPreferences, sharedPreferences1;
+    TextView textView, textView1;
+    CardView imtsmart, multi_option,card_imt;
+    ;
+    TextView add_currency, increaseRate, null1, imtPrice,increaseRate2, null2, Price;
+    String imtPrices, imtPrices1, increaseRate1;
     KProgressHUD progressDialog;
-    String currency2,CurrencySymbols;
-   UserData userData;
-    Animation enterright,rightin,right;
+    String currency2, CurrencySymbols;
+    UserData userData;
+    Animation enterright, rightin, right;
+    ArrayList<String> strings;
 
     public Deshboard() {
         // Required empty public constructor
@@ -94,23 +97,23 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-      View view= inflater.inflate(R.layout.fragment_deshboard, container, false);
+        View view = inflater.inflate(R.layout.fragment_deshboard, container, false);
         cryptoInfoRecyclerView = view.findViewById(R.id.deshboardRecyclerView);
 
-        lytscan=view.findViewById(R.id.lytScan);
-        lytPay=view.findViewById(R.id.lytPay);
-        lytWalletBalance=view.findViewById(R.id.lytwallet);
-        lytaddMoney=view.findViewById(R.id.lytaddMoney);
+        lytscan = view.findViewById(R.id.lytScan);
+        lytPay = view.findViewById(R.id.lytPay);
+        lytWalletBalance = view.findViewById(R.id.lytwallet);
+        lytaddMoney = view.findViewById(R.id.lytaddMoney);
         imtsmart = view.findViewById(R.id.ImtSmart);
         add_currency = view.findViewById(R.id.Add_more_Currency);
         overviewRecycler = view.findViewById(R.id.overviewRecycler);
-        multi_option =view.findViewById(R.id.multi_option);
-        amt_pic =view.findViewById(R.id.amt_pic);
+        multi_option = view.findViewById(R.id.multi_option);
+        amt_pic = view.findViewById(R.id.amt_pic);
 
         // Animation
         enterright = AnimationUtils.loadAnimation(getContext(), R.anim.enter_right);
         rightin = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_right);
-        right = AnimationUtils.loadAnimation(getContext(),R.anim.slide_in_right);
+        right = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_right);
 
         //set animation
 
@@ -121,40 +124,42 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
         lytWalletBalance.setOnClickListener(this);
         lytaddMoney.setOnClickListener(this);
 
-        crptoInfoModels=new ArrayList<CrptoInfoModel>();
-        overViewModels=new ArrayList<OverViewModel>();
+        crptoInfoModels = new ArrayList<CrptoInfoModel>();
+        overViewModels = new ArrayList<OverViewModel>();
 
-        textView  =view.findViewById(R.id.balance);
-        textView1  =view.findViewById(R.id.balance1);
-        increaseRate  =view.findViewById(R.id.increaseRate);
-        null1  =view.findViewById(R.id.null1);
-        imtPrice  =view.findViewById(R.id.coinrate);
+        textView = view.findViewById(R.id.balance);
+        textView1 = view.findViewById(R.id.balance1);
+        increaseRate = view.findViewById(R.id.increaseRate);
+        null1 = view.findViewById(R.id.null1);
+        imtPrice = view.findViewById(R.id.coinrate);
 
-      //  sharedPreferences=getActivity().getSharedPreferences("symbols", Context.MODE_PRIVATE);
-        sharedPreferences1=getActivity().getSharedPreferences("imtInfo", Context.MODE_PRIVATE);
+        /*-----------------------overView---------------*/
+        increaseRate2 = view.findViewById(R.id.increaseRate1);
+        null2 = view.findViewById(R.id.null2);
+        Price = view.findViewById(R.id.price);
+        card_imt = view.findViewById(R.id.card);
+        //  sharedPreferences=getActivity().getSharedPreferences("symbols", Context.MODE_PRIVATE);
+        sharedPreferences1 = getActivity().getSharedPreferences("imtInfo", Context.MODE_PRIVATE);
         sharedPreferences1.getString("price", null);
 
-       sharedPreferences =getActivity().getSharedPreferences("currency",0);
-         currency2 =sharedPreferences.getString("currency1","usd");
-         CurrencySymbols =sharedPreferences.getString("Currency_Symbols","$");
+        sharedPreferences = getActivity().getSharedPreferences("currency", 0);
+        currency2 = sharedPreferences.getString("currency1", "usd");
+        CurrencySymbols = sharedPreferences.getString("Currency_Symbols", "$");
         userData = SharedPrefManager.getInstance(getContext()).getUser();
 
+        strings = new ArrayList<>();
         CryptoInfoRecyclerView();
-    // checkBalance();
+
 
         imtsmart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ImtSmartGraphLayout.class);
-
-               /* intent.putExtra("price",imtPrices);
-                intent.putExtra("chanage",increaseRate1);
-*/
                 startActivity(intent);
 
-                SharedPreferences.Editor editor=sharedPreferences1.edit();
-                editor.putString("price",imtPrices);
-                editor.putString("chanage",increaseRate1);
+                SharedPreferences.Editor editor = sharedPreferences1.edit();
+                editor.putString("price", imtPrices);
+                editor.putString("chanage", increaseRate1);
                 editor.commit();
             }
         });
@@ -166,39 +171,32 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
             }
         });
 
-       getImtDetails();
-
-
-        overViewData();
+        getImtDetails();
         AirDropBalance();
-
-
-
-
-
+        getAllCoins();
         return view;
     }
 
-    public void CryptoInfoRecyclerView(){
-            String url="https://api.coingecko.com/api/v3/coins/markets?vs_currency="+currency2+"&ids=bitcoin%2Cethereum%2Ctether%2Cripple%2Clitecoin%2Cusd-coin&order=market_cap_desc&sparkline=false&price_change_percentage=24h";
-        StringRequest stringRequest=new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+    public void CryptoInfoRecyclerView() {
+        String url = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=" + currency2 + "&ids=bitcoin%2Cethereum%2Ctether%2Cripple%2Clitecoin%2Cusd-coin&order=market_cap_desc&sparkline=false&price_change_percentage=24h";
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onResponse(String response) {
-             //   hidepDialog();
+                //   hidepDialog();
                 try {
-                    JSONArray jsonArray=new JSONArray(response);
-                    for (int i=0;i<=jsonArray.length();i++){
-                        CrptoInfoModel  crptoInfoModel1= new CrptoInfoModel();
-                         JSONObject jsonObject1=jsonArray.getJSONObject(i);
-                        String id=jsonObject1.getString("id");
-                        String symbol =jsonObject1.getString("symbol");
-                        String image=jsonObject1.getString("image");
-                        String name=jsonObject1.getString("name");
-                        String rate=jsonObject1.getString("price_change_percentage_24h");
-                       String price=jsonObject1.getString("current_price");
-                        String high_price=jsonObject1.getString("high_24h");
-                        String low_price=jsonObject1.getString("low_24h");
+                    JSONArray jsonArray = new JSONArray(response);
+                    for (int i = 0; i <= jsonArray.length(); i++) {
+                        CrptoInfoModel crptoInfoModel1 = new CrptoInfoModel();
+                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                        String id = jsonObject1.getString("id");
+                        String symbol = jsonObject1.getString("symbol");
+                        String image = jsonObject1.getString("image");
+                        String name = jsonObject1.getString("name");
+                        String rate = jsonObject1.getString("price_change_percentage_24h");
+                        String price = jsonObject1.getString("current_price");
+                        String high_price = jsonObject1.getString("high_24h");
+                        String low_price = jsonObject1.getString("low_24h");
 
 
                         crptoInfoModel1.setId(id);
@@ -219,8 +217,8 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
                     e.printStackTrace();
                 }
 
-                crypto_currencyInfo = new Crypto_currencyInfo(crptoInfoModels,getContext(),Deshboard.this::onCryptoItemClickListener );
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
+                crypto_currencyInfo = new Crypto_currencyInfo(crptoInfoModels, getContext(), Deshboard.this::onCryptoItemClickListener);
+                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
                 cryptoInfoRecyclerView.setLayoutManager(mLayoutManager);
                 cryptoInfoRecyclerView.setItemAnimator(new DefaultItemAnimator());
                 cryptoInfoRecyclerView.setAdapter(crypto_currencyInfo);
@@ -237,22 +235,22 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
 
     }
 
-    public void AirDropBalance(){
+    public void AirDropBalance() {
         String token = userData.getToken();
 
         String currency = currency2.toUpperCase();
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().AirDropBalance(token,"airdrop",currency);
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().AirDropBalance(token, "airdrop", currency);
 
         call.enqueue(new Callback<ResponseBody>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                String s =null;
+                String s = null;
 
 
-                if (response.code()==200){
+                if (response.code() == 200) {
                     try {
-                        s=response.body().string();
+                        s = response.body().string();
 
                         JSONObject object = new JSONObject(s);
                         String balance = object.getString("balance");
@@ -263,31 +261,31 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
                         DecimalFormat df = new DecimalFormat();
                         df.setMaximumFractionDigits(2);
 
-                        if (calBalance.equals("null")){
+                        if (calBalance.equals("null")) {
                             double balance2 = Double.parseDouble(balance);
-                            textView.setText(""+df.format(balance2));
-                            textView1.setText(CurrencySymbols+"0");
-                        }else{
+                            textView.setText("" + df.format(balance2));
+                            textView1.setText(CurrencySymbols + "0");
+                        } else {
 
                             double balance2 = Double.parseDouble(balance);
                             double calBalance2 = Double.parseDouble(calBalance);
 
-                            textView.setText(""+df.format(balance2));
-                            textView1.setText(CurrencySymbols+df.format(calBalance2));
+                            textView.setText("" + df.format(balance2));
+                            textView1.setText(CurrencySymbols + df.format(calBalance2));
                         }
 
 
-                   //  Log.d("airDrop",s);
+                        //  Log.d("airDrop",s);
 
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }
 
-                } else if(response.code()==400){
+                } else if (response.code() == 400) {
                     try {
-                        s=response.errorBody().string();
-                        JSONObject jsonObject1=new JSONObject(s);
-                        String error =jsonObject1.getString("error");
+                        s = response.errorBody().string();
+                        JSONObject jsonObject1 = new JSONObject(s);
+                        String error = jsonObject1.getString("error");
 
 
                         Snacky.builder()
@@ -303,7 +301,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
                         e.printStackTrace();
                     }
 
-                } else if(response.code()==401){
+                } else if (response.code() == 401) {
 
                     Snacky.builder()
                             .setActivity(getActivity())
@@ -349,7 +347,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
             break;
     }*/
 
-      if (id == R.id.lytScan) {
+        if (id == R.id.lytScan) {
             deepChangeTextColor(1);
             startActivity(new Intent(getContext(), WalletScan.class));
 
@@ -363,12 +361,12 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
             startActivity(new Intent(getContext(), WalletBalance.class));
 
 
-        }else if (id == R.id.lytaddMoney) {
-          deepChangeTextColor(4);
-         startActivity(new Intent(getContext(), Top_up_Money.class));
+        } else if (id == R.id.lytaddMoney) {
+            deepChangeTextColor(4);
+            startActivity(new Intent(getContext(), Top_up_Money.class));
 
 
-      }
+        }
 
     }
 
@@ -396,82 +394,92 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
     @Override
     public void onCryptoItemClickListener(int position) {
 
-        String CoinID=crptoInfoModels.get(position).getId();
-        String result=crptoInfoModels.get(position).getSymbol();
-        String  price=crptoInfoModels.get(position).getCurrentPrice();
-        String image=crptoInfoModels.get(position).getImage();
-        String coinName=crptoInfoModels.get(position).getName();
-        String change=crptoInfoModels.get(position).getCurrencyRate();
-        Updated_data.getInstans(getContext()).userLogin(position,coinName,result,image,change,price,CoinID);
+        String CoinID = crptoInfoModels.get(position).getId();
+        String result = crptoInfoModels.get(position).getSymbol();
+        String price = crptoInfoModels.get(position).getCurrentPrice();
+        String image = crptoInfoModels.get(position).getImage();
+        String coinName = crptoInfoModels.get(position).getName();
+        String change = crptoInfoModels.get(position).getCurrencyRate();
+        Updated_data.getInstans(getContext()).userLogin(position, coinName, result, image, change, price, CoinID);
 
         Intent intent = new Intent(getContext(), Graph_layout.class);
         startActivity(intent);
 
 
-
-
     }
 
 
-    public  void getImtDetails(){
+    public void getImtDetails() {
 
         UserData userData = SharedPrefManager.getInstance(getContext()).getUser();
 
-        String Token =userData.getToken();
+        String Token = userData.getToken();
         String currency = currency2.toUpperCase();
 
-        Call<ResponseBody>call = RetrofitClient.getInstance().getApi().getIMTDetails(Token,currency);
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().getIMTDetails(Token, currency);
 
         call.enqueue(new Callback<ResponseBody>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                String s =null;
+                String s = null;
 
 
-                if (response.code()==200){
+                if (response.code() == 200) {
                     try {
-                        s=response.body().string();
+                        s = response.body().string();
 
                         JSONArray jsonArray = new JSONArray(s);
 
-                        for (int i=0; i<=jsonArray.length();i++){
+                        for (int i = 0; i <= jsonArray.length(); i++) {
                             JSONObject object = jsonArray.getJSONObject(i);
-                             imtPrices =object.getString("price");
-                           // imtPrices1 =object.getString("price");
-                            increaseRate1=object.getString("percent_change_24h");
+                            imtPrices = object.getString("price");
+                            // imtPrices1 =object.getString("price");
+                            increaseRate1 = object.getString("percent_change_24h");
 
-                            imtPrice.setText(CurrencySymbols+imtPrices);
+                            imtPrice.setText(CurrencySymbols + imtPrices);
+                            Price.setText(CurrencySymbols + imtPrices);
                             increaseRate.setText(increaseRate1);
+                            increaseRate2.setText(increaseRate1);
 
-                            SharedPreferences.Editor editor=sharedPreferences1.edit();
-                            editor.putString("imtPrices",imtPrices);
+                            SharedPreferences.Editor editor = sharedPreferences1.edit();
+                            editor.putString("imtPrices", imtPrices);
                             editor.commit();
 
                             try {
-                                increaseRate.setTextColor(increaseRate1.contains("-")?
-                                        getContext().getResources().getColor(R.color.red): getContext().getResources().getColor(R.color.green)  );
+                                increaseRate.setTextColor(increaseRate1.contains("-") ?
+                                        getContext().getResources().getColor(R.color.red) : getContext().getResources().getColor(R.color.green));
 
-                                null1.setTextColor(increaseRate1.contains("-")?
-                                        getContext().getResources().getColor(R.color.red): getContext().getResources().getColor(R.color.green)  );
-                                if(increaseRate1.contains("-")){
+                                null1.setTextColor(increaseRate1.contains("-") ?
+                                        getContext().getResources().getColor(R.color.red) : getContext().getResources().getColor(R.color.green));
+                                if (increaseRate1.contains("-")) {
                                     increaseRate.setText(increaseRate1);
-                                }else{
-                                    increaseRate.setText("+"+increaseRate1);
+                                } else {
+                                    increaseRate.setText("+" + increaseRate1);
                                 }
-                            }catch (Exception e){
+                            } catch (Exception e) { }
+                            try {
+                                increaseRate2.setTextColor(increaseRate1.contains("-") ?
+                                        getContext().getResources().getColor(R.color.red) : getContext().getResources().getColor(R.color.green));
 
-                            }
+                                null2.setTextColor(increaseRate1.contains("-") ?
+                                        getContext().getResources().getColor(R.color.red) : getContext().getResources().getColor(R.color.green));
+                                if (increaseRate1.contains("-")) {
+                                    increaseRate2.setText(increaseRate1);
+                                } else {
+                                    increaseRate2.setText("+" + increaseRate1);
+                                }
+                            } catch (Exception e) { }
                         }
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }
 
-                } else if(response.code()==400){
+                } else if (response.code() == 400) {
                     try {
-                        s=response.errorBody().string();
-                        JSONObject jsonObject1=new JSONObject(s);
-                        String error =jsonObject1.getString("error");
+                        s = response.errorBody().string();
+                        JSONObject jsonObject1 = new JSONObject(s);
+                        String error = jsonObject1.getString("error");
 
 
                         Snacky.builder()
@@ -487,7 +495,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
                         e.printStackTrace();
                     }
 
-                } else if(response.code()==401){
+                } else if (response.code() == 401) {
 
                     Snacky.builder()
                             .setActivity(getActivity())
@@ -526,35 +534,124 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
             progressDialog.dismiss();
     }
 
-    public void overViewData(){
-
-        String CoinId= "bitcoin,ethereum,ripple,tether,litecoin,usd-coin";
+    public void getAllCoins() {
 
 
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().getAllCoinDataBase(userData.getToken());
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                String s = null;
+
+                if (response.isSuccessful() && response.code() == 200 && response.body() != null) {
+
+                    try {
+                        s = response.body().string();
+
+                        JSONObject object = new JSONObject(s);
+
+                        String account = object.getString("Account");
+                        JSONArray jsonArray = new JSONArray(account);
+                        for (int i = 0; i <= jsonArray.length(); i++) {
+                            JSONObject object1 = jsonArray.getJSONObject(i);
+                            Boolean enabled = object1.getBoolean("enabled");
+
+                            if (enabled == true) {
+                                String name = object1.getString("name");
+
+                                if (name.equalsIgnoreCase("imt")) {
+                                    card_imt.setVisibility(View.VISIBLE);
+                                } else {
+                                    strings.add(name);
+                                }
+
+                            }
 
 
-        Call<ResponseBody> call = RetrofitGraph.getInstance().getApi().getAllCoin(CoinId,currency2.toLowerCase());
+                        }
+
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    String coinId = String.join(",", strings);
+                    if (!coinId.isEmpty()){
+                        overViewData(coinId);
+                    }else {
+                        Snacky.builder()
+                                .setActivity(getActivity())
+                                .setText("No Coin Enabled")
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .success()
+                                .show();
+
+                    }
+
+
+                } else if (response.code() == 401 || response.code() == 400) {
+
+                    try {
+                        s = response.errorBody().string();
+                        JSONObject object = new JSONObject(s);
+                        String error = object.getString("error");
+
+                        Snacky.builder()
+                                .setActivity(getActivity())
+                                .setText(error)
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                Snacky.builder()
+                        .setActivity(getActivity())
+                        .setText(t.getLocalizedMessage())
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+            }
+        });
+    }
+
+    public void overViewData(String CoinId) {
+
+        Call<ResponseBody> call = RetrofitGraph.getInstance().getApi().getAllCoin(CoinId, currency2.toLowerCase());
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                String  s =null;
-                if (response.isSuccessful()){
+                String s = null;
+                overViewModels.clear();
+                if (response.isSuccessful()) {
                     try {
-                        s=response.body().string();
+                        s = response.body().string();
                         JSONArray jsonArray = new JSONArray(s);
-                        for (int i=0;i<=jsonArray.length();i++){
-                            OverViewModel  overViewModel1= new OverViewModel();
+                        for (int i = 0; i <= jsonArray.length(); i++) {
+                            OverViewModel overViewModel1 = new OverViewModel();
 
-                            JSONObject jsonObject1=jsonArray.getJSONObject(i);
-                            String id=jsonObject1.getString("id");
-                            String symbol =jsonObject1.getString("symbol");
-                            String image=jsonObject1.getString("image");
-                            String name=jsonObject1.getString("name");
-                            String rate=jsonObject1.getString("price_change_percentage_24h");
-                            String price=jsonObject1.getString("current_price");
-                            String high_price=jsonObject1.getString("high_24h");
-                            String low_price=jsonObject1.getString("low_24h");
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                            String id = jsonObject1.getString("id");
+                            String symbol = jsonObject1.getString("symbol");
+                            String image = jsonObject1.getString("image");
+                            String name = jsonObject1.getString("name");
+                            String rate = jsonObject1.getString("price_change_percentage_24h");
+                            String price = jsonObject1.getString("current_price");
+                            String high_price = jsonObject1.getString("high_24h");
+                            String low_price = jsonObject1.getString("low_24h");
 
                             // Log.d("data",id+symbol+image+name+rate+price);
 
@@ -576,12 +673,11 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
                     }
 
 
-                    overViewAdapter = new OverViewAdapter(overViewModels,getContext());
-                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false);
+                    overViewAdapter = new OverViewAdapter(overViewModels, getContext());
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
                     overviewRecycler.setLayoutManager(mLayoutManager);
                     overviewRecycler.setItemAnimator(new DefaultItemAnimator());
                     overviewRecycler.setAdapter(overViewAdapter);
-
 
 
                 }
@@ -595,8 +691,6 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
         });
 
     }
-
-
 
 
 

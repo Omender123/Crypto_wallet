@@ -225,7 +225,7 @@ TextInputLayout layout_otp;
                         JSONObject object= new JSONObject(s);
                         String result =object.getString("result");
                         String token =object.getString("token");
-
+                        updateCoin(token);
                         JSONObject  object1 = new JSONObject(result);
                         id= object1.getString("_id");
                         String name = object1.getString("name");
@@ -263,8 +263,9 @@ TextInputLayout layout_otp;
                             public void run() {
                                 // This method will be executed once the timer is over
                                 sendEmail();
+
                             }
-                        }, 1000);
+                        }, 500);
 
                        // Toast.makeText(Login.this, ""+s, Toast.LENGTH_SHORT).show();
                     } catch (IOException | JSONException e) {
@@ -733,7 +734,42 @@ public void listener(){
 
     }
 
+    public void updateCoin(String token){
 
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().UpdateCoin(token);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                String s= null;
+                if (response.isSuccessful()){
+
+                    try {
+                        s= response.body().string();
+                        //  Toast.makeText(getContext(), ""+s, Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }else if(response.code()==400||response.code()==401){
+                    try {
+                        s = response.errorBody().string();
+                        JSONObject jsonObject1 = new JSONObject(s);
+                        String error = jsonObject1.getString("error");
+                        Toast.makeText(getApplicationContext(), "" + error, Toast.LENGTH_SHORT).show();
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "" + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
 
 
 }

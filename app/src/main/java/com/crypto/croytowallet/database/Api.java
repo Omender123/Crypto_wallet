@@ -444,4 +444,9 @@ public interface Api {
             @Field("enabled") String  aBoolean
 
             );
+
+    @GET("EC/modifyEC")
+    Call<ResponseBody>UpdateCoin(
+            @Header("Authorization") String Authtoken
+    );
 }

@@ -13,11 +13,25 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 
 import com.crypto.croytowallet.Activity.Setting;
+import com.crypto.croytowallet.LunchActivity.MainActivity;
 import com.crypto.croytowallet.R;
+import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.TransactionHistorySharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.UserData;
+import com.crypto.croytowallet.database.RetrofitClient;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 
+import java.io.IOException;
+
 import de.mateware.snacky.Snacky;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AppUpdateChecker {
     private Activity activity;
@@ -65,6 +79,7 @@ public class AppUpdateChecker {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //Click button action
+
                         activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="+activity.getPackageName())));
                         dialog.dismiss();
                     }
@@ -123,4 +138,6 @@ public class AppUpdateChecker {
     {
         new GetLatestVersion(manualCheck).execute();
     }
+
+
 }
