@@ -36,6 +36,7 @@ import com.crypto.croytowallet.Adapter.Add_Currency_Adapter;
 import com.crypto.croytowallet.Adapter.Crypto_currencyInfo;
 import com.crypto.croytowallet.Adapter.OverViewAdapter;
 import com.crypto.croytowallet.Interface.CryptoClickListner;
+import com.crypto.croytowallet.Interface.OverViewClickListner;
 import com.crypto.croytowallet.Model.CrptoInfoModel;
 import com.crypto.croytowallet.Model.Model_Class_Add_Currency;
 import com.crypto.croytowallet.Model.OverViewModel;
@@ -66,7 +67,7 @@ import retrofit2.Callback;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Wallet extends Fragment implements CryptoClickListner {
+public class Wallet extends Fragment implements CryptoClickListner, OverViewClickListner {
     ArrayList<CrptoInfoModel> crptoInfoModels;
     ArrayList<OverViewModel> overViewModels;
     RecyclerView WalletRecyclerView, overviewRecycler;
@@ -344,7 +345,7 @@ public class Wallet extends Fragment implements CryptoClickListner {
                     }
 
 
-                    overViewAdapter = new OverViewAdapter(overViewModels, getContext());
+                    overViewAdapter = new OverViewAdapter(overViewModels, getContext(),Wallet.this::onOverViewItemClickListener);
                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
                     overviewRecycler.setLayoutManager(mLayoutManager);
                     overviewRecycler.setItemAnimator(new DefaultItemAnimator());
@@ -364,9 +365,8 @@ public class Wallet extends Fragment implements CryptoClickListner {
     }
 
 
+    @Override
+    public void onOverViewItemClickListener(int position) {
 
-
-
-
-
+    }
 }

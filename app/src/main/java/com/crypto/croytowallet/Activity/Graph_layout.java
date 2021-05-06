@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.crypto.croytowallet.Adapter.Coin_History_Adapter;
 import com.crypto.croytowallet.CoinTransfer.CoinScan;
 import com.crypto.croytowallet.CoinTransfer.Received_Coin;
@@ -84,6 +85,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
     RecyclerView recyclerView;
     TextView history_Empty;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -147,9 +149,17 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
 
-        Picasso.get().load(image).into(circleImageView);
+        Glide.with(this).load(image).into(circleImageView);
 
-        price.setText(CurrencySymbols + price1);
+      try {
+          double pric = Double.parseDouble(price1);
+          DecimalFormat df = new DecimalFormat();
+          df.setMaximumFractionDigits(5);
+
+          price.setText(CurrencySymbols + df.format(pric));
+
+      }catch (Exception e){}
+
         coinname.setText(coinName);
         coinsymbols.setText("(" + symbol + ")");
         //   sync.setText(symbol+" Price");
@@ -166,7 +176,9 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
             increaseRate.setText("+" + change);
         }
         getBalance();
-        getGraph();
+        getGraphData(coinId, currency2, "1", "");
+
+
 
         getSendCoinHistory();
 
@@ -208,7 +220,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                 m_3.setBackgroundColor(getResources().getColor(R.color.background));
                 m_6.setBackgroundColor(getResources().getColor(R.color.background));
                 y_1.setBackgroundColor(getResources().getColor(R.color.background));
-                getGraph();
+                getGraphData(coinId, currency2, "1","");
 
                 break;
 
@@ -219,7 +231,21 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                 m_3.setBackgroundColor(getResources().getColor(R.color.background));
                 m_6.setBackgroundColor(getResources().getColor(R.color.background));
                 y_1.setBackgroundColor(getResources().getColor(R.color.background));
-                getGraphData(coinId, currency2, "7", "daily");
+                if (coinId.equalsIgnoreCase("bitcoin")||coinId.equalsIgnoreCase("ethereum")||coinId.equalsIgnoreCase("ripple")
+                        ||coinId.equalsIgnoreCase("tether")||coinId.equalsIgnoreCase("litecoin")||coinId.equalsIgnoreCase("usd-coin")){
+
+                    getGraphData(coinId, currency2, "7", "daily");
+                }else{
+
+                    Snacky.builder()
+                            .setActivity(Graph_layout.this)
+                            .setText("Comings soon")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .success()
+                            .show();
+                }
+
                 break;
 
             case R.id.m_1:
@@ -229,7 +255,21 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                 m_3.setBackgroundColor(getResources().getColor(R.color.background));
                 m_6.setBackgroundColor(getResources().getColor(R.color.background));
                 y_1.setBackgroundColor(getResources().getColor(R.color.background));
-                getGraphData(coinId, currency2, "30", "daily");
+                if (coinId.equalsIgnoreCase("bitcoin")||coinId.equalsIgnoreCase("ethereum")||coinId.equalsIgnoreCase("ripple")
+                        ||coinId.equalsIgnoreCase("tether")||coinId.equalsIgnoreCase("litecoin")||coinId.equalsIgnoreCase("usd-coin")){
+
+                    getGraphData(coinId, currency2, "30", "daily");
+                }else{
+
+                    Snacky.builder()
+                            .setActivity(Graph_layout.this)
+                            .setText("Comings soon")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .success()
+                            .show();
+                }
+
 
                 break;
 
@@ -240,7 +280,21 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                 m_3.setBackgroundColor(getResources().getColor(R.color.purple_500));
                 m_6.setBackgroundColor(getResources().getColor(R.color.background));
                 y_1.setBackgroundColor(getResources().getColor(R.color.background));
-                getGraphData(coinId, currency2, "90", "daily");
+                if (coinId.equalsIgnoreCase("bitcoin")||coinId.equalsIgnoreCase("ethereum")||coinId.equalsIgnoreCase("ripple")
+                        ||coinId.equalsIgnoreCase("tether")||coinId.equalsIgnoreCase("litecoin")||coinId.equalsIgnoreCase("usd-coin")){
+
+                    getGraphData(coinId, currency2, "90", "daily");
+                }else{
+
+                    Snacky.builder()
+                            .setActivity(Graph_layout.this)
+                            .setText("Comings soon")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .success()
+                            .show();
+                }
+
 
                 break;
 
@@ -251,7 +305,21 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                 m_3.setBackgroundColor(getResources().getColor(R.color.background));
                 m_6.setBackgroundColor(getResources().getColor(R.color.purple_500));
                 y_1.setBackgroundColor(getResources().getColor(R.color.background));
-                getGraphData(coinId, currency2, "180", "daily");
+                if (coinId.equalsIgnoreCase("bitcoin")||coinId.equalsIgnoreCase("ethereum")||coinId.equalsIgnoreCase("ripple")
+                        ||coinId.equalsIgnoreCase("tether")||coinId.equalsIgnoreCase("litecoin")||coinId.equalsIgnoreCase("usd-coin")){
+
+                    getGraphData(coinId, currency2, "180", "daily");
+                }else{
+
+                    Snacky.builder()
+                            .setActivity(Graph_layout.this)
+                            .setText("Comings soon")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .success()
+                            .show();
+                }
+
 
 
                 break;
@@ -263,9 +331,20 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                 m_3.setBackgroundColor(getResources().getColor(R.color.background));
                 m_6.setBackgroundColor(getResources().getColor(R.color.background));
                 y_1.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                if (coinId.equalsIgnoreCase("bitcoin")||coinId.equalsIgnoreCase("ethereum")||coinId.equalsIgnoreCase("ripple")
+                        ||coinId.equalsIgnoreCase("tether")||coinId.equalsIgnoreCase("litecoin")||coinId.equalsIgnoreCase("usd-coin")){
 
-                getGraphData(coinId, currency2, "365", "daily");
+                    getGraphData(coinId, currency2, "365", "daily");
+                }else{
 
+                    Snacky.builder()
+                            .setActivity(Graph_layout.this)
+                            .setText("Comings soon")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .success()
+                            .show();
+                }
                 break;
 
 
@@ -432,144 +511,6 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
             progressDialog.dismiss();
     }
 
-    public void getGraph() {
-        progressDialog = KProgressHUD.create(Graph_layout.this)
-                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                .setLabel("Please wait.....")
-                .setCancellable(false)
-                .setAnimationSpeed(2)
-                .setDimAmount(0.5f)
-                .show();
-
-        showpDialog();
-
-
-        Call<ResponseBody> call = RetrofitGraph.getInstance().getApi().getGraphData(coinId, currency2, "1");
-
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                String s = null;
-                hidepDialog();
-                if (response.code() == 200) {
-                    ArrayList<Entry> yvalue = new ArrayList<>();
-                    yvalue.clear();
-                    try {
-                        s = response.body().string();
-
-                        JSONObject object = new JSONObject(s);
-
-                        String prices = object.getString("prices");
-                        JSONArray jsonArray = new JSONArray(prices);
-
-                        for (int i = 0; i <= jsonArray.length(); i++) {
-
-                            String peice1 = jsonArray.getString(i);
-
-                            JSONArray jsonArray1 = new JSONArray(peice1);
-                            for (int j = 0; j <= jsonArray1.length(); j++) {
-                                String lowPrices = jsonArray1.getString(1);
-
-                                Float aFloat = Float.parseFloat(lowPrices);
-                                yvalue.add(new Entry(i, aFloat));
-                            }
-
-                        }
-
-
-                    } catch (IOException | JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    chart.setDragEnabled(true);
-                    chart.setScaleEnabled(true);
-                    chart.setPinchZoom(true);
-                    /* create marker to display box when values are selected */
-                    MyMarkerView mv = new MyMarkerView(Graph_layout.this, R.layout.custom_marker_view);
-
-                    // Set the marker to the chart
-                    mv.setChartView(chart);
-                    chart.setMarker(mv);
-                    chart.animateXY(2000, 200);
-                    chart.getXAxis().setDrawGridLines(false);
-                    chart.getAxisLeft().setDrawGridLinesBehindData(false);
-                    chart.getAxisLeft().setDrawGridLines(false);
-                    chart.getAxisRight().setDrawGridLines(false);
-                    chart.getDescription().setEnabled(false);
-                    chart.getAxisLeft().setDrawLabels(false);
-                    chart.getAxisRight().setDrawLabels(false);
-                    chart.getXAxis().setDrawLabels(false);
-                    chart.getLegend().setEnabled(false);
-                    YAxis y = chart.getAxisRight();
-                    y.setEnabled(false);
-                    y.setDrawAxisLine(false);
-                    YAxis y1 = chart.getAxisLeft();
-                    y1.setDrawAxisLine(false);
-
-                    XAxis x = chart.getXAxis();
-                    x.setDrawAxisLine(false);
-                    x.setDrawGridLines(false);
-
-
-                    LineDataSet set1 = new LineDataSet(yvalue, "");
-                    set1.setFillAlpha(110);
-                    ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-                    dataSets.add(set1);
-                    LineData data = new LineData(dataSets);
-                    chart.setData(data);
-
-                    if (Utils.getSDKInt() >= 18) {
-                        Drawable drawable = ContextCompat.getDrawable(Graph_layout.this, R.drawable.gradient1);
-                        set1.setFillDrawable(drawable);
-                    } else {
-                        set1.setFillColor(Color.rgb(229, 146, 19));
-                    }
-                    set1.setMode(LineDataSet.Mode.LINEAR);
-                    set1.setLineWidth(2f);
-                    set1.setColor(getResources().getColor(R.color.graph_line));
-                    set1.setDrawValues(!set1.isDrawValuesEnabled());
-                    set1.setDrawFilled(true);
-                    set1.setDrawCircles(false);
-                    chart.setBackgroundColor(getResources().getColor(R.color.graph));
-
-
-                } else if (response.code() == 400) {
-                    try {
-                        s = response.errorBody().string();
-                        JSONObject jsonObject1 = new JSONObject(s);
-                        String error = jsonObject1.getString("error");
-                        Snacky.builder()
-                                .setActivity(Graph_layout.this)
-                                .setText(error)
-                                .setDuration(Snacky.LENGTH_SHORT)
-                                .setActionText(android.R.string.ok)
-                                .error()
-                                .show();
-
-
-                    } catch (IOException | JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                hidepDialog();
-                Snacky.builder()
-                        .setActivity(Graph_layout.this)
-                        .setText("Internet Problem ")
-                        .setDuration(Snacky.LENGTH_SHORT)
-                        .setActionText(android.R.string.ok)
-                        .error()
-                        .show();
-            }
-        });
-    }
-
     public void getGraphData(String id, String currency, String days, String interval) {
 
         progressDialog = KProgressHUD.create(Graph_layout.this)
@@ -700,7 +641,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                 hidepDialog();
                 Snacky.builder()
                         .setActivity(Graph_layout.this)
-                        .setText("Internet Problem ")
+                        .setText(t.getLocalizedMessage())
                         .setDuration(Snacky.LENGTH_SHORT)
                         .setActionText(android.R.string.ok)
                         .error()

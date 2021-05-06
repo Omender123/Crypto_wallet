@@ -162,13 +162,18 @@ Button okay;
     }
 
     public void back(View view) {
-        onBackPressed();
+
+        startActivity(new Intent(SwapAcknowledgement.this, MainActivity.class));
+        SwapSharedPrefernce.getInstance(getApplicationContext()).ClearSwapData();
+        SwapResponsePrefernce.getInstance(getApplicationContext()).ClearData();
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
 
-        onSaveInstanceState(new Bundle());
+        startActivity(new Intent(SwapAcknowledgement.this, MainActivity.class));
+        SwapSharedPrefernce.getInstance(getApplicationContext()).ClearSwapData();
+        SwapResponsePrefernce.getInstance(getApplicationContext()).ClearData();
     }
 }

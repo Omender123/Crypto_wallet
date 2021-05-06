@@ -269,13 +269,6 @@ public interface Api {
             @Path("id") String id
     );
 
-    @GET("coins/{id}/market_chart")
-    Call<ResponseBody> getGraphData(
-            @Path("id") String id,
-            @Query("vs_currency") String currency,
-            @Query("days") String days
-    );
-
 
     @GET("coins/{id}/market_chart")
     Call<ResponseBody> getGraphData1(

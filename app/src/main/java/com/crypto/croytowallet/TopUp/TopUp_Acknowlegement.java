@@ -76,12 +76,14 @@ public class TopUp_Acknowlegement extends AppCompatActivity {
     }
 
     public void back(View view) {
-        onBackPressed();
+        startActivity(new Intent(TopUp_Acknowlegement.this, MainActivity.class));
+        SharedRequestResponse.getInstans(getApplicationContext()).RemoveData();
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        onSaveInstanceState(new Bundle());
+        startActivity(new Intent(TopUp_Acknowlegement.this, MainActivity.class));
+        SharedRequestResponse.getInstans(getApplicationContext()).RemoveData();
     }
 }

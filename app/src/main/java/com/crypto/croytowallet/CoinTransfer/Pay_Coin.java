@@ -107,28 +107,7 @@ public class Pay_Coin extends AppCompatActivity {
                     enterAmount.requestFocus();
                 }else {
 
-
-                    DecimalFormat df = new DecimalFormat();
-                    df.setMaximumFractionDigits(8);
-
-                    Double coinprices,enterAmount,totalAmoumt;
-                    coinprices=Double.parseDouble(price);
-                    enterAmount=Double.parseDouble(Amount);
-
-                    totalAmoumt = enterAmount*coinprices;
-
-                    String coinAmount = String.valueOf(df.format(totalAmoumt));
-
-                    SwapModel swapModel = new SwapModel(cryptoCurrency,result,price,currency2,CurrencySymbols,coinAmount,Amount,userBalance,coinAmount,1,"CoinTransfer");
-                    SwapSharedPrefernce.getInstance(getApplicationContext()).SetData(swapModel);
-
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Intent intent = new Intent(getApplicationContext(), SwapConfirmation.class);
-                            startActivity(intent);
-                        }
-                    },1000);
+                    AirDropBalance(userData.getToken(),cryptoCurrency,currency2);
 
                       /*   Intent intent =new Intent(getApplicationContext(),Payout_verification.class);
                  //  intent.putExtra("result1",result);
@@ -178,7 +157,7 @@ public class Pay_Coin extends AppCompatActivity {
         });
 
 
-        AirDropBalance(userData.getToken(),cryptoCurrency,currency2);
+
 
          back();
        get2fa();
@@ -201,6 +180,28 @@ public class Pay_Coin extends AppCompatActivity {
 
                         JSONObject object = new JSONObject(s);
                         userBalance = object.getString("balance");
+
+                        DecimalFormat df = new DecimalFormat();
+                        df.setMaximumFractionDigits(8);
+
+                        Double coinprices,enterAmount,totalAmoumt;
+                        coinprices=Double.parseDouble(price);
+                        enterAmount=Double.parseDouble(Amount);
+
+                        totalAmoumt = enterAmount*coinprices;
+
+                        String coinAmount = String.valueOf(df.format(totalAmoumt));
+
+                        SwapModel swapModel = new SwapModel(cryptoCurrency,result,price,currency2,CurrencySymbols,coinAmount,Amount,userBalance,coinAmount,1,"CoinTransfer");
+                        SwapSharedPrefernce.getInstance(getApplicationContext()).SetData(swapModel);
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent intent = new Intent(getApplicationContext(), SwapConfirmation.class);
+                                startActivity(intent);
+                            }
+                        },200);
 
                       //  Toast.makeText(Pay_Coin.this, ""+userBalance, Toast.LENGTH_SHORT).show();
                     } catch (IOException | JSONException e) {

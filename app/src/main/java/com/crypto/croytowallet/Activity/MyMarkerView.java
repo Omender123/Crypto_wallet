@@ -33,7 +33,7 @@ public class MyMarkerView extends MarkerView {
         tvContent = findViewById(R.id.tvContent);
         sharedPreferences = context.getSharedPreferences("currency",0);
         CurrencySymbols =sharedPreferences.getString("Currency_Symbols","$");
-        format = new DecimalFormat("###.##");
+        format = new DecimalFormat("###.#####");
 
     }
 

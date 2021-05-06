@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.crypto.croytowallet.LunchActivity.MainActivity;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
@@ -190,8 +191,9 @@ public class StoryView extends AppCompatActivity implements StoriesProgressView.
                     storiesProgressView.setStoriesListener(StoryView.this); // <- set listener
                     storiesProgressView.startStories(counter); // <- start progress
 
+                    Glide.with(StoryView.this).load(images.get(counter)).into(image);
 
-                    Picasso.get().load(images.get(counter)).into(image);
+                   // Picasso.get().load(images.get(counter)).into(image);
 
 
                 } else if(response.code()==400){

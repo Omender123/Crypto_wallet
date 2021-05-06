@@ -73,7 +73,7 @@
                 android:background="@drawable/verifying_textview"
                 android:drawableStart="@drawable/number_24"
                 android:hint="@string/account_no"
-                android:inputType="text"
+                android:inputType="number"
                 android:paddingStart="10dp"
                 android:textColor="@color/toolbar_text_color" />
 

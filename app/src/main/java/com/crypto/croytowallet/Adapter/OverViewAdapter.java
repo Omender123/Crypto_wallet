@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.crypto.croytowallet.Interface.CryptoClickListner;
+import com.crypto.croytowallet.Interface.OverViewClickListner;
 import com.crypto.croytowallet.Model.CrptoInfoModel;
 import com.crypto.croytowallet.Model.OverViewModel;
 import com.crypto.croytowallet.R;
@@ -22,10 +24,11 @@ public class OverViewAdapter extends RecyclerView.Adapter<OverViewAdapter.MyHold
     ArrayList<OverViewModel> overViewModels;
     Context context;
     SharedPreferences sharedPreferences;
-
-    public OverViewAdapter(ArrayList<OverViewModel> overViewModels, Context context) {
+    private OverViewClickListner overViewClickListner;
+    public OverViewAdapter(ArrayList<OverViewModel> overViewModels, Context context,OverViewClickListner overViewClickListner) {
         this.overViewModels = overViewModels;
         this.context = context;
+        this.overViewClickListner = overViewClickListner;
     }
 
     public OverViewAdapter() {
@@ -87,6 +90,13 @@ public class OverViewAdapter extends RecyclerView.Adapter<OverViewAdapter.MyHold
             coinSmybols=itemView.findViewById(R.id.coinsymbols);
             currencyPrice=itemView.findViewById(R.id.price);
             percentage = itemView.findViewById(R.id.null1);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    overViewClickListner.onOverViewItemClickListener(getAdapterPosition());
+                }
+            });
 
         }
     }

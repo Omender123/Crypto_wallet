@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.icu.text.DecimalFormat;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,7 @@ import com.crypto.croytowallet.Adapter.Crypto_currencyInfo;
 import com.crypto.croytowallet.Adapter.OverViewAdapter;
 import com.crypto.croytowallet.ImtSmart.ImtSmartGraphLayout;
 import com.crypto.croytowallet.Interface.CryptoClickListner;
+import com.crypto.croytowallet.Interface.OverViewClickListner;
 import com.crypto.croytowallet.Model.CrptoInfoModel;
 import com.crypto.croytowallet.Model.OverViewModel;
 import com.crypto.croytowallet.TopUp.Top_up_Money;
@@ -68,7 +70,7 @@ import retrofit2.Callback;
  * A simple {@link Fragment} subclass.
  */
 public class
-Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
+Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner, OverViewClickListner {
     ArrayList<CrptoInfoModel> crptoInfoModels;
     ArrayList<OverViewModel> overViewModels;
     RecyclerView cryptoInfoRecyclerView, overviewRecycler;
@@ -110,23 +112,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
         multi_option = view.findViewById(R.id.multi_option);
         amt_pic = view.findViewById(R.id.amt_pic);
 
-        // Animation
-        enterright = AnimationUtils.loadAnimation(getContext(), R.anim.enter_right);
-        rightin = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_right);
-        right = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_right);
-
-        //set animation
-
-        multi_option.startAnimation(right);
-        amt_pic.startAnimation(right);
-        lytscan.setOnClickListener(this);
-        lytPay.setOnClickListener(this);
-        lytWalletBalance.setOnClickListener(this);
-        lytaddMoney.setOnClickListener(this);
-
-        crptoInfoModels = new ArrayList<CrptoInfoModel>();
-        overViewModels = new ArrayList<OverViewModel>();
-
+        /*-----------------------CryptoInfo---------------*/
         textView = view.findViewById(R.id.balance);
         textView1 = view.findViewById(R.id.balance1);
         increaseRate = view.findViewById(R.id.increaseRate);
@@ -138,38 +124,42 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
         null2 = view.findViewById(R.id.null2);
         Price = view.findViewById(R.id.price);
         card_imt = view.findViewById(R.id.card);
-        //  sharedPreferences=getActivity().getSharedPreferences("symbols", Context.MODE_PRIVATE);
-        sharedPreferences1 = getActivity().getSharedPreferences("imtInfo", Context.MODE_PRIVATE);
+
+
+
+         sharedPreferences1 = getActivity().getSharedPreferences("imtInfo", Context.MODE_PRIVATE);// for imt price
         sharedPreferences1.getString("price", null);
 
-        sharedPreferences = getActivity().getSharedPreferences("currency", 0);
+        sharedPreferences = getActivity().getSharedPreferences("currency", 0);// for currency
         currency2 = sharedPreferences.getString("currency1", "usd");
         CurrencySymbols = sharedPreferences.getString("Currency_Symbols", "$");
+
         userData = SharedPrefManager.getInstance(getContext()).getUser();
 
+        crptoInfoModels = new ArrayList<CrptoInfoModel>();
+        overViewModels = new ArrayList<OverViewModel>();
         strings = new ArrayList<>();
         CryptoInfoRecyclerView();
 
 
-        imtsmart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), ImtSmartGraphLayout.class);
-                startActivity(intent);
 
-                SharedPreferences.Editor editor = sharedPreferences1.edit();
-                editor.putString("price", imtPrices);
-                editor.putString("chanage", increaseRate1);
-                editor.commit();
-            }
-        });
+        // Animation
+        enterright = AnimationUtils.loadAnimation(getContext(), R.anim.enter_right);
+        rightin = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_right);
+        right = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_right);
 
-        add_currency.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getContext(), Add_Currency.class));
-            }
-        });
+        //set animation
+        multi_option.startAnimation(right);
+        amt_pic.startAnimation(right);
+
+        /*-------------------setClickListner------------*/
+        lytscan.setOnClickListener(this);
+        lytPay.setOnClickListener(this);
+        lytWalletBalance.setOnClickListener(this);
+        lytaddMoney.setOnClickListener(this);
+        imtsmart.setOnClickListener(this);
+        add_currency.setOnClickListener(this);
+        card_imt.setOnClickListener(this);
 
         getImtDetails();
         AirDropBalance();
@@ -341,12 +331,6 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
     public void onClick(View v) {
         int id = v.getId();
 
-   /* switch (id){
-        case R.id.lytScan:
-
-            break;
-    }*/
-
         if (id == R.id.lytScan) {
             deepChangeTextColor(1);
             startActivity(new Intent(getContext(), WalletScan.class));
@@ -365,6 +349,24 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
             deepChangeTextColor(4);
             startActivity(new Intent(getContext(), Top_up_Money.class));
 
+
+        }else if(id == R.id.card){
+            SharedPreferences.Editor editor = sharedPreferences1.edit();
+            editor.putString("price", imtPrices);
+            editor.putString("chanage", increaseRate1);
+            editor.commit();
+
+            startActivity(new Intent(getContext(), ImtSmartGraphLayout.class));
+
+        }else if(id == R.id.Add_more_Currency){
+            startActivity(new Intent(getContext(), Add_Currency.class));
+        }else if(id == R.id.ImtSmart){
+            SharedPreferences.Editor editor = sharedPreferences1.edit();
+            editor.putString("price", imtPrices);
+            editor.putString("chanage", increaseRate1);
+            editor.commit();
+
+            startActivity(new Intent(getContext(), ImtSmartGraphLayout.class));
 
         }
 
@@ -673,7 +675,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
                     }
 
 
-                    overViewAdapter = new OverViewAdapter(overViewModels, getContext());
+                    overViewAdapter = new OverViewAdapter(overViewModels, getContext(),Deshboard.this::onOverViewItemClickListener);
                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
                     overviewRecycler.setLayoutManager(mLayoutManager);
                     overviewRecycler.setItemAnimator(new DefaultItemAnimator());
@@ -693,6 +695,20 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner {
     }
 
 
+    @Override
+    public void onOverViewItemClickListener(int position) {
+        String CoinID = overViewModels.get(position).getId();
+        String result = overViewModels.get(position).getSymbol();
+        String price = overViewModels.get(position).getCurrentPrice();
+        String image = overViewModels.get(position).getImage();
+        String coinName = overViewModels.get(position).getName();
+        String change = overViewModels.get(position).getCurrencyRate();
+        Updated_data.getInstans(getContext()).userLogin(position, coinName, result, image, change, price, CoinID);
 
+        Intent intent = new Intent(getContext(), Graph_layout.class);
+        startActivity(intent);
+
+
+    }
 }
 

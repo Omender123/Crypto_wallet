@@ -69,7 +69,8 @@ Add_Currency extends AppCompatActivity implements EnabledClickedListner {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -80,7 +81,6 @@ Add_Currency extends AppCompatActivity implements EnabledClickedListner {
         super.onBackPressed();
         //onSaveInstanceState(new Bundle());
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 

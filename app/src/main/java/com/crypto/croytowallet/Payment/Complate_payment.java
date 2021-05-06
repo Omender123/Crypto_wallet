@@ -57,7 +57,8 @@ public class Complate_payment extends AppCompatActivity implements View.OnClickL
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-       onSaveInstanceState(new Bundle());
+        startActivity(new Intent(Complate_payment.this, MainActivity.class));
+        SharedRequestResponse.getInstans(getApplicationContext()).RemoveData();
     }
 
 
@@ -66,7 +67,8 @@ public class Complate_payment extends AppCompatActivity implements View.OnClickL
 
         switch (v.getId()){
             case  R.id.back:
-            onBackPressed();
+                startActivity(new Intent(Complate_payment.this, MainActivity.class));
+                SharedRequestResponse.getInstans(getApplicationContext()).RemoveData();
             break;
 
             case  R.id.btn_copy:
