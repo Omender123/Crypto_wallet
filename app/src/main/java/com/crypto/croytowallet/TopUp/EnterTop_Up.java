@@ -23,8 +23,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.crypto.croytowallet.Extra_Class.ImagePath;
+import com.crypto.croytowallet.Extra_Class.MyPreferences;
+import com.crypto.croytowallet.Extra_Class.PrefConf;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.SharedRequestResponse;
@@ -55,10 +58,10 @@ public class EnterTop_Up extends AppCompatActivity {
     Spinner sp_currency;
     ArrayList<String> Currency;
     Button done;
-    String BankName, Acc_no, Holder_name, trans_id, Upi_Id, Amount, Payment_mode, currencyType;
+    String BankName, Acc_no, Holder_name, trans_id, Upi_Id, Amount, options, currencyType;
     UserData userData;
     KProgressHUD progressDialog;
-    TextView chooseFile;
+    TextView chooseFile,text_currency;
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     private ImageView ivImage;
     private String userChoosenTask;
@@ -76,6 +79,7 @@ public class EnterTop_Up extends AppCompatActivity {
         ed_upi_id = findViewById(R.id.upi_id);
         ed_Amount = findViewById(R.id.enter_amount);
         sp_currency = findViewById(R.id.select_currency);
+        text_currency = findViewById(R.id.txt_currency);
         done = findViewById(R.id.show_dailog);
         chooseFile = findViewById(R.id.chooseFile);
         ivImage = findViewById(R.id.setImageView);
@@ -84,7 +88,20 @@ public class EnterTop_Up extends AppCompatActivity {
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
         Currency = new ArrayList<String>();
-        getCurrency();
+
+
+
+        options= MyPreferences.getInstance(getApplicationContext()).getString(PrefConf.TOP_UP_TYPE,"");
+
+        if (options.equalsIgnoreCase("bank")){
+            sp_currency.setVisibility(View.VISIBLE);
+            getCurrency();
+            text_currency.setVisibility(View.GONE);
+
+        }else if (options.equalsIgnoreCase("qrCode")){
+            currencyType="THB";
+
+        }
 
         try{
             Bundle bundle = getIntent().getExtras();
@@ -120,6 +137,7 @@ public class EnterTop_Up extends AppCompatActivity {
 
                 } else {
                     PaymentDone(BankName, Acc_no, Holder_name, trans_id, Amount, currencyType,file);
+                   // Toast.makeText(EnterTop_Up.this, ""+currencyType, Toast.LENGTH_SHORT).show();
                 }
 
 

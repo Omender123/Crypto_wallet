@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.crypto.croytowallet.Extra_Class.ApiResponse.ResponseBankDetails;
 import com.crypto.croytowallet.Extra_Class.MyPreferences;
@@ -49,7 +50,7 @@ public class Enter_TopUp_Amount extends AppCompatActivity {
     String  Amount, currencyType,imtPrices,token,options;
     UserData userData;
     KProgressHUD progressDialog;
-    TextView text_send;
+    TextView text_send,text_currency;
     Double totalAmoumt;
     BottomSheetDialogFragment myBottomSheet;
 
@@ -61,21 +62,32 @@ public class Enter_TopUp_Amount extends AppCompatActivity {
         sp_currency = findViewById(R.id.select_currency);
         done = findViewById(R.id.add_money);
         text_send = findViewById(R.id.txt_send_amount);
+        text_currency = findViewById(R.id.txt_currency);
         Currency = new ArrayList<String>();
-
-
-
-        try{
-            Bundle bundle = getIntent().getExtras();
-            options =bundle.getString("options");
-
-        }catch (Exception e){}
-
 
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
         myBottomSheet = MyBottomSheetDialogFragment.newInstance("Modal Bottom Sheet");
 
         token = userData.getToken();
+
+
+
+            options= MyPreferences.getInstance(getApplicationContext()).getString(PrefConf.TOP_UP_TYPE,"");
+
+            if (options.equalsIgnoreCase("bank")){
+                sp_currency.setVisibility(View.VISIBLE);
+                text_currency.setVisibility(View.GONE);
+
+            }else if (options.equalsIgnoreCase("qrCode")){
+                currencyType="THB";
+
+                getImtDetails(currencyType);
+            }
+
+
+
+
+
         Show_Details();
         getCurrency();
 
@@ -94,12 +106,12 @@ public class Enter_TopUp_Amount extends AppCompatActivity {
 
               }else{
                   if (options.equalsIgnoreCase("bank")){
-                      myBottomSheet.show(getSupportFragmentManager(), myBottomSheet.getTag());
+                       myBottomSheet.show(getSupportFragmentManager(), myBottomSheet.getTag());
 
-                      MyPreferences.getInstance(getApplicationContext()).putString(PrefConf.RECEIVED_AMOUNT, String.valueOf(totalAmoumt));
-
+                     MyPreferences.getInstance(getApplicationContext()).putString(PrefConf.RECEIVED_AMOUNT, String.valueOf(totalAmoumt));
                   }else {
                       startActivity(new Intent(getApplicationContext(),ShowTop_UP.class).putExtra("totalAmount",totalAmoumt));
+
                   }
 
               }
@@ -338,7 +350,7 @@ public class Enter_TopUp_Amount extends AppCompatActivity {
                             JSONObject object = jsonArray.getJSONObject(i);
                             imtPrices =object.getString("price");
 
-                         }
+                             }
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }

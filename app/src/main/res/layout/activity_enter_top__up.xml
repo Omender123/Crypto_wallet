@@ -133,10 +133,23 @@
                 android:layout_marginRight="20dp"
                 android:gravity="center"
                 android:background="@drawable/verifying_textview">
-
+                <TextView
+                    android:id="@+id/txt_currency"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="THB"
+                    android:gravity="start|center"
+                    android:paddingStart="10dp"
+                    android:textSize="15dp"
+                    android:textColor="@color/toolbar_text_color"
+                    android:drawableRight="@drawable/ic_baseline_arrow_drop_down_24"
+                    />
                 <Spinner
                     android:id="@+id/select_currency"
                     android:layout_width="match_parent"
+                    android:visibility="gone"
                     android:layout_height="40dp"
                     android:layout_margin="10dp"/>
             </LinearLayout>

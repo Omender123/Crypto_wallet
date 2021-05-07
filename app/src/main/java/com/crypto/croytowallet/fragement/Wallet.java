@@ -181,9 +181,6 @@ public class Wallet extends Fragment implements CryptoClickListner, OverViewClic
 
     @Override
     public void onCryptoItemClickListener(int position) {
-        Intent intent = new Intent(getContext(), Graph_layout.class);
-        //  intent.putExtra("position",position);
-        startActivity(intent);
         String CoinID = crptoInfoModels.get(position).getId();
         String result = crptoInfoModels.get(position).getSymbol();
         String price = crptoInfoModels.get(position).getCurrentPrice();
@@ -193,6 +190,8 @@ public class Wallet extends Fragment implements CryptoClickListner, OverViewClic
 
         Updated_data.getInstans(getContext()).userLogin(position, coinName, result, image, change, price, CoinID);
 
+        Intent intent = new Intent(getContext(), Graph_layout.class);
+        startActivity(intent);
 
     }
 
@@ -367,6 +366,15 @@ public class Wallet extends Fragment implements CryptoClickListner, OverViewClic
 
     @Override
     public void onOverViewItemClickListener(int position) {
+        String CoinID = overViewModels.get(position).getId();
+        String result = overViewModels.get(position).getSymbol();
+        String price = overViewModels.get(position).getCurrentPrice();
+        String image = overViewModels.get(position).getImage();
+        String coinName = overViewModels.get(position).getName();
+        String change = overViewModels.get(position).getCurrencyRate();
+        Updated_data.getInstans(getContext()).userLogin(position, coinName, result, image, change, price, CoinID);
 
+        Intent intent = new Intent(getContext(), Graph_layout.class);
+        startActivity(intent);
     }
 }

@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.crypto.croytowallet.Extra_Class.MyPreferences;
+import com.crypto.croytowallet.Extra_Class.PrefConf;
 import com.crypto.croytowallet.R;
 
 import de.mateware.snacky.Snacky;
@@ -45,12 +47,13 @@ CardView card_paypal,card_bank,card_qrCode;
           switch (v.getId()){
 
               case R.id.card_bank:
-                  startActivity(new Intent(Top_up_Money.this,Enter_TopUp_Amount.class).putExtra("options","bank"));
-
+                  startActivity(new Intent(Top_up_Money.this,Enter_TopUp_Amount.class)/*.putExtra("options","bank")*/);
+                  MyPreferences.getInstance(getApplicationContext()).putString(PrefConf.TOP_UP_TYPE,"bank");
                   break;
 
               case R.id.card_QrCode:
-                  startActivity(new Intent(Top_up_Money.this,Enter_TopUp_Amount.class).putExtra("options","qrCode"));
+                  startActivity(new Intent(Top_up_Money.this,Enter_TopUp_Amount.class)/*.putExtra("options","qrCode")*/);
+                  MyPreferences.getInstance(getApplicationContext()).putString(PrefConf.TOP_UP_TYPE,"qrCode");
                   break;
 
               case R.id.card_paypal:

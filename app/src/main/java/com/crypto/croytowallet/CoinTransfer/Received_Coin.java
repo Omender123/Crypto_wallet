@@ -76,6 +76,7 @@ Received_Coin extends AppCompatActivity implements View.OnClickListener {
 
         barcodeAddress.setOnClickListener(this);
         barCodeshare.setOnClickListener(this);
+
        /*  if (coinId.toLowerCase().equalsIgnoreCase("btc")){
              String id = userData.getBTC();
              barcodeAddress.setText(id);
@@ -206,8 +207,7 @@ Received_Coin extends AppCompatActivity implements View.OnClickListener {
          }
 
 */
-
-       getPublicKey(userData.getToken(),coinId.toUpperCase());
+        getPublicKey(userData.getToken(),coinId.toUpperCase());
 
         }
 

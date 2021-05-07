@@ -362,6 +362,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
 
         String token = userData.getToken();
         String symbols = Updated_data.getInstans(getApplicationContext()).getmobile();
+
         Call<ResponseBody> call = RetrofitClient.getInstance().getApi().Balance(token, symbols);
 
         call.enqueue(new Callback<ResponseBody>() {
@@ -369,7 +370,6 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 String s = null;
-
                 if (response.code() == 200) {
                     try {
                         s = response.body().string();
@@ -399,72 +399,41 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                         s = response.errorBody().string();
                         JSONObject jsonObject1 = new JSONObject(s);
                         String error = jsonObject1.getString("error");
-                        String body1 = jsonObject1.getString("body");
-                        JSONObject object = new JSONObject(body1);
-                        String data = object.getString("data");
 
                         if (error.equalsIgnoreCase("Account not found.")) {
-
                             Snacky.builder()
                                     .setActivity(Graph_layout.this)
                                     .setText("You need to activate the Ripple account by transferring the 25 XRP")
-                                    .setDuration(Snacky.LENGTH_INDEFINITE)
+                                    .setDuration(Snacky.LENGTH_LONG)
+                                    .setActionText(android.R.string.ok)
+                                    .error()
+                                    .show();
+
+                        } else {
+                          Snacky.builder()
+                                    .setActivity(Graph_layout.this)
+                                    .setText("Failed to Load Balance kindly try again.")
+                                    .setDuration(Snacky.LENGTH_LONG)
                                     .setActionText(android.R.string.ok)
                                     .setActionClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-
-
+                                            Snacky.builder()
+                                                    .setView(v)
+                                                    .setText(error)
+                                                    .setDuration(Snacky.LENGTH_SHORT)
+                                                    .error()
+                                                    .show();
                                         }
                                     })
                                     .error()
                                     .show();
-
-                        } else if (!data.equalsIgnoreCase("null")) {
-                            Snacky.builder()
-                                    .setActivity(Graph_layout.this)
-                                    .setText(error)
-                                    .setDuration(Snacky.LENGTH_SHORT)
-                                    .setActionText(android.R.string.ok)
-                                    .error()
-                                    .show();
-                        }
-
-                        else {
-                            Snacky.builder()
-                                    .setActivity(Graph_layout.this)
-                                    .setText("Failed to Load Balance kindly try again.")
-                                    .setDuration(Snacky.LENGTH_SHORT)
-                                    .setActionText(android.R.string.ok)
-                                    .error()
-                                    .show();
+                           // Toast.makeText(Graph_layout.this, ""+error, Toast.LENGTH_SHORT).show();
                         }
 
 
 
-                        /* else if (error.equalsIgnoreCase("Returned error: getDeleteStateObject (14c60f4ffe33587b95cebfff0af75422945ea992) error: no suitable peers available") ||
-                                   error.equalsIgnoreCase("Returned error: getDeleteStateObject (dac17f958d2ee523a2206206994597c13d831ec7) error: no suitable peers available")
-                                || error.equalsIgnoreCase("Returned error: getDeleteStateObject (a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48) error: no suitable peers available")) {
-                            Snacky.builder()
-                                    .setActivity(Graph_layout.this)
-                                    .setText("Failed to Load Balance kindly try again.")
-                                    .setDuration(Snacky.LENGTH_SHORT)
-                                    .setActionText(android.R.string.ok)
-                                    .error()
-                                    .show();
 
-
-                        } else {
-                            Snacky.builder()
-                                    .setActivity(Graph_layout.this)
-                                    .setText(error)
-                                    .setDuration(Snacky.LENGTH_SHORT)
-                                    .setActionText(android.R.string.ok)
-                                    .error()
-                                    .show();
-
-                        }
-*/
 
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();

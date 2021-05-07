@@ -299,28 +299,26 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                         s = response.errorBody().string();
                         JSONObject jsonObject1 = new JSONObject(s);
                         String error = jsonObject1.getString("error");
-                        String body1 = jsonObject1.getString("body");
-                        JSONObject object = new JSONObject(body1);
-                        String data = object.getString("data");
 
-                        Toast.makeText(ImtSmartGraphLayout.this, ""+data, Toast.LENGTH_SHORT).show();
-                        if (!data.equalsIgnoreCase("null")){
-                            Snacky.builder()
-                                    .setActivity(ImtSmartGraphLayout.this)
-                                    .setText(error)
-                                    .setDuration(Snacky.LENGTH_SHORT)
-                                    .setActionText(android.R.string.ok)
-                                    .error()
-                                    .show();
-                        }else{
-                            Snacky.builder()
+                        Snacky.builder()
                                     .setActivity(ImtSmartGraphLayout.this)
                                     .setText("Failed to Load Balance kindly try again.")
-                                    .setDuration(Snacky.LENGTH_SHORT)
+                                    .setDuration(Snacky.LENGTH_LONG)
                                     .setActionText(android.R.string.ok)
+                                    .setActionClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Snacky.builder()
+                                                    .setView(v)
+                                                    .setText(error)
+                                                    .setDuration(Snacky.LENGTH_SHORT)
+                                                    .error()
+                                                    .show();
+                                        }
+                                    })
                                     .error()
                                     .show();
-                        }
+
 
 
 
@@ -698,7 +696,6 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                                 .setActionText(android.R.string.ok)
                                 .error()
                                 .show();
-                        Log.d("errror", error);
 
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
