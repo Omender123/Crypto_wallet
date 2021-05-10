@@ -87,6 +87,8 @@ public class CompleteScreen extends AppCompatActivity {
                     sharedPreferences2.edit().clear().commit();
                     //  deleteCache(MainActivity.this);
                     clearApplicationData();
+
+                    finish();
                    // Toast.makeText(CompleteScreen.this, "Logout Successfully", Toast.LENGTH_SHORT).show();
 
                 }else if(response.code()==400){

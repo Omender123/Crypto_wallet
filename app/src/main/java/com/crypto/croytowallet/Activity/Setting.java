@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +20,7 @@ import android.widget.TextView;
 import com.crypto.croytowallet.Extra_Class.AppUpdateChecker;
 import com.crypto.croytowallet.LunchActivity.MainActivity;
 import com.crypto.croytowallet.R;
+
 
 import de.mateware.snacky.Snacky;
 
@@ -62,6 +65,10 @@ public class Setting extends AppCompatActivity implements View.OnClickListener {
 
         currencyType.setText(currency2);
         back();
+
+
+
+
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -104,6 +111,8 @@ public class Setting extends AppCompatActivity implements View.OnClickListener {
                         .setDuration(Snacky.LENGTH_SHORT)
                         .success()
                         .show();
+
+
                 break;
             case R.id.notification:
                 startActivity(new Intent(getApplicationContext(),Notification.class));
@@ -133,8 +142,7 @@ public class Setting extends AppCompatActivity implements View.OnClickListener {
         super.onBackPressed();
 
         onSaveInstanceState(new Bundle());
-      /*  Intent intent = new Intent(Setting.this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);*/
+
     }
-}
+
+   }

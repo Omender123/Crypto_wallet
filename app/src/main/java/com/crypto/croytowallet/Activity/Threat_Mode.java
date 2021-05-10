@@ -130,6 +130,7 @@ CardView submit;
                     TransactionHistorySharedPrefManager.getInstance(getApplicationContext()).clearPearData();
                     sharedPreferences1.edit().clear().commit();
                     sharedPreferences2.edit().clear().commit();
+                    finish();
 
                 }else if(response.code()==400){
                     try {

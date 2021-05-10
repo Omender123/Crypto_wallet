@@ -231,20 +231,8 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                 m_3.setBackgroundColor(getResources().getColor(R.color.background));
                 m_6.setBackgroundColor(getResources().getColor(R.color.background));
                 y_1.setBackgroundColor(getResources().getColor(R.color.background));
-                if (coinId.equalsIgnoreCase("bitcoin")||coinId.equalsIgnoreCase("ethereum")||coinId.equalsIgnoreCase("ripple")
-                        ||coinId.equalsIgnoreCase("tether")||coinId.equalsIgnoreCase("litecoin")||coinId.equalsIgnoreCase("usd-coin")){
 
-                    getGraphData(coinId, currency2, "7", "daily");
-                }else{
-
-                    Snacky.builder()
-                            .setActivity(Graph_layout.this)
-                            .setText("Comings soon")
-                            .setDuration(Snacky.LENGTH_SHORT)
-                            .setActionText(android.R.string.ok)
-                            .success()
-                            .show();
-                }
+                getGraphData(coinId, currency2, "7", "daily");
 
                 break;
 
@@ -255,21 +243,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                 m_3.setBackgroundColor(getResources().getColor(R.color.background));
                 m_6.setBackgroundColor(getResources().getColor(R.color.background));
                 y_1.setBackgroundColor(getResources().getColor(R.color.background));
-                if (coinId.equalsIgnoreCase("bitcoin")||coinId.equalsIgnoreCase("ethereum")||coinId.equalsIgnoreCase("ripple")
-                        ||coinId.equalsIgnoreCase("tether")||coinId.equalsIgnoreCase("litecoin")||coinId.equalsIgnoreCase("usd-coin")){
-
                     getGraphData(coinId, currency2, "30", "daily");
-                }else{
-
-                    Snacky.builder()
-                            .setActivity(Graph_layout.this)
-                            .setText("Comings soon")
-                            .setDuration(Snacky.LENGTH_SHORT)
-                            .setActionText(android.R.string.ok)
-                            .success()
-                            .show();
-                }
-
 
                 break;
 

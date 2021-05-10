@@ -467,46 +467,6 @@ TextInputLayout layout_otp;
     }
 
 
-    public void OTPexpire(){
-        new Handler().postDelayed(new Runnable() {
-
-
-            @Override
-            public void run() {
-                // This method will be executed once the timer is over
-                expire();
-            }
-        }, 60000);
-    }
-
-    public void expire(){
-        String usernames = username.getText().toString().trim();
-
-
-        Call<ResponseBody> call=  RetrofitClient
-                .getInstance()
-                .getApi().expireOtp(usernames);
-
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                hidepDialog();
-
-                String s=null;
-                if (response.code()==200){
-                    Toast.makeText(Login.this, "Your Otp is expire", Toast.LENGTH_SHORT).show();
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
-        });
-
-    }
-
     public void getAllDetails(){
 
         StringRequest stringRequest =new StringRequest(Request.Method.GET, "http://ip-api.com/json", new com.android.volley.Response.Listener<String>() {
@@ -771,5 +731,9 @@ public void listener(){
 
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

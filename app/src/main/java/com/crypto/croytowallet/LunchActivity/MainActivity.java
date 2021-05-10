@@ -465,6 +465,7 @@ public class MainActivity extends AppCompatActivity {
                     //  deleteCache(MainActivity.this);
                     clearApplicationData();
                     Toast.makeText(MainActivity.this, "Logout Successfully", Toast.LENGTH_SHORT).show();
+                    finish();
 
                 } else if (response.code() == 400) {
 

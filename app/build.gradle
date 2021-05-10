@@ -130,6 +130,7 @@ dependencies {
 
     implementation 'com.github.cooltechworks:ScratchView:v1.1'
 
+
 }
 
 private Integer generateVersionCode() {
