@@ -272,4 +272,8 @@ Add_Currency extends AppCompatActivity implements EnabledClickedListner {
 
 
     }
+
+    public void newCoin(View view) {
+        startActivity(new Intent(getApplicationContext(),New_Currency.class));
+    }
 }

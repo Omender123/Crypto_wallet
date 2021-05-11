@@ -75,7 +75,6 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
     ImageView back, received, send;
     KProgressHUD progressDialog;
     SharedPreferences preferences, sharedPreferences;
-    ;
     private LineChart chart;
     UserData userData;
     CircleImageView circleImageView;
@@ -344,7 +343,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 String s = null;
-                if (response.code() == 200) {
+                if (response.code() == 200 || response.body()!=null) {
                     try {
                         s = response.body().string();
 
@@ -368,7 +367,15 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                         e.printStackTrace();
                     }
 
-                } else if (response.code() == 400) {
+                }/*else if(response.body()==null){
+                    Snacky.builder()
+                            .setActivity(Graph_layout.this)
+                            .setText("Tron Coin Balance not found ")
+                            .setDuration(Snacky.LENGTH_LONG)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+                }*/ else if (response.code() == 400) {
                     try {
                         s = response.errorBody().string();
                         JSONObject jsonObject1 = new JSONObject(s);
@@ -691,6 +698,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                coinModals.clear();
                 Snacky.builder()
                         .setActivity(Graph_layout.this)
                         .setText(t.getMessage())

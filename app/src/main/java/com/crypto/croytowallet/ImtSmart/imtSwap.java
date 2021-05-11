@@ -59,12 +59,11 @@ imtSwap extends AppCompatActivity implements View.OnClickListener {
     TextView swapBtn, txt_low, txt_average, txt_high, gwei_low, gwei_average, gwei_high, min_low, min_average, min_high, min_rate, half_rate, max_rate;
     LinearLayout lyt_low, lyt_average, lyt_high;
     EditText enter_Swap_Amount;
-    String[] coinName = {"ImSmart", "Bitcoin","Ethereum","Tether","XRP","Litcoin","USD Coin","ImSmart Utility"};
-    String[] coinSymbols = {"IMT", "BTC","ETH","USDT","XRP","LTC","USDC","IMT-U"};
-    String[] coinId = {"imt", "btc","eth","usdt","xrp","ltc","usdc","airdrop"};
-    String[] PricecoinId = {"airdrop", "bitcoin","ethereum","tether","ripple","litecoin","usd-coin","airdrop"};
-
-    int[] coinImage = {R.mipmap.imt,R.mipmap.bitcoin_image,R.mipmap.group_blue,R.mipmap.usdt,R.mipmap.xrp,R.mipmap.ltc,R.mipmap.usdc,R.drawable.ic_imt__u};
+    String[] coinName = {"ImSmart", "Bitcoin","Ethereum","Tether","XRP","Litecoin","USD Coin","Tron","ImSmart Utility"};
+    String[] coinSymbols = {"IMT", "BTC","ETH","USDT","XRP","LTC","USDC","TRX","IMT-U"};
+    String[] coinId = {"imt", "btc","eth","usdt","xrp","ltc","usdc","trx","airdrop"};
+    String[] PricecoinId = {"airdrop", "bitcoin","ethereum","tether","ripple","litecoin","usd-coin","tron","airdrop"};
+    int[] coinImage = {R.mipmap.imt,R.mipmap.bitcoin_image,R.mipmap.group_blue,R.mipmap.usdt,R.mipmap.xrp,R.mipmap.ltc,R.mipmap.usdc,R.drawable.ic_tron,R.drawable.ic_imt__u};
 
     String[] coinName1 = {"ImSmart Utility", "ImSmart"};
     String[] coinSymbols1 = {"IMT-U","IMT"};
@@ -78,6 +77,7 @@ imtSwap extends AppCompatActivity implements View.OnClickListener {
     String currency2,CurrencySymbols,token,userBalance,imtPrice,coinSymbol;
     UserData userData;
     TextView text_send;
+    Double userBalance1,enter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -216,7 +216,10 @@ imtSwap extends AppCompatActivity implements View.OnClickListener {
                 SwapAmount = enter_Swap_Amount.getText().toString().trim();
                 int mini = Integer.parseInt(min_amount);
                 int to = --mini ;
-
+                if (!SwapAmount.isEmpty()){
+                    userBalance1 = Double.parseDouble(userBalance);
+                    enter = Double.parseDouble(SwapAmount);
+                }
                 if (SwapAmount.isEmpty()) {
                     Snacky.builder()
                             .setActivity(imtSwap.this)
@@ -242,7 +245,15 @@ imtSwap extends AppCompatActivity implements View.OnClickListener {
                             .error()
                             .show();
                 }*/
-
+                else if(enter>=userBalance1){
+                    Snacky.builder()
+                            .setActivity(imtSwap.this)
+                            .setText(" Inefficient balance")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+                }
                 else if(priceCoinId.equals("airdrop")){
 
                     DecimalFormat df = new DecimalFormat();

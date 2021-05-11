@@ -60,11 +60,11 @@ public class Exchange extends Fragment implements View.OnClickListener {
     TextView swapBtn, txt_low, txt_average, txt_high, gwei_low, gwei_average, gwei_high, min_low, min_average, min_high, min_rate, half_rate, max_rate;
     LinearLayout lyt_low, lyt_average, lyt_high;
     EditText enter_Swap_Amount;
-    String[] coinName = {"ImSmart", "Bitcoin","Ethereum","Tether","XRP","Litecoin","USD Coin","ImSmart Utility"};
-    String[] coinSymbols = {"IMT", "BTC","ETH","USDT","XRP","LTC","USDC","IMT-U"};
-    String[] coinId = {"imt", "btc","eth","usdt","xrp","ltc","usdc","airdrop"};
-    String[] PricecoinId = {"airdrop", "bitcoin","ethereum","tether","ripple","litecoin","usd-coin","airdrop"};
-    int[] coinImage = {R.mipmap.imt,R.mipmap.bitcoin_image,R.mipmap.group_blue,R.mipmap.usdt,R.mipmap.xrp,R.mipmap.ltc,R.mipmap.usdc,R.drawable.ic_imt__u};
+    String[] coinName = {"ImSmart", "Bitcoin","Ethereum","Tether","XRP","Litecoin","USD Coin","Tron","ImSmart Utility"};
+    String[] coinSymbols = {"IMT", "BTC","ETH","USDT","XRP","LTC","USDC","TRX","IMT-U"};
+    String[] coinId = {"imt", "btc","eth","usdt","xrp","ltc","usdc","trx","airdrop"};
+    String[] PricecoinId = {"airdrop", "bitcoin","ethereum","tether","ripple","litecoin","usd-coin","tron","airdrop"};
+    int[] coinImage = {R.mipmap.imt,R.mipmap.bitcoin_image,R.mipmap.group_blue,R.mipmap.usdt,R.mipmap.xrp,R.mipmap.ltc,R.mipmap.usdc,R.drawable.ic_tron,R.drawable.ic_imt__u};
 
     String[] coinName1 = {"ImSmart Utility","ImSmart"};
     String[] coinSymbols1 = {"IMT-U","IMT"};
@@ -79,6 +79,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
     String currency2,CurrencySymbols,token,userBalance,imtPrice,coinSymbol;
     UserData userData;
     TextView text_send;
+    Double userBalance1,enter;
 
 
 
@@ -222,7 +223,10 @@ public class Exchange extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 SwapAmount = enter_Swap_Amount.getText().toString().trim();
-
+                if (!SwapAmount.isEmpty()){
+                      userBalance1 = Double.parseDouble(userBalance);
+                     enter = Double.parseDouble(SwapAmount);
+                }
                 int mini = Integer.parseInt(min_amount);
                 int to = --mini ;
 
@@ -250,7 +254,18 @@ public class Exchange extends Fragment implements View.OnClickListener {
                             .setActionText(android.R.string.ok)
                             .error()
                             .show();
-                }*/else if(priceCoinId.equals("airdrop")){
+                }*/
+
+                else if(enter>=userBalance1){
+                    Snacky.builder()
+                            .setActivity(
+                                    getActivity())
+                            .setText(" Inefficient balance")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+                }else if(priceCoinId.equals("airdrop")){
 
                     DecimalFormat df = new DecimalFormat();
                     df.setMaximumFractionDigits(8);
@@ -461,121 +476,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
         VolleySingleton.getInstance(getActivity()).addToRequestQueue(stringRequest);
        }
 
-   /* public void SwapApi() {
 
-        UserData userData = SharedPrefManager.getInstance(getContext()).getUser();
-
-        String Token = userData.getToken();
-        String eth_Address = userData.getETH();
-        progressDialog = KProgressHUD.create(getActivity())
-                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                .setLabel("Please wait.....")
-                .setCancellable(false)
-                .setAnimationSpeed(2)
-                .setDimAmount(0.5f)
-                .show();
-
-      showpDialog();
-
-
-
-
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().IMT_SWAP(Token, sendData, receviedData, value, SwapAmount, "", eth_Address);
-
-
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                String s = null;
-                hidepDialog();
-                if (response.code() == 200) {
-
-                    try {
-                        s = response.body().string();
-
-                        if (s == null) {
-                            startActivity(new Intent(getContext(), ImtSmartGraphLayout.class));
-                            Toast.makeText(getContext(), "Error  occurred in Transaction", Toast.LENGTH_SHORT).show();
-                        } else {
-                            startActivity(new Intent(getContext(), ImtSmartGraphLayout.class));
-                            Toast.makeText(getContext(), " Successfully \t" + sendData + "\t to \t" + receviedData, Toast.LENGTH_SHORT).show();
-                        }
-
-
-                        // Toast.makeText(getContext(), ""+s, Toast.LENGTH_SHORT).show();
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                } else if (response.code() == 400) {
-                    try {
-                        s = response.errorBody().string();
-                        JSONObject jsonObject1 = new JSONObject(s);
-                        String error = jsonObject1.getString("error");
-
-
-                        Snacky.builder()
-                                .setActivity(getActivity())
-                                .setText(error)
-                                .setDuration(Snacky.LENGTH_SHORT)
-                                .setActionText(android.R.string.ok)
-                                .error()
-                                .show();
-
-
-                    } catch (IOException | JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                } else if (response.code() == 401) {
-                    Snacky.builder()
-                            .setActivity(getActivity())
-                            .setText("unAuthorization Request")
-                            .setDuration(Snacky.LENGTH_SHORT)
-                            .setActionText(android.R.string.ok)
-                            .error()
-                            .show();
-                } else if (response.code() == 504) {
-                    Snacky.builder()
-                            .setActivity(getActivity())
-                            .setText("Gate Way Time Down")
-                            .setDuration(Snacky.LENGTH_SHORT)
-                            .setActionText(android.R.string.ok)
-                            .error()
-                            .show();
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                hidepDialog();
-            *//*  Snacky.builder()
-                        .setActivity(getContext())
-                        .setText("Please Check Your Internet Connection")
-                        .setDuration(Snacky.LENGTH_SHORT)
-                        .setActionText(android.R.string.ok)
-                        .error()
-                        .show();
-
-                startActivity(new Intent(getContext(), ImtSmartGraphLayout.class));
-                Toast.makeText(getContext(), "Your Amount is Not detected ", Toast.LENGTH_SHORT).show();
-*//*
-                AppUtils.showMessageOKCancel("Your transaction is in process. Kindly check again for the confirmation.", getActivity(), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent = new Intent(getContext(), ImtSmartGraphLayout.class);
-                        startActivity(intent);
-
-                    }
-                });
-
-            }
-        });
-
-
-    }*/
 
     private void showpDialog() {
         if (!progressDialog.isShowing())

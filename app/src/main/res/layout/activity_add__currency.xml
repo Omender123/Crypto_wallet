@@ -31,10 +31,12 @@
             android:layout_gravity="center"
             android:layout_marginRight="20dp"
             android:text="@string/add_currency"
+            android:onClick="newCoin"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             android:textColor="@color/white"
             android:textSize="25dp"
+            android:drawableRight="@drawable/ic_newcoinbuttom"
             android:textStyle="bold" />
     </LinearLayout>
 

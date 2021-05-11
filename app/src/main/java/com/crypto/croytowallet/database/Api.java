@@ -1,9 +1,13 @@
 package com.crypto.croytowallet.database;
 
+import com.crypto.croytowallet.Extra_Class.ApiResponse.GetNewCoinRespinse;
 import com.crypto.croytowallet.Extra_Class.ApiResponse.PublicKeyResponse;
 import com.crypto.croytowallet.Extra_Class.ApiResponse.PearToPearResponse;
 import com.crypto.croytowallet.Extra_Class.ApiResponse.ResponseBankDetails;
+import com.crypto.croytowallet.Extra_Class.ApiResponse.SendAddAmountRequestResponse;
 import com.google.gson.JsonObject;
+
+import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -417,7 +421,7 @@ public interface Api {
 
     @Multipart
     @POST("pending/pendingtransfer")
-    Call<ResponseBody> SendAddAmountRequest(
+    Call<SendAddAmountRequestResponse> SendAddAmountRequest(
             @Header("Authorization") String authorization,
             @Part("accountName") RequestBody Bankname,
             @Part("accountNo") RequestBody Acc_no,
@@ -425,6 +429,7 @@ public interface Api {
             @Part("transactionId") RequestBody TransId,
             @Part("amount") RequestBody Amount,
             @Part("currency") RequestBody Currency,
+            @Part("utility") RequestBody utility,
             @Part MultipartBody.Part image
 
            );
@@ -441,5 +446,17 @@ public interface Api {
     @GET("EC/modifyEC")
     Call<ResponseBody>UpdateCoin(
             @Header("Authorization") String Authtoken
+    );
+
+    @GET("currency/getNewCurrency")
+    Call<ResponseBody> getNewCoin(
+            @Header("Authorization") String Authtoken
+    );
+
+    @GET("coins/markets")
+    Call<List<GetNewCoinRespinse>> getNewCoin(
+            @Query("ids") String coinId,
+            @Query("vs_currency") String currency
+
     );
 }

@@ -25,6 +25,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crypto.croytowallet.Extra_Class.ApiResponse.SendAddAmountRequestResponse;
 import com.crypto.croytowallet.Extra_Class.ImagePath;
 import com.crypto.croytowallet.Extra_Class.MyPreferences;
 import com.crypto.croytowallet.Extra_Class.PrefConf;
@@ -67,6 +68,7 @@ public class EnterTop_Up extends AppCompatActivity {
     private String userChoosenTask;
     File file;
     String total;
+    Double totalAmount;
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,7 +138,7 @@ public class EnterTop_Up extends AppCompatActivity {
                             .show();
 
                 } else {
-                    PaymentDone(BankName, Acc_no, Holder_name, trans_id, Amount, currencyType,file);
+                    PaymentDone(BankName, Acc_no, Holder_name, trans_id, Amount, currencyType,total,file);
                    // Toast.makeText(EnterTop_Up.this, ""+currencyType, Toast.LENGTH_SHORT).show();
                 }
 
@@ -153,7 +155,7 @@ public class EnterTop_Up extends AppCompatActivity {
 
     }
 
-    public void PaymentDone(String bankName, String acc_no, String holder_name, String trans_id, String amount, String currencyType,File file) {
+    public void PaymentDone(String bankName, String acc_no, String holder_name, String trans_id, String amount, String currencyType,String  utility,File file ) {
 
         String token = userData.getToken();
 
@@ -191,17 +193,34 @@ public class EnterTop_Up extends AppCompatActivity {
         RequestBody Currency_Type =
                 RequestBody.create(
                         MediaType.parse("multipart/form-data"),currencyType);
+        RequestBody utility1 =
+                RequestBody.create(
+                        MediaType.parse("multipart/form-data"),utility);
 
+        Call<SendAddAmountRequestResponse> call = RetrofitClient.getInstance().getApi().SendAddAmountRequest(token,bank_Name,Acc_no,Holder_name1,Trans_id,Amount1,Currency_Type,utility1,image);
 
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().SendAddAmountRequest(token,bank_Name,Acc_no,Holder_name1,Trans_id,Amount1,Currency_Type,image);
-
-        call.enqueue(new Callback<ResponseBody>() {
+        call.enqueue(new Callback<SendAddAmountRequestResponse>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<SendAddAmountRequestResponse> call, Response<SendAddAmountRequestResponse> response) {
                 hidepDialog();
                 String s = null;
                 if (response.isSuccessful()) {
-                    try {
+                    if (response.body()!=null){
+                        SendAddAmountRequestResponse response1 = response.body();
+
+                        SharedRequestResponse.getInstans(getApplicationContext()).SetData(
+                                response1.getTransactionId(),response1.getId(),response1.getAmount(), String.valueOf(response1.getUtility()),response1.getStatus(),response1.getCurrency());
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                startActivity(new Intent(getApplicationContext(), TopUp_Acknowlegement.class));
+                            }
+                        },500);
+
+
+                    }
+                  /*  try {
                         s = response.body().string();
                         JSONObject  object = new JSONObject(s);
                         String trans_id =object.getString("transactionId");
@@ -221,7 +240,7 @@ public class EnterTop_Up extends AppCompatActivity {
 
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
-                    }
+                    }*/
 
 
 
@@ -249,7 +268,7 @@ public class EnterTop_Up extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<SendAddAmountRequestResponse> call, Throwable t) {
                 hidepDialog();
 
                 Snacky.builder()
