@@ -91,7 +91,12 @@ public class New_Currency extends AppCompatActivity implements NewCoinAdapter.On
                     }
 
                     String coinId = String.join(",", coinName);
-                    getNewcoinss(coinId, "usd");
+                    if (!coinId.isEmpty()){
+                        getNewcoinss(coinId, "usd");
+                    }else {
+                         empty.setVisibility(View.VISIBLE);
+                    }
+
                 } else if (response.code() == 401 || response.code() == 400) {
 
                     try {
@@ -146,6 +151,7 @@ public class New_Currency extends AppCompatActivity implements NewCoinAdapter.On
             @Override
             public void onResponse(Call<List<GetNewCoinRespinse>> call, Response<List<GetNewCoinRespinse>> response) {
                 hidepDialog();
+
                 if (response.code() == 200 || response.isSuccessful()) {
                     if (response.body() != null || response.body().size() > 0) {
 
@@ -174,7 +180,7 @@ public class New_Currency extends AppCompatActivity implements NewCoinAdapter.On
                         });
 
                     } else {
-                        empty.setVisibility(View.VISIBLE);
+
                     }
                 }
             }

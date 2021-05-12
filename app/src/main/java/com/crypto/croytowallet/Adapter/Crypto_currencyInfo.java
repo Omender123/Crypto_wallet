@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.crypto.croytowallet.Interface.CryptoClickListner;
 import com.crypto.croytowallet.Model.CrptoInfoModel;
 import com.crypto.croytowallet.R;
@@ -72,8 +73,11 @@ private CryptoClickListner cryptoClickListner;
 
        if(crptoInfoModels.get(position).getCurrencyRate().contains("-")){
            holder.increaseRate.setText(currencyRate);
+           holder.lineChartView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_down_blue));
+           holder.lineChartView.setScaleType(ImageView.ScaleType.CENTER_CROP);
        }else{
            holder.increaseRate.setText("+"+currencyRate);
+           holder.lineChartView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_up_blue));
        }
 
        // Picasso.get().load(crptoInfoModels.get(position).getImage()).into(holder.imageView);
@@ -85,8 +89,7 @@ private CryptoClickListner cryptoClickListner;
     }
 
     public class MyHolder extends RecyclerView.ViewHolder{
-        ImageView imageView;
-      //  LineChartView lineChartView;
+        ImageView imageView,lineChartView;
         TextView increaseRate,name,currencyPrice,percentage;
         public MyHolder(@NonNull View itemView) {
             super(itemView);
@@ -95,7 +98,7 @@ private CryptoClickListner cryptoClickListner;
             name=itemView.findViewById(R.id.coinname);
             currencyPrice=itemView.findViewById(R.id.coinrate);
             percentage=itemView.findViewById(R.id.null1);
-           // lineChartView =itemView.findViewById(R.id.chart);
+            lineChartView =itemView.findViewById(R.id.chart);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -314,7 +314,6 @@
                         android:id="@+id/chart"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:src="@mipmap/wave"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_below="@id/coinrate"
@@ -414,7 +413,7 @@
                 android:layout_marginTop="12dp"
                 android:layout_toEndOf="@+id/coinName"
                 android:padding="10dp"
-                app:srcCompat="@mipmap/path2059" />
+                />
 
             <TextView
                 android:id="@+id/coinName"

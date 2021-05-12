@@ -67,8 +67,10 @@ public class OverViewAdapter extends RecyclerView.Adapter<OverViewAdapter.MyHold
 
         if(overViewModels.get(position).getCurrencyRate().contains("-")){
             holder.increaseRate.setText(currencyRate);
+            holder.chart.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_orange_down));
         }else{
             holder.increaseRate.setText("+"+currencyRate);
+            holder.chart.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_orange_up));
         }
         holder.coinSmybols.setText(overViewModels.get(position).getSymbol());
     }
@@ -80,7 +82,7 @@ public class OverViewAdapter extends RecyclerView.Adapter<OverViewAdapter.MyHold
 
 
     public class MyHolder extends RecyclerView.ViewHolder{
-        ImageView imageView;
+        ImageView imageView,chart;
         TextView increaseRate,name,currencyPrice,percentage,coinSmybols;
         public MyHolder(@NonNull View itemView) {
             super(itemView);
@@ -90,7 +92,7 @@ public class OverViewAdapter extends RecyclerView.Adapter<OverViewAdapter.MyHold
             coinSmybols=itemView.findViewById(R.id.coinsymbols);
             currencyPrice=itemView.findViewById(R.id.price);
             percentage = itemView.findViewById(R.id.null1);
-
+            chart= itemView.findViewById(R.id.imageView3);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -218,7 +218,6 @@ Add_Currency extends AppCompatActivity implements EnabledClickedListner {
     @Override
     public void onEnabledItemClickListener(int position, Boolean aBoolean) {
         String  Symbols = item_data.get(position).getTitle_Des();
-
         String value = String.valueOf(aBoolean);
         CoinEdit(Symbols,value);
 

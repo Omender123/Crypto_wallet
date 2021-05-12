@@ -82,14 +82,14 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner, 
     SharedPreferences sharedPreferences, sharedPreferences1;
     TextView textView, textView1,new_currency;
     CardView imtsmart, multi_option,card_imt;
-    ;
     TextView add_currency, increaseRate, null1, imtPrice,increaseRate2, null2, Price;
-    String imtPrices, imtPrices1, increaseRate1;
+    String imtPrices, increaseRate1;
     KProgressHUD progressDialog;
     String currency2, CurrencySymbols;
     UserData userData;
     Animation enterright, rightin, right;
     ArrayList<String> strings;
+    ImageView ImtChart,ImtChart1;
 
     public Deshboard() {
         // Required empty public constructor
@@ -120,12 +120,14 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner, 
         increaseRate = view.findViewById(R.id.increaseRate);
         null1 = view.findViewById(R.id.null1);
         imtPrice = view.findViewById(R.id.coinrate);
+        ImtChart = view.findViewById(R.id.chart);
 
         /*-----------------------overView---------------*/
         increaseRate2 = view.findViewById(R.id.increaseRate1);
         null2 = view.findViewById(R.id.null2);
         Price = view.findViewById(R.id.price);
         card_imt = view.findViewById(R.id.card);
+        ImtChart1 = view.findViewById(R.id.imageView3);
 
 
 
@@ -461,10 +463,13 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner, 
                                         getContext().getResources().getColor(R.color.red) : getContext().getResources().getColor(R.color.green));
                                 if (increaseRate1.contains("-")) {
                                     increaseRate.setText(increaseRate1);
-                                } else {
+                                     ImtChart.setImageDrawable(getResources().getDrawable(R.drawable.ic_down_blue));
+                                 } else {
                                     increaseRate.setText("+" + increaseRate1);
-                                }
+                                     ImtChart.setImageDrawable(getResources().getDrawable(R.drawable.ic_up_blue));
+                                  }
                             } catch (Exception e) { }
+
                             try {
                                 increaseRate2.setTextColor(increaseRate1.contains("-") ?
                                         getContext().getResources().getColor(R.color.red) : getContext().getResources().getColor(R.color.green));
@@ -472,11 +477,14 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner, 
                                 null2.setTextColor(increaseRate1.contains("-") ?
                                         getContext().getResources().getColor(R.color.red) : getContext().getResources().getColor(R.color.green));
                                 if (increaseRate1.contains("-")) {
-                                    increaseRate2.setText(increaseRate1);
+                                     increaseRate2.setText(increaseRate1);
+                                    ImtChart1.setImageDrawable(getResources().getDrawable(R.drawable.ic_orange_down));
                                 } else {
                                     increaseRate2.setText("+" + increaseRate1);
+                                    ImtChart1.setImageDrawable(getResources().getDrawable(R.drawable.ic_orange_up));
                                 }
                             } catch (Exception e) { }
+
                         }
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
