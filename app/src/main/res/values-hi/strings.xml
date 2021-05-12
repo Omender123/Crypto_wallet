@@ -298,7 +298,7 @@
     <string name = "bank_name"> बैंक नाम </string>
     <string name = "transaction_id"> लेनदेन आईडी </string>
     <string name = "upi_id"> यूपीआई आईडी </string>
-    <string name = "ifsc"> IFSC कोड </string>
+    <string name = "ifsc"> SWIFT कोड </string>
     <string name = "bank_hol"> बैंक होल्डर का नाम </string>
     <string name = "bank_show"> बैंक विवरण दिखाएं </string>
     <string name="qr_code">थाई क्यूआर कोड</string>

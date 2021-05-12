@@ -33,6 +33,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.crypto.croytowallet.Activity.Add_Currency;
 import com.crypto.croytowallet.Activity.Graph_layout;
+import com.crypto.croytowallet.Activity.New_Currency;
 import com.crypto.croytowallet.Activity.WalletBalance;
 import com.crypto.croytowallet.Activity.WalletReceive;
 import com.crypto.croytowallet.Activity.WalletScan;
@@ -79,7 +80,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner, 
     OverViewAdapter overViewAdapter;
     LinearLayout lytscan, lytPay, lytWalletBalance, lytaddMoney, amt_pic;
     SharedPreferences sharedPreferences, sharedPreferences1;
-    TextView textView, textView1;
+    TextView textView, textView1,new_currency;
     CardView imtsmart, multi_option,card_imt;
     ;
     TextView add_currency, increaseRate, null1, imtPrice,increaseRate2, null2, Price;
@@ -111,6 +112,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner, 
         overviewRecycler = view.findViewById(R.id.overviewRecycler);
         multi_option = view.findViewById(R.id.multi_option);
         amt_pic = view.findViewById(R.id.amt_pic);
+        new_currency = view.findViewById(R.id.newCoin);
 
         /*-----------------------CryptoInfo---------------*/
         textView = view.findViewById(R.id.balance);
@@ -160,6 +162,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner, 
         imtsmart.setOnClickListener(this);
         add_currency.setOnClickListener(this);
         card_imt.setOnClickListener(this);
+        new_currency.setOnClickListener(this);
 
         getImtDetails();
         AirDropBalance();
@@ -368,6 +371,8 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner, 
 
             startActivity(new Intent(getContext(), ImtSmartGraphLayout.class));
 
+        }else if(id ==R.id.newCoin){
+            startActivity(new Intent(getContext(), New_Currency.class));
         }
 
     }

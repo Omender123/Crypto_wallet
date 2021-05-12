@@ -296,7 +296,7 @@
     <string name="bank_name">银行名称</string>
     <string name="transaction_id">交易 ID </string>
     <string name="upi_id"> UPI ID </string>
-    <string name="ifsc"> IFSC 代码</string>
+    <string name="ifsc"> SWIFT 代码</string>
     <string name="bank_hol">银行持有人名称</string>
     <string name ="bank_show">显示银行详细信息</string>
     <string name ="qr_code">泰国 二维码 码</string>

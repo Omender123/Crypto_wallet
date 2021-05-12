@@ -24,7 +24,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class MyBottomSheetDialogFragment extends BottomSheetDialogFragment implements View.OnClickListener {
 
-    String mString,received_Amount;
+    String mString,received_Amount,show;
     TextView bank_name, bank_acc_no, bank_ifsc, bank_ho_name;
     ResponseBankDetails responseBankDetails;
     Button transfer;
@@ -60,8 +60,10 @@ public class MyBottomSheetDialogFragment extends BottomSheetDialogFragment imple
 
         responseBankDetails = SharedBankDetails.getInstance(getContext()).getBankDetails();
         received_Amount = MyPreferences.getInstance(getActivity()).getString(PrefConf.RECEIVED_AMOUNT,"0");
-
-
+        show = MyPreferences.getInstance(getActivity()).getString(PrefConf.TOP_UP_TYPE1,"QrCode");
+        if (show.equalsIgnoreCase("QrCode")){
+            transfer.setVisibility(View.GONE);
+        }
 
         bank_name.setOnClickListener(this);
         bank_acc_no.setOnClickListener(this);

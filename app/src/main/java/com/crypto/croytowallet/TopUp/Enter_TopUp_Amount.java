@@ -50,7 +50,7 @@ public class Enter_TopUp_Amount extends AppCompatActivity {
     String  Amount, currencyType,imtPrices,token,options;
     UserData userData;
     KProgressHUD progressDialog;
-    TextView text_send,text_currency;
+    TextView text_send,text_currency,showdetails;
     Double totalAmoumt;
     BottomSheetDialogFragment myBottomSheet;
 
@@ -63,6 +63,7 @@ public class Enter_TopUp_Amount extends AppCompatActivity {
         done = findViewById(R.id.add_money);
         text_send = findViewById(R.id.txt_send_amount);
         text_currency = findViewById(R.id.txt_currency);
+        showdetails= findViewById(R.id.showdetails);
         Currency = new ArrayList<String>();
 
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
@@ -80,7 +81,7 @@ public class Enter_TopUp_Amount extends AppCompatActivity {
 
             }else if (options.equalsIgnoreCase("qrCode")){
                 currencyType="THB";
-
+                showdetails.setVisibility(View.VISIBLE);
                 getImtDetails(currencyType);
             }
 
@@ -106,10 +107,11 @@ public class Enter_TopUp_Amount extends AppCompatActivity {
 
               }else{
                   if (options.equalsIgnoreCase("bank")){
-                       myBottomSheet.show(getSupportFragmentManager(), myBottomSheet.getTag());
+                      MyPreferences.getInstance(getApplicationContext()).putString(PrefConf.TOP_UP_TYPE1,"bank");
+                      MyPreferences.getInstance(getApplicationContext()).putString(PrefConf.RECEIVED_AMOUNT, String.valueOf(totalAmoumt));
 
-                     MyPreferences.getInstance(getApplicationContext()).putString(PrefConf.RECEIVED_AMOUNT, String.valueOf(totalAmoumt));
-                  }else {
+                      myBottomSheet.show(getSupportFragmentManager(), myBottomSheet.getTag());
+                   }else {
                       startActivity(new Intent(getApplicationContext(),ShowTop_UP.class).putExtra("totalAmount",totalAmoumt));
 
                   }
@@ -429,5 +431,14 @@ public class Enter_TopUp_Amount extends AppCompatActivity {
     private void hidepDialog() {
         if (progressDialog.isShowing())
             progressDialog.dismiss();
+    }
+
+    public void show(View view) {
+
+        MyPreferences.getInstance(getApplicationContext()).putString(PrefConf.RECEIVED_AMOUNT, String.valueOf(totalAmoumt));
+        MyPreferences.getInstance(getApplicationContext()).putString(PrefConf.TOP_UP_TYPE1,"QrCode");
+        myBottomSheet.show(getSupportFragmentManager(), myBottomSheet.getTag());
+
+
     }
 }

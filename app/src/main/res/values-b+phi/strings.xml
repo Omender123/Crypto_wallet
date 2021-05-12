@@ -300,7 +300,7 @@
     <string name = "bank_name"> Pangalan ng bangko </string>
     <string name = "transaction_id"> Id ng Transaksyon </string>
     <string name = "upi_id"> UPI Id </string>
-    <string name = "ifsc"> IFSC Code </string>
+    <string name = "ifsc"> SWIFT Code </string>
     <string name = "bank_hol"> Pangalan ng May-ari ng bangko </string>
     <string name = "bank_show"> Ipakita ang Mga Detalye ng bangko </string>
     <string name = "qr_code"> Thai QR code </string>

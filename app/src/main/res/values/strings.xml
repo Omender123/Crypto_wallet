@@ -299,7 +299,7 @@
     <string name="bank_name">Bank Name</string>
     <string name="transaction_id">Transaction ID</string>
     <string name="upi_id">UPI ID</string>
-    <string name="ifsc">IFSC Code</string>
+    <string name="ifsc">SWIFT Code</string>
     <string name="bank_hol">Bank Holder Name</string>
     <string name="bank_show">Show Bank Details</string>
     <string name="qr_code">Thai QR code</string>

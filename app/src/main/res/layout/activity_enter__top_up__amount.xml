@@ -94,6 +94,7 @@
                 android:inputType="numberDecimal"
                 android:paddingStart="10dp"
                 android:textColor="@color/toolbar_text_color" />
+
             <TextView
                 android:id="@+id/txt_send_amount"
                 android:layout_width="match_parent"
@@ -129,7 +130,23 @@
                     android:textSize="15dp"
                     android:textStyle="normal" />
             </androidx.cardview.widget.CardView>
-
+            <TextView
+                android:id="@+id/showdetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/bank_show"
+                android:textAlignment="textEnd"
+                android:visibility="gone"
+                android:textSize="13dp"
+                android:onClick="show"
+                android:fontFamily="@font/montserrat"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="#044B7F"
+                android:textStyle="bold"
+                />
 
         </LinearLayout>
     </ScrollView>

@@ -457,6 +457,16 @@ public interface Api {
     Call<List<GetNewCoinRespinse>> getNewCoin(
             @Query("ids") String coinId,
             @Query("vs_currency") String currency
-
     );
+
+    @FormUrlEncoded
+    @POST("currency/addNewCurrency")
+    Call<ResponseBody>AddCoinInProfile(
+            @Header("Authorization") String Authtoken,
+            @Field("name") String CoinName,
+            @Field("enabled") Boolean  aBoolean,
+            @Field("symbol") String symbol,
+            @Field("image") String Image
+     );
+
 }
