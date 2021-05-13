@@ -256,7 +256,7 @@ public class New_Currency extends AppCompatActivity implements NewCoinAdapter.On
                             .setText("Successfully Active the "+name.toUpperCase())
                             .setDuration(Snacky.LENGTH_SHORT)
                             .setActionText(android.R.string.ok)
-                            .error()
+                            .success()
                             .show();
 
                 }else if (response.code()==400||response.code()==401){

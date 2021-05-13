@@ -37,5 +37,6 @@
     <color name="swap_color">#3A4671</color>
     <color name="graph_icon_color">#FFFFFF</color>
     <color name="blue">#FFFFFF</color>
+    <color name="empty_color">#FFFFFF</color>
 
 </resources>

@@ -17,11 +17,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crypto.croytowallet.Extra_Class.ApiResponse.ResponseBankDetails;
+import com.crypto.croytowallet.Extra_Class.MyPreferences;
+import com.crypto.croytowallet.Extra_Class.PrefConf;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedBankDetails;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.database.RetrofitClient;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.zxing.WriterException;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
@@ -42,9 +45,11 @@ public class ShowTop_UP extends AppCompatActivity {
     TextView barcodeAddress;
     KProgressHUD progressDialog;
     Button transfer;
-    TextView text_send;
+    TextView text_send,bank_name,bank_acc_no;
 
     Double totalAmount;
+    BottomSheetDialogFragment myBottomSheet;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +59,10 @@ public class ShowTop_UP extends AppCompatActivity {
         qrImage = findViewById(R.id.qrPlaceHolder);
         transfer = findViewById(R.id.show_dailog);
         text_send = findViewById(R.id.txt_send_amount);
+        bank_name = findViewById(R.id.bank_name);
+        bank_acc_no = findViewById(R.id.bank_account_no);
+
+        myBottomSheet = MyBottomSheetDialogFragment.newInstance("Modal Bottom Sheet");
 
 
         try{
@@ -105,6 +114,8 @@ public class ShowTop_UP extends AppCompatActivity {
                    ResponseBankDetails   responseBankDetails = response.body();
 
                    barcodeAddress.setText(responseBankDetails.getUpi());
+                    bank_acc_no.setText(responseBankDetails.getAccountNo());
+                    bank_name.setText(responseBankDetails.getBankName());
 
                     barcodeAddress.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -187,5 +198,12 @@ public class ShowTop_UP extends AppCompatActivity {
         onSaveInstanceState(new Bundle());
     }
 
+    public void show(View view) {
 
+        MyPreferences.getInstance(getApplicationContext()).putString(PrefConf.RECEIVED_AMOUNT, String.valueOf(totalAmount));
+        MyPreferences.getInstance(getApplicationContext()).putString(PrefConf.TOP_UP_TYPE1,"QrCode");
+        myBottomSheet.show(getSupportFragmentManager(), myBottomSheet.getTag());
+
+
+    }
 }

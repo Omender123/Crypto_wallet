@@ -150,14 +150,15 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
 
         Glide.with(this).load(image).into(circleImageView);
 
-      try {
-          double pric = Double.parseDouble(price1);
-          DecimalFormat df = new DecimalFormat();
-          df.setMaximumFractionDigits(5);
+        try {
+            double pric = Double.parseDouble(price1);
+            DecimalFormat df = new DecimalFormat();
+            df.setMaximumFractionDigits(5);
 
-          price.setText(CurrencySymbols + df.format(pric));
+            price.setText(CurrencySymbols + df.format(pric));
 
-      }catch (Exception e){}
+        } catch (Exception e) {
+        }
 
         coinname.setText(coinName);
         coinsymbols.setText("(" + symbol + ")");
@@ -176,7 +177,6 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         }
         getBalance();
         getGraphData(coinId, currency2, "1", "");
-
 
 
         getSendCoinHistory();
@@ -219,7 +219,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                 m_3.setBackgroundColor(getResources().getColor(R.color.background));
                 m_6.setBackgroundColor(getResources().getColor(R.color.background));
                 y_1.setBackgroundColor(getResources().getColor(R.color.background));
-                getGraphData(coinId, currency2, "1","");
+                getGraphData(coinId, currency2, "1", "");
 
                 break;
 
@@ -242,7 +242,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                 m_3.setBackgroundColor(getResources().getColor(R.color.background));
                 m_6.setBackgroundColor(getResources().getColor(R.color.background));
                 y_1.setBackgroundColor(getResources().getColor(R.color.background));
-                    getGraphData(coinId, currency2, "30", "daily");
+                getGraphData(coinId, currency2, "30", "daily");
 
                 break;
 
@@ -253,20 +253,8 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                 m_3.setBackgroundColor(getResources().getColor(R.color.purple_500));
                 m_6.setBackgroundColor(getResources().getColor(R.color.background));
                 y_1.setBackgroundColor(getResources().getColor(R.color.background));
-                if (coinId.equalsIgnoreCase("bitcoin")||coinId.equalsIgnoreCase("ethereum")||coinId.equalsIgnoreCase("ripple")
-                        ||coinId.equalsIgnoreCase("tether")||coinId.equalsIgnoreCase("litecoin")||coinId.equalsIgnoreCase("usd-coin")){
 
-                    getGraphData(coinId, currency2, "90", "daily");
-                }else{
-
-                    Snacky.builder()
-                            .setActivity(Graph_layout.this)
-                            .setText("Comings soon")
-                            .setDuration(Snacky.LENGTH_SHORT)
-                            .setActionText(android.R.string.ok)
-                            .success()
-                            .show();
-                }
+                getGraphData(coinId, currency2, "90", "daily");
 
 
                 break;
@@ -278,21 +266,8 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                 m_3.setBackgroundColor(getResources().getColor(R.color.background));
                 m_6.setBackgroundColor(getResources().getColor(R.color.purple_500));
                 y_1.setBackgroundColor(getResources().getColor(R.color.background));
-                if (coinId.equalsIgnoreCase("bitcoin")||coinId.equalsIgnoreCase("ethereum")||coinId.equalsIgnoreCase("ripple")
-                        ||coinId.equalsIgnoreCase("tether")||coinId.equalsIgnoreCase("litecoin")||coinId.equalsIgnoreCase("usd-coin")){
 
-                    getGraphData(coinId, currency2, "180", "daily");
-                }else{
-
-                    Snacky.builder()
-                            .setActivity(Graph_layout.this)
-                            .setText("Comings soon")
-                            .setDuration(Snacky.LENGTH_SHORT)
-                            .setActionText(android.R.string.ok)
-                            .success()
-                            .show();
-                }
-
+                getGraphData(coinId, currency2, "180", "daily");
 
 
                 break;
@@ -304,20 +279,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                 m_3.setBackgroundColor(getResources().getColor(R.color.background));
                 m_6.setBackgroundColor(getResources().getColor(R.color.background));
                 y_1.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                if (coinId.equalsIgnoreCase("bitcoin")||coinId.equalsIgnoreCase("ethereum")||coinId.equalsIgnoreCase("ripple")
-                        ||coinId.equalsIgnoreCase("tether")||coinId.equalsIgnoreCase("litecoin")||coinId.equalsIgnoreCase("usd-coin")){
-
-                    getGraphData(coinId, currency2, "365", "daily");
-                }else{
-
-                    Snacky.builder()
-                            .setActivity(Graph_layout.this)
-                            .setText("Comings soon")
-                            .setDuration(Snacky.LENGTH_SHORT)
-                            .setActionText(android.R.string.ok)
-                            .success()
-                            .show();
-                }
+                getGraphData(coinId, currency2, "365", "daily");
                 break;
 
 
@@ -343,13 +305,14 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 String s = null;
-                if (response.code() == 200 || response.body()!=null) {
+                if (response.code() == 200) {
                     try {
                         s = response.body().string();
 
                         JSONObject jsonObject = new JSONObject(s);
-                        balance1 = jsonObject.getString("balance");
 
+
+                        balance1 = jsonObject.getString("balance");
 
 
                         double balance2 = Double.parseDouble(balance1);
@@ -361,21 +324,14 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                         balance.setText(CurrencySymbols + df.format(total));
                         coinprice.setText("" + df.format(balance2));
 
+
                         // Log.d("bal",df.format(total));
 
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }
 
-                }/*else if(response.body()==null){
-                    Snacky.builder()
-                            .setActivity(Graph_layout.this)
-                            .setText("Tron Coin Balance not found ")
-                            .setDuration(Snacky.LENGTH_LONG)
-                            .setActionText(android.R.string.ok)
-                            .error()
-                            .show();
-                }*/ else if (response.code() == 400) {
+                } else if (response.code() == 400) {
                     try {
                         s = response.errorBody().string();
                         JSONObject jsonObject1 = new JSONObject(s);
@@ -391,7 +347,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                                     .show();
 
                         } else {
-                          Snacky.builder()
+                            Snacky.builder()
                                     .setActivity(Graph_layout.this)
                                     .setText("Failed to Load Balance kindly try again.")
                                     .setDuration(Snacky.LENGTH_LONG)
@@ -409,11 +365,8 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                                     })
                                     .error()
                                     .show();
-                           // Toast.makeText(Graph_layout.this, ""+error, Toast.LENGTH_SHORT).show();
+                            // Toast.makeText(Graph_layout.this, ""+error, Toast.LENGTH_SHORT).show();
                         }
-
-
-
 
 
                     } catch (IOException | JSONException e) {
@@ -431,6 +384,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                             .show();
 
                 }
+
 
             }
 
