@@ -400,7 +400,7 @@ public class CoinHistory extends AppCompatActivity implements HistoryClickLister
                             CoinModal modal = new CoinModal();
                             String type = object1.getString("cryptoCurrency");
                             String amount = object1.getString("amtOfCrypto");
-                            String id = object1.getString("_id");
+                            String id = object1.getString("transactionHash");
                             String date = object1.getString("createdAt");
                             String userData = object1.getString("userId");
                             //  String receiver = object1.getString("receiver");
@@ -415,7 +415,7 @@ public class CoinHistory extends AppCompatActivity implements HistoryClickLister
                             modal.setUsername(username);
                             modal.setTime(date);
                             modal.setAmount(amount);
-                            modal.setType(type);
+                            modal.setType(type.toUpperCase());
                             modal.setId(id);
                             coinModals.add(modal);
 

@@ -646,7 +646,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                             CoinModal modal = new CoinModal();
                             String type = object1.getString("cryptoCurrency");
                             String amount = object1.getString("amtOfCrypto");
-                            String id = object1.getString("_id");
+                            String id = object1.getString("transactionHash");
                             String date = object1.getString("createdAt");
                             String userData = object1.getString("userId");
 
@@ -658,7 +658,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                             modal.setUsername(username);
                             modal.setTime(date);
                             modal.setAmount(amount);
-                            modal.setType(type);
+                            modal.setType(type.toUpperCase());
                             modal.setId(id);
                             coinModals.add(modal);
 

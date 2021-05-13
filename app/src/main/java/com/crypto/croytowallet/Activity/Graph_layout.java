@@ -561,7 +561,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         String token = user.getToken();
 
 
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().get_SendHistory(token, coinId);
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().get_SendHistory(token, symbol.toLowerCase());
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -581,7 +581,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                             CoinModal modal = new CoinModal();
                             String type = object1.getString("cryptoCurrency");
                             String amount = object1.getString("amtOfCrypto");
-                            String id = object1.getString("_id");
+                            String id = object1.getString("transactionHash");
                             String date = object1.getString("createdAt");
                             String userData = object1.getString("userId");
 
@@ -593,7 +593,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                             modal.setUsername(username);
                             modal.setTime(date);
                             modal.setAmount(amount);
-                            modal.setType(type);
+                            modal.setType(type.toUpperCase());
                             modal.setId(id);
                             coinModals.add(modal);
 
