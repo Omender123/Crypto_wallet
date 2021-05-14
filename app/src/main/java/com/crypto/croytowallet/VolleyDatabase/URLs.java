@@ -15,8 +15,6 @@ public class URLs {
     public static final String URL_TRANSACTION_HISTORY_FULL = ROOT_URL + "transaction/allPeerTransactiones1";
 
     public static final String URL_USER_DETAILS = ROOT_URL + "user/userInfromation";
-    //Active Device
-    public static final String URL_ACTIVE_DEVICE = ROOT_URL + "user/findCurrentlyActiveDevices";
     //ADD TICKET
     public static final String URL_ADD_TIKECT = ROOT_URL + "ticket/generateTicket";
     //GET TICKET

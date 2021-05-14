@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.crypto.croytowallet.Interface.HistoryClickLister;
-import com.crypto.croytowallet.Model.ActiveDeviceModel;
 import com.crypto.croytowallet.Model.NoticationModel;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.VolleyDatabase.URLs;

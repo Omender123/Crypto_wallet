@@ -304,4 +304,18 @@
     <string name = "bank_hol"> ชื่อเจ้าของธนาคาร </string>
     <string name = "bank_show"> แสดงรายละเอียดธนาคาร </string>
     <string name = "qr_code"> รหัส QR ภาษาไทย </string>
+
+
+    <string name = "redeem"> แลก </string>
+    <string name = "redeem_utility"> แลกในยูทิลิตี้ </string>
+    <string name = "redeem_now"> แลกเลย </string>
+    <string name = "term"> ข้อกำหนดในการให้บริการ </string>
+    <string name = "rewards"> รางวัล </string>
+    <string name = "imx_point"> จุด IMX </string>
+    <string name = "redeem_gift"> แลกเป็นของขวัญ </string>
+    <string name = "Rewards_his"> ประวัติรางวัล </string>
+    <string name = "product"> ผลิตภัณฑ์ </string>
+    <string name = "cart"> รถเข็น </string>
+    <string name = "history"> ประวัติ </string>
+    <string name = "categories"> หมวดหมู่ </string>
 </resources>

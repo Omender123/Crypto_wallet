@@ -19,12 +19,11 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.crypto.croytowallet.Adapter.ActiveDeviceAdapter;
+import com.crypto.croytowallet.Extra_Class.ApiResponse.ActiveDeviceResponse;
 import com.crypto.croytowallet.Interface.HistoryClickLister;
-import com.crypto.croytowallet.Model.ActiveDeviceModel;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
@@ -41,6 +40,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,11 +49,12 @@ import de.mateware.snacky.Snacky;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Sync_device extends AppCompatActivity implements HistoryClickLister {
     ImageView imageView;
     RecyclerView recyclerView;
-    ArrayList<ActiveDeviceModel> modelArrayList;
+    private ArrayList<ActiveDeviceResponse.Result> data;
     KProgressHUD progressDialog;
     ActiveDeviceAdapter activeDeviceAdapter;
     TextView balances ,textView1;
@@ -67,7 +68,8 @@ public class Sync_device extends AppCompatActivity implements HistoryClickLister
         imageView = findViewById(R.id.back);
         balances = findViewById(R.id.balance);
         textView1  =findViewById(R.id.balance1);
-        modelArrayList = new ArrayList<ActiveDeviceModel>();
+
+        data = new  ArrayList<ActiveDeviceResponse.Result>();
 
         recyclerView = findViewById(R.id.active_device_recyclerView);
         back();
@@ -79,7 +81,7 @@ public class Sync_device extends AppCompatActivity implements HistoryClickLister
 
       //  checkBalance();
         AirDropBalance();
-        getActiveDeviceDetails();
+       getActiveDeviceDetails();
     }
 
     public void getActiveDeviceDetails(){
@@ -97,92 +99,60 @@ public class Sync_device extends AppCompatActivity implements HistoryClickLister
 
         showpDialog();
 
-        StringRequest stringRequest =new StringRequest(Request.Method.POST, URLs.URL_ACTIVE_DEVICE, new Response.Listener<String>() {
+        Call<ActiveDeviceResponse>call = RetrofitClient.getInstance().getApi().ActiveDevice(username);
+        call.enqueue(new Callback<ActiveDeviceResponse>() {
             @Override
-            public void onResponse(String response) {
-                hidepDialog();
-                modelArrayList.clear();
-                try {
-                    JSONObject object = new JSONObject(response);
-                    String result = object.getString("result");
+            public void onResponse(Call<ActiveDeviceResponse> call, Response<ActiveDeviceResponse> response) {
+             hidepDialog();
+                Toast.makeText(Sync_device.this, ""+response.code(), Toast.LENGTH_SHORT).show();
+              String s= null;
+                if (response.isSuccessful()){
+                    ActiveDeviceResponse activeDeviceResponse = response.body();
+                   data = new ArrayList<ActiveDeviceResponse.Result>(Arrays.asList(activeDeviceResponse.getResults()));
 
-                    JSONArray jsonArray =new JSONArray(result);
+                    activeDeviceAdapter =new ActiveDeviceAdapter(data,getApplicationContext(),Sync_device.this);
+                    RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(),2);
+                    recyclerView.setLayoutManager(mLayoutManager);
+                    recyclerView.setItemAnimator(new DefaultItemAnimator());
+                    recyclerView.setAdapter(activeDeviceAdapter);
 
-                    for (int i=0;i<=jsonArray.length();i++){
+                }else{
+                    try{
+                     s=response.errorBody().string();
+                        JSONObject jsonObject1=new JSONObject(s);
+                        String error =jsonObject1.getString("error");
 
-                        ActiveDeviceModel activeDeviceModel1 =new ActiveDeviceModel();
-                        JSONObject jsonObject =jsonArray.getJSONObject(i);
 
-                        String location =jsonObject.getString("location");
-                        String osName =jsonObject.getString("osName");
-                        String iP_address =jsonObject.getString("ipV4");
-                        String jwt =jsonObject.getString("jwt");
+                        Snacky.builder()
+                                .setActivity(Sync_device.this)
+                                .setText(error)
+                                .setTextColor(getResources().getColor(R.color.white))
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
 
-                       activeDeviceModel1.setIP_Address(iP_address);
-                        activeDeviceModel1.setOS_Name(osName);
-                        activeDeviceModel1.setLocation(location);
-                        activeDeviceModel1.setJwt(jwt);
-                        modelArrayList.add(activeDeviceModel1);
 
-                        Collections.reverse(modelArrayList);
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-
-                activeDeviceAdapter =new ActiveDeviceAdapter(modelArrayList,getApplicationContext(),Sync_device.this);
-                RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(),2);
-                recyclerView.setLayoutManager(mLayoutManager);
-                recyclerView.setItemAnimator(new DefaultItemAnimator());
-                recyclerView.setAdapter(activeDeviceAdapter);
-
-
-                // Toast.makeText(getApplicationContext(), ""+response, Toast.LENGTH_SHORT).show();
-
             }
-        }, new Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
+            public void onFailure(Call<ActiveDeviceResponse> call, Throwable t) {
                 hidepDialog();
-                if (error == null || error.networkResponse == null) {
-                    return;
-                }
 
-                String body;
-                //get status code here
-                final String statusCode = String.valueOf(error.networkResponse.statusCode);
-                //get response body and parse with appropriate encoding
-                try {
-                    body = new String(error.networkResponse.data,"UTF-8");
-
-                    Toast.makeText(Sync_device.this, ""+body, Toast.LENGTH_SHORT).show();
-                } catch (UnsupportedEncodingException e) {
-
-                }
-
+                Snacky.builder()
+                        .setActivity(Sync_device.this)
+                        .setText(t.getLocalizedMessage())
+                        .setTextColor(getResources().getColor(R.color.white))
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
             }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("username", username);
-
-                return params;
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<String, String>();
-
-               // headers.put("Authorization", token);
-
-                return headers;
-            }
-
-
-        };
-
-        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+        });
 
 
     }
@@ -313,7 +283,7 @@ public class Sync_device extends AppCompatActivity implements HistoryClickLister
     @Override
     public void onHistoryItemClickListener(int position) {
 
-        jwt_token =modelArrayList.get(position).getJwt();
+        jwt_token =data.get(position).getJwt();
         AlertDialogBox();
 
     }

@@ -29,6 +29,7 @@ import com.crypto.croytowallet.Activity.Setting;
 import com.crypto.croytowallet.Activity.Support;
 import com.crypto.croytowallet.Activity.Threat_Mode;
 import com.crypto.croytowallet.R;
+import com.crypto.croytowallet.Rewards.Rewards;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.database.RetrofitClient;
@@ -49,13 +50,13 @@ import retrofit2.Callback;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Profile extends Fragment {
-    CardView security, setting, support, threat_mode,referral_code1,language;
-    LinearLayout profile;
+public class Profile extends Fragment implements View.OnClickListener {
+    CardView security, setting, support, threat_mode, referral_code1, language, Rewardss;
     Animation down, blink, right, left;
     ImageView share;
     TextView get, send;
     KProgressHUD progressDialog;
+
     public Profile() {
         // Required empty public constructor
     }
@@ -66,7 +67,6 @@ public class Profile extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        profile = view.findViewById(R.id.profile1);
         security = view.findViewById(R.id.security1);
         setting = view.findViewById(R.id.setting1);
         support = view.findViewById(R.id.support1);
@@ -75,8 +75,8 @@ public class Profile extends Fragment {
         send = view.findViewById(R.id.send);
         threat_mode = view.findViewById(R.id.threat_mode);
         referral_code1 = view.findViewById(R.id.referral_code1);
-        language  = view.findViewById(R.id.langauge1);
-
+        language = view.findViewById(R.id.langauge1);
+        Rewardss = view.findViewById(R.id.Rewards);
         //animation
         down = AnimationUtils.loadAnimation(getContext(), R.anim.silde_down);
         blink = AnimationUtils.loadAnimation(getContext(), R.anim.blink);
@@ -93,57 +93,20 @@ public class Profile extends Fragment {
         threat_mode.startAnimation(right);
         referral_code1.startAnimation(right);
         language.startAnimation(right);
+        Rewardss.startAnimation(right);
 
-        setting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), Setting.class));
-                setting.startAnimation(blink);
-            }
-        });
-        support.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), Support.class));
-                support.startAnimation(blink);
-            }
-        });
-        security.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), Security.class));
-                security.startAnimation(blink);
-            }
-        });
-
-        threat_mode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                threat_mode.startAnimation(blink);
-                resendOTP();
-
-            }
-        });
-        referral_code1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), MyReferral_code.class));
-                referral_code1.startAnimation(blink);
-
-            }
-        });
-
-        language.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showChangeLanguageDialod();
-            }
-        });
+        setting.setOnClickListener(this);
+        support.setOnClickListener(this);
+        security.setOnClickListener(this);
+        threat_mode.setOnClickListener(this);
+        referral_code1.setOnClickListener(this);
+        language.setOnClickListener(this);
+        Rewardss.setOnClickListener(this);
         return view;
     }
 
     private void showChangeLanguageDialod() {
-        final  String[] listItem={"English","Hindi","Japanese","ThaiLand","Chinese","Philippines"};
+        final String[] listItem = {"English", "Hindi", "Japanese", "ThaiLand", "Chinese", "Philippines"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Choose Language.......");
@@ -151,22 +114,22 @@ public class Profile extends Fragment {
         builder.setSingleChoiceItems(listItem, -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
-                if (i==0){
+                if (i == 0) {
                     setLocale("en");
                     getActivity().recreate();
-                }else if(i==1){
+                } else if (i == 1) {
                     setLocale("hi");
                     getActivity().recreate();
-                }else if(i==2){
+                } else if (i == 2) {
                     setLocale("ja");
                     getActivity().recreate();
-                }else if(i==3){
+                } else if (i == 3) {
                     setLocale("th");
                     getActivity().recreate();
-                }else if(i==4){
+                } else if (i == 4) {
                     setLocale("zh");
                     getActivity().recreate();
-                }else if(i==5){
+                } else if (i == 5) {
                     setLocale("phi");
                     getActivity().recreate();
                 }
@@ -175,7 +138,7 @@ public class Profile extends Fragment {
             }
         });
 
-        AlertDialog alertDialog =builder.create();
+        AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
 
@@ -184,20 +147,20 @@ public class Profile extends Fragment {
         Locale locale = new Locale(lang);
         Locale.setDefault(locale);
 
-        Configuration configuration= new Configuration();
-        configuration.locale=locale;
-        getActivity().getBaseContext().getResources().updateConfiguration(configuration,getActivity().getBaseContext().getResources().getDisplayMetrics());
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+        getActivity().getBaseContext().getResources().updateConfiguration(configuration, getActivity().getBaseContext().getResources().getDisplayMetrics());
 
         SharedPreferences.Editor editor = getActivity().getSharedPreferences("settings", Context.MODE_PRIVATE).edit();
-        editor.putString("My_Lang",lang);
+        editor.putString("My_Lang", lang);
         editor.apply();
 
     }
     // load lanage saved in sharedPreference
 
-    public void loadLocale(){
-        SharedPreferences sharedPreferences =getActivity().getSharedPreferences("settings", Activity.MODE_PRIVATE);
-        String Language = sharedPreferences.getString("My_Lang","");
+    public void loadLocale() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("settings", Activity.MODE_PRIVATE);
+        String Language = sharedPreferences.getString("My_Lang", "");
         setLocale(Language);
     }
 
@@ -270,6 +233,7 @@ public class Profile extends Fragment {
 
 
     }
+
     private void showpDialog() {
         if (!progressDialog.isShowing())
             progressDialog.show();
@@ -280,4 +244,39 @@ public class Profile extends Fragment {
             progressDialog.dismiss();
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.security1:
+                startActivity(new Intent(getContext(), Setting.class));
+                support.startAnimation(blink);
+                break;
+            case R.id.setting1:
+                startActivity(new Intent(getContext(), Setting.class));
+                setting.startAnimation(blink);
+                break;
+            case R.id.support1:
+                startActivity(new Intent(getContext(), Support.class));
+                support.startAnimation(blink);
+                break;
+            case R.id.threat_mode:
+                threat_mode.startAnimation(blink);
+                resendOTP();
+                break;
+            case R.id.referral_code1:
+                startActivity(new Intent(getContext(), MyReferral_code.class));
+                referral_code1.startAnimation(blink);
+                break;
+            case R.id.langauge1:
+                showChangeLanguageDialod();
+                break;
+            case R.id.Rewards:
+                startActivity(new Intent(getContext(), Rewards.class));
+                referral_code1.startAnimation(blink);
+
+                break;
+
+        }
+
+    }
 }

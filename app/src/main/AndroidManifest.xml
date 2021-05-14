@@ -33,8 +33,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CroytoWallet"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.New_Currency"
+        <activity android:name=".Rewards.Redeem"
             android:theme="@style/Theme.CroytoWallet.NoActionBar"></activity>
+        <activity
+            android:name=".Rewards.Rewards"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
+        <activity
+            android:name=".Activity.New_Currency"
+            android:theme="@style/Theme.CroytoWallet.NoActionBar" />
         <activity
             android:name=".TopUp.TopUp_Acknowlegement"
             android:theme="@style/Theme.CroytoWallet.NoActionBar" />

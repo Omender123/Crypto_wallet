@@ -213,7 +213,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.h_24:
-                h_24.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                h_24.setBackground(getResources().getDrawable(R.drawable.graph_box));
                 d_7.setBackgroundColor(getResources().getColor(R.color.background));
                 m_1.setBackgroundColor(getResources().getColor(R.color.background));
                 m_3.setBackgroundColor(getResources().getColor(R.color.background));
@@ -225,7 +225,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
 
             case R.id.d_7:
                 h_24.setBackgroundColor(getResources().getColor(R.color.background));
-                d_7.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                d_7.setBackground(getResources().getDrawable(R.drawable.graph_box));
                 m_1.setBackgroundColor(getResources().getColor(R.color.background));
                 m_3.setBackgroundColor(getResources().getColor(R.color.background));
                 m_6.setBackgroundColor(getResources().getColor(R.color.background));
@@ -238,7 +238,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
             case R.id.m_1:
                 h_24.setBackgroundColor(getResources().getColor(R.color.background));
                 d_7.setBackgroundColor(getResources().getColor(R.color.background));
-                m_1.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                m_1.setBackground(getResources().getDrawable(R.drawable.graph_box));
                 m_3.setBackgroundColor(getResources().getColor(R.color.background));
                 m_6.setBackgroundColor(getResources().getColor(R.color.background));
                 y_1.setBackgroundColor(getResources().getColor(R.color.background));
@@ -250,7 +250,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                 h_24.setBackgroundColor(getResources().getColor(R.color.background));
                 d_7.setBackgroundColor(getResources().getColor(R.color.background));
                 m_1.setBackgroundColor(getResources().getColor(R.color.background));
-                m_3.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                m_3.setBackground(getResources().getDrawable(R.drawable.graph_box));
                 m_6.setBackgroundColor(getResources().getColor(R.color.background));
                 y_1.setBackgroundColor(getResources().getColor(R.color.background));
 
@@ -264,7 +264,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                 d_7.setBackgroundColor(getResources().getColor(R.color.background));
                 m_1.setBackgroundColor(getResources().getColor(R.color.background));
                 m_3.setBackgroundColor(getResources().getColor(R.color.background));
-                m_6.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                m_6.setBackground(getResources().getDrawable(R.drawable.graph_box));
                 y_1.setBackgroundColor(getResources().getColor(R.color.background));
 
                 getGraphData(coinId, currency2, "180", "daily");
@@ -278,7 +278,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                 m_1.setBackgroundColor(getResources().getColor(R.color.background));
                 m_3.setBackgroundColor(getResources().getColor(R.color.background));
                 m_6.setBackgroundColor(getResources().getColor(R.color.background));
-                y_1.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                y_1.setBackground(getResources().getDrawable(R.drawable.graph_box));
                 getGraphData(coinId, currency2, "365", "daily");
                 break;
 

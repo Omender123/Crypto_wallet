@@ -1,5 +1,6 @@
 package com.crypto.croytowallet.database;
 
+import com.crypto.croytowallet.Extra_Class.ApiResponse.ActiveDeviceResponse;
 import com.crypto.croytowallet.Extra_Class.ApiResponse.GetNewCoinRespinse;
 import com.crypto.croytowallet.Extra_Class.ApiResponse.PublicKeyResponse;
 import com.crypto.croytowallet.Extra_Class.ApiResponse.PearToPearResponse;
@@ -468,5 +469,9 @@ public interface Api {
             @Field("symbol") String symbol,
             @Field("image") String Image
      );
-
+    @FormUrlEncoded
+    @POST("user/findCurrentlyActiveDevices")
+    Call<ActiveDeviceResponse>ActiveDevice(
+            @Field("username") String username
+            );
 }

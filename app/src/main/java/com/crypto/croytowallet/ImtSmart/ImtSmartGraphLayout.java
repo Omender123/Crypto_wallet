@@ -177,7 +177,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                 startActivity(intent3);
                 break;
             case R.id.h_24:
-                h_24.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                h_24.setBackground(getResources().getDrawable(R.drawable.graph_box));
                 d_7.setBackgroundColor(getResources().getColor(R.color.background));
                 m_1.setBackgroundColor(getResources().getColor(R.color.background));
                 m_3.setBackgroundColor(getResources().getColor(R.color.background));
@@ -188,7 +188,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
 
             case R.id.d_7:
                 h_24.setBackgroundColor(getResources().getColor(R.color.background));
-                d_7.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                d_7.setBackground(getResources().getDrawable(R.drawable.graph_box));
                 m_1.setBackgroundColor(getResources().getColor(R.color.background));
                 m_3.setBackgroundColor(getResources().getColor(R.color.background));
                 m_6.setBackgroundColor(getResources().getColor(R.color.background));
@@ -199,7 +199,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
             case R.id.m_1:
                 h_24.setBackgroundColor(getResources().getColor(R.color.background));
                 d_7.setBackgroundColor(getResources().getColor(R.color.background));
-                m_1.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                m_1.setBackground(getResources().getDrawable(R.drawable.graph_box));
                 m_3.setBackgroundColor(getResources().getColor(R.color.background));
                 m_6.setBackgroundColor(getResources().getColor(R.color.background));
                 y_1.setBackgroundColor(getResources().getColor(R.color.background));
@@ -210,7 +210,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                 h_24.setBackgroundColor(getResources().getColor(R.color.background));
                 d_7.setBackgroundColor(getResources().getColor(R.color.background));
                 m_1.setBackgroundColor(getResources().getColor(R.color.background));
-                m_3.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                m_3.setBackground(getResources().getDrawable(R.drawable.graph_box));
                 m_6.setBackgroundColor(getResources().getColor(R.color.background));
                 y_1.setBackgroundColor(getResources().getColor(R.color.background));
                 GetImtGraphAll("imt", currency2, 90);
@@ -221,7 +221,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                 d_7.setBackgroundColor(getResources().getColor(R.color.background));
                 m_1.setBackgroundColor(getResources().getColor(R.color.background));
                 m_3.setBackgroundColor(getResources().getColor(R.color.background));
-                m_6.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                m_6.setBackground(getResources().getDrawable(R.drawable.graph_box));
                 y_1.setBackgroundColor(getResources().getColor(R.color.background));
 
                 GetImtGraphAll("imt", currency2, 180);
@@ -233,7 +233,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
                 m_1.setBackgroundColor(getResources().getColor(R.color.background));
                 m_3.setBackgroundColor(getResources().getColor(R.color.background));
                 m_6.setBackgroundColor(getResources().getColor(R.color.background));
-                y_1.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                y_1.setBackground(getResources().getDrawable(R.drawable.graph_box));
 
                 GetImtGraphAll("imt", currency2, 365);
                 break;

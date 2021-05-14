@@ -57,5 +57,9 @@
         android:id="@+id/our_Offer"
         android:name="com.crypto.croytowallet.Offer.Offer"
         tools:layout="@layout/activity_offer" />
+    <activity
+        android:id="@+id/our_Rewards"
+        android:name="com.crypto.croytowallet.Rewards.Rewards"
+        tools:layout="@layout/activity_rewards" />
 
 </navigation>

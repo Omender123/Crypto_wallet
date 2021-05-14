@@ -297,6 +297,20 @@
     <string name="upi_id"> UPI ID </string>
     <string name="ifsc"> SWIFT Code</string>
     <string name="bank_hol">銀行名</string>
-    <string name = "bank_show">銀行の詳細を表示</string>
-    <string name = "qr_code">タイのQRコード</string>
+    <string name="bank_show">銀行の詳細を表示</string>
+    <string name="qr_code">タイのQRコード</string>
+
+
+    <string name="redeem">引き換え </string>
+    <string name="redeem_utility">ユーティリティで利用 </string>
+    <string name="redeem_now">今すぐ利用 </string>
+    <string name="term">利用規約 </string>
+    <string name="rewards">報酬 </string>
+    <string name="imx_point"> IMXポイント </string>
+    <string name="redeem_gift">ギフトと引き換える </string>
+    <string name="Rewards_his">特典の履歴 </string>
+    <string name="product">製品 </string>
+    <string name="cart">カート </string>
+    <string name="history">履歴 </string>
+    <string name="categories">カテゴリ </string>
 </resources>

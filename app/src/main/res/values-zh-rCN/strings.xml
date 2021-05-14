@@ -298,7 +298,20 @@
     <string name="upi_id"> UPI ID </string>
     <string name="ifsc"> SWIFT 代码</string>
     <string name="bank_hol">银行持有人名称</string>
-    <string name ="bank_show">显示银行详细信息</string>
-    <string name ="qr_code">泰国 二维码 码</string>
+    <string name="bank_show">显示银行详细信息</string>
+    <string name="qr_code">泰国 二维码 码</string>
 
+
+    <string name="redeem">兑换</string>
+    <string name="redeem_utility">在实用程序中兑换</string>
+    <string name="redeem_now">立即兑换</string>
+    <string name="term">条款和条件</string>
+    <string name="rewards">奖励</string>
+    <string name="imx_point"> IMX点</string>
+    <string name="redeem_gift">兑换礼品</string>
+    <string name="Rewards_his">奖励记录</string>
+    <string name="product">产品</string>
+    <string name="cart">购物车</string>
+    <string name="history">历史</string>
+    <string name="categories">类别</string>
 </resources>

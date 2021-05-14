@@ -204,7 +204,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@drawable/graph_box"
                         android:gravity="center"
+                        android:paddingTop="7dp"
+                        android:paddingBottom="7dp"
                         android:id="@+id/h_24"
                         android:orientation="vertical">
                         <TextView
@@ -221,6 +224,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:id="@+id/d_7"
+                        android:paddingTop="7dp"
+                        android:paddingBottom="7dp"
                         android:gravity="center"
                         android:orientation="vertical">
                         <TextView
@@ -237,6 +242,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:id="@+id/m_1"
+                        android:paddingTop="7dp"
+                        android:paddingBottom="7dp"
                         android:gravity="center"
                         android:orientation="vertical">
                         <TextView
@@ -254,6 +261,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:paddingTop="7dp"
+                        android:paddingBottom="7dp"
                         android:id="@+id/m_3"
                         android:orientation="vertical">
                         <TextView
@@ -272,6 +281,8 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:id="@+id/m_6"
+                        android:paddingTop="7dp"
+                        android:paddingBottom="7dp"
                         android:orientation="vertical">
                         <TextView
                             android:layout_width="wrap_content"
@@ -287,6 +298,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:paddingTop="7dp"
+                        android:paddingBottom="7dp"
                         android:gravity="center"
                         android:id="@+id/y_1"
                         android:orientation="vertical">

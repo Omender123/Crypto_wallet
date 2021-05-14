@@ -305,4 +305,18 @@
     <string name = "bank_show"> Ipakita ang Mga Detalye ng bangko </string>
     <string name = "qr_code"> Thai QR code </string>
 
+
+    <string name = "redeem"> Kunin ang </string>
+    <string name = "redeem_utility"> I-redeem sa Utility </string>
+    <string name = "redeem_now"> I-red now </string>
+    <string name = "term"> mga tuntunin at kundisyon </string>
+    <string name = "rewards"> Mga Gantimpala </string>
+    <string name = "imx_point"> IMX Point </string>
+    <string name = "redeem_gift"> Kunin sa Mga Regalo </string>
+    <string name = "Rewards_his"> Kasaysayan ng Mga Gantimpala </string>
+    <string name = "product"> Mga Produkto </string>
+    <string name = "cart"> Cart </string>
+    <string name = "history"> Kasaysayan </string>
+    <string name = "categories"> Mga Kategoryang </string>
+
 </resources>

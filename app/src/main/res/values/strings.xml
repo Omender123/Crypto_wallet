@@ -304,5 +304,18 @@
     <string name="bank_show">Show Bank Details</string>
     <string name="qr_code">Thai QR code</string>
 
+    <string name="redeem">Redeem</string>
+    <string name="redeem_utility">Redeem in Utility</string>
+    <string name="redeem_now">Redeem Now</string>
+    <string name="term">Terms &amp; Conditions</string>
+    <string name="rewards">Rewards</string>
+    <string name="imx_point">IMX Point</string>
+    <string name="redeem_gift">Redeem in Gifts</string>
+    <string name="Rewards_his">Rewards History</string>
+    <string name="product">Products</string>
+    <string name="cart">Cart</string>
+    <string name="history">History</string>
+    <string name="categories">Categories</string>
+
 
 </resources>

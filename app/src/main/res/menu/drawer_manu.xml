@@ -67,6 +67,12 @@
             android:id="@+id/our_Offer"
             android:icon="@drawable/ic_icon_feather_percent"
             android:title="@string/our_offer" />
+        <item
+            android:checkable="false"
+            android:checked="false"
+            android:id="@+id/our_Rewards"
+            android:icon="@drawable/ic_rewards_icon"
+            android:title="@string/rewards" />
     </group>
     <item
         android:title="@string/other">

@@ -9,17 +9,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.crypto.croytowallet.Extra_Class.ApiResponse.ActiveDeviceResponse;
 import com.crypto.croytowallet.Interface.HistoryClickLister;
-import com.crypto.croytowallet.Model.ActiveDeviceModel;
+
 import com.crypto.croytowallet.R;
 
 import java.util.ArrayList;
 
 public class ActiveDeviceAdapter extends RecyclerView.Adapter<ActiveDeviceAdapter.myViewHolder> {
-ArrayList<ActiveDeviceModel> modelArrayList;
+ArrayList<ActiveDeviceResponse.Result> modelArrayList;
 Context context;
     private HistoryClickLister historyClickLister;
-    public ActiveDeviceAdapter(ArrayList<ActiveDeviceModel> modelArrayList, Context context ,HistoryClickLister historyClickLister) {
+    public ActiveDeviceAdapter(ArrayList<ActiveDeviceResponse.Result> modelArrayList, Context context ,HistoryClickLister historyClickLister) {
         this.modelArrayList = modelArrayList;
         this.context = context;
         this.historyClickLister=historyClickLister;
@@ -38,8 +39,8 @@ Context context;
 
     @Override
     public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
-        holder.Os_Name.setText("OS Name : "+modelArrayList.get(position).getOS_Name());
-        holder.IP_Address.setText("IP Address : "+modelArrayList.get(position).getIP_Address());
+        holder.Os_Name.setText("OS Name : "+modelArrayList.get(position).getOsName());
+        holder.IP_Address.setText("IP Address : "+modelArrayList.get(position).getIpV4());
         holder.Location.setText("Location : "+modelArrayList.get(position).getLocation());
 
 
