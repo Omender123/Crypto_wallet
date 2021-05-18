@@ -26,6 +26,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.crypto.croytowallet.Activity.Graph_layout;
 import com.crypto.croytowallet.Adapter.CustomSpinnerAdapter;
 import com.crypto.croytowallet.LunchActivity.MainActivity;
 import com.crypto.croytowallet.Model.SwapModel;
@@ -50,6 +51,7 @@ import de.mateware.snacky.Snacky;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 public class
 imtSwap extends AppCompatActivity implements View.OnClickListener {
@@ -138,7 +140,8 @@ imtSwap extends AppCompatActivity implements View.OnClickListener {
                 priceCoinId = PricecoinId[position];
                 coinSymbol = coinSymbols[position];
                 positions = position;
-                AirDropBalance(token,sendData,currency2);
+                geTypeToken(token,sendData);
+               // AirDropBalance(token,sendData,currency2);
 
                 if(sendData.equals(receviedData)){
                     Snacky.builder()
@@ -734,7 +737,56 @@ imtSwap extends AppCompatActivity implements View.OnClickListener {
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
 
     }
-    public void AirDropBalance(String token,String coinType,String currency){
+
+    private void geTypeToken(String token, String symbol) {
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().getToken(token,symbol);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String s = null;
+                if (response.code()==200){
+                    try {
+                        s = response.body().string();
+                        JSONObject object = new JSONObject(s);
+                        String token1 = object.getString("token");
+                        getBalance(token,token1,symbol,currency2);
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }else if (response.code()==400){
+                    getBalance(token,symbol,symbol,currency2);
+
+                }else if (response.code()==401){
+                    Snacky.builder()
+                            .setActivity(imtSwap.this)
+                            .setText("unAuthorization Request")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Snacky.builder()
+                        .setActivity(imtSwap.this)
+                        .setText(t.getLocalizedMessage())
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+
+            }
+        });
+
+    }
+
+
+    public void getBalance(String token,String coinType,String coinSymbol,String currency){
         if (positions==0){
 
         }else {
@@ -749,7 +801,7 @@ imtSwap extends AppCompatActivity implements View.OnClickListener {
             showpDialog();
         }
 
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().AirDropBalance(token,coinType,currency);
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().Balance(token,coinType,coinSymbol,currency);
 
         call.enqueue(new Callback<ResponseBody>() {
             @RequiresApi(api = Build.VERSION_CODES.N)

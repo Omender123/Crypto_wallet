@@ -24,6 +24,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.crypto.croytowallet.Adapter.Transaaction_history_adapter;
+import com.crypto.croytowallet.Extra_Class.MyPreferences;
+import com.crypto.croytowallet.Extra_Class.PrefConf;
 import com.crypto.croytowallet.Interface.HistoryClickLister;
 import com.crypto.croytowallet.Model.TransactionHistoryModel;
 import com.crypto.croytowallet.R;
@@ -63,7 +65,7 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
     KProgressHUD progressDialog;
     TextView history_Empty;
    SharedPreferences sharedPreferences;
-   String CurrencySymbols,currency2;
+   String CurrencySymbols,currency2,balance,cal_balance;
    LinearLayout linearLayout;
     private ShimmerFrameLayout mShimmerViewContainer,mShimmerViewContainer1;
 
@@ -90,12 +92,17 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
         CurrencySymbols =sharedPreferences.getString("Currency_Symbols","$");
 
 
+        balance = MyPreferences.getInstance(getApplicationContext()).getString(PrefConf.USER_BALANCE,"0");
+        cal_balance =MyPreferences.getInstance(getApplicationContext()).getString(PrefConf.CAL_USER_BALANCE,"0");
+
+        textView.setText(balance);
+        textView1.setText(CurrencySymbols+cal_balance);
+
         transactionHistoryModels =new ArrayList<TransactionHistoryModel>();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 getHistory();
-                AirDropBalance();
             }
         }, 2000);
 
@@ -120,115 +127,7 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
 
     }
 
-    public void AirDropBalance(){
-        UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
-        String token = user.getToken();
 
-        progressDialog = KProgressHUD.create(WalletBalance.this)
-                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                .setLabel("Loading.........")
-                .setCancellable(false)
-                .setAnimationSpeed(2)
-                .setDimAmount(0.5f)
-                .show();
-
-        showpDialog();
-
-        String currency = currency2.toUpperCase();
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().AirDropBalance(token,"airdrop",currency);
-
-        call.enqueue(new Callback<ResponseBody>() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                String s =null;
-
-                hidepDialog();
-                if (response.code()==200){
-                    try {
-                        s=response.body().string();
-
-                        JSONObject object = new JSONObject(s);
-                        String balance = object.getString("balance");
-                        String cal = object.getString("calculationPrice");
-                        JSONObject object1 = new JSONObject(cal);
-                        String calBalance = object1.getString("calculation");
-
-                        DecimalFormat df = new DecimalFormat();
-                        df.setMaximumFractionDigits(2);
-
-                        if (calBalance.equals("null")){
-                            double balance2 = Double.parseDouble(balance);
-                            textView.setText(""+df.format(balance2));
-                            textView1.setText(CurrencySymbols+"0");
-                        }else{
-
-                            double balance2 = Double.parseDouble(balance);
-                            double calBalance2 = Double.parseDouble(calBalance);
-
-                            textView.setText(""+df.format(balance2));
-                            textView1.setText(CurrencySymbols+df.format(calBalance2));
-                        }
-
-
-                        //  Log.d("airDrop",s);
-
-
-                    } catch (IOException | JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    mShimmerViewContainer1.stopShimmerAnimation();
-                    mShimmerViewContainer1.setVisibility(View.GONE);
-                    linearLayout.setVisibility(View.VISIBLE);
-
-                } else if(response.code()==400){
-                    try {
-                        s=response.errorBody().string();
-                        JSONObject jsonObject1=new JSONObject(s);
-                        String error =jsonObject1.getString("error");
-
-
-                        Snacky.builder()
-                                .setActivity(WalletBalance.this)
-                                .setText(error)
-                                .setDuration(Snacky.LENGTH_SHORT)
-                                .setActionText(android.R.string.ok)
-                                .error()
-                                .show();
-
-
-                    } catch (IOException | JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                } else if(response.code()==401){
-
-                    Snacky.builder()
-                            .setActivity(WalletBalance.this)
-                            .setText("unAuthorization Request")
-                            .setDuration(Snacky.LENGTH_SHORT)
-                            .setActionText(android.R.string.ok)
-                            .error()
-                            .show();
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                hidepDialog();
-                Snacky.builder()
-                        .setActivity(WalletBalance.this)
-                        .setText(t.getLocalizedMessage())
-                        .setDuration(Snacky.LENGTH_SHORT)
-                        .setActionText(android.R.string.ok)
-                        .error()
-                        .show();
-            }
-        });
-    }
 
 
     public  void getHistory(){
@@ -278,6 +177,10 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
                 // stop animating Shimmer and hide the layout
                 mShimmerViewContainer.stopShimmerAnimation();
                 mShimmerViewContainer.setVisibility(View.GONE);
+                mShimmerViewContainer1.stopShimmerAnimation();
+                mShimmerViewContainer1.setVisibility(View.GONE);
+                linearLayout.setVisibility(View.VISIBLE);
+
 
                 if(transactionHistoryModels!=null && transactionHistoryModels.size()>0){
                     transaaction_history_adapter = new Transaaction_history_adapter(transactionHistoryModels,getApplicationContext(),WalletBalance.this);
@@ -292,7 +195,6 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
                 }
 
 
-               // Toast.makeText(WalletBalance.this, ""+response, Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -303,9 +205,7 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-              /*  params.put("username", usernames);
-                params.put("password", passwords);
-*/
+
 
                 return params;
             }

@@ -76,10 +76,9 @@ public class New_Currency extends AppCompatActivity implements NewCoinAdapter.On
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
+                coinName.clear();
                 String s = null;
                 if (response.isSuccessful() && response.code() == 200 && response.body() != null) {
-
                     try {
                         s = response.body().string();
                         JSONArray jsonArray = new JSONArray(s);
@@ -251,6 +250,7 @@ public class New_Currency extends AppCompatActivity implements NewCoinAdapter.On
                 hidepDialog();
                 String s =null;
                 if (response.isSuccessful()||response.code()==200){
+                    getNewCoin(token);
                     Snacky.builder()
                             .setActivity(New_Currency.this)
                             .setText("Successfully Active the "+name.toUpperCase())

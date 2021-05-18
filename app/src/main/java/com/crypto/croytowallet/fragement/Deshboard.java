@@ -39,6 +39,8 @@ import com.crypto.croytowallet.Activity.WalletReceive;
 import com.crypto.croytowallet.Activity.WalletScan;
 import com.crypto.croytowallet.Adapter.Crypto_currencyInfo;
 import com.crypto.croytowallet.Adapter.OverViewAdapter;
+import com.crypto.croytowallet.Extra_Class.MyPreferences;
+import com.crypto.croytowallet.Extra_Class.PrefConf;
 import com.crypto.croytowallet.ImtSmart.ImtSmartGraphLayout;
 import com.crypto.croytowallet.Interface.CryptoClickListner;
 import com.crypto.croytowallet.Interface.OverViewClickListner;
@@ -234,7 +236,7 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner, 
         String token = userData.getToken();
 
         String currency = currency2.toUpperCase();
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().AirDropBalance(token, "airdrop", currency);
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().Balance(token, "airdrop","airdrop", currency);
 
         call.enqueue(new Callback<ResponseBody>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -267,6 +269,9 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner, 
 
                             textView.setText("" + df.format(balance2));
                             textView1.setText(CurrencySymbols + df.format(calBalance2));
+                            MyPreferences.getInstance(getContext()).putString(PrefConf.USER_BALANCE, ""+ df.format(balance2));
+                            MyPreferences.getInstance(getContext()).putString(PrefConf.CAL_USER_BALANCE, ""+df.format(calBalance2));
+
                         }
 
 

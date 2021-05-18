@@ -255,7 +255,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
 
         String currency = currency2.toUpperCase();
 
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().AirDropBalance(token, "imt", currency);
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().Balance(token, "imt","imt", currency);
 
         call.enqueue(new Callback<ResponseBody>() {
             @RequiresApi(api = Build.VERSION_CODES.N)

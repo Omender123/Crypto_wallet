@@ -30,6 +30,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.crypto.croytowallet.Adapter.CustomSpinnerAdapter;
 import com.crypto.croytowallet.ImtSmart.SwapConfirmation;
+import com.crypto.croytowallet.ImtSmart.imtSwap;
 import com.crypto.croytowallet.Model.SwapModel;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
@@ -52,38 +53,38 @@ import de.mateware.snacky.Snacky;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Exchange extends Fragment implements View.OnClickListener {
     Spinner sendSpinner, reciveSpinner;
-    String sendData, receviedData, SwapAmount, low_gasFees, average_gasFees, high_gasFees, min_amount, half_amount, max_amount,priceCoinId,coinPrice;
+    String sendData, receviedData, SwapAmount, low_gasFees, average_gasFees, high_gasFees, min_amount, half_amount, max_amount, priceCoinId, coinPrice;
     ImageView img_low, img_average, img_high;
     TextView swapBtn, txt_low, txt_average, txt_high, gwei_low, gwei_average, gwei_high, min_low, min_average, min_high, min_rate, half_rate, max_rate;
     LinearLayout lyt_low, lyt_average, lyt_high;
     EditText enter_Swap_Amount;
-    String[] coinName = {"ImSmart", "Bitcoin","Ethereum","Tether","XRP","Litecoin","USD Coin","Tron","ImSmart Utility"};
-    String[] coinSymbols = {"IMT", "BTC","ETH","USDT","XRP","LTC","USDC","TRX","IMT-U"};
-    String[] coinId = {"imt", "btc","eth","usdt","xrp","ltc","usdc","trx","airdrop"};
-    String[] PricecoinId = {"airdrop", "bitcoin","ethereum","tether","ripple","litecoin","usd-coin","tron","airdrop"};
-    int[] coinImage = {R.mipmap.imt,R.mipmap.bitcoin_image,R.mipmap.group_blue,R.mipmap.usdt,R.mipmap.xrp,R.mipmap.ltc,R.mipmap.usdc,R.drawable.ic_tron,R.drawable.ic_imt__u};
+    String[] coinName = {"ImSmart", "Bitcoin", "Ethereum", "Tether", "XRP", "Litecoin", "USD Coin", "Tron", "ImSmart Utility"};
+    String[] coinSymbols = {"IMT", "BTC", "ETH", "USDT", "XRP", "LTC", "USDC", "TRX", "IMT-U"};
+    String[] coinId = {"imt", "btc", "eth", "usdt", "xrp", "ltc", "usdc", "trx", "airdrop"};
+    String[] PricecoinId = {"airdrop", "bitcoin", "ethereum", "tether", "ripple", "litecoin", "usd-coin", "tron", "airdrop"};
+    int[] coinImage = {R.mipmap.imt, R.mipmap.bitcoin_image, R.mipmap.group_blue, R.mipmap.usdt, R.mipmap.xrp, R.mipmap.ltc, R.mipmap.usdc, R.drawable.ic_tron, R.drawable.ic_imt__u};
 
-    String[] coinName1 = {"ImSmart Utility","ImSmart"};
-    String[] coinSymbols1 = {"IMT-U","IMT"};
-    String[] coinId1 = {"airdrop","imt"};
-    String[] PricecoinId1 = {"airdrop","imt"};
-    int[] coinImage1 = {R.drawable.ic_imt__u,R.mipmap.imt};
-    int value,positions;
+    String[] coinName1 = {"ImSmart Utility", "ImSmart"};
+    String[] coinSymbols1 = {"IMT-U", "IMT"};
+    String[] coinId1 = {"airdrop", "imt"};
+    String[] PricecoinId1 = {"airdrop", "imt"};
+    int[] coinImage1 = {R.drawable.ic_imt__u, R.mipmap.imt};
+    int value, positions;
     SeekBar seekBar;
 
     KProgressHUD progressDialog;
-    SharedPreferences sharedPreferences,sharedPreferences1;
-    String currency2,CurrencySymbols,token,userBalance,imtPrice,coinSymbol;
+    SharedPreferences sharedPreferences, sharedPreferences1;
+    String currency2, CurrencySymbols, token, userBalance, imtPrice, coinSymbol;
     UserData userData;
     TextView text_send;
-    Double userBalance1,enter;
+    Double userBalance1, enter;
 
 
-
-       public Exchange() {
+    public Exchange() {
         // Required empty public constructor
     }
 
@@ -91,7 +92,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-       View view= inflater.inflate(R.layout.fragment_exchange, container, false);
+        View view = inflater.inflate(R.layout.fragment_exchange, container, false);
 
 
         sendSpinner = view.findViewById(R.id.sendSpinner);
@@ -130,17 +131,15 @@ public class Exchange extends Fragment implements View.OnClickListener {
         token = userData.getToken();
 
 
-
-
         sharedPreferences1 = getContext().getSharedPreferences("imtInfo", Context.MODE_PRIVATE);
-        sharedPreferences =getActivity().getSharedPreferences("currency",0);
+        sharedPreferences = getActivity().getSharedPreferences("currency", 0);
 
-        currency2 =sharedPreferences.getString("currency1","usd");
-        CurrencySymbols =sharedPreferences.getString("Currency_Symbols","$");
+        currency2 = sharedPreferences.getString("currency1", "usd");
+        CurrencySymbols = sharedPreferences.getString("Currency_Symbols", "$");
 
         imtPrice = sharedPreferences1.getString("imtPrices", "0.09");
 
-        CustomSpinnerAdapter customAdapter = new CustomSpinnerAdapter(getContext(), coinImage, coinName, coinSymbols,coinId,PricecoinId);
+        CustomSpinnerAdapter customAdapter = new CustomSpinnerAdapter(getContext(), coinImage, coinName, coinSymbols, coinId, PricecoinId);
         sendSpinner.setAdapter(customAdapter);
         sendSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -150,10 +149,11 @@ public class Exchange extends Fragment implements View.OnClickListener {
                 sendData = coinId[position];
                 priceCoinId = PricecoinId[position];
                 coinSymbol = coinSymbols[position];
-                positions=position;
-                AirDropBalance(token,sendData,currency2);
+                positions = position;
+                geTypeToken(token, sendData);
+                // AirDropBalance(token,sendData,currency2);
 
-                  if(sendData.equals(receviedData)){
+                if (sendData.equals(receviedData)) {
                     Snacky.builder()
                             .setActivity(getActivity())
                             .setText("You can't select the same currency for Swap ")
@@ -161,28 +161,28 @@ public class Exchange extends Fragment implements View.OnClickListener {
                             .setActionText(android.R.string.ok)
                             .error()
                             .show();
-                }else if(priceCoinId.equals("airdrop")){
-                      SwapAmount = enter_Swap_Amount.getText().toString().trim();
-                      if (!SwapAmount.isEmpty()){
-                          DecimalFormat df = new DecimalFormat();
-                          df.setMaximumFractionDigits(8);
+                } else if (priceCoinId.equals("airdrop")) {
+                    SwapAmount = enter_Swap_Amount.getText().toString().trim();
+                    if (!SwapAmount.isEmpty()) {
+                        DecimalFormat df = new DecimalFormat();
+                        df.setMaximumFractionDigits(8);
 
-                          Double coinprices,enterAmount,totalAmoumt;
-                          coinprices=Double.parseDouble(imtPrice);
-                          enterAmount=Double.parseDouble(SwapAmount);
+                        Double coinprices, enterAmount, totalAmoumt;
+                        coinprices = Double.parseDouble(imtPrice);
+                        enterAmount = Double.parseDouble(SwapAmount);
 
-                          totalAmoumt = enterAmount*coinprices;
+                        totalAmoumt = enterAmount * coinprices;
 
-                          text_send.setText(SwapAmount +" "+ coinSymbol +"="+df.format(totalAmoumt)+" " +currency2.toUpperCase());
-                      }
-                  }else{
+                        text_send.setText(SwapAmount + " " + coinSymbol + "=" + df.format(totalAmoumt) + " " + currency2.toUpperCase());
+                    }
+                } else {
 
-                      String coinid=priceCoinId.toLowerCase();
-                      String currency=currency2.toLowerCase();
+                    String coinid = priceCoinId.toLowerCase();
+                    String currency = currency2.toLowerCase();
 
-                     getCoinPrice(coinid,currency);
+                    getCoinPrice(coinid, currency);
 
-                  }
+                }
 
             }
 
@@ -192,7 +192,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
             }
         });
 
-        CustomSpinnerAdapter customAdapter1 = new CustomSpinnerAdapter(getContext(), coinImage1, coinName1, coinSymbols1,coinId1,PricecoinId1);
+        CustomSpinnerAdapter customAdapter1 = new CustomSpinnerAdapter(getContext(), coinImage1, coinName1, coinSymbols1, coinId1, PricecoinId1);
 
         reciveSpinner.setAdapter(customAdapter1);
         reciveSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -201,7 +201,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
                 receviedData = coinId1[position];
                 // Toast.makeText(view.getContext(), receviedData,Toast.LENGTH_SHORT).show();
 
-                if(sendData.equals(receviedData)){
+                if (sendData.equals(receviedData)) {
                     Snacky.builder()
                             .setActivity(getActivity())
                             .setText("You can't select the same currency for Swap ")
@@ -223,12 +223,12 @@ public class Exchange extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 SwapAmount = enter_Swap_Amount.getText().toString().trim();
-                if (!SwapAmount.isEmpty()){
-                      userBalance1 = Double.parseDouble(userBalance);
-                     enter = Double.parseDouble(SwapAmount);
+                if (!SwapAmount.isEmpty()) {
+                    userBalance1 = Double.parseDouble(userBalance);
+                    enter = Double.parseDouble(SwapAmount);
                 }
                 int mini = Integer.parseInt(min_amount);
-                int to = --mini ;
+                int to = --mini;
 
                 if (SwapAmount.isEmpty()) {
                     Snacky.builder()
@@ -238,7 +238,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
                             .setActionText(android.R.string.ok)
                             .error()
                             .show();
-                } else if(sendData.equals(receviedData)){
+                } else if (sendData.equals(receviedData)) {
                     Snacky.builder()
                             .setActivity(getActivity())
                             .setText("You can't select the same currency for Swap ")
@@ -246,7 +246,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
                             .setActionText(android.R.string.ok)
                             .error()
                             .show();
-                     }/*else if(Integer.parseInt(SwapAmount)<=to){
+                }/*else if(Integer.parseInt(SwapAmount)<=to){
                     Snacky.builder()
                             .setActivity(getActivity())
                             .setText("Please enter  the minimum amount of  "+min_amount)
@@ -254,9 +254,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
                             .setActionText(android.R.string.ok)
                             .error()
                             .show();
-                }*/
-
-                else if(enter>=userBalance1){
+                }*/ else if (enter >= userBalance1) {
                     Snacky.builder()
                             .setActivity(
                                     getActivity())
@@ -265,22 +263,21 @@ public class Exchange extends Fragment implements View.OnClickListener {
                             .setActionText(android.R.string.ok)
                             .error()
                             .show();
-                }else if(priceCoinId.equals("airdrop")){
+                } else if (priceCoinId.equals("airdrop")) {
 
                     DecimalFormat df = new DecimalFormat();
                     df.setMaximumFractionDigits(8);
 
-                    Double coinprices,enterAmount,totalAmoumt;
-                    coinprices=Double.parseDouble(imtPrice);
-                    enterAmount=Double.parseDouble(SwapAmount);
+                    Double coinprices, enterAmount, totalAmoumt;
+                    coinprices = Double.parseDouble(imtPrice);
+                    enterAmount = Double.parseDouble(SwapAmount);
 
-                    totalAmoumt = enterAmount*coinprices;
+                    totalAmoumt = enterAmount * coinprices;
 
                     String coinAmount = String.valueOf(df.format(totalAmoumt));
 
 
-
-                    SwapModel swapModel = new SwapModel(sendData,receviedData,imtPrice,currency2,CurrencySymbols,coinAmount,SwapAmount,userBalance,coinAmount,value,"Swap");
+                    SwapModel swapModel = new SwapModel(sendData, receviedData, imtPrice, currency2, CurrencySymbols, coinAmount, SwapAmount, userBalance, coinAmount, value, "Swap");
                     SwapSharedPrefernce.getInstance(getContext()).SetData(swapModel);
 
 
@@ -290,24 +287,23 @@ public class Exchange extends Fragment implements View.OnClickListener {
                             Intent intent = new Intent(getActivity(), SwapConfirmation.class);
                             startActivity(intent);
                         }
-                    },1000);
+                    }, 1000);
 
-                }else {
+                } else {
 
                     DecimalFormat df = new DecimalFormat();
                     df.setMaximumFractionDigits(8);
 
-                    Double coinprices,enterAmount,totalAmoumt;
-                    coinprices=Double.parseDouble(coinPrice);
-                    enterAmount=Double.parseDouble(SwapAmount);
+                    Double coinprices, enterAmount, totalAmoumt;
+                    coinprices = Double.parseDouble(coinPrice);
+                    enterAmount = Double.parseDouble(SwapAmount);
 
-                    totalAmoumt = enterAmount*coinprices;
+                    totalAmoumt = enterAmount * coinprices;
 
-                  String coinAmount = String.valueOf(df.format(totalAmoumt));
+                    String coinAmount = String.valueOf(df.format(totalAmoumt));
 
 
-
-                    SwapModel swapModel = new SwapModel(sendData,receviedData,coinPrice,currency2,CurrencySymbols,coinAmount,SwapAmount,userBalance,coinAmount,value,"Swap");
+                    SwapModel swapModel = new SwapModel(sendData, receviedData, coinPrice, currency2, CurrencySymbols, coinAmount, SwapAmount, userBalance, coinAmount, value, "Swap");
                     SwapSharedPrefernce.getInstance(getContext()).SetData(swapModel);
 
 
@@ -317,7 +313,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
                             Intent intent = new Intent(getContext(), SwapConfirmation.class);
                             startActivity(intent);
                         }
-                    },1000);
+                    }, 1000);
 
                 }
             }
@@ -335,7 +331,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-               // double balance2 = Double.parseDouble(String.valueOf(progress));
+                // double balance2 = Double.parseDouble(String.valueOf(progress));
 
                 int total = progress * 10;
                 enter_Swap_Amount.setText(String.valueOf(total));
@@ -355,7 +351,6 @@ public class Exchange extends Fragment implements View.OnClickListener {
         GET_AMOUNT();
 
 
-
         enter_Swap_Amount.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -368,40 +363,40 @@ public class Exchange extends Fragment implements View.OnClickListener {
                 String msg = s.toString();
 
 
-                if (priceCoinId.equals("airdrop")){
+                if (priceCoinId.equals("airdrop")) {
 
-                    if (msg.isEmpty()){
+                    if (msg.isEmpty()) {
                         text_send.setText(" ");
-                    }else{
+                    } else {
                         DecimalFormat df = new DecimalFormat();
                         df.setMaximumFractionDigits(8);
 
-                        Double coinprices,enterAmount,totalAmoumt;
-                        coinprices=Double.parseDouble(imtPrice);
-                        enterAmount=Double.parseDouble(msg);
+                        Double coinprices, enterAmount, totalAmoumt;
+                        coinprices = Double.parseDouble(imtPrice);
+                        enterAmount = Double.parseDouble(msg);
 
-                        totalAmoumt = enterAmount*coinprices;
+                        totalAmoumt = enterAmount * coinprices;
 
-                        text_send.setText(msg +" "+ coinSymbol +"="+df.format(totalAmoumt)+" " +currency2.toUpperCase());
+                        text_send.setText(msg + " " + coinSymbol + "=" + df.format(totalAmoumt) + " " + currency2.toUpperCase());
                     }
 
-                }else{
+                } else {
 
-                    if (msg.isEmpty()){
+                    if (msg.isEmpty()) {
                         text_send.setText(" ");
-                    }else {
+                    } else {
                         DecimalFormat df = new DecimalFormat();
                         df.setMaximumFractionDigits(8);
 
-                        Double coinprices,enterAmount,totalAmoumt;
-                        coinprices=Double.parseDouble(coinPrice);
-                        enterAmount=Double.parseDouble(msg);
+                        Double coinprices, enterAmount, totalAmoumt;
+                        coinprices = Double.parseDouble(coinPrice);
+                        enterAmount = Double.parseDouble(msg);
 
-                        totalAmoumt = enterAmount*coinprices;
+                        totalAmoumt = enterAmount * coinprices;
 
-                        text_send.setText(msg +" "+ coinSymbol +"="+df.format(totalAmoumt)+" " +currency2.toUpperCase());
+                        text_send.setText(msg + " " + coinSymbol + "=" + df.format(totalAmoumt) + " " + currency2.toUpperCase());
                     }
-                   }
+                }
             }
 
             @Override
@@ -410,12 +405,13 @@ public class Exchange extends Fragment implements View.OnClickListener {
             }
         });
 
-        return view; }
+        return view;
+    }
 
 
-    public void getCoinPrice(String coinId,String currency) {
+    public void getCoinPrice(String coinId, String currency) {
 
-           String url = "https://api.coingecko.com/api/v3/simple/price?ids="+coinId+"&vs_currencies="+currency;
+        String url = "https://api.coingecko.com/api/v3/simple/price?ids=" + coinId + "&vs_currencies=" + currency;
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new com.android.volley.Response.Listener<String>() {
@@ -435,17 +431,17 @@ public class Exchange extends Fragment implements View.OnClickListener {
                 }
 
                 SwapAmount = enter_Swap_Amount.getText().toString().trim();
-                if (!SwapAmount.isEmpty()){
+                if (!SwapAmount.isEmpty()) {
                     DecimalFormat df = new DecimalFormat();
                     df.setMaximumFractionDigits(8);
 
-                    Double coinprices,enterAmount,totalAmoumt;
-                    coinprices=Double.parseDouble(coinPrice);
-                    enterAmount=Double.parseDouble(SwapAmount);
+                    Double coinprices, enterAmount, totalAmoumt;
+                    coinprices = Double.parseDouble(coinPrice);
+                    enterAmount = Double.parseDouble(SwapAmount);
 
-                    totalAmoumt = enterAmount*coinprices;
+                    totalAmoumt = enterAmount * coinprices;
 
-                    text_send.setText(SwapAmount +" "+ coinSymbol +"="+df.format(totalAmoumt)+" " +currency2.toUpperCase());
+                    text_send.setText(SwapAmount + " " + coinSymbol + "=" + df.format(totalAmoumt) + " " + currency2.toUpperCase());
                 }
 
             }
@@ -474,8 +470,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
         });
 
         VolleySingleton.getInstance(getActivity()).addToRequestQueue(stringRequest);
-       }
-
+    }
 
 
     private void showpDialog() {
@@ -561,8 +556,8 @@ public class Exchange extends Fragment implements View.OnClickListener {
                 half_rate.setTextColor(getResources().getColor(R.color.black));
                 max_rate.setTextColor(getResources().getColor(R.color.black));
                 enter_Swap_Amount.setText(min_amount);
-                Integer min=Integer.parseInt(min_amount);
-                int min1=min/10;
+                Integer min = Integer.parseInt(min_amount);
+                int min1 = min / 10;
                 seekBar.setProgress(min1);
                 break;
 
@@ -574,8 +569,8 @@ public class Exchange extends Fragment implements View.OnClickListener {
                 half_rate.setTextColor(getResources().getColor(R.color.white));
                 max_rate.setTextColor(getResources().getColor(R.color.black));
                 enter_Swap_Amount.setText(half_amount);
-                Integer min2=Integer.parseInt(half_amount);
-                int min3=min2/10;
+                Integer min2 = Integer.parseInt(half_amount);
+                int min3 = min2 / 10;
                 seekBar.setProgress(min3);
                 // seekBar.setProgress(Integer.parseInt(half_amount));
                 break;
@@ -588,8 +583,8 @@ public class Exchange extends Fragment implements View.OnClickListener {
                 half_rate.setTextColor(getResources().getColor(R.color.black));
                 max_rate.setTextColor(getResources().getColor(R.color.white));
                 enter_Swap_Amount.setText(max_amount);
-                Integer min4=Integer.parseInt(max_amount);
-                int min5=min4/10;
+                Integer min4 = Integer.parseInt(max_amount);
+                int min5 = min4 / 10;
                 seekBar.setProgress(min5);
 
                 // seekBar.setProgress(Integer.parseInt(max_amount));
@@ -726,7 +721,57 @@ public class Exchange extends Fragment implements View.OnClickListener {
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
 
     }
-    public void AirDropBalance(String token,String coinType,String currency){
+
+    private void geTypeToken(String token, String symbol) {
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().getToken(token, symbol);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String s = null;
+                if (response.code() == 200) {
+                    try {
+                        s = response.body().string();
+                        JSONObject object = new JSONObject(s);
+                        String token1 = object.getString("token");
+                        getBalance(token, token1, symbol, currency2);
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if (response.code() == 400) {
+                    getBalance(token, symbol, symbol, currency2);
+
+                } else if (response.code() == 401) {
+                    Snacky.builder()
+                            .setActivity(getActivity())
+                            .setText("unAuthorization Request")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Snacky.builder()
+                        .setActivity(getActivity())
+                        .setText(t.getLocalizedMessage())
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+
+            }
+        });
+
+    }
+
+
+
+    public void getBalance(String token,String coinType,String coinSymbol,String currency){
 
         if (positions==0){
 
@@ -744,7 +789,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
 
 
 
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().AirDropBalance(token,coinType,currency);
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().Balance(token,coinType,coinSymbol,currency);
 
         call.enqueue(new Callback<ResponseBody>() {
             @RequiresApi(api = Build.VERSION_CODES.N)

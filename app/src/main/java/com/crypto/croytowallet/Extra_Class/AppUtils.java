@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 
 import com.crypto.croytowallet.R;
@@ -60,6 +62,14 @@ public class AppUtils {
             e.printStackTrace();
         }
         return dateStr;
+    }
+
+    public  static void hideKeyboard(View view,Context context) {
+        try {
+            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        } catch (Exception ignored) {
+        }
     }
 
 }

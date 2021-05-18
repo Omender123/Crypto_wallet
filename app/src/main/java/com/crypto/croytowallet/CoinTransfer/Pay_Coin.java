@@ -24,6 +24,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.crypto.croytowallet.Activity.Graph_layout;
 import com.crypto.croytowallet.ImtSmart.SwapConfirmation;
 import com.crypto.croytowallet.Model.SwapModel;
 import com.crypto.croytowallet.R;
@@ -107,13 +108,8 @@ public class Pay_Coin extends AppCompatActivity {
                     enterAmount.requestFocus();
                 }else {
 
-                    AirDropBalance(userData.getToken(),cryptoCurrency,currency2);
 
-                      /*   Intent intent =new Intent(getApplicationContext(),Payout_verification.class);
-                 //  intent.putExtra("result1",result);
-                    intent.putExtra("amount1",Amount);
-
-                   startActivity(intent);*/
+                    geTypeToken(userData.getToken(),cryptoCurrency);
 
                 }
 
@@ -163,11 +159,57 @@ public class Pay_Coin extends AppCompatActivity {
        get2fa();
 
     }
+    private void geTypeToken(String token, String symbol) {
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().getToken(token,symbol);
 
-    public void AirDropBalance(String token,String coinType,String currency){
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                String s = null;
+                if (response.code()==200){
+                    try {
+                        s = response.body().string();
+                        JSONObject object = new JSONObject(s);
+                        String token1 = object.getString("token");
+                        getBalance(token,token1,symbol,"usd");
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }else if (response.code()==400){
+                    getBalance(token,symbol,symbol,"usd");
+
+                }else if (response.code()==401){
+                    Snacky.builder()
+                            .setActivity(Pay_Coin.this)
+                            .setText("unAuthorization Request")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Snacky.builder()
+                        .setActivity(Pay_Coin.this)
+                        .setText(t.getLocalizedMessage())
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+
+            }
+        });
+
+    }
+
+    public void getBalance(String token,String coinType,String coinSymbols,String currency){
 
 
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().AirDropBalance(token,coinType,currency);
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().Balance(token,coinType,coinSymbols,currency);
 
         call.enqueue(new Callback<ResponseBody>() {
             @RequiresApi(api = Build.VERSION_CODES.N)

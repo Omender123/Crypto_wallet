@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -26,6 +27,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.crypto.croytowallet.CoinTransfer.Pay_Coin;
 import com.crypto.croytowallet.CoinTransfer.Payout_verification;
+import com.crypto.croytowallet.Extra_Class.AppUtils;
 import com.crypto.croytowallet.Model.SwapModel;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
@@ -92,33 +94,10 @@ public class ImtSmartEnterAmout extends AppCompatActivity {
                     enterAmount.requestFocus();
                 }else {
 
-                    DecimalFormat df = new DecimalFormat();
-                    df.setMaximumFractionDigits(8);
+                    AirDropBalance(userData.getToken(),"erc","imt",currency2);
 
-                    Double coinprices,enterAmount,totalAmoumt;
-                    coinprices=Double.parseDouble(imtPrice);
-                    enterAmount=Double.parseDouble(Amount);
+                    AppUtils.hideKeyboard(v,ImtSmartEnterAmout.this);
 
-                    totalAmoumt = enterAmount*coinprices;
-
-                    String coinAmount = String.valueOf(df.format(totalAmoumt));
-
-                    SwapModel swapModel = new SwapModel(cryptoCurrency,result,imtPrice,currency2,CurrencySymbols,coinAmount,Amount,userBalance,coinAmount,1,"CoinTransfer");
-                    SwapSharedPrefernce.getInstance(getApplicationContext()).SetData(swapModel);
-
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Intent intent = new Intent(getApplicationContext(), SwapConfirmation.class);
-                            startActivity(intent);
-                        }
-                    },1000);
-
-
-                 /*   Intent intent =new Intent(getApplicationContext(), ImtSmartVerification.class);
-                    intent.putExtra("amount2",Amount);
-
-                    startActivity(intent);*/
 
 
                 }
@@ -162,19 +141,30 @@ public class ImtSmartEnterAmout extends AppCompatActivity {
         });
 
 
-        AirDropBalance(userData.getToken(),"imt",currency2);
+
         back();
         get2fa();
     }
 
-    public void AirDropBalance(String token,String coinType,String currency){
+    public void AirDropBalance(String token,String coinType,String coinSymbol,String currency){
 
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().AirDropBalance(token,coinType,currency);
+        progressDialog = KProgressHUD.create(ImtSmartEnterAmout.this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Please wait.....")
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
+
+        showpDialog();
+
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().Balance(token,coinType,coinSymbol,currency);
 
         call.enqueue(new Callback<ResponseBody>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                hidepDialog();
                 String s =null;
                 if (response.code()==200){
                     try {
@@ -183,7 +173,29 @@ public class ImtSmartEnterAmout extends AppCompatActivity {
                         JSONObject object = new JSONObject(s);
                         userBalance = object.getString("balance");
 
-                      //  Toast.makeText(ImtSmartEnterAmout.this, ""+userBalance, Toast.LENGTH_SHORT).show();
+                        DecimalFormat df = new DecimalFormat();
+                        df.setMaximumFractionDigits(8);
+
+                        Double coinprices,enterAmount,totalAmoumt;
+                        coinprices=Double.parseDouble(imtPrice);
+                        enterAmount=Double.parseDouble(Amount);
+
+                        totalAmoumt = enterAmount*coinprices;
+
+                        String coinAmount = String.valueOf(df.format(totalAmoumt));
+
+                        SwapModel swapModel = new SwapModel(cryptoCurrency,result,imtPrice,currency2,CurrencySymbols,coinAmount,Amount,userBalance,coinAmount,1,"CoinTransfer");
+                        SwapSharedPrefernce.getInstance(getApplicationContext()).SetData(swapModel);
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent intent = new Intent(getApplicationContext(), SwapConfirmation.class);
+                                startActivity(intent);
+                            }
+                        },500);
+
+
 
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
@@ -225,7 +237,7 @@ public class ImtSmartEnterAmout extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                hidepDialog();
                     Snacky.builder()
                         .setActivity(ImtSmartEnterAmout.this)
                         .setText(t.getMessage())

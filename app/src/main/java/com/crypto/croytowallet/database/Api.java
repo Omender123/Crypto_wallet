@@ -122,18 +122,19 @@ public interface Api {
             @Field("receiverAddress") String receiverAddress
     );
 
-    @FormUrlEncoded
+   /* @FormUrlEncoded
     @POST("user/balance")
     Call<ResponseBody> Balance(
             @Header("Authorization") String Authtoken,
             @Field("type") String type
-    );
+    );*/
 
     @FormUrlEncoded
     @POST("user/balance")
-    Call<ResponseBody> AirDropBalance(
+    Call<ResponseBody> Balance(
             @Header("Authorization") String Authtoken,
             @Field("type") String type,
+            @Field("name") String name,
             @Field("currency") String currency
     );
 
@@ -474,4 +475,12 @@ public interface Api {
     Call<ActiveDeviceResponse>ActiveDevice(
             @Field("username") String username
             );
+
+    @FormUrlEncoded
+    @POST(" ERC20/getToken")
+    Call<ResponseBody>getToken(
+            @Header("Authorization") String Authtoken,
+            @Field("name") String coinSymbols
+    );
+
 }

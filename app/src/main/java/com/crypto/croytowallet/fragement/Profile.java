@@ -272,7 +272,7 @@ public class Profile extends Fragment implements View.OnClickListener {
                 break;
             case R.id.Rewards:
                 startActivity(new Intent(getContext(), Rewards.class));
-                referral_code1.startAnimation(blink);
+                Rewardss.startAnimation(blink);
 
                 break;
 

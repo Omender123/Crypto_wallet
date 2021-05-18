@@ -59,4 +59,5 @@
     <color name="blue">#044B7F</color>
     <color name="empty_color">#F1BB0E</color>
 
+    <color name="card_product_back">#EBEAEC</color>
 </resources>

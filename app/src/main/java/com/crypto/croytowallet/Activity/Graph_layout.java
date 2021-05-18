@@ -78,7 +78,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
     private LineChart chart;
     UserData userData;
     CircleImageView circleImageView;
-    String balance1, price1;
+    String balance1, price1,token;
     ArrayList<CoinModal> coinModals;
     Coin_History_Adapter coin_history_adapter;
     RecyclerView recyclerView;
@@ -142,11 +142,9 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         coinId = Updated_data.getInstans(getApplicationContext()).getCoinId();
         currency2 = sharedPreferences.getString("currency1", "usd");
 
-
-        //   Log.d("price",getString(price1));
-
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
+        token  = userData.getToken();
 
         Glide.with(this).load(image).into(circleImageView);
 
@@ -175,15 +173,15 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         } else {
             increaseRate.setText("+" + change);
         }
-        getBalance();
+       // getBalance();
+
         getGraphData(coinId, currency2, "1", "");
+        geTypeToken(token,symbol);
 
 
         getSendCoinHistory();
 
     }
-
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -293,12 +291,57 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         onSaveInstanceState(new Bundle());
     }
 
-    public void getBalance() {
+    private void geTypeToken(String token, String symbol) {
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().getToken(token,symbol);
 
-        String token = userData.getToken();
-        String symbols = Updated_data.getInstans(getApplicationContext()).getmobile();
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String s = null;
+                if (response.code()==200){
+                    try {
+                        s = response.body().string();
+                        JSONObject object = new JSONObject(s);
+                        String token1 = object.getString("token");
+                        getBalance(token,token1,symbol,"usd");
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
 
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().Balance(token, symbols);
+                }else if (response.code()==400){
+                    getBalance(token,symbol,symbol,"usd");
+
+                }else if (response.code()==401){
+                    Snacky.builder()
+                            .setActivity(Graph_layout.this)
+                            .setText("unAuthorization Request")
+                            .setDuration(Snacky.LENGTH_SHORT)
+                            .setActionText(android.R.string.ok)
+                            .error()
+                            .show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Snacky.builder()
+                        .setActivity(Graph_layout.this)
+                        .setText(t.getLocalizedMessage())
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
+
+            }
+        });
+
+    }
+
+    public void getBalance(String token,String type,String name,String currency) {
+
+
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().Balance(token,type,name ,currency);
 
         call.enqueue(new Callback<ResponseBody>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -390,7 +433,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                hidepDialog();
+
                 Snacky.builder()
                         .setActivity(Graph_layout.this)
                         .setText(t.getLocalizedMessage())

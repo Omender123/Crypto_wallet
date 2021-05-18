@@ -23,6 +23,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.crypto.croytowallet.Adapter.ActiveDeviceAdapter;
 import com.crypto.croytowallet.Extra_Class.ApiResponse.ActiveDeviceResponse;
+import com.crypto.croytowallet.Extra_Class.MyPreferences;
+import com.crypto.croytowallet.Extra_Class.PrefConf;
 import com.crypto.croytowallet.Interface.HistoryClickLister;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
@@ -59,7 +61,7 @@ public class Sync_device extends AppCompatActivity implements HistoryClickLister
     ActiveDeviceAdapter activeDeviceAdapter;
     TextView balances ,textView1;
     SharedPreferences sharedPreferences;
-    String CurrencySymbols,currency2;
+    String CurrencySymbols,currency2,balance,cal_balance;
     String jwt_token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +81,12 @@ public class Sync_device extends AppCompatActivity implements HistoryClickLister
         CurrencySymbols =sharedPreferences.getString("Currency_Symbols","$");
 
 
-      //  checkBalance();
-        AirDropBalance();
+        balance = MyPreferences.getInstance(getApplicationContext()).getString(PrefConf.USER_BALANCE,"0");
+        cal_balance =MyPreferences.getInstance(getApplicationContext()).getString(PrefConf.CAL_USER_BALANCE,"0");
+
+        balances.setText(balance);
+        textView1.setText(CurrencySymbols+cal_balance);
+
        getActiveDeviceDetails();
     }
 
@@ -155,100 +161,6 @@ public class Sync_device extends AppCompatActivity implements HistoryClickLister
         });
 
 
-    }
-    public void AirDropBalance(){
-        UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
-        String token = user.getToken();
-
-        String currency = currency2.toUpperCase();
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().AirDropBalance(token,"airdrop",currency);
-
-        call.enqueue(new Callback<ResponseBody>() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                String s =null;
-
-
-                if (response.code()==200){
-                    try {
-                        s=response.body().string();
-
-                        JSONObject object = new JSONObject(s);
-                        String balance = object.getString("balance");
-                        String cal = object.getString("calculationPrice");
-                        JSONObject object1 = new JSONObject(cal);
-                        String calBalance = object1.getString("calculation");
-
-                        DecimalFormat df = new DecimalFormat();
-                        df.setMaximumFractionDigits(2);
-
-                        if (calBalance.equals("null")){
-                            double balance2 = Double.parseDouble(balance);
-                            balances.setText(""+df.format(balance2));
-                            textView1.setText(CurrencySymbols+"0");
-                        }else{
-
-                            double balance2 = Double.parseDouble(balance);
-                            double calBalance2 = Double.parseDouble(calBalance);
-
-                            balances.setText(""+df.format(balance2));
-                            textView1.setText(CurrencySymbols+df.format(calBalance2));
-                        }
-
-
-                        //  Log.d("airDrop",s);
-
-                    } catch (IOException | JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                } else if(response.code()==400){
-                    try {
-                        s=response.errorBody().string();
-                        JSONObject jsonObject1=new JSONObject(s);
-                        String error =jsonObject1.getString("error");
-
-
-                        Snacky.builder()
-                                .setActivity(Sync_device.this)
-                                .setText(error)
-                                .setDuration(Snacky.LENGTH_SHORT)
-                                .setActionText(android.R.string.ok)
-                                .error()
-                                .show();
-
-
-                    } catch (IOException | JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                } else if(response.code()==401){
-
-                    Snacky.builder()
-                            .setActivity(Sync_device.this)
-                            .setText("unAuthorization Request")
-                            .setDuration(Snacky.LENGTH_SHORT)
-                            .setActionText(android.R.string.ok)
-                            .error()
-                            .show();
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                Snacky.builder()
-                        .setActivity(Sync_device.this)
-                        .setText("Internet Problem ")
-                        .setDuration(Snacky.LENGTH_SHORT)
-                        .setActionText(android.R.string.ok)
-                        .error()
-                        .show();
-            }
-        });
     }
 
 
