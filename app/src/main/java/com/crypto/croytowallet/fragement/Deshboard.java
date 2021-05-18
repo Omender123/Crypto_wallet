@@ -267,10 +267,16 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner, 
                             double balance2 = Double.parseDouble(balance);
                             double calBalance2 = Double.parseDouble(calBalance);
 
+                            String bal = String.valueOf(df.format(balance2));
+                            String cal_bal = String.valueOf( df.format(calBalance2));
+
                             textView.setText("" + df.format(balance2));
                             textView1.setText(CurrencySymbols + df.format(calBalance2));
-                            MyPreferences.getInstance(getContext()).putString(PrefConf.USER_BALANCE, ""+ df.format(balance2));
-                            MyPreferences.getInstance(getContext()).putString(PrefConf.CAL_USER_BALANCE, ""+df.format(calBalance2));
+                            try {
+                                MyPreferences.getInstance(getActivity()).putString(PrefConf.USER_BALANCE,bal);
+                                MyPreferences.getInstance(getActivity()).putString(PrefConf.CAL_USER_BALANCE, cal_bal);
+
+                            }catch (Exception e){}
 
                         }
 

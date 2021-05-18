@@ -25,6 +25,8 @@ import com.bumptech.glide.Glide;
 import com.crypto.croytowallet.Adapter.Coin_History_Adapter;
 import com.crypto.croytowallet.CoinTransfer.CoinScan;
 import com.crypto.croytowallet.CoinTransfer.Received_Coin;
+import com.crypto.croytowallet.Extra_Class.MyPreferences;
+import com.crypto.croytowallet.Extra_Class.PrefConf;
 import com.crypto.croytowallet.ImtSmart.imtSwap;
 import com.crypto.croytowallet.Interface.HistoryClickLister;
 import com.crypto.croytowallet.Model.CoinModal;
@@ -304,13 +306,14 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                         JSONObject object = new JSONObject(s);
                         String token1 = object.getString("token");
                         getBalance(token,token1,symbol,"usd");
+                        MyPreferences.getInstance(getApplicationContext()).putString(PrefConf.TOKEN_TYPE,token1);
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }
 
                 }else if (response.code()==400){
                     getBalance(token,symbol,symbol,"usd");
-
+                    MyPreferences.getInstance(getApplicationContext()).putString(PrefConf.TOKEN_TYPE,symbol);
                 }else if (response.code()==401){
                     Snacky.builder()
                             .setActivity(Graph_layout.this)

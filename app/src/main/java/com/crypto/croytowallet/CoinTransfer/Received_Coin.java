@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crypto.croytowallet.Extra_Class.ApiResponse.PublicKeyResponse;
+import com.crypto.croytowallet.Extra_Class.MyPreferences;
+import com.crypto.croytowallet.Extra_Class.PrefConf;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.Updated_data;
@@ -41,9 +43,7 @@ Received_Coin extends AppCompatActivity implements View.OnClickListener {
     TextView barcodeAddress,toolbar_title,address,address1;
     ImageView qrImage,imageView;
     CardView barCodeshare;
-    SharedPreferences preferences;
-    int position;
-    String coinId,publicKey;
+    String coinId,publicKey,coinId1;
     UserData userData;
     KProgressHUD progressDialog;
     PublicKeyResponse publicKeyResponses;
@@ -62,22 +62,24 @@ Received_Coin extends AppCompatActivity implements View.OnClickListener {
 
         userData= SharedPrefManager.getInstance(this).getUser();
 
+       coinId1 = Updated_data.getInstans(getApplicationContext()).getmobile();
 
-        position = Updated_data.getInstans(getApplicationContext()).getUserId();
-        coinId = Updated_data.getInstans(getApplicationContext()).getmobile();
+        coinId = MyPreferences.getInstance(getApplicationContext()).getString(PrefConf.TOKEN_TYPE,"");
 
         back();
 
 
 
-         address.setText("Your "+coinId.toUpperCase()+" Address");
-         address1.setText("Tab "+coinId.toUpperCase()+" Address to Copy");
-        toolbar_title.setText("Receive "+coinId.toUpperCase());
+         address.setText("Your "+coinId1.toUpperCase()+" Address");
+         address1.setText("Tab "+coinId1.toUpperCase()+" Address to Copy");
+        toolbar_title.setText("Receive "+coinId1.toUpperCase());
 
         barcodeAddress.setOnClickListener(this);
         barCodeshare.setOnClickListener(this);
 
-        getPublicKey(userData.getToken(),coinId.toUpperCase());
+
+
+       getPublicKey(userData.getToken(),coinId);
 
         }
 
