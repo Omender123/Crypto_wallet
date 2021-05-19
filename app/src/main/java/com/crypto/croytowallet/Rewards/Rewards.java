@@ -45,7 +45,7 @@ public class Rewards extends AppCompatActivity {
     }
 
     private void getAllprouct() {
-        product_adapter = new Product_adapter(price);
+        product_adapter = new Product_adapter(price,Rewards.this);
         RecyclerView.LayoutManager mLayoutManager1 = new LinearLayoutManager(Rewards.this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(mLayoutManager1);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -65,4 +65,8 @@ public class Rewards extends AppCompatActivity {
     public void OpenRedeem(View view) {
         startActivity(new Intent(getApplicationContext(),Redeem.class));
     }
+    public void Categories_btn(View view) {
+        startActivity(new Intent(getApplicationContext(),Product_Categories.class));
+    }
+
 }

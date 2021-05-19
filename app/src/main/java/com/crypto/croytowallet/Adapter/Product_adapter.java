@@ -1,5 +1,6 @@
 package com.crypto.croytowallet.Adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +15,11 @@ import com.crypto.croytowallet.R;
 
 public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyViewHolder> {
 String [] name;
+Context context;
 
-    public Product_adapter(String[] name) {
+    public Product_adapter(String[] name,Context context) {
         this.name = name;
+        this.context=context;
     }
 
     public Product_adapter() {

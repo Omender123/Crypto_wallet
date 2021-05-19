@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -144,10 +145,11 @@ public class Enter_TopUp_Amount extends AppCompatActivity {
                     coinprices=Double.parseDouble(imtPrices);
                     enterAmount=Double.parseDouble(msg);
 
+
                     totalAmoumt = enterAmount/coinprices;
 
                     text_send.setText(msg +" "+currencyType.toUpperCase() +"="+df.format(totalAmoumt)+" IMT-Utility"  );
-                }
+                  }
 
             }
 

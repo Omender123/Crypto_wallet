@@ -361,14 +361,22 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
                         balance1 = jsonObject.getString("balance");
 
 
-                        double balance2 = Double.parseDouble(balance1);
-                        double price = Double.parseDouble(price1);
-                        double total = balance2 * price;
-                        DecimalFormat df = new DecimalFormat();
-                        df.setMaximumFractionDigits(2);
+                        if (!balance1.equalsIgnoreCase("null")){
+                            double balance2 = Double.parseDouble(balance1);
+                            double price = Double.parseDouble(price1);
+                            double total = balance2 * price;
+                            DecimalFormat df = new DecimalFormat();
+                            df.setMaximumFractionDigits(2);
 
-                        balance.setText(CurrencySymbols + df.format(total));
-                        coinprice.setText("" + df.format(balance2));
+                            balance.setText(CurrencySymbols + df.format(total));
+                            coinprice.setText("" + df.format(balance2));
+
+                        }else {
+                            balance.setText(CurrencySymbols + "0");
+                            coinprice.setText("0");
+                        }
+
+
 
 
                         // Log.d("bal",df.format(total));

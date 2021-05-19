@@ -152,7 +152,6 @@ public class Payout_verification extends AppCompatActivity {
             }
         });
 
-    //   Toast.makeText(this, ""+result+Amount+cryptoCurrency, Toast.LENGTH_SHORT).show();
         get2fa();
         back();
 

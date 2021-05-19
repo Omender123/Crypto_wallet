@@ -209,13 +209,15 @@ public class New_Currency extends AppCompatActivity implements NewCoinAdapter.On
     }
 
     public void back(View view) {
-        startActivity(new Intent(getApplicationContext(), Add_Currency.class));
+        startActivity(new Intent(New_Currency.this, Add_Currency.class));
+        finish();
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        startActivity(new Intent(getApplicationContext(), Add_Currency.class));
+       // super.onBackPressed();
+        startActivity(new Intent(New_Currency.this, Add_Currency.class));
+        finish();
     }
 
 

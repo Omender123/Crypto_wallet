@@ -106,6 +106,7 @@
                 android:id="@+id/moretransactions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="Categories_btn"
                 android:text="@string/more"
                 android:textSize="14sp"
                 android:textAlignment="textEnd"

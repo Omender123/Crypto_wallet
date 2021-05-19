@@ -69,8 +69,12 @@ Add_Currency extends AppCompatActivity implements EnabledClickedListner {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(Add_Currency.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
+                finish();
+
+             //   onBackPressed();
             }
         });
 
@@ -78,10 +82,13 @@ Add_Currency extends AppCompatActivity implements EnabledClickedListner {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        //onSaveInstanceState(new Bundle());
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+       super.onBackPressed();
+      //  onSaveInstanceState(new Bundle());
+        Intent intent = new Intent(Add_Currency.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
         startActivity(intent);
+        finish();
     }
 
     public void getAllCoins() {
@@ -273,6 +280,8 @@ Add_Currency extends AppCompatActivity implements EnabledClickedListner {
     }
 
     public void newCoin(View view) {
-        startActivity(new Intent(getApplicationContext(),New_Currency.class));
+        startActivity(new Intent(Add_Currency.this,New_Currency.class));
+        finish();
+
     }
 }
