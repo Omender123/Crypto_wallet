@@ -40,7 +40,7 @@ SwapConfirmation extends AppCompatActivity {
     Button confirm;
     SwapModel swapModel;
     UserData userData;
-    String sendData,receivedData,coinPrice,currencyType,currencySymbols,enterAmount,coinAmount,Token,ethAddress,type;
+    String sendData,receivedData,coinPrice,currencyType,currencySymbols,enterAmount,coinAmount,Token,ethAddress,type,coinTypes;
     int value;
     KProgressHUD progressDialog;
     TextView coinValue,showCoinAmount,showEnteredAmount;
@@ -83,7 +83,7 @@ SwapConfirmation extends AppCompatActivity {
         balance = swapModel.getUserBalance();
         total = swapModel.getEnterAmount();
         type = swapModel.getType();
-
+        coinTypes = swapModel.getCoinType();
 
 
 

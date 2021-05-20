@@ -184,7 +184,7 @@ public class ImtSmartEnterAmout extends AppCompatActivity {
 
                         String coinAmount = String.valueOf(df.format(totalAmoumt));
 
-                        SwapModel swapModel = new SwapModel(cryptoCurrency,result,imtPrice,currency2,CurrencySymbols,coinAmount,Amount,userBalance,coinAmount,1,"CoinTransfer");
+                        SwapModel swapModel = new SwapModel(cryptoCurrency,result,imtPrice,currency2,CurrencySymbols,coinAmount,Amount,userBalance,coinAmount,1,"CoinTransfer",coinType);
                         SwapSharedPrefernce.getInstance(getApplicationContext()).SetData(swapModel);
 
                         new Handler().postDelayed(new Runnable() {

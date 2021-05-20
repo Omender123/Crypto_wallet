@@ -170,8 +170,8 @@ public class Pay_Coin extends AppCompatActivity {
                     try {
                         s = response.body().string();
                         JSONObject object = new JSONObject(s);
-                        String token1 = object.getString("token");
-                        getBalance(token,token1,symbol,"usd");
+                        String CoinType = object.getString("token");
+                        getBalance(token,CoinType,symbol,"usd");
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }
@@ -206,10 +206,10 @@ public class Pay_Coin extends AppCompatActivity {
 
     }
 
-    public void getBalance(String token,String coinType,String coinSymbols,String currency){
+    public void getBalance(String Auth_token,String coinType,String coinSymbols,String currency){
 
 
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().Balance(token,coinType,coinSymbols,currency);
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().Balance(Auth_token,coinType,coinSymbols,currency);
 
         call.enqueue(new Callback<ResponseBody>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -234,7 +234,7 @@ public class Pay_Coin extends AppCompatActivity {
 
                         String coinAmount = String.valueOf(df.format(totalAmoumt));
 
-                        SwapModel swapModel = new SwapModel(cryptoCurrency,result,price,currency2,CurrencySymbols,coinAmount,Amount,userBalance,coinAmount,1,"CoinTransfer");
+                        SwapModel swapModel = new SwapModel(cryptoCurrency,result,price,currency2,CurrencySymbols,coinAmount,Amount,userBalance,coinAmount,1,"CoinTransfer",coinType);
                         SwapSharedPrefernce.getInstance(getApplicationContext()).SetData(swapModel);
 
                         new Handler().postDelayed(new Runnable() {
@@ -243,7 +243,7 @@ public class Pay_Coin extends AppCompatActivity {
                                 Intent intent = new Intent(getApplicationContext(), SwapConfirmation.class);
                                 startActivity(intent);
                             }
-                        },200);
+                        },500);
 
                       //  Toast.makeText(Pay_Coin.this, ""+userBalance, Toast.LENGTH_SHORT).show();
                     } catch (IOException | JSONException e) {

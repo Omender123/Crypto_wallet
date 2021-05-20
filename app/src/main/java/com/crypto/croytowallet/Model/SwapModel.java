@@ -1,12 +1,12 @@
 package com.crypto.croytowallet.Model;
 
 public class SwapModel {
-    String sendData, receivedData, coinPrice, currencyType,currencySymbol,coinAmount,enterAmount,userBalance,TotalAmount,type;
+    String sendData, receivedData, coinPrice, currencyType,currencySymbol,coinAmount,enterAmount,userBalance,TotalAmount,type,CoinType;
     int value;
 
 
 
-    public SwapModel(String sendData, String receivedData, String coinPrice, String currencyType, String currencySymbol, String coinAmount, String enterAmount, String userBalance, String totalAmount, int value, String type) {
+    public SwapModel(String sendData, String receivedData, String coinPrice, String currencyType, String currencySymbol, String coinAmount, String enterAmount, String userBalance, String totalAmount, int value, String type,String CoinType) {
         this.sendData = sendData;
         this.receivedData = receivedData;
         this.coinPrice = coinPrice;
@@ -18,6 +18,7 @@ public class SwapModel {
         this.TotalAmount = totalAmount;
         this.value = value;
         this.type = type;
+        this.CoinType = CoinType;
     }
 
     public SwapModel() {
@@ -108,5 +109,13 @@ public class SwapModel {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getCoinType() {
+        return CoinType;
+    }
+
+    public void setCoinType(String coinType) {
+        CoinType = coinType;
     }
 }

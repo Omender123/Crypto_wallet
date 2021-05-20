@@ -57,7 +57,7 @@ import retrofit2.Response;
 
 public class Exchange extends Fragment implements View.OnClickListener {
     Spinner sendSpinner, reciveSpinner;
-    String sendData, receviedData, SwapAmount, low_gasFees, average_gasFees, high_gasFees, min_amount, half_amount, max_amount, priceCoinId, coinPrice;
+    String sendData, receviedData, SwapAmount, low_gasFees, average_gasFees, high_gasFees, min_amount, half_amount, max_amount, priceCoinId, coinPrice,coinTypes;
     ImageView img_low, img_average, img_high;
     TextView swapBtn, txt_low, txt_average, txt_high, gwei_low, gwei_average, gwei_high, min_low, min_average, min_high, min_rate, half_rate, max_rate;
     LinearLayout lyt_low, lyt_average, lyt_high;
@@ -277,7 +277,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
                     String coinAmount = String.valueOf(df.format(totalAmoumt));
 
 
-                    SwapModel swapModel = new SwapModel(sendData, receviedData, imtPrice, currency2, CurrencySymbols, coinAmount, SwapAmount, userBalance, coinAmount, value, "Swap");
+                    SwapModel swapModel = new SwapModel(sendData, receviedData, imtPrice, currency2, CurrencySymbols, coinAmount, SwapAmount, userBalance, coinAmount, value, "Swap",coinTypes);
                     SwapSharedPrefernce.getInstance(getContext()).SetData(swapModel);
 
 
@@ -287,7 +287,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
                             Intent intent = new Intent(getActivity(), SwapConfirmation.class);
                             startActivity(intent);
                         }
-                    }, 1000);
+                    }, 500);
 
                 } else {
 
@@ -303,7 +303,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
                     String coinAmount = String.valueOf(df.format(totalAmoumt));
 
 
-                    SwapModel swapModel = new SwapModel(sendData, receviedData, coinPrice, currency2, CurrencySymbols, coinAmount, SwapAmount, userBalance, coinAmount, value, "Swap");
+                    SwapModel swapModel = new SwapModel(sendData, receviedData, coinPrice, currency2, CurrencySymbols, coinAmount, SwapAmount, userBalance, coinAmount, value, "Swap",coinTypes);
                     SwapSharedPrefernce.getInstance(getContext()).SetData(swapModel);
 
 
@@ -313,7 +313,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
                             Intent intent = new Intent(getContext(), SwapConfirmation.class);
                             startActivity(intent);
                         }
-                    }, 1000);
+                    }, 500);
 
                 }
             }
@@ -734,6 +734,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
                         s = response.body().string();
                         JSONObject object = new JSONObject(s);
                         String token1 = object.getString("token");
+                        coinTypes = token1;
                         getBalance(token, token1, symbol, currency2);
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
@@ -741,7 +742,7 @@ public class Exchange extends Fragment implements View.OnClickListener {
 
                 } else if (response.code() == 400) {
                     getBalance(token, symbol, symbol, currency2);
-
+                    coinTypes = symbol;
                 } else if (response.code() == 401) {
                     Snacky.builder()
                             .setActivity(getActivity())

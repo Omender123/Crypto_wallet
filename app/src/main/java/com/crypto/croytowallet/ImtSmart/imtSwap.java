@@ -56,7 +56,7 @@ import retrofit2.Response;
 public class
 imtSwap extends AppCompatActivity implements View.OnClickListener {
     Spinner sendSpinner, reciveSpinner;
-    String sendData, receviedData, SwapAmount, low_gasFees, average_gasFees, high_gasFees, min_amount, half_amount, max_amount,priceCoinId,coinPrice;
+    String sendData, receviedData, SwapAmount, low_gasFees, average_gasFees, high_gasFees, min_amount, half_amount, max_amount,priceCoinId,coinPrice,coinTypes;
     ImageView imageView, img_low, img_average, img_high;
     TextView swapBtn, txt_low, txt_average, txt_high, gwei_low, gwei_average, gwei_high, min_low, min_average, min_high, min_rate, half_rate, max_rate;
     LinearLayout lyt_low, lyt_average, lyt_high;
@@ -272,7 +272,7 @@ imtSwap extends AppCompatActivity implements View.OnClickListener {
 
 
 
-                    SwapModel swapModel = new SwapModel(sendData,receviedData,imtPrice,currency2,CurrencySymbols,coinAmount,SwapAmount,userBalance,coinAmount,value,"Swap");
+                    SwapModel swapModel = new SwapModel(sendData,receviedData,imtPrice,currency2,CurrencySymbols,coinAmount,SwapAmount,userBalance,coinAmount,value,"Swap",coinTypes);
                     SwapSharedPrefernce.getInstance(getApplicationContext()).SetData(swapModel);
 
 
@@ -282,7 +282,7 @@ imtSwap extends AppCompatActivity implements View.OnClickListener {
                             Intent intent = new Intent(imtSwap.this, SwapConfirmation.class);
                             startActivity(intent);
                         }
-                    },1000);
+                    },500);
                 } else {
 
                     DecimalFormat df = new DecimalFormat();
@@ -296,7 +296,7 @@ imtSwap extends AppCompatActivity implements View.OnClickListener {
 
                     String coinAmount = String.valueOf(df.format(totalAmoumt));
 
-                    SwapModel swapModel = new SwapModel(sendData,receviedData,coinPrice,currency2,CurrencySymbols,coinAmount,SwapAmount,userBalance,coinAmount,value,"Swap");
+                    SwapModel swapModel = new SwapModel(sendData,receviedData,coinPrice,currency2,CurrencySymbols,coinAmount,SwapAmount,userBalance,coinAmount,value,"Swap",coinTypes);
                     SwapSharedPrefernce.getInstance(getApplicationContext()).SetData(swapModel);
 
                     new Handler().postDelayed(new Runnable() {
@@ -305,7 +305,7 @@ imtSwap extends AppCompatActivity implements View.OnClickListener {
                             Intent intent = new Intent(imtSwap.this, SwapConfirmation.class);
                             startActivity(intent);
                         }
-                    },1000);
+                    },500);
 
 
                 }
@@ -749,7 +749,8 @@ imtSwap extends AppCompatActivity implements View.OnClickListener {
                     try {
                         s = response.body().string();
                         JSONObject object = new JSONObject(s);
-                        String token1 = object.getString("token");
+                        String token1  = object.getString("token");
+                        coinTypes = token1;
                         getBalance(token,token1,symbol,currency2);
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
@@ -757,6 +758,10 @@ imtSwap extends AppCompatActivity implements View.OnClickListener {
 
                 }else if (response.code()==400){
                     getBalance(token,symbol,symbol,currency2);
+
+                    coinTypes = symbol;
+
+
 
                 }else if (response.code()==401){
                     Snacky.builder()
@@ -819,6 +824,8 @@ imtSwap extends AppCompatActivity implements View.OnClickListener {
 
                         JSONObject object = new JSONObject(s);
                         userBalance = object.getString("balance");
+
+
 
 
                     } catch (IOException | JSONException e) {
