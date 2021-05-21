@@ -239,7 +239,7 @@ public class ImtSmartVerification extends AppCompatActivity {
 
         AuthToken =userData.getToken();
 
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().coinTransfer(AuthToken,"IMT","1",Token,otp,Amount,enterPin,result);
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().coinTransfer(AuthToken,"erc","imt","1",Token,otp,Amount,enterPin,result);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override

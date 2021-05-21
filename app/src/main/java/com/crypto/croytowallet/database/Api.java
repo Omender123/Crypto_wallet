@@ -112,7 +112,8 @@ public interface Api {
     @POST("transaction/transfer")
     Call<ResponseBody> coinTransfer(
             @Header("Authorization") String Authtoken,
-            @Field("cryptoCurrency") String crptoCurency,
+            @Field("cryptoCurrency") String CoinType,
+            @Field("name") String Symbols,
             @Field("deliveryRate") String deliveryRate,
             @Field("token") String token,
             @Field("otp") String otp,

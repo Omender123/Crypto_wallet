@@ -66,7 +66,7 @@ public class Payout_verification extends AppCompatActivity {
 
     private ProgressBar progressBarCircle;
 
-    String result,Amount,Token,enterPin,cryptoCurrency,otp,AuthToken,email2fa,google2fa;
+    String result,Amount,Token,enterPin,cryptoCurrency,otp,AuthToken,email2fa,google2fa,CoinType;
     SharedPreferences preferences;
     KProgressHUD progressDialog;
     UserData userData;
@@ -114,6 +114,7 @@ public class Payout_verification extends AppCompatActivity {
         cryptoCurrency = swapModel.getSendData();
         result = swapModel.getReceivedData();
         Amount = swapModel.getEnterAmount();
+        CoinType = swapModel.getCoinType();
 
 
 
@@ -145,7 +146,7 @@ public class Payout_verification extends AppCompatActivity {
                 }else{
 
                   //  Log.d("coinTranser",cryptoCurrency+result+Amount+enterPin);
-                //  Toast.makeText(Payout_verification.this, ""+cryptoCurrency+result+Amount+enterPin, Toast.LENGTH_SHORT).show();
+                 // Toast.makeText(Payout_verification.this, ""+cryptoCurrency+result+Amount+enterPin+CoinType, Toast.LENGTH_SHORT).show();
                   sendcoin();
                 }
 
@@ -339,7 +340,7 @@ public class Payout_verification extends AppCompatActivity {
 
         AuthToken =userData.getToken();
 
-        Call<ResponseBody>call = RetrofitClient.getInstance().getApi().coinTransfer(AuthToken,cryptoCurrency,"1",Token,otp,Amount,enterPin,result);
+        Call<ResponseBody>call = RetrofitClient.getInstance().getApi().coinTransfer(AuthToken,CoinType,cryptoCurrency,"1",Token,otp,Amount,enterPin,result);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
