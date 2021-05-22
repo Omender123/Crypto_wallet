@@ -8,13 +8,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crypto.croytowallet.R;
 
 public class Add_Verification1 extends AppCompatActivity {
 CheckBox checkgoogle;
-    Button skip;
+    TextView skip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -89,7 +89,7 @@
     <!--text for Login and Signup screen-->
     <string name="login">Login</string>
     <string name="sign_up">Signup</string>
-    <string name="hello">Hello!!</string>
+    <string name="hello">Hello!</string>
     <string name="welcome_back">Welcome Back</string>
     <string name="name">Name</string>
     <string name="email">Email</string>

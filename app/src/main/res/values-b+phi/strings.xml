@@ -89,7 +89,7 @@
   <!--  <! - teksto para sa screen ng Pag-login at Pag-signup ->-->
     <string name = "login"> Pag-login </string>
     <string name = "sign_up"> Pag-sign up </string>
-    <string name = "hello"> Kumusta !! </string>
+    <string name = "hello"> Kumusta ! </string>
     <string name = "welcome_back"> Maligayang Pagbalik </string>
     <string name = "name"> Pangalan </string>
     <string name = "email"> Email </string>

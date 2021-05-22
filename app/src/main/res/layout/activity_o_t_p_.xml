@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="210dp"
+        android:layout_height="230dp"
         android:scaleType="fitXY"
         android:src="@mipmap/backgroun_image1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,7 +38,8 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="130dp"
+                android:layout_marginTop="140dp"
+                android:fontFamily="@font/montserrat"
                 android:text="@string/login"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@android:color/darker_gray"
@@ -51,9 +52,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="130dp"
+                android:layout_marginTop="140dp"
                 android:layout_marginRight="20dp"
                 android:text="@string/sign_up"
+                android:fontFamily="@font/montserrat"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/purple_500"
                 android:textSize="20dp"
@@ -66,8 +68,9 @@
                 android:layout_below="@id/login"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="80dp"
+                android:fontFamily="@font/montserrat"
                 android:text="@string/hello_nice"
-                android:textColor="@color/toolbar"
+                android:textColor="@color/hello_color"
                 android:textSize="12dp" />
 
             <TextView
@@ -79,7 +82,7 @@
                 android:fontFamily="@font/montserrat"
                 android:text="@string/comfirm"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/toolbar"
+                android:textColor="@color/text_color"
                 android:textSize="20dp"
                 android:textStyle="bold" />
         </RelativeLayout>
@@ -114,6 +117,7 @@
             android:layout_marginLeft="25dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="20dp"
+            android:fontFamily="@font/montserrat"
             android:text="@string/otp_send"
             android:textColor="@android:color/darker_gray" />
         <LinearLayout
@@ -137,6 +141,7 @@
                 android:gravity="center"
                 android:text="@string/not_otp"
                 android:textAlignment="textEnd"
+                android:fontFamily="@font/montserrat"
                 android:layout_marginRight="10dp"
                 android:textStyle="bold"
                 android:textColor="@android:color/darker_gray"
@@ -177,11 +182,14 @@
         <Button
             android:id="@+id/next2"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:layout_below="@id/text2"
             android:layout_margin="20dp"
             android:background="@drawable/rounded_button"
             android:text="@string/next"
+            android:textColor="@color/text_color"
+            android:textStyle="bold"
+            android:fontFamily="@font/montserrat"
             android:textAllCaps="false"
             android:textSize="20dp" />
 

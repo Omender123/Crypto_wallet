@@ -9,7 +9,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="210dp"
+        android:layout_height="230dp"
         android:scaleType="fitXY"
         android:src="@mipmap/backgroun_image1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="130dp">
+            android:layout_marginTop="140dp">
             <TextView
                 android:id="@+id/login"
                 android:layout_width="wrap_content"
@@ -36,6 +36,7 @@
                 android:text="@string/login"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="20dp"
+                android:fontFamily="@font/montserrat"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textStyle="bold" />
             <TextView
@@ -45,6 +46,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:text="@string/sign_up"
+                android:fontFamily="@font/montserrat"
                 android:textColor="@color/purple_500"
                 android:textSize="20dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -57,19 +59,21 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/login"
             android:text="@string/hello_nice"
+            android:fontFamily="@font/montserrat"
             android:layout_marginTop="80dp"
             android:textSize="12dp"
-            android:textColor="@color/toolbar"
+            android:textColor="@color/hello_color"
             android:layout_marginLeft="20dp"/>
         <TextView
             android:id="@+id/welcome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/mnemonic"
+            android:fontFamily="@font/montserrat"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="20dp"
             android:textStyle="bold"
-            android:textColor="@color/toolbar"
+            android:textColor="@color/text_color"
             android:layout_marginLeft="20dp"/>
         <ScrollView
             android:layout_width="match_parent"
@@ -95,6 +99,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="15dp"
+                        android:fontFamily="@font/montserrat"
                         android:textColor="@android:color/darker_gray"
                         android:justificationMode="inter_word"
                         android:textStyle="bold"/>
@@ -119,7 +124,10 @@
                     android:layout_height="50dp"
                     android:layout_below="@id/user"
                     android:text="@string/next"
+                    android:fontFamily="@font/montserrat"
                     android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_color"
                     android:background="@drawable/rounded_button"
                     android:textAllCaps="false"
                     android:layout_margin="20dp"/>
@@ -130,6 +138,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:textSize="15dp"
+                    android:fontFamily="@font/montserrat"
                     android:textColor="@android:color/darker_gray"
                     android:text="@string/fortext"
                     android:justificationMode="inter_word"

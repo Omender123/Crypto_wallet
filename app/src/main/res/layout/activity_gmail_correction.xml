@@ -10,7 +10,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="210dp"
+        android:layout_height="230dp"
         android:scaleType="fitXY"
         android:src="@mipmap/backgroun_image1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,8 +29,9 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="130dp"
+            android:layout_marginTop="140dp"
             android:text="@string/login"
+            android:fontFamily="@font/montserrat"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@android:color/darker_gray"
             android:textSize="20dp"
@@ -41,8 +42,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:fontFamily="@font/montserrat"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="130dp"
+            android:layout_marginTop="140dp"
             android:layout_marginRight="20dp"
             android:text="@string/sign_up"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -57,8 +59,9 @@
             android:layout_below="@id/login"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="80dp"
+            android:fontFamily="@font/montserrat"
             android:text="@string/hello_nice"
-            android:textColor="@color/toolbar"
+            android:textColor="@color/hello_color"
             android:textSize="12dp" />
 
         <TextView
@@ -70,7 +73,7 @@
             android:fontFamily="@font/montserrat"
             android:text="Confirm Your Email"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/toolbar"
+            android:textColor="@color/text_color"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -140,7 +143,7 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_contact_details_email"
                         android:drawablePadding="10dp"
-                        android:drawableTint="@android:color/darker_gray"
+                        android:drawableTint="#707070"
                         android:ems="10"
                         android:inputType="text"
                         android:textColor="@color/toolbar" />
@@ -166,7 +169,7 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_passcode"
                         android:drawablePadding="10dp"
-                        android:drawableTint="@android:color/darker_gray"
+                        android:drawableTint="#707070"
                         android:ems="10"
                         android:inputType="text"
                         android:textColor="@color/toolbar" />
@@ -182,10 +185,12 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/scrollView"
             android:layout_marginLeft="20dp"
+            android:textSize="15sp"
+            android:fontFamily="@font/montserrat"
             android:layout_marginTop="7dp"
             android:layout_marginRight="20dp"
             android:text="Confirm your Email if you want to change your email id please click on the edit icon."
-            android:textStyle="bold" />
+            android:textStyle="normal" />
 
         <Button
             android:id="@+id/confirm_btn"
@@ -197,7 +202,7 @@
             android:fontFamily="@font/montserrat"
             android:text="@string/confirm"
             android:textAllCaps="false"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:textStyle="bold" />
 
 

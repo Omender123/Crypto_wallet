@@ -28,7 +28,15 @@ ImageView imageView;
             public void onClick(View view) {
 
                 startActivity(new Intent(getApplicationContext(), Login.class));
+                finish();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), Login.class));
+        finish();
     }
 }

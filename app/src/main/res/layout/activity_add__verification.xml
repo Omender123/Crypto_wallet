@@ -8,7 +8,7 @@
     tools:context=".signup.Add_Verification">
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="210dp"
+        android:layout_height="230dp"
         android:scaleType="fitXY"
         android:src="@mipmap/backgroun_image1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="130dp">
+            android:layout_marginTop="140dp">
             <TextView
                 android:id="@+id/login"
                 android:layout_width="wrap_content"
@@ -36,6 +36,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="20dp"
                 android:text="@string/login"
+                android:fontFamily="@font/montserrat"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="20dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -46,6 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
+                android:fontFamily="@font/montserrat"
                 android:layout_marginRight="20dp"
                 android:text="@string/sign_up"
                 android:textColor="@color/purple_500"
@@ -61,9 +63,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/login"
+            android:fontFamily="@font/montserrat"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="100dp"
-            android:textColor="#242424"
+            android:textColor="@color/hello_color"
             android:text="@string/Nice"
            />
 
@@ -76,7 +79,7 @@
             android:layout_marginBottom="20dp"
             android:text="@string/Addverification"
             android:fontFamily="@font/montserrat"
-            android:textColor="#242424"
+            android:textColor="@color/text_color"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -190,12 +193,15 @@
                 <Button
                     android:id="@+id/show_dailog"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="50dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="80dp"
                     android:layout_marginRight="20dp"
                     android:textStyle="bold"
-                    android:backgroundTint="#494949"
+                    android:textColor="@color/text_color"
+                    android:textAllCaps="false"
+                    android:fontFamily="@font/montserrat"
+                    android:backgroundTint="#BABABA"
                     android:text="@string/skip" />
             </LinearLayout>
         </ScrollView>

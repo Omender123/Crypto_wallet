@@ -26,7 +26,7 @@
     <color name="light_gray">@android:color/darker_gray</color>
     <color name="border_color">#F1BB0E</color>
     <color name="txt_hide">#DAD8D8</color>
-    <color name="stoke_color">#707070</color>
+    <color name="stoke_color">#33707070</color>
     <color name="layout_color">#F1F1F1</color>
     <!--bottom section color-->
     <color name="select">#F7CE2B</color>
@@ -60,4 +60,6 @@
     <color name="empty_color">#F1BB0E</color>
 
     <color name="card_product_back">#EBEAEC</color>
+    <color name="hello_color">#99303030</color>
+    <color name="text_color">#303030</color>
 </resources>

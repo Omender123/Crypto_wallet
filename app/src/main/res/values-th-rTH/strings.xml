@@ -88,7 +88,7 @@
   <!--  <! - ข้อความสำหรับหน้าจอเข้าสู่ระบบและลงทะเบียน ->-->
     <string name = "login"> เข้าสู่ระบบ </string>
     <string name = "sign_up"> สมัครใช้งาน </string>
-    <string name = "hello"> สวัสดี !! </string>
+    <string name = "hello"> สวัสดี ! </string>
     <string name = "welcome_back"> ยินดีต้อนรับกลับ </string>
     <string name = "name"> ชื่อ </string>
     <string name = "email"> อีเมล </string>

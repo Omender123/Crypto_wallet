@@ -614,7 +614,6 @@ public void listener(){
         @Override
         public void onClick(View v) {
             startActivity(new Intent(getApplicationContext(), ForgetPassword.class).putExtra("options","1"));
-            finish();
         }
     });
 

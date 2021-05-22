@@ -83,7 +83,6 @@ public class OTP_Activity extends AppCompatActivity {
               Intent intent = new Intent(getApplicationContext(),Change_Password.class);
               intent.putExtra("otp",otp);
               startActivity(intent);
-              finish();
 
           }
 

@@ -88,7 +88,7 @@
     <!--text for Login and Signup screen-->
     <string name="login">ログイン</string>
     <string name="sign_up">サインアップ</string>
-    <string name="hello">こんにちは!! </string>
+    <string name="hello">こんにちは! </string>
     <string name="welcome_back">おかえりなさい</string>
     <string name="name">名前</string>
     <string name="email">メール</string>

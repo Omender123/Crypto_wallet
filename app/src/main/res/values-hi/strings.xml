@@ -87,7 +87,7 @@
     <!--लॉगिन और साइनअप स्क्रीन के लिए पाठ -->
     <string name="login"> लॉगिन </string>
     <string name="sign_up"> साइन अप करें </string>
-    <string name="hello"> हैलो !! </string>
+    <string name="hello"> हैलो ! </string>
     <string name="welcome_back"> वेलकम बैक </string>
     <string name="name"> नाम </string>
     <string name="email"> Email </string>
