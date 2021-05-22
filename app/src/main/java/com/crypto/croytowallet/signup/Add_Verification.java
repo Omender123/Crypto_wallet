@@ -103,7 +103,7 @@ Button skip;
                 String s=null;
                 if (response.code()==200){
 
-                    Intent intent= new Intent(getApplicationContext(), GmailVerfiyOtp.class);
+                    Intent intent= new Intent(Add_Verification.this, GmailVerfiyOtp.class);
                     startActivity(intent);
 
                  //   OTPexpire();
@@ -176,10 +176,7 @@ Button skip;
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-        Intent intent = new Intent(Add_Verification.this, EnterConfirmMnemonic.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        onSaveInstanceState(new Bundle());
     }
 
     public void OTPexpire(){

@@ -107,9 +107,15 @@ public class GmailVerfiyOtp extends AppCompatActivity {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),Add_Verification1.class));
+                startActivity(new Intent(GmailVerfiyOtp.this,Add_Verification1.class));
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        onSaveInstanceState(new Bundle());
     }
 
     public  void verifyOTP(View view){

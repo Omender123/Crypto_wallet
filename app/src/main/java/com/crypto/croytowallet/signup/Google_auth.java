@@ -257,4 +257,9 @@ public class Google_auth extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        onSaveInstanceState(new Bundle());
+    }
 }

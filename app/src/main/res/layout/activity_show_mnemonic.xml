@@ -109,10 +109,12 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:drawableLeft="@drawable/ic_baseline_content_copy_24"
+                  android:drawableTint="#000"
                   android:text="@string/copy"
-
+                  android:fontFamily="@font/montserrat"
+                  android:textStyle="bold"
                   android:textAllCaps="false"
-                  android:textColor="@color/black"/>
+                  android:textColor="@color/text_color"/>
 
                 </LinearLayout>
 

@@ -30,7 +30,7 @@ CheckBox checkgoogle;
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if (isChecked){
-                    startActivity(new Intent(getApplicationContext(),Google_auth.class));
+                    startActivity(new Intent(Add_Verification1.this,Google_auth.class));
                 }
             }
         });
@@ -40,10 +40,14 @@ CheckBox checkgoogle;
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(getApplicationContext(),sucessfullverification.class));
+                startActivity(new Intent(Add_Verification1.this,sucessfullverification.class));
             }
         });
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        onSaveInstanceState(new Bundle());
+    }
 }

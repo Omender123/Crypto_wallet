@@ -140,7 +140,7 @@ String text1,text2,text3,text4,text5,text6,text7,text8,text9,text10,text11,text1
             @Override
             public void onResponse(String response) {
                 hidepDialog();
-                 startActivity(new Intent(getApplicationContext(), GmailCorrection.class));
+                 startActivity(new Intent(EnterConfirmMnemonic.this, GmailCorrection.class));
 
             }
 
@@ -403,5 +403,10 @@ String text1,text2,text3,text4,text5,text6,text7,text8,text9,text10,text11,text1
 
 
         }
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        onSaveInstanceState(new Bundle());
     }
 }

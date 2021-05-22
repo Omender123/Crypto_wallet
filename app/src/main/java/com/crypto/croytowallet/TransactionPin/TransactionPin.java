@@ -312,7 +312,7 @@ public class TransactionPin extends AppCompatActivity {
             editor.putString("transaction",first);
             editor.commit();
 
-            Intent intent =new Intent(getApplicationContext(),ShowMnemonic.class);
+            Intent intent =new Intent(TransactionPin.this,ShowMnemonic.class);
             startActivity(intent);
 
 
@@ -328,9 +328,7 @@ public class TransactionPin extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(TransactionPin.this, GmailCorrection.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+       onSaveInstanceState(new Bundle());
     }
 }
 

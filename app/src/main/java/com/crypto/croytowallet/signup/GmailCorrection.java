@@ -82,9 +82,9 @@ SignUpData signUpData;
                           }
 
                 }else if (check.equalsIgnoreCase("1")){
-                     startActivity(new Intent(getApplicationContext(), Add_Verification.class));
+                     startActivity(new Intent(GmailCorrection.this, Add_Verification.class));
                 }else if(check.equalsIgnoreCase("2")){
-                  startActivity(new Intent(getApplicationContext(), Add_Verification.class));
+                  startActivity(new Intent(GmailCorrection.this, Add_Verification.class));
 
                 }
 
@@ -204,10 +204,7 @@ SignUpData signUpData;
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-        Intent intent = new Intent(GmailCorrection.this, SignUp.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        onSaveInstanceState(new Bundle());
     }
 
     private void showpDialog() {

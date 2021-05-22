@@ -77,13 +77,14 @@ public class Referral_code extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Referral_code.this,Referral_code_scan.class));
+                finish();
             }
         });
     }
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-       
+       onSaveInstanceState(new Bundle());
     }
 
     public void referral_login(View view) {
@@ -93,7 +94,7 @@ public class Referral_code extends AppCompatActivity {
     }
 
     public void dont_Referral(View view) {
-        Intent intent = new Intent(getApplicationContext(), SignUp.class);
+        Intent intent = new Intent(Referral_code.this, SignUp.class);
         intent.putExtra("referral_code", "");
         startActivity(intent);
     }

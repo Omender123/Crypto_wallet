@@ -65,7 +65,7 @@
                 android:layout_marginRight="10dp"
                 android:text="Products more"
                 android:textSize="12dp"
-                android:textColor="@color/green"
+                android:textColor="@color/green1"
                 android:drawableRight="@drawable/ic_baseline_arrow_right_alt_24"
                 android:textStyle="bold"
                 android:fontFamily="@font/montserrat"/>

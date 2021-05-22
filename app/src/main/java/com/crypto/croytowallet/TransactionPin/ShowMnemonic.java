@@ -58,13 +58,17 @@ Button copy,next;
             public void onClick(View v) {
 
 
-             Intent intent=new Intent(getApplicationContext(),EnterConfirmMnemonic.class);
+             Intent intent=new Intent(ShowMnemonic.this,EnterConfirmMnemonic.class);
              startActivity(intent);
 
             }
         });
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        onSaveInstanceState(new Bundle());
+    }
 
 }

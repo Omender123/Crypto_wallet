@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SignUpData;
 import com.crypto.croytowallet.SharedPrefernce.SignUpRefernace;
@@ -46,12 +47,12 @@ public class SignUp extends AppCompatActivity {
     Animation fade_in;
     ConstraintLayout constraintLayout;
     Button ready_to1;
-    EditText name1,username1,email1,phoneno1,pass1,repass1;
+    EditText name1, username1, email1, phoneno1, pass1, repass1;
     KProgressHUD progressDialog;
-    String url="http://13.233.136.56:8080/api/user/register";
+    String url = "http://13.233.136.56:8080/api/user/register";
     SharedPreferences sharedPreferences;
     Spinner countryCode;
-    ArrayList<String>code;
+    ArrayList<String> code;
     String codeName;
 
 
@@ -61,26 +62,26 @@ public class SignUp extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         // animation
-        constraintLayout =findViewById(R.id.signup1);
-        fade_in = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_in);
-        sharedPreferences=getSharedPreferences("MyData", Context.MODE_PRIVATE);
+        constraintLayout = findViewById(R.id.signup1);
+        fade_in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
+        sharedPreferences = getSharedPreferences("MyData", Context.MODE_PRIVATE);
 
         code = new ArrayList<String>();
 
-        name1=findViewById(R.id.name1);
-        username1=findViewById(R.id.username1);
-        email1=findViewById(R.id.email1);
-        phoneno1=findViewById(R.id.phone1);
-        pass1=findViewById(R.id.pass1);
-        repass1=findViewById(R.id.re_pass1);
+        name1 = findViewById(R.id.name1);
+        username1 = findViewById(R.id.username1);
+        email1 = findViewById(R.id.email1);
+        phoneno1 = findViewById(R.id.phone1);
+        pass1 = findViewById(R.id.pass1);
+        repass1 = findViewById(R.id.re_pass1);
         countryCode = findViewById(R.id.countryCode);
 
-        ready_to1=findViewById(R.id.ready_to12);
+        ready_to1 = findViewById(R.id.ready_to12);
         ready_to1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signup(v);
-                hideKeyboard((Button)v);
+                hideKeyboard((Button) v);
             }
         });
 
@@ -90,38 +91,38 @@ public class SignUp extends AppCompatActivity {
 
     public void getCountryCode() {
 
-        Call<ResponseBody>call = RetrofitClient.getInstance().getApi().getCountryCode();
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().getCountryCode();
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                String s=null;
+                String s = null;
 
-                if (response.code()==200){
+                if (response.code() == 200) {
                     try {
-                        s=response.body().string();
+                        s = response.body().string();
 
-                       JSONObject object = new JSONObject(s);
+                        JSONObject object = new JSONObject(s);
 
-                       String result = object.getString("result");
+                        String result = object.getString("result");
 
                         JSONArray jsonArray = new JSONArray(result);
 
-                        for (int i=0;i<=jsonArray.length();i++){
+                        for (int i = 0; i <= jsonArray.length(); i++) {
                             code.add(jsonArray.getString(i));
                         }
 
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }
-                    ArrayAdapter<String> adp = new ArrayAdapter<String> (SignUp.this,android.R.layout.simple_spinner_dropdown_item,code);
+                    ArrayAdapter<String> adp = new ArrayAdapter<String>(SignUp.this, android.R.layout.simple_spinner_dropdown_item, code);
                     countryCode.setAdapter(adp);
 
                     countryCode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            codeName  = parent.getItemAtPosition(position).toString();
-                           // Toast.makeText(parent.getContext(), city, Toast.LENGTH_LONG).show();
+                            codeName = parent.getItemAtPosition(position).toString();
+                            // Toast.makeText(parent.getContext(), city, Toast.LENGTH_LONG).show();
                         }
 
                         @Override
@@ -131,14 +132,14 @@ public class SignUp extends AppCompatActivity {
                     });
 
 
-                }else if (response.code()==400){
+                } else if (response.code() == 400) {
 
 
                     try {
 
-                        s=response.errorBody().string();
-                        JSONObject jsonObject1=new JSONObject(s);
-                        String error =jsonObject1.getString("error");
+                        s = response.errorBody().string();
+                        JSONObject jsonObject1 = new JSONObject(s);
+                        String error = jsonObject1.getString("error");
 
 
                         Snacky.builder()
@@ -177,6 +178,7 @@ public class SignUp extends AppCompatActivity {
         } catch (Exception ignored) {
         }
     }
+
     public void signup(View parentView) {
         if (validate() == false) {
             onSignupFailed();
@@ -187,7 +189,7 @@ public class SignUp extends AppCompatActivity {
 
 
     public void onSignupFailed() {
-     //   Toast.makeText(getBaseContext(), "Please fill all requirement ", Toast.LENGTH_LONG).show();
+        //   Toast.makeText(getBaseContext(), "Please fill all requirement ", Toast.LENGTH_LONG).show();
 
         Snackbar warningSnackBar = Snacky.builder()
                 .setActivity(SignUp.this)
@@ -209,14 +211,14 @@ public class SignUp extends AppCompatActivity {
         String password = pass1.getText().toString();
         String reEnterPassword = repass1.getText().toString();
 
-        if (name.isEmpty() ) {
+        if (name.isEmpty()) {
             name1.setError("Please enter your name");
             requestFocus(name1);
             valid = false;
         } else {
             name1.setError(null);
         }
-        if (username.isEmpty() ) {
+        if (username.isEmpty()) {
             username1.setError("Please enter your username");
             requestFocus(username1);
             valid = false;
@@ -232,7 +234,7 @@ public class SignUp extends AppCompatActivity {
         } else {
             email1.setError(null);
         }
-        if (mobile.isEmpty() || mobile.length()<10) {
+        if (mobile.isEmpty() || mobile.length() < 10) {
             phoneno1.setError("enter a Mobile");
             requestFocus(phoneno1);
             valid = false;
@@ -240,7 +242,7 @@ public class SignUp extends AppCompatActivity {
             phoneno1.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 8 ) {
+        if (password.isEmpty() || password.length() < 8) {
             pass1.setError("please enter your password is more then 8 digit");
             requestFocus(pass1);
             valid = false;
@@ -248,7 +250,7 @@ public class SignUp extends AppCompatActivity {
             pass1.setError(null);
         }
 
-        if (reEnterPassword.isEmpty() || reEnterPassword.length() < 4  || !(reEnterPassword.equals(password))) {
+        if (reEnterPassword.isEmpty() || reEnterPassword.length() < 4 || !(reEnterPassword.equals(password))) {
             repass1.setError("Password Do not match");
             requestFocus(repass1);
             valid = false;
@@ -312,8 +314,8 @@ public class SignUp extends AppCompatActivity {
                         //storing the user in shared preferences
                         SignUpRefernace.getInstance(getApplicationContext()).UserSignUP(user);
 
-                       Intent intent = new Intent(getApplicationContext(), TransactionPin.class);
-                       // Intent intent = new Intent(getApplicationContext(), Google_auth.class);
+                        Intent intent = new Intent(SignUp.this, TransactionPin.class);
+                        // Intent intent = new Intent(getApplicationContext(), Google_auth.class);
                         startActivity(intent);
 
                     } catch (IOException e) {
@@ -371,7 +373,8 @@ public class SignUp extends AppCompatActivity {
 
 
     }
-private void showpDialog() {
+
+    private void showpDialog() {
         if (!progressDialog.isShowing())
             progressDialog.show();
     }
@@ -391,7 +394,7 @@ private void showpDialog() {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
+        onSaveInstanceState(new Bundle());
 
     }
 
