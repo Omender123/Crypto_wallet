@@ -1,11 +1,14 @@
 package com.crypto.croytowallet.signup;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +23,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.crypto.croytowallet.Extra_Class.InitApplication;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SignUpData;
 import com.crypto.croytowallet.SharedPrefernce.SignUpRefernace;
@@ -115,8 +119,10 @@ public class SignUp extends AppCompatActivity {
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }
-                    ArrayAdapter<String> adp = new ArrayAdapter<String>(SignUp.this, android.R.layout.simple_spinner_dropdown_item, code);
+                    ArrayAdapter<String> adp = new ArrayAdapter<String>(SignUp.this, R.layout.spinner_list, code);
                     countryCode.setAdapter(adp);
+
+                  //  adp.setDropDownViewResource(R.layout.spinner_list);
 
                     countryCode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -410,4 +416,7 @@ public class SignUp extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);*/
     }
+
+
+
 }

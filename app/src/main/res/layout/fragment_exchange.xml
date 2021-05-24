@@ -114,27 +114,22 @@
         </androidx.cardview.widget.CardView>
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/OutlineBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/welcome"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="5dp"
-            android:hint="Please Enter Swap amount  ">
-
             <EditText
                 android:id="@+id/enter_swap"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:drawablePadding="10dp"
                 android:background="@drawable/verifying_textview"
                 android:drawableTint="@android:color/darker_gray"
                 android:ems="10"
+                android:paddingStart="15dp"
+                android:layout_below="@id/welcome"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="5dp"
+                android:hint="Please Enter Swap amount  "
                 android:inputType="numberDecimal" />
-        </com.google.android.material.textfield.TextInputLayout>
 
 
         <androidx.cardview.widget.CardView

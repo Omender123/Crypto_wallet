@@ -58,9 +58,9 @@ public class SwapEnterPin extends AppCompatActivity {
     private Socket mSocket;
     {
         try {
-           mSocket = IO.socket("https://api.imx.global");
+          mSocket = IO.socket("https://api.imx.global");
 
-           // mSocket = IO.socket("http://13.233.136.56:8080");
+          //  mSocket = IO.socket("http://13.233.136.56:8080");
 
         } catch (URISyntaxException e) {}
     }
@@ -263,7 +263,7 @@ public class SwapEnterPin extends AppCompatActivity {
 
 
 
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().IMT_SWAP(Token, sendData, receivedData, value, enterAmount, pin, ethAddress);
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().IMT_SWAP(Token,swapModel.getCoinType(),sendData, receivedData, value, enterAmount, pin, ethAddress);
 
 
         call.enqueue(new Callback<ResponseBody>() {
@@ -276,7 +276,6 @@ public class SwapEnterPin extends AppCompatActivity {
                     if (response!=null){
                         try {
                             s = response.body().string();
-
                             JSONObject object = new JSONObject(s);
                             String responses = object.getString("response");
 

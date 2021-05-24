@@ -143,6 +143,7 @@ public interface Api {
     @POST("transaction/swapCurrency")
     Call<ResponseBody> IMT_SWAP(
             @Header("Authorization") String Authtoken,
+            @Field("name") String coinType,
             @Field("sendCurrency") String sendCurrency,
             @Field("receiveCurrency") String receiveCurrency,
             @Field("deliveryRate") int rate,

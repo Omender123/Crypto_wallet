@@ -482,9 +482,7 @@ imtSwap extends AppCompatActivity implements View.OnClickListener {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // onSaveInstanceState(new Bundle());
-                startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                finish();
+            onBackPressed();
             }
         });
 

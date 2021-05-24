@@ -39,7 +39,7 @@
     </style>
 
     <style name="OutlineBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-        <item name="boxStrokeColor">@color/stoke_color</item>
+        <item name="boxStrokeColor">@color/purple_500</item>
         <item name="hintTextColor">#707070</item>
         <item name="boxCornerRadiusBottomEnd">7dp</item>
         <item name="boxCornerRadiusBottomStart">7dp</item>
@@ -66,7 +66,6 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <item name="pinViewStyle">@style/PinWidget.PinView</item>
     </style>
-
 
 
 

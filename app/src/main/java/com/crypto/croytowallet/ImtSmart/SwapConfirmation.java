@@ -143,8 +143,8 @@ public class SwapConfirmation extends AppCompatActivity {
                            .error()
                            .show();
                }else if (type.equalsIgnoreCase("Swap")){
-                   startActivity(new Intent(getApplicationContext(),SwapEnterPin.class));
-                   // Toast.makeText(SwapConfirmation.this, ""+type, Toast.LENGTH_SHORT).show();
+                  startActivity(new Intent(getApplicationContext(),SwapEnterPin.class));
+                //  Toast.makeText(SwapConfirmation.this, ""+coinTypes, Toast.LENGTH_SHORT).show();
                }else {
                    startActivity(new Intent(getApplicationContext(), Payout_verification.class));
                    // Toast.makeText(SwapConfirmation.this, ""+type, Toast.LENGTH_SHORT).show();
@@ -190,7 +190,7 @@ public class SwapConfirmation extends AppCompatActivity {
 
 
 
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().IMT_SWAP(Token, sendData, receivedData, value, coinAmount, userData.getTransaction_Pin(), ethAddress);
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().IMT_SWAP(Token, "",sendData, receivedData, value, coinAmount, userData.getTransaction_Pin(), ethAddress);
 
 
         call.enqueue(new Callback<ResponseBody>() {
