@@ -225,7 +225,7 @@ TextInputLayout layout_otp;
                         JSONObject object= new JSONObject(s);
                         String result =object.getString("result");
                         String token =object.getString("token");
-                        updateCoin(token);
+                    //    updateCoin(token);
                         JSONObject  object1 = new JSONObject(result);
                         id= object1.getString("_id");
                         String name = object1.getString("name");

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/background1"
+    android:background="@color/card_background"
     android:orientation="horizontal">
 
     <ImageView
@@ -11,7 +11,7 @@
         android:layout_height="50dp"
         android:padding="5dp"
         android:layout_marginLeft="15dp"
-        android:background="@color/background1"
+        android:background="@color/card_background"
         /><!--Make sure image is present in Drawable folder-->
     <TextView
             android:id="@+id/coinName"
@@ -20,7 +20,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:text="ImSmart"
-            android:background="@color/background1"
+            android:background="@color/card_background"
             android:textColor="@color/toolbar_text_color"
             android:fontFamily="@font/montserrat"
             android:textSize="17dp"

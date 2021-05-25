@@ -48,7 +48,7 @@ public class SwapEnterPin extends AppCompatActivity {
     KProgressHUD progressDialog;
     SwapModel swapModel;
     UserData userData;
-    String sendData,receivedData,coinAmount,Token,ethAddress,enterAmount;
+    String sendData,receivedData,coinAmount,Token,enterAmount,CoinPrice,coinToken;
     String transIDs,statuss;
     int value;
 
@@ -60,7 +60,7 @@ public class SwapEnterPin extends AppCompatActivity {
         try {
           mSocket = IO.socket("https://api.imx.global");
 
-          //  mSocket = IO.socket("http://13.233.136.56:8080");
+         //  mSocket = IO.socket("http://13.233.136.56:8080");
 
         } catch (URISyntaxException e) {}
     }
@@ -89,13 +89,15 @@ public class SwapEnterPin extends AppCompatActivity {
         swapModel = SwapSharedPrefernce.getInstance(getApplicationContext()).getSwapData();
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
         Token = userData.getToken();
-        ethAddress = userData.getETH();
+        coinToken = swapModel.getType();
 
         sendData = swapModel.getSendData();
         receivedData = swapModel.getReceivedData();
        coinAmount = swapModel.getCoinAmount();
         value = swapModel.getValue();
         enterAmount = swapModel.getEnterAmount();
+        CoinPrice = swapModel.getCoinPrice();
+        coinToken =swapModel.getCoinType();
 
 
 
@@ -123,7 +125,9 @@ public class SwapEnterPin extends AppCompatActivity {
                             pinView.setLineColor(getResources().getColor(R.color.light_gray));
                         }
                     }, 200);
-                  done(enterPin);
+
+                    //Toast.makeText(getApplicationContext(),"name "+ sendData +"sendCurrency "+coinToken,Toast.LENGTH_LONG).show();
+                 done(enterPin);
                 }else{
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -182,8 +186,8 @@ public class SwapEnterPin extends AppCompatActivity {
                 @Override
                 public void run() {
                     JSONObject data = (JSONObject) args[0];
-                    Log.d("hello",data.toString());
-                    Toast.makeText(SwapEnterPin.this, ""+data.toString(), Toast.LENGTH_SHORT).show();
+                    //Log.d("hello",data.toString());
+                //    Toast.makeText(SwapEnterPin.this, ""+data.toString(), Toast.LENGTH_SHORT).show();
 
 
                        AppUtils.showMessageOKCancel(data.toString(), SwapEnterPin.this, new DialogInterface.OnClickListener() {
@@ -262,8 +266,7 @@ public class SwapEnterPin extends AppCompatActivity {
 
 
 
-
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().IMT_SWAP(Token,swapModel.getCoinType(),sendData, receivedData, value, enterAmount, pin, ethAddress);
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().IMT_SWAP(Token,sendData,CoinPrice,coinToken, receivedData, value, enterAmount, pin);
 
 
         call.enqueue(new Callback<ResponseBody>() {
@@ -276,7 +279,7 @@ public class SwapEnterPin extends AppCompatActivity {
                     if (response!=null){
                         try {
                             s = response.body().string();
-                            JSONObject object = new JSONObject(s);
+                           JSONObject object = new JSONObject(s);
                             String responses = object.getString("response");
 
                             if (responses.equalsIgnoreCase("null")){

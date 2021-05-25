@@ -53,19 +53,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class
-imtSwap extends AppCompatActivity implements View.OnClickListener {
+public class imtSwap extends AppCompatActivity implements View.OnClickListener {
     Spinner sendSpinner, reciveSpinner;
     String sendData, receviedData, SwapAmount, low_gasFees, average_gasFees, high_gasFees, min_amount, half_amount, max_amount,priceCoinId,coinPrice,coinTypes;
     ImageView imageView, img_low, img_average, img_high;
     TextView swapBtn, txt_low, txt_average, txt_high, gwei_low, gwei_average, gwei_high, min_low, min_average, min_high, min_rate, half_rate, max_rate;
     LinearLayout lyt_low, lyt_average, lyt_high;
     EditText enter_Swap_Amount;
-    String[] coinName = {"ImSmart", "Bitcoin","Ethereum","Tether","XRP","Litecoin","USD Coin","Tron","ImSmart Utility"};
-    String[] coinSymbols = {"IMT", "BTC","ETH","USDT","XRP","LTC","USDC","TRX","IMT-U"};
-    String[] coinId = {"imt", "btc","eth","usdt","xrp","ltc","usdc","trx","airdrop"};
-    String[] PricecoinId = {"airdrop", "bitcoin","ethereum","tether","ripple","litecoin","usd-coin","tron","airdrop"};
-    int[] coinImage = {R.mipmap.imt,R.mipmap.bitcoin_image,R.mipmap.group_blue,R.mipmap.usdt,R.mipmap.xrp,R.mipmap.ltc,R.mipmap.usdc,R.drawable.ic_tron,R.drawable.ic_imt__u};
+    String[] coinName = {"ImSmart", "Bitcoin","Ethereum","Tether","XRP","Litecoin","USD Coin","Tron","BitTorrent","ImSmart Utility"};
+    String[] coinSymbols = {"IMT", "BTC","ETH","USDT","XRP","LTC","USDC","TRX","BTT","IMT-U"};
+    String[] coinId = {"imt", "btc","eth","usdt","xrp","ltc","usdc","trx","btt","airdrop"};
+    String[] PricecoinId = {"airdrop", "bitcoin","ethereum","tether","ripple","litecoin","usd-coin","tron","bittorrent-2","airdrop"};
+    int[] coinImage = {R.mipmap.imt,R.mipmap.bitcoin_image,R.mipmap.group_blue,R.mipmap.usdt,R.mipmap.xrp,R.mipmap.ltc,R.mipmap.usdc,R.drawable.ic_tron,R.drawable.ic_btt,R.drawable.ic_imt__u};
 
     String[] coinName1 = {"ImSmart Utility", "ImSmart"};
     String[] coinSymbols1 = {"IMT-U","IMT"};

@@ -41,7 +41,6 @@ public class SwapConfirmation extends AppCompatActivity {
     UserData userData;
     String sendData,receivedData,coinPrice,currencyType,currencySymbols,enterAmount,coinAmount,Token,ethAddress,type,coinTypes;
     int value;
-    KProgressHUD progressDialog;
     TextView coinValue,showCoinAmount,showEnteredAmount;
     String balance,total;
     Double userBalance,TotalAmount;
@@ -101,23 +100,10 @@ public class SwapConfirmation extends AppCompatActivity {
             userBalance = Double.parseDouble(balance);
             TotalAmount = Double.parseDouble(total);
 
-          /*  if(TotalAmount>=userBalance) {
 
-                confirm.setBackgroundColor(getResources().getColor(R.color.light_gray));
-                confirm.setAlpha(0.5f);
-            }else{
-                confirm.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                confirm.setAlpha(0.9f);
-            }*/
         }catch (Exception e){
 
-           /* Snacky.builder()
-                    .setActivity(SwapConfirmation.this)
-                    .setText(" User Balance Not Found")
-                    .setDuration(Snacky.LENGTH_SHORT)
-                    .setActionText(android.R.string.ok)
-                    .error()
-                    .show();*/
+
         }
 
 
@@ -144,7 +130,7 @@ public class SwapConfirmation extends AppCompatActivity {
                            .show();
                }else if (type.equalsIgnoreCase("Swap")){
                   startActivity(new Intent(getApplicationContext(),SwapEnterPin.class));
-                //  Toast.makeText(SwapConfirmation.this, ""+coinTypes, Toast.LENGTH_SHORT).show();
+               //  Toast.makeText(SwapConfirmation.this, ""+coinTypes, Toast.LENGTH_SHORT).show();
                }else {
                    startActivity(new Intent(getApplicationContext(), Payout_verification.class));
                    // Toast.makeText(SwapConfirmation.this, ""+type, Toast.LENGTH_SHORT).show();
@@ -175,117 +161,8 @@ public class SwapConfirmation extends AppCompatActivity {
 
         onSaveInstanceState(new Bundle());
     }
-     public void SwapApi() {
-
-          progressDialog = KProgressHUD.create(SwapConfirmation.this)
-                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                .setLabel("Please wait.....")
-                .setCancellable(false)
-                .setAnimationSpeed(2)
-                .setDimAmount(0.5f)
-                .show();
-
-      showpDialog();
 
 
 
-
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().IMT_SWAP(Token, "",sendData, receivedData, value, coinAmount, userData.getTransaction_Pin(), ethAddress);
-
-
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                String s = null;
-                hidepDialog();
-                if (response.code() == 200) {
-
-                    try {
-                        s = response.body().string();
-
-                        if (s == null) {
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                            Toast.makeText(getApplicationContext(), "Error  occurred in Transaction", Toast.LENGTH_SHORT).show();
-                        } else {
-                               Intent intent = new Intent(SwapConfirmation.this,SwapAcknowledgement.class);
-                               startActivity(intent);
-                                }
-
-
-                        // Toast.makeText(getContext(), ""+s, Toast.LENGTH_SHORT).show();
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                } else if (response.code() == 400) {
-                    try {
-                        s = response.errorBody().string();
-                        JSONObject jsonObject1 = new JSONObject(s);
-                        String error = jsonObject1.getString("error");
-
-
-                        Snacky.builder()
-                                .setActivity(SwapConfirmation.this)
-                                .setText(error)
-                                .setDuration(Snacky.LENGTH_SHORT)
-                                .setActionText(android.R.string.ok)
-                                .error()
-                                .show();
-
-
-                    } catch (IOException | JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                } else if (response.code() == 401) {
-                    Snacky.builder()
-                            .setActivity(SwapConfirmation.this)
-                            .setText("unAuthorization Request")
-                            .setDuration(Snacky.LENGTH_SHORT)
-                            .setActionText(android.R.string.ok)
-                            .error()
-                            .show();
-                } else if (response.code() == 504) {
-                    Snacky.builder()
-                            .setActivity(SwapConfirmation.this)
-                            .setText("Gate Way Time Down")
-                            .setDuration(Snacky.LENGTH_SHORT)
-                            .setActionText(android.R.string.ok)
-                            .error()
-                            .show();
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                hidepDialog();
-
-
-                AppUtils.showMessageOKCancel("Your transaction is in process. Kindly check again for the confirmation.", SwapConfirmation.this, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(intent);
-
-                    }
-                });
-
-            }
-        });
-
-
-    }
-
-    private void showpDialog() {
-        if (!progressDialog.isShowing())
-            progressDialog.show();
-    }
-
-    private void hidepDialog() {
-        if (progressDialog.isShowing())
-            progressDialog.dismiss();
-    }
 
 }

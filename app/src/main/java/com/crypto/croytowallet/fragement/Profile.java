@@ -271,7 +271,14 @@ public class Profile extends Fragment implements View.OnClickListener {
                 showChangeLanguageDialod();
                 break;
             case R.id.Rewards:
-                startActivity(new Intent(getContext(), Rewards.class));
+             startActivity(new Intent(getContext(), Rewards.class));
+
+             /*   Snacky.builder()
+                        .setActivity(getActivity())
+                        .setTextColor(getResources().getColor(R.color.white))
+                        .setText("Coming Soon")
+                        .success()
+                        .show();*/
                 Rewardss.startAnimation(blink);
 
                 break;
