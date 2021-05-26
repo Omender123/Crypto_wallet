@@ -3,12 +3,15 @@ package com.crypto.croytowallet.fragement;
 
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +26,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import com.anupkumarpanwar.scratchview.ScratchView;
 import com.crypto.croytowallet.Activity.MyReferral_code;
 import com.crypto.croytowallet.Activity.Security;
 import com.crypto.croytowallet.Activity.Setting;
@@ -33,6 +37,7 @@ import com.crypto.croytowallet.Rewards.Rewards;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.database.RetrofitClient;
+import com.crypto.croytowallet.signup.Google_auth;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONException;
@@ -248,8 +253,8 @@ public class Profile extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.security1:
-                startActivity(new Intent(getContext(), Setting.class));
-                support.startAnimation(blink);
+                startActivity(new Intent(getContext(), Security.class));
+                security.startAnimation(blink);
                 break;
             case R.id.setting1:
                 startActivity(new Intent(getContext(), Setting.class));
@@ -271,19 +276,62 @@ public class Profile extends Fragment implements View.OnClickListener {
                 showChangeLanguageDialod();
                 break;
             case R.id.Rewards:
-             startActivity(new Intent(getContext(), Rewards.class));
+                startActivity(new Intent(getContext(), Rewards.class));
 
-             /*   Snacky.builder()
+                /*Snacky.builder()
                         .setActivity(getActivity())
                         .setTextColor(getResources().getColor(R.color.white))
                         .setText("Coming Soon")
                         .success()
-                        .show();*/
+                        .show();
+               */
                 Rewardss.startAnimation(blink);
 
                 break;
 
         }
+
+    }
+
+    private void Reward_box() {
+        TextView text_point;
+        ScratchView scratchView;
+
+        final Dialog dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.reward_dialog_box);
+        text_point=dialog.findViewById(R.id.text_point);
+        scratchView=dialog.findViewById(R.id.scratchView);
+
+        scratchView.setRevealListener(new ScratchView.IRevealListener() {
+            @Override
+            public void onRevealed(ScratchView scratchView) {
+              //  Toast.makeText(getContext(), "Revealed!", Toast.LENGTH_SHORT).show();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.dismiss();
+                    }
+                },2000);
+
+
+            }
+
+            @Override
+            public void onRevealPercentChangedListener(ScratchView scratchView, float percent) {
+                if (percent>=0.5) {
+                    Log.d("Reveal Percentage", "onRevealPercentChangedListener: " + String.valueOf(percent));
+                    scratchView.clear();
+                }
+            }
+        });
+
+        dialog.show();
+        dialog.setCancelable(false);
+
+
+
+
 
     }
 }
