@@ -14,6 +14,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chaos.view.PinView;
 import com.crypto.croytowallet.Extra_Class.ApiResponse.PearToPearResponse;
@@ -147,7 +148,8 @@ CardView pay_money;
                             pearToPearResponse.getResult().getSenderName(),
                             String.valueOf(pearToPearResponse.getResult().getAmount()),
                             pearToPearResponse.getResult().getStatus(),
-                            "");
+                            "",
+                            pearToPearResponse.getResult().getEarnedReward());
 
                     new Handler().postDelayed(new Runnable() {
                         @Override

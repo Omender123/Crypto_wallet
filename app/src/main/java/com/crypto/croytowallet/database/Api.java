@@ -6,6 +6,7 @@ import com.crypto.croytowallet.Extra_Class.ApiResponse.PublicKeyResponse;
 import com.crypto.croytowallet.Extra_Class.ApiResponse.PearToPearResponse;
 import com.crypto.croytowallet.Extra_Class.ApiResponse.ResponseBankDetails;
 import com.crypto.croytowallet.Extra_Class.ApiResponse.SendAddAmountRequestResponse;
+import com.crypto.croytowallet.Extra_Class.ApiResponse.TransactionHistoryResponse;
 import com.google.gson.JsonObject;
 
 import java.util.List;
@@ -484,5 +485,8 @@ public interface Api {
             @Header("Authorization") String Authtoken,
             @Field("name") String coinSymbols
     );
-
+    @POST("transaction/allPeerTransactiones1")
+    Call<TransactionHistoryResponse>GetAllTransactionHistory(
+            @Header("Authorization") String Authtoken
+    );
 }

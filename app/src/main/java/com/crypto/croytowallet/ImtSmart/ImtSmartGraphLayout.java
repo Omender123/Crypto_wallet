@@ -736,8 +736,8 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
         String type = coinModals.get(position).getType();
         String date = coinModals.get(position).getTime();
         String amount = coinModals.get(position).getAmount();
-
-        Transaction_HistoryModel historyModel = new Transaction_HistoryModel(transaction, "imt", amount, type, username, date);
+        String Type = "coinTransfer";
+        Transaction_HistoryModel historyModel = new Transaction_HistoryModel(transaction, "imt", amount, type, username, date,"null",Type);
 
         //storing the user in shared preferences
         TransactionHistorySharedPrefManager.getInstance(getApplicationContext()).Transaction_History_Data(historyModel);

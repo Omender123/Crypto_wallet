@@ -293,45 +293,5 @@ public class Profile extends Fragment implements View.OnClickListener {
 
     }
 
-    private void Reward_box() {
-        TextView text_point;
-        ScratchView scratchView;
 
-        final Dialog dialog = new Dialog(getContext());
-        dialog.setContentView(R.layout.reward_dialog_box);
-        text_point=dialog.findViewById(R.id.text_point);
-        scratchView=dialog.findViewById(R.id.scratchView);
-
-        scratchView.setRevealListener(new ScratchView.IRevealListener() {
-            @Override
-            public void onRevealed(ScratchView scratchView) {
-              //  Toast.makeText(getContext(), "Revealed!", Toast.LENGTH_SHORT).show();
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        dialog.dismiss();
-                    }
-                },2000);
-
-
-            }
-
-            @Override
-            public void onRevealPercentChangedListener(ScratchView scratchView, float percent) {
-                if (percent>=0.5) {
-                    Log.d("Reveal Percentage", "onRevealPercentChangedListener: " + String.valueOf(percent));
-                    scratchView.clear();
-                }
-            }
-        });
-
-        dialog.show();
-        dialog.setCancelable(false);
-
-
-
-
-
-    }
 }

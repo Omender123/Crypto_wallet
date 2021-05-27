@@ -151,6 +151,7 @@ tools:context=".TransactionHistory.Full_Transaction_History">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardElevation="5dp"
+        app:cardCornerRadius="05dp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
@@ -219,6 +220,7 @@ tools:context=".TransactionHistory.Full_Transaction_History">
         android:layout_width="match_parent"
         android:layout_height="70dp"
         app:cardElevation="5dp"
+        app:cardCornerRadius="05dp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
@@ -275,6 +277,7 @@ tools:context=".TransactionHistory.Full_Transaction_History">
         android:layout_width="match_parent"
         android:layout_height="70dp"
         app:cardElevation="5dp"
+        app:cardCornerRadius="05dp"
         android:visibility="gone"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
@@ -331,6 +334,71 @@ tools:context=".TransactionHistory.Full_Transaction_History">
 
     </androidx.cardview.widget.CardView>
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_rewards"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        app:cardCornerRadius="05dp"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"
+        android:layout_marginRight="15dp"
+        app:cardBackgroundColor="@color/card_background"
+        app:cardElevation="5dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingBottom="15dp">
+
+            <TextView
+                android:id="@+id/text6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/imx_point"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/toolbar_text_color"
+                android:textSize="10dp" />
+
+
+            <TextView
+                android:id="@+id/text_point"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text6"
+                android:layout_marginStart="25dp"
+                android:fontFamily="@font/montserrat"
+                android:textColor="@color/toolbar_text_color"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <View
+
+                android:layout_width="5dp"
+                android:layout_height="40dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/gradient" />
+
+            <ImageView
+                android:id="@+id/rewardImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="20dp"
+                android:padding="5dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_rewards_icon"
+                app:tint="@color/purple_500" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
     <Button
         android:id="@+id/show_btn"
         android:layout_width="match_parent"

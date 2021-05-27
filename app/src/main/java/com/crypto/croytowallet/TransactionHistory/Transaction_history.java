@@ -16,36 +16,33 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.crypto.croytowallet.Adapter.Transaaction_history_adapter;
-import com.crypto.croytowallet.Extra_Class.AppUtils;
+import com.crypto.croytowallet.Extra_Class.ApiResponse.TransactionHistoryResponse;
 import com.crypto.croytowallet.Interface.HistoryClickLister;
-import com.crypto.croytowallet.Model.TransactionHistoryModel;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.TransactionHistorySharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.Transaction_HistoryModel;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
-import com.crypto.croytowallet.VolleyDatabase.URLs;
-import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
+import com.crypto.croytowallet.database.RetrofitClient;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
+
+import de.mateware.snacky.Snacky;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Transaction_history extends AppCompatActivity implements HistoryClickLister {
     ImageView imageView;
     RecyclerView recyclerView;
-    ArrayList<TransactionHistoryModel> transactionHistoryModels;
+    private ArrayList<TransactionHistoryResponse.Result> data;
     Transaaction_history_adapter transaaction_history_adapter;
     KProgressHUD progressDialog;
     SharedPreferences sharedPreferences;
@@ -65,13 +62,17 @@ public class Transaction_history extends AppCompatActivity implements HistoryCli
         recyclerView=findViewById(R.id.recyclerTransation);
 
         history_Empty =findViewById(R.id.txt_list_is_empty);
-        transactionHistoryModels =new ArrayList<TransactionHistoryModel>();
 
+
+        data = new  ArrayList<TransactionHistoryResponse.Result>();
         sharedPreferences=getSharedPreferences("transaction", Context.MODE_PRIVATE);
-        getHistory();
+      //  getHistory();
+
+        GetAllTransactionHistory();
+
     }
 
-    public  void getHistory(){
+    private void GetAllTransactionHistory() {
         UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
         String token=user.getToken();
 
@@ -85,110 +86,89 @@ public class Transaction_history extends AppCompatActivity implements HistoryCli
 
         showpDialog();
 
-        StringRequest stringRequest=new StringRequest(Request.Method.POST, URLs.URL_TRANSACTION_HISTORY_FULL, new Response.Listener<String>() {
+        Call<TransactionHistoryResponse> call = RetrofitClient.getInstance().getApi().GetAllTransactionHistory(token);
+
+        call.enqueue(new Callback<TransactionHistoryResponse>() {
             @Override
-            public void onResponse(String response) {
+            public void onResponse(Call<TransactionHistoryResponse> call, Response<TransactionHistoryResponse> response) {
                 hidepDialog();
-                try {
-                    JSONObject object  = new JSONObject(response);
-                    String result =object.getString("result");
-                    JSONArray jsonArray=new JSONArray(result);
+                String s= null;
+                if (response.isSuccessful()){
+                    TransactionHistoryResponse transactionHistoryResponse = response.body();
+                    data = new ArrayList<TransactionHistoryResponse.Result>(Arrays.asList(transactionHistoryResponse.getResults()));
 
-                    for (int i=0;i<=29;i++){
+                    if (data!=null && data.size()>0){
+                        transaaction_history_adapter = new Transaaction_history_adapter(data,getApplicationContext(),Transaction_history.this);
+                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL,false);
+                        recyclerView.setLayoutManager(mLayoutManager);
+                        recyclerView.setItemAnimator(new DefaultItemAnimator());
+                        recyclerView.setAdapter(transaaction_history_adapter);
+                    }else{
 
-                        String data =jsonArray.getString(i);
-                        JSONObject  object1=new JSONObject(data);
-                        TransactionHistoryModel transactionHistoryModel1=new TransactionHistoryModel();
-                        String id = object1.getString("_id");
-                        String sendername=object1.getString("senderName");
-                        String receviername=object1.getString("receiverName");
-                        String amount=object1.getString("amount");
-                        String status =object1.getString("status");
-                        String time=object1.getString("createdAt");
+                        history_Empty.setVisibility(View.VISIBLE);
 
-                        transactionHistoryModel1.setId(id);
-                        transactionHistoryModel1.setStatus(status);
-                        transactionHistoryModel1.setRecivedName(receviername);
-                        transactionHistoryModel1.setUsername(sendername);
-                        transactionHistoryModel1.setAmountTrans(amount);
-                        transactionHistoryModel1.setDate(time);
-                        transactionHistoryModel1.setSearchDate(AppUtils.getDate(time));
-
-
-
-
-                        transactionHistoryModels.add(transactionHistoryModel1);
-
-                   //   Collections.reverse(transactionHistoryModels);
-                      //  Toast.makeText(Transaction_history.this, ""+data, Toast.LENGTH_SHORT).show();
                     }
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                if(transactionHistoryModels!=null && transactionHistoryModels.size()>0){
-                    transaaction_history_adapter = new Transaaction_history_adapter(transactionHistoryModels,getApplicationContext(),Transaction_history.this);
-                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL,false);
-                    recyclerView.setLayoutManager(mLayoutManager);
-                    recyclerView.setItemAnimator(new DefaultItemAnimator());
-                    recyclerView.setAdapter(transaaction_history_adapter);
+                    search_input.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            transaaction_history_adapter.getFilter().filter(s);
+                            search = s;
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+
+                        }
+                    });
+
+
+
                 }else{
+                    try{
+                        s=response.errorBody().string();
+                        JSONObject jsonObject1=new JSONObject(s);
+                        String error =jsonObject1.getString("error");
 
-                    history_Empty.setVisibility(View.VISIBLE);
 
+                        Snacky.builder()
+                                .setActivity(Transaction_history.this)
+                                .setText(error)
+                                .setTextColor(getResources().getColor(R.color.white))
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
+
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
 
-                search_input.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        transaaction_history_adapter.getFilter().filter(s);
-                        search = s;
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-
-                    }
-                });
-
-
             }
-        }, new Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
+            public void onFailure(Call<TransactionHistoryResponse> call, Throwable t) {
                 hidepDialog();
-               // Toast.makeText(Transaction_history.this, ""+error.toString(), Toast.LENGTH_SHORT).show();
+
+                Snacky.builder()
+                        .setActivity(Transaction_history.this)
+                        .setText(t.getLocalizedMessage())
+                        .setTextColor(getResources().getColor(R.color.white))
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
             }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-              /*  params.put("username", usernames);
-                params.put("password", passwords);
-*/
-
-                return params;
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<String, String>();
-
-                headers.put("Authorization", token);
-
-                return headers;
-            }
-
-
-        };
-
-        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+        });
     }
+
 
 
     private void showpDialog() {
@@ -220,21 +200,33 @@ public class Transaction_history extends AppCompatActivity implements HistoryCli
     @Override
     public void onHistoryItemClickListener(int position) {
 
+
+        String id = data.get(position).getId();
+        String sendername=data.get(position).getSenderName();
+        String receviername=data.get(position).getReceiverName();
+        String amount=data.get(position).getAmount();
+        String status =data.get(position).getStatus();
+        String time=data.get(position).getCreatedAt();
+        String type = data.get(position).getType();
+
+        if (data.get(position).getEarnedReward()==null){
+            String Rewards = "0.0";
+            Transaction_HistoryModel historyModel=new Transaction_HistoryModel(id,"Done",amount,sendername,receviername,time,Rewards,type);
+
+            TransactionHistorySharedPrefManager.getInstance(getApplicationContext()).Transaction_History_Data(historyModel);
+
+        }else{
+            String Rewards=data.get(position).getEarnedReward();
+
+            Transaction_HistoryModel historyModel=new Transaction_HistoryModel(id,"Done",amount,sendername,receviername,time,Rewards,type);
+            //storing the user in shared preferences
+            TransactionHistorySharedPrefManager.getInstance(getApplicationContext()).Transaction_History_Data(historyModel);
+
+        }
+
+
         Intent intent = new Intent(Transaction_history.this,Full_Transaction_History.class);
         startActivity(intent);
-
-        String id = transactionHistoryModels.get(position).getId();
-        String sendername=transactionHistoryModels.get(position).getUsername();
-        String receviername=transactionHistoryModels.get(position).getRecivedName();
-        String amount=transactionHistoryModels.get(position).getAmountTrans();
-        String status =transactionHistoryModels.get(position).getStatus();
-        String time=transactionHistoryModels.get(position).getDate();
-
-       Transaction_HistoryModel historyModel=new Transaction_HistoryModel(id,"Done",amount,sendername,receviername,time);
-
-        //storing the user in shared preferences
-        TransactionHistorySharedPrefManager.getInstance(getApplicationContext()).Transaction_History_Data(historyModel);
-
 
     }
 }

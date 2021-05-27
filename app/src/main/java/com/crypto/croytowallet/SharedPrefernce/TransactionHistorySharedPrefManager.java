@@ -11,7 +11,8 @@ public class TransactionHistorySharedPrefManager {
     private static final String KEY_SENDER_NAME = "keySenderName";
     private static final String KEY_RECEVIER_NAME = "keyReciverName";
     private static final String KEY_TIME= "keyTime";
-
+    private static final String KEY_REWARDS= "KEY_REWARDS";
+    private static final String KEY_TYPE= "KEY_TYPE";
 
     private static TransactionHistorySharedPrefManager mInstance;
     private static Context mCtx;
@@ -38,7 +39,8 @@ public class TransactionHistorySharedPrefManager {
         editor.putString(KEY_SENDER_NAME, user.getSenderName());
         editor.putString(KEY_RECEVIER_NAME, user.getReciverName());
         editor.putString(KEY_TIME, user.getTime());
-
+        editor.putString(KEY_REWARDS, user.getRewards());
+        editor.putString(KEY_TYPE, user.getType());
 
         editor.apply();
     }
@@ -54,7 +56,9 @@ public class TransactionHistorySharedPrefManager {
                 sharedPreferences.getString(KEY_AMTOFCRYPTO, null),
                 sharedPreferences.getString(KEY_SENDER_NAME, null),
                 sharedPreferences.getString(KEY_RECEVIER_NAME, null),
-                sharedPreferences.getString(KEY_TIME, null)
+                sharedPreferences.getString(KEY_TIME, null),
+                sharedPreferences.getString(KEY_REWARDS, null),
+                sharedPreferences.getString(KEY_TYPE, null)
         );
     }
 

@@ -209,7 +209,7 @@ public class EnterTop_Up extends AppCompatActivity {
                         SendAddAmountRequestResponse response1 = response.body();
 
                         SharedRequestResponse.getInstans(getApplicationContext()).SetData(
-                                response1.getTransactionId(),response1.getId(),response1.getAmount(), String.valueOf(response1.getUtility()),response1.getStatus(),response1.getCurrency());
+                                response1.getTransactionId(),response1.getId(),response1.getAmount(), String.valueOf(response1.getUtility()),response1.getStatus(),response1.getCurrency(),"");
 
                         new Handler().postDelayed(new Runnable() {
                             @Override

@@ -19,12 +19,12 @@ import com.crypto.croytowallet.SharedPrefernce.TransactionHistorySharedPrefManag
 import com.crypto.croytowallet.SharedPrefernce.Transaction_HistoryModel;
 
 public class Full_Transaction_History extends AppCompatActivity {
-TextView date,time,amount,download,share,trans_id,btncopy,receiverName;
+TextView date,time,amount,download,share,trans_id,btncopy,receiverName,text_point;
 Button showBtn,hideBtn;
-String date1,time1,amount1,id,receiverName1;
+String date1,time1,amount1,id,receiverName1,EarnsRewards,Type;
 Transaction_HistoryModel transaction_historyModel;
 ImageView imageView;
-CardView card2,card3;
+CardView card2,card3,card_rewards;
 String back;
 SharedPreferences sharedPreferences;
     @Override
@@ -45,6 +45,8 @@ SharedPreferences sharedPreferences;
         imageView =findViewById(R.id.back);
         card2  = findViewById(R.id.card2);
         card3  = findViewById(R.id.card3);
+        card_rewards = findViewById(R.id.card_rewards);
+        text_point = findViewById(R.id.text_point);
         transaction_historyModel = TransactionHistorySharedPrefManager.getInstance(getApplicationContext()).getTransaction_History();
 
 
@@ -58,8 +60,9 @@ SharedPreferences sharedPreferences;
         amount1 = transaction_historyModel.getAmtOfCrypto();
         receiverName1 = transaction_historyModel.getReciverName();
         id = transaction_historyModel.getId();
-
+        EarnsRewards = transaction_historyModel.getRewards();
         back = transaction_historyModel.getStatus();
+        Type= transaction_historyModel.getType();
 
         date.setText(AppUtils.getDate(date1));
         String[] s= date1.split("T");
@@ -72,39 +75,51 @@ SharedPreferences sharedPreferences;
          showBtn.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 card2.setVisibility(View.VISIBLE);
-                 card3.setVisibility(View.VISIBLE);
-                 showBtn.setVisibility(View.GONE);
-                 hideBtn.setVisibility(View.VISIBLE);
+
+                 if (Type.equalsIgnoreCase("airDropIMT")){
+                     text_point.setText(EarnsRewards+" PT");
+                     card2.setVisibility(View.VISIBLE);
+                     card3.setVisibility(View.VISIBLE);
+                     card_rewards.setVisibility(View.VISIBLE);
+                     showBtn.setVisibility(View.GONE);
+                     hideBtn.setVisibility(View.VISIBLE);
+                 }else{
+                     card2.setVisibility(View.VISIBLE);
+                     card3.setVisibility(View.VISIBLE);
+                    // card_rewards.setVisibility(View.GONE);
+                     showBtn.setVisibility(View.GONE);
+                     hideBtn.setVisibility(View.VISIBLE);
+
+                 }
+
+
              }
          });
 
         hideBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                card2.setVisibility(View.GONE);
-                card3.setVisibility(View.GONE);
-                showBtn.setVisibility(View.VISIBLE);
-                hideBtn.setVisibility(View.GONE);
+                if (Type.equalsIgnoreCase("airDropIMT")){
+                    card2.setVisibility(View.GONE);
+                    card3.setVisibility(View.GONE);
+                    card_rewards.setVisibility(View.GONE);
+                    showBtn.setVisibility(View.VISIBLE);
+                    hideBtn.setVisibility(View.GONE);
+                }else{
+                    card2.setVisibility(View.GONE);
+                    card3.setVisibility(View.GONE);
+                    showBtn.setVisibility(View.GONE);
+                    hideBtn.setVisibility(View.VISIBLE);
+
+                }
+
+
             }
         });
 
          imageView.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                /* if (back.equals("Done")){
-                     startActivity(new Intent(getApplicationContext(),Transaction_history.class));
-                 }else if(back.equals("OK")){
-                     startActivity(new Intent(getApplicationContext(), WalletBalance.class));
-                 }else if(back.equals("imt")){
-                     startActivity(new Intent(getApplicationContext(), ImtSmartGraphLayout.class));
-                 } else if(back.equals(back)){
-                     startActivity(new Intent(getApplicationContext(), Graph_layout.class));
-                 }else{
-
-                     startActivity(new Intent(getApplicationContext(), CoinHistory.class));
-                 }
-*/
                  onBackPressed();
 
              }
@@ -140,21 +155,6 @@ SharedPreferences sharedPreferences;
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-       /* if (back.equals("Done")){
-            startActivity(new Intent(getApplicationContext(),Transaction_history.class));
-        }else if(back.equals("OK")){
-            startActivity(new Intent(getApplicationContext(), WalletBalance.class));
-        }else if(back.equals("imt")){
-            startActivity(new Intent(getApplicationContext(), ImtSmartGraphLayout.class));
-        } else if(back.equals(back)){
-            startActivity(new Intent(getApplicationContext(), Graph_layout.class));
-        }else{
-
-            startActivity(new Intent(getApplicationContext(), CoinHistory.class));
-        }*/
-
-
         onSaveInstanceState(new Bundle());
     }
 }

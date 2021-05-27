@@ -13,7 +13,7 @@ public class SharedRequestResponse {
     private static final String Enter_Amount="Enter_Amount";
     private static final String IMT_U_Amount="IMT_U";
     private static final String STATUS="STATUS";
-
+    private static final String REWARDS="REWARDS";
     private SharedRequestResponse(Context context){
         mct=context;
     }
@@ -24,7 +24,7 @@ public class SharedRequestResponse {
         return minst;
     }
 
-    public boolean SetData( String TransId, String RequestId,String EnterAmount,String IMT_amount,String  Status,String Curreny_type){
+    public boolean SetData( String TransId, String RequestId,String EnterAmount,String IMT_amount,String  Status,String Curreny_type,String Rewards){
 
         SharedPreferences sharedPreferences=mct.getSharedPreferences(SHARD_PERFNAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferences.edit();
@@ -34,6 +34,7 @@ public class SharedRequestResponse {
         editor.putString(IMT_U_Amount,IMT_amount);
         editor.putString(STATUS,Status);
         editor.putString(Currency_type,Curreny_type);
+        editor.putString(REWARDS,Rewards);
 
 
         editor.apply();
@@ -82,5 +83,9 @@ public class SharedRequestResponse {
 
     }
 
+    public String getRewards(){
+        SharedPreferences sharedPreferences=mct.getSharedPreferences(SHARD_PERFNAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(REWARDS,null);
 
+    }
 }

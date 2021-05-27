@@ -1,6 +1,5 @@
 package com.crypto.croytowallet.Activity;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,26 +7,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.icu.text.DecimalFormat;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.crypto.croytowallet.Adapter.Transaaction_history_adapter;
+import com.crypto.croytowallet.Extra_Class.ApiResponse.TransactionHistoryResponse;
 import com.crypto.croytowallet.Extra_Class.MyPreferences;
 import com.crypto.croytowallet.Extra_Class.PrefConf;
 import com.crypto.croytowallet.Interface.HistoryClickLister;
-import com.crypto.croytowallet.Model.TransactionHistoryModel;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.TransactionHistorySharedPrefManager;
@@ -35,37 +25,33 @@ import com.crypto.croytowallet.SharedPrefernce.Transaction_HistoryModel;
 import com.crypto.croytowallet.SharedPrefernce.UserData;
 import com.crypto.croytowallet.TransactionHistory.Full_Transaction_History;
 import com.crypto.croytowallet.TransactionHistory.Transaction_history;
-import com.crypto.croytowallet.VolleyDatabase.URLs;
-import com.crypto.croytowallet.VolleyDatabase.VolleySingleton;
 import com.crypto.croytowallet.database.RetrofitClient;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
 
 import de.mateware.snacky.Snacky;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 public class WalletBalance extends AppCompatActivity implements HistoryClickLister {
     ImageView imageView,sreach;
     TextView textView,textView1,more;
-    RequestQueue requestQueue;
     RecyclerView recyclerView;
-    ArrayList<TransactionHistoryModel> transactionHistoryModels;
-    Transaaction_history_adapter transaaction_history_adapter;
     KProgressHUD progressDialog;
     TextView history_Empty;
    SharedPreferences sharedPreferences;
-   String CurrencySymbols,currency2,balance,cal_balance;
+    private ArrayList<TransactionHistoryResponse.Result> data;
+    Transaaction_history_adapter transaaction_history_adapter;
+
+    String CurrencySymbols,currency2,balance,cal_balance;
    LinearLayout linearLayout;
     private ShimmerFrameLayout mShimmerViewContainer,mShimmerViewContainer1;
 
@@ -86,6 +72,7 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
         mShimmerViewContainer1 = findViewById(R.id.shimmer_view_container1);
         linearLayout =  findViewById(R.id.linear);
 
+        data = new  ArrayList<TransactionHistoryResponse.Result>();
 
         sharedPreferences =getApplicationContext().getSharedPreferences("currency",0);
        currency2 =sharedPreferences.getString("currency1","usd");
@@ -98,13 +85,7 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
         textView.setText(balance);
         textView1.setText(CurrencySymbols+cal_balance);
 
-        transactionHistoryModels =new ArrayList<TransactionHistoryModel>();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                getHistory();
-            }
-        }, 2000);
+
 
 
         more.setOnClickListener(new View.OnClickListener() {
@@ -125,105 +106,98 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
             }
         });
 
+        GetAllTransactionHistory();
+
     }
 
 
 
-
-    public  void getHistory(){
+    private void GetAllTransactionHistory() {
         UserData user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
         String token=user.getToken();
 
-        StringRequest stringRequest=new StringRequest(Request.Method.POST, URLs.URL_TRANSACTION_HISTORY, new Response.Listener<String>() {
+        progressDialog = KProgressHUD.create(WalletBalance.this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Loading.........")
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
+
+        showpDialog();
+
+        Call<TransactionHistoryResponse> call = RetrofitClient.getInstance().getApi().GetAllTransactionHistory(token);
+
+        call.enqueue(new Callback<TransactionHistoryResponse>() {
             @Override
-            public void onResponse(String response) {
-                transactionHistoryModels.clear();
-               try {
-                    JSONObject object  = new JSONObject(response);
-                    String result =object.getString("result");
-                    JSONArray jsonArray=new JSONArray(result);
+            public void onResponse(Call<TransactionHistoryResponse> call, Response<TransactionHistoryResponse> response) {
+                hidepDialog();
+                String s= null;
+                if (response.isSuccessful()){
+                    TransactionHistoryResponse transactionHistoryResponse = response.body();
+                    data = new ArrayList<TransactionHistoryResponse.Result>(Arrays.asList(transactionHistoryResponse.getResults()));
 
-                    for (int i=0;i<=9;i++){
+                    if (data!=null && data.size()>0){
+                        transaaction_history_adapter = new Transaaction_history_adapter(data,getApplicationContext(),WalletBalance.this);
+                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL,false);
+                        recyclerView.setLayoutManager(mLayoutManager);
+                        recyclerView.setItemAnimator(new DefaultItemAnimator());
+                        recyclerView.setAdapter(transaaction_history_adapter);
+                    }else{
 
-                       String data =jsonArray.getString(i);
-                       JSONObject  object1=new JSONObject(data);
-                        TransactionHistoryModel transactionHistoryModel1=new TransactionHistoryModel();
+                        history_Empty.setVisibility(View.VISIBLE);
 
-                        String id = object1.getString("_id");
-                        String sendername=object1.getString("senderName");
-                        String receviername=object1.getString("receiverName");
-                        String amount=object1.getString("amount");
-                        String status =object1.getString("status");
-                        String time=object1.getString("updatedAt");
-
-                        transactionHistoryModel1.setId(id);
-                        transactionHistoryModel1.setStatus(status);
-                        transactionHistoryModel1.setRecivedName(receviername);
-                        transactionHistoryModel1.setUsername(sendername);
-                        transactionHistoryModel1.setAmountTrans(amount);
-                        transactionHistoryModel1.setDate(time);
-
-
-                        transactionHistoryModels.add(transactionHistoryModel1);
-
-                    //  Toast.makeText(WalletBalance.this, ""+data, Toast.LENGTH_SHORT).show();
                     }
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+
+
+
+                }else{
+                    try{
+                        s=response.errorBody().string();
+                        JSONObject jsonObject1=new JSONObject(s);
+                        String error =jsonObject1.getString("error");
+
+
+                        Snacky.builder()
+                                .setActivity(WalletBalance.this)
+                                .setText(error)
+                                .setTextColor(getResources().getColor(R.color.white))
+                                .setDuration(Snacky.LENGTH_SHORT)
+                                .setActionText(android.R.string.ok)
+                                .error()
+                                .show();
+
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
 
-
-                // stop animating Shimmer and hide the layout
                 mShimmerViewContainer.stopShimmerAnimation();
                 mShimmerViewContainer.setVisibility(View.GONE);
                 mShimmerViewContainer1.stopShimmerAnimation();
                 mShimmerViewContainer1.setVisibility(View.GONE);
                 linearLayout.setVisibility(View.VISIBLE);
-
-
-                if(transactionHistoryModels!=null && transactionHistoryModels.size()>0){
-                    transaaction_history_adapter = new Transaaction_history_adapter(transactionHistoryModels,getApplicationContext(),WalletBalance.this);
-                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL,false);
-                    recyclerView.setLayoutManager(mLayoutManager);
-                    recyclerView.setItemAnimator(new DefaultItemAnimator());
-                    recyclerView.setAdapter(transaaction_history_adapter);
-                }else{
-
-                    history_Empty.setVisibility(View.VISIBLE);
-
-                }
-
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-
-
-                return params;
             }
 
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<String, String>();
+            public void onFailure(Call<TransactionHistoryResponse> call, Throwable t) {
+                hidepDialog();
 
-                headers.put("Authorization", token);
-
-                return headers;
+                Snacky.builder()
+                        .setActivity(WalletBalance.this)
+                        .setText(t.getLocalizedMessage())
+                        .setTextColor(getResources().getColor(R.color.white))
+                        .setDuration(Snacky.LENGTH_SHORT)
+                        .setActionText(android.R.string.ok)
+                        .error()
+                        .show();
             }
-
-
-        };
-
-        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+        });
     }
+
+
 
     private void showpDialog() {
         if (!progressDialog.isShowing())
@@ -254,19 +228,32 @@ public class WalletBalance extends AppCompatActivity implements HistoryClickList
     @Override
     public void onHistoryItemClickListener(int position) {
 
-        String id = transactionHistoryModels.get(position).getId();
-        String sendername=transactionHistoryModels.get(position).getUsername();
-        String receviername=transactionHistoryModels.get(position).getRecivedName();
-        String amount=transactionHistoryModels.get(position).getAmountTrans();
-        String status =transactionHistoryModels.get(position).getStatus();
-        String time=transactionHistoryModels.get(position).getDate();
 
-        Transaction_HistoryModel historyModel=new Transaction_HistoryModel(id,"OK",amount,sendername,receviername,time);
+        String id = data.get(position).getId();
+        String sendername=data.get(position).getSenderName();
+        String receviername=data.get(position).getReceiverName();
+        String amount=data.get(position).getAmount();
+        String status =data.get(position).getStatus();
+        String time=data.get(position).getCreatedAt();
+        String type = data.get(position).getType();
 
-        //storing the user in shared preferences
-        TransactionHistorySharedPrefManager.getInstance(getApplicationContext()).Transaction_History_Data(historyModel);
+        if (data.get(position).getEarnedReward()==null){
+            String Rewards = "0.0";
+            Transaction_HistoryModel historyModel=new Transaction_HistoryModel(id,"Done",amount,sendername,receviername,time,Rewards,type);
 
-        Intent intent = new Intent(WalletBalance.this, Full_Transaction_History.class);
+            TransactionHistorySharedPrefManager.getInstance(getApplicationContext()).Transaction_History_Data(historyModel);
+
+        }else{
+            String Rewards=data.get(position).getEarnedReward();
+
+            Transaction_HistoryModel historyModel=new Transaction_HistoryModel(id,"Done",amount,sendername,receviername,time,Rewards,type);
+            //storing the user in shared preferences
+            TransactionHistorySharedPrefManager.getInstance(getApplicationContext()).Transaction_History_Data(historyModel);
+
+        }
+
+
+        Intent intent = new Intent(WalletBalance.this,Full_Transaction_History.class);
         startActivity(intent);
 
     }

@@ -2,16 +2,18 @@ package com.crypto.croytowallet.SharedPrefernce;
 
 public class Transaction_HistoryModel {
     private String id;
-    private String status, amtOfCrypto,senderName,ReciverName,Time;
+    private String status, amtOfCrypto,senderName,ReciverName,Time,Rewards,Type;
 
 
-    public Transaction_HistoryModel(String id, String status, String amtOfCrypto, String senderName, String reciverName, String time) {
+    public Transaction_HistoryModel(String id, String status, String amtOfCrypto, String senderName, String reciverName, String time,String Rewards,String Type) {
         this.id = id;
         this.status = status;
         this.amtOfCrypto = amtOfCrypto;
         this.senderName = senderName;
-        ReciverName = reciverName;
-        Time = time;
+        this.ReciverName = reciverName;
+        this.Time = time;
+        this.Rewards = Rewards;
+        this.Type = Type;
     }
 
     public Transaction_HistoryModel() {
@@ -63,5 +65,21 @@ public class Transaction_HistoryModel {
 
     public void setTime(String time) {
         Time = time;
+    }
+
+    public String getRewards() {
+        return Rewards;
+    }
+
+    public void setRewards(String rewards) {
+        Rewards = rewards;
+    }
+
+    public String getType() {
+        return Type;
+    }
+
+    public void setType(String type) {
+        Type = type;
     }
 }

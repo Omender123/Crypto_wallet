@@ -110,7 +110,6 @@ public class Sync_device extends AppCompatActivity implements HistoryClickLister
             @Override
             public void onResponse(Call<ActiveDeviceResponse> call, Response<ActiveDeviceResponse> response) {
              hidepDialog();
-                Toast.makeText(Sync_device.this, ""+response.code(), Toast.LENGTH_SHORT).show();
               String s= null;
                 if (response.isSuccessful()){
                     ActiveDeviceResponse activeDeviceResponse = response.body();

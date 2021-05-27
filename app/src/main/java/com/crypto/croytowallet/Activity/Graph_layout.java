@@ -726,8 +726,9 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         String type = coinModals.get(position).getType();
         String date = coinModals.get(position).getTime();
         String amount = coinModals.get(position).getAmount();
+        String Type = "coinTransfer";
 
-        Transaction_HistoryModel historyModel = new Transaction_HistoryModel(transaction, coinId, amount, type, username, date);
+        Transaction_HistoryModel historyModel = new Transaction_HistoryModel(transaction, coinId, amount, type, username, date,"null",Type);
 
         //storing the user in shared preferences
         TransactionHistorySharedPrefManager.getInstance(getApplicationContext()).Transaction_History_Data(historyModel);

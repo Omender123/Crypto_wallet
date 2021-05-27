@@ -1,19 +1,37 @@
 package com.crypto.croytowallet.Extra_Class.ApiResponse;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-public class PearToPearResponse {
+public class TransactionHistoryResponse {
+  /*  @SerializedName("result")
+    @Expose
+    private List<Result> result = null;
+  */  @SerializedName("count")
+    @Expose
+    private String count;
+
     @SerializedName("result")
     @Expose
-    private Result result;
+    private Result[] results;
 
-    public Result getResult() {
+    public Result[] getResults() {
+        return results;
+    }
+
+  /*  public List<Result> getResult() {
         return result;
     }
 
-    public void setResult(Result result) {
+    public void setResult(List<Result> result) {
         this.result = result;
+    }*/
+
+    public String getCount() {
+        return count;
     }
 
+    public void setCount(String count) {
+        this.count = count;
+    }
     public class Result {
 
         @SerializedName("type")
@@ -33,16 +51,16 @@ public class PearToPearResponse {
         private String earnedReward;
         @SerializedName("closingBalance")
         @Expose
-        private Double closingBalance;
+        private String closingBalance;
         @SerializedName("status")
         @Expose
         private String status;
         @SerializedName("amount")
         @Expose
-        private Integer amount;
+        private String amount;
         @SerializedName("withdrawlFees")
         @Expose
-        private Integer withdrawlFees;
+        private String withdrawlFees;
         @SerializedName("senderName")
         @Expose
         private String senderName;
@@ -96,11 +114,11 @@ public class PearToPearResponse {
             this.earnedReward = earnedReward;
         }
 
-        public Double getClosingBalance() {
+        public String getClosingBalance() {
             return closingBalance;
         }
 
-        public void setClosingBalance(Double closingBalance) {
+        public void setClosingBalance(String closingBalance) {
             this.closingBalance = closingBalance;
         }
 
@@ -112,19 +130,19 @@ public class PearToPearResponse {
             this.status = status;
         }
 
-        public Integer getAmount() {
+        public String getAmount() {
             return amount;
         }
 
-        public void setAmount(Integer amount) {
+        public void setAmount(String amount) {
             this.amount = amount;
         }
 
-        public Integer getWithdrawlFees() {
+        public String getWithdrawlFees() {
             return withdrawlFees;
         }
 
-        public void setWithdrawlFees(Integer withdrawlFees) {
+        public void setWithdrawlFees(String withdrawlFees) {
             this.withdrawlFees = withdrawlFees;
         }
 
@@ -159,6 +177,6 @@ public class PearToPearResponse {
         public void setUpdatedAt(String updatedAt) {
             this.updatedAt = updatedAt;
         }
-    }
-    }
 
+    }
+}
