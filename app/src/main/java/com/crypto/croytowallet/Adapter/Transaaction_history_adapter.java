@@ -19,6 +19,8 @@ import com.crypto.croytowallet.Extra_Class.ApiResponse.TransactionHistoryRespons
 import com.crypto.croytowallet.Extra_Class.AppUtils;
 import com.crypto.croytowallet.Interface.HistoryClickLister;
 import com.crypto.croytowallet.R;
+import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
+import com.crypto.croytowallet.SharedPrefernce.UserData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,14 +55,20 @@ public class Transaaction_history_adapter extends RecyclerView.Adapter<Transaact
     @Override
     public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
 
-        sharedPreferences = context.getSharedPreferences("currency", 0);
+        UserData userData = SharedPrefManager.getInstance(context).getUser();
 
-        String CurrencySymbols = sharedPreferences.getString("Currency_Symbols", "$");
-
-
-        holder.transaction_status.setText("Paid To " + transactionHistoryModels.get(position).getReceiverName());
+        holder.transaction_status.setText("Receiver " + transactionHistoryModels.get(position).getReceiverName());
         holder.transaction_amount.setText(transactionHistoryModels.get(position).getAmount());
-        holder.transaction_username.setText("Paid From " + transactionHistoryModels.get(position).getSenderName());
+        holder.transaction_username.setText("Sender " + transactionHistoryModels.get(position).getSenderName());
+
+        if (!userData.getName().equals(transactionHistoryModels.get(position).getSenderName())){
+            holder.transaction_amount.setText("+"+transactionHistoryModels.get(position).getAmount());
+            holder.transaction_amount.setTextColor(context.getResources().getColor(R.color.green));
+        }else{
+            holder.transaction_amount.setText("-"+transactionHistoryModels.get(position).getAmount());
+            holder.transaction_amount.setTextColor(context.getResources().getColor(R.color.red));
+
+        }
 
         String dateAndTime = transactionHistoryModels.get(position).getCreatedAt();
         String[] s = dateAndTime.split("T");

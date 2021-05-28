@@ -11,4 +11,5 @@ public class PrefConf {
     public static final String CAL_USER_BALANCE = "CAL_USER_BALANCE";
     public static final String TOKEN_TYPE = "TOKEN_TYPE";
 
+    public static final String REDEEM_AMOUNT = "REDEEM_AMOUNT";
 }

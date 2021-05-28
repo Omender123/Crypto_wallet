@@ -15,15 +15,12 @@ import android.graphics.drawable.Drawable;
 import android.icu.text.DecimalFormat;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.crypto.croytowallet.Activity.Graph_layout;
-import com.crypto.croytowallet.Activity.MyMarkerView1;
+import com.crypto.croytowallet.Extra_Class.MyMarkerView1;
 import com.crypto.croytowallet.Adapter.Coin_History_Adapter;
 import com.crypto.croytowallet.Interface.HistoryClickLister;
 import com.crypto.croytowallet.Model.CoinModal;
@@ -44,7 +41,6 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.Utils;
-import com.google.gson.JsonObject;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONArray;
@@ -737,7 +733,7 @@ public class ImtSmartGraphLayout extends AppCompatActivity implements View.OnCli
         String date = coinModals.get(position).getTime();
         String amount = coinModals.get(position).getAmount();
         String Type = "coinTransfer";
-        Transaction_HistoryModel historyModel = new Transaction_HistoryModel(transaction, "imt", amount, type, username, date,"null",Type);
+        Transaction_HistoryModel historyModel = new Transaction_HistoryModel(transaction, "imt", amount, type, username, date,null,Type);
 
         //storing the user in shared preferences
         TransactionHistorySharedPrefManager.getInstance(getApplicationContext()).Transaction_History_Data(historyModel);

@@ -1,4 +1,4 @@
-package com.crypto.croytowallet.Activity;
+package com.crypto.croytowallet.Extra_Class;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -21,19 +21,19 @@ import java.text.DecimalFormat;
  * @author Philipp Jahoda
  */
 @SuppressLint("ViewConstructor")
-public class MyMarkerView extends MarkerView {
+public class MyMarkerView1 extends MarkerView {
 
     private final TextView tvContent;
-     SharedPreferences sharedPreferences;
-     String CurrencySymbols;
+    SharedPreferences sharedPreferences;
+    String CurrencySymbols;
     private final DecimalFormat format;
-    public MyMarkerView(Context context, int layoutResource) {
+    public MyMarkerView1(Context context, int layoutResource) {
         super(context, layoutResource);
 
         tvContent = findViewById(R.id.tvContent);
         sharedPreferences = context.getSharedPreferences("currency",0);
         CurrencySymbols =sharedPreferences.getString("Currency_Symbols","$");
-        format = new DecimalFormat("###.#####");
+        format = new DecimalFormat("###.#######");
 
     }
 
@@ -42,17 +42,7 @@ public class MyMarkerView extends MarkerView {
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
 
-      /*  if (e instanceof CandleEntry) {
-
-            CandleEntry ce = (CandleEntry) e;
-
-            tvContent.setText(CurrencySymbols+Utils.formatNumber(ce.getHigh(), 0, true));
-        } else {
-
-            tvContent.setText(CurrencySymbols+Utils.formatNumber(e.getY(), 0, true));
-        }*/
-
- tvContent.setText( CurrencySymbols+format.format(e.getY()));
+        tvContent.setText( CurrencySymbols+format.format(e.getY()));
         super.refreshContent(e, highlight);
 
     }

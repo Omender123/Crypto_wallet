@@ -18,11 +18,11 @@ import java.util.Date;
 public class AppUtils {
 
 
-    public static void showMessageOKCancel(String message, Activity activity, DialogInterface.OnClickListener okListener) {
+    public static void showMessageOKCancel(String message, Activity activity,Boolean aBoolean, DialogInterface.OnClickListener okListener) {
         new android.app.AlertDialog.Builder(activity)
                 .setMessage(message)
-                .setIcon(R.drawable.ic_baseline_check_circle_24)
                 .setPositiveButton("OKAY", okListener)
+                .setCancelable(aBoolean)
                 .create()
                 .show();
     }

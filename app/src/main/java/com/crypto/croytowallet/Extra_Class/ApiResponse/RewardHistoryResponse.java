@@ -1,10 +1,9 @@
 package com.crypto.croytowallet.Extra_Class.ApiResponse;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-public class TransactionHistoryResponse { @SerializedName("count")
-    @Expose
-    private String count;
 
+public class RewardHistoryResponse {
     @SerializedName("result")
     @Expose
     private Result[] results;
@@ -13,14 +12,6 @@ public class TransactionHistoryResponse { @SerializedName("count")
         return results;
     }
 
-
-    public String getCount() {
-        return count;
-    }
-
-    public void setCount(String count) {
-        this.count = count;
-    }
     public class Result {
 
         @SerializedName("type")
@@ -32,24 +23,18 @@ public class TransactionHistoryResponse { @SerializedName("count")
         @SerializedName("senderId")
         @Expose
         private String senderId;
-        @SerializedName("receiverId")
-        @Expose
-        private String receiverId;
-        @SerializedName("earnedReward")
-        @Expose
-        private String earnedReward;
         @SerializedName("closingBalance")
         @Expose
-        private String closingBalance;
+        private String  closingBalance;
         @SerializedName("status")
         @Expose
         private String status;
         @SerializedName("amount")
         @Expose
-        private String amount;
-        @SerializedName("withdrawlFees")
+        private String  amount;
+        @SerializedName("earnedReward")
         @Expose
-        private String withdrawlFees;
+        private String  earnedReward;
         @SerializedName("senderName")
         @Expose
         private String senderName;
@@ -62,6 +47,31 @@ public class TransactionHistoryResponse { @SerializedName("count")
         @SerializedName("updatedAt")
         @Expose
         private String updatedAt;
+        @SerializedName("receiverId")
+        @Expose
+        private String receiverId;
+        @SerializedName("withdrawlFees")
+        @Expose
+        private Integer withdrawlFees;
+        
+        public Result() {
+        }
+        public Result(String type, String id, String senderId, String closingBalance, String status, String amount, String earnedReward, String senderName, String receiverName, String createdAt, String updatedAt, String receiverId, Integer withdrawlFees) {
+            super();
+            this.type = type;
+            this.id = id;
+            this.senderId = senderId;
+            this.closingBalance = closingBalance;
+            this.status = status;
+            this.amount = amount;
+            this.earnedReward = earnedReward;
+            this.senderName = senderName;
+            this.receiverName = receiverName;
+            this.createdAt = createdAt;
+            this.updatedAt = updatedAt;
+            this.receiverId = receiverId;
+            this.withdrawlFees = withdrawlFees;
+        }
 
         public String getType() {
             return type;
@@ -85,22 +95,6 @@ public class TransactionHistoryResponse { @SerializedName("count")
 
         public void setSenderId(String senderId) {
             this.senderId = senderId;
-        }
-
-        public String getReceiverId() {
-            return receiverId;
-        }
-
-        public void setReceiverId(String receiverId) {
-            this.receiverId = receiverId;
-        }
-
-        public String getEarnedReward() {
-            return earnedReward;
-        }
-
-        public void setEarnedReward(String earnedReward) {
-            this.earnedReward = earnedReward;
         }
 
         public String getClosingBalance() {
@@ -127,12 +121,12 @@ public class TransactionHistoryResponse { @SerializedName("count")
             this.amount = amount;
         }
 
-        public String getWithdrawlFees() {
-            return withdrawlFees;
+        public String getEarnedReward() {
+            return earnedReward;
         }
 
-        public void setWithdrawlFees(String withdrawlFees) {
-            this.withdrawlFees = withdrawlFees;
+        public void setEarnedReward(String earnedReward) {
+            this.earnedReward = earnedReward;
         }
 
         public String getSenderName() {
@@ -167,5 +161,20 @@ public class TransactionHistoryResponse { @SerializedName("count")
             this.updatedAt = updatedAt;
         }
 
+        public String getReceiverId() {
+            return receiverId;
+        }
+
+        public void setReceiverId(String receiverId) {
+            this.receiverId = receiverId;
+        }
+
+        public Integer getWithdrawlFees() {
+            return withdrawlFees;
+        }
+
+        public void setWithdrawlFees(Integer withdrawlFees) {
+            this.withdrawlFees = withdrawlFees;
+        }
     }
 }

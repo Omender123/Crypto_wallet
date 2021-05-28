@@ -6,15 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crypto.croytowallet.Adapter.Categories_Adapter;
-import com.crypto.croytowallet.Adapter.Product_HistoryAdapter;
-import com.crypto.croytowallet.Adapter.Product_adapter;
-import com.crypto.croytowallet.Extra_Class.CustomEditText;
 import com.crypto.croytowallet.Extra_Class.DrawableTextView;
 import com.crypto.croytowallet.R;
 

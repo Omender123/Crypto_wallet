@@ -5,6 +5,7 @@ import com.crypto.croytowallet.Extra_Class.ApiResponse.GetNewCoinRespinse;
 import com.crypto.croytowallet.Extra_Class.ApiResponse.PublicKeyResponse;
 import com.crypto.croytowallet.Extra_Class.ApiResponse.PearToPearResponse;
 import com.crypto.croytowallet.Extra_Class.ApiResponse.ResponseBankDetails;
+import com.crypto.croytowallet.Extra_Class.ApiResponse.RewardHistoryResponse;
 import com.crypto.croytowallet.Extra_Class.ApiResponse.SendAddAmountRequestResponse;
 import com.crypto.croytowallet.Extra_Class.ApiResponse.TransactionHistoryResponse;
 import com.google.gson.JsonObject;
@@ -489,4 +490,24 @@ public interface Api {
     Call<TransactionHistoryResponse>GetAllTransactionHistory(
             @Header("Authorization") String Authtoken
     );
+
+    @FormUrlEncoded
+    @POST("transaction/swapRewards")
+    Call<ResponseBody>SwapRewards(
+            @Header("Authorization") String Authtoken,
+            @Field("sendAmount") String amount,
+            @Field("transactionPin") String transactionPin
+    );
+
+    @GET("user/calculateReward")
+    Call<ResponseBody>GetRewards(
+            @Header("Authorization") String Authtoken
+    );
+
+    @GET("transaction/rewardHistory")
+    Call<RewardHistoryResponse>GetHistoryRewards(
+            @Header("Authorization") String Authtoken
+    );
+
+
 }

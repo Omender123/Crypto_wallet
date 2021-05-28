@@ -76,7 +76,7 @@ SharedPreferences sharedPreferences;
              @Override
              public void onClick(View v) {
 
-                 if (Type.equalsIgnoreCase("airDropIMT")){
+                 if (EarnsRewards!=null){
                      text_point.setText(EarnsRewards+" PT");
                      card2.setVisibility(View.VISIBLE);
                      card3.setVisibility(View.VISIBLE);
@@ -99,7 +99,7 @@ SharedPreferences sharedPreferences;
         hideBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Type.equalsIgnoreCase("airDropIMT")){
+                if (EarnsRewards!=null){
                     card2.setVisibility(View.GONE);
                     card3.setVisibility(View.GONE);
                     card_rewards.setVisibility(View.GONE);

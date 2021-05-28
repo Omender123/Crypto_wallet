@@ -42,6 +42,7 @@
                 android:layout_toStartOf="@+id/transaction_amount"
                 android:layout_toEndOf="@+id/view"
                 android:text="Received from"
+                android:fontFamily="@font/montserrat"
                 android:layout_marginRight="5dp"
                 android:textColor="@color/toolbar_text_color"
                 android:textSize="15dp"
@@ -54,6 +55,7 @@
                 android:layout_marginTop="14dp"
                 android:layout_marginRight="15dp"
                 android:textColor="@color/toolbar_text_color"
+                android:fontFamily="@font/montserrat"
                 android:layout_alignParentRight="true"
                 android:text="$210"
                 android:textSize="14dp"
@@ -69,6 +71,7 @@
                 android:layout_toStartOf="@+id/layout"
                 android:layout_toEndOf="@+id/view"
                 android:text="Singh1234567"
+                android:fontFamily="@font/montserrat"
                 android:layout_marginRight="5dp"
                 android:textColor="@color/toolbar_text_color"
                 android:textSize="12dp"
@@ -89,6 +92,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="19 hours ago"
+                    android:fontFamily="@font/montserrat"
                     android:textSize="10dp"
                     android:textStyle="normal"/>
                 <TextView
@@ -97,6 +101,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:text="10:30"
+                    android:fontFamily="@font/montserrat"
                     android:maxLength="8"
                     android:textSize="10dp"
                     android:textStyle="normal"/>

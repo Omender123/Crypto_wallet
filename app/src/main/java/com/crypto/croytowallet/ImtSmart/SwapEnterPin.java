@@ -190,7 +190,7 @@ public class SwapEnterPin extends AppCompatActivity {
                 //    Toast.makeText(SwapEnterPin.this, ""+data.toString(), Toast.LENGTH_SHORT).show();
 
 
-                       AppUtils.showMessageOKCancel(data.toString(), SwapEnterPin.this, new DialogInterface.OnClickListener() {
+                       AppUtils.showMessageOKCancel(data.toString(), SwapEnterPin.this,false, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);

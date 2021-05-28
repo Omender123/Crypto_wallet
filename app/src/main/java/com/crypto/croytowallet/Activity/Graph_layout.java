@@ -14,17 +14,16 @@ import android.graphics.drawable.Drawable;
 import android.icu.text.DecimalFormat;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.crypto.croytowallet.Adapter.Coin_History_Adapter;
 import com.crypto.croytowallet.CoinTransfer.CoinScan;
 import com.crypto.croytowallet.CoinTransfer.Received_Coin;
+import com.crypto.croytowallet.Extra_Class.MyMarkerView;
 import com.crypto.croytowallet.Extra_Class.MyPreferences;
 import com.crypto.croytowallet.Extra_Class.PrefConf;
 import com.crypto.croytowallet.ImtSmart.imtSwap;
@@ -50,7 +49,6 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.Utils;
 import com.kaopiz.kprogresshud.KProgressHUD;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -728,7 +726,7 @@ public class Graph_layout extends AppCompatActivity implements View.OnClickListe
         String amount = coinModals.get(position).getAmount();
         String Type = "coinTransfer";
 
-        Transaction_HistoryModel historyModel = new Transaction_HistoryModel(transaction, coinId, amount, type, username, date,"null",Type);
+        Transaction_HistoryModel historyModel = new Transaction_HistoryModel(transaction, coinId, amount, type, username, date,null,Type);
 
         //storing the user in shared preferences
         TransactionHistorySharedPrefManager.getInstance(getApplicationContext()).Transaction_History_Data(historyModel);

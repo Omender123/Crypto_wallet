@@ -307,7 +307,7 @@ public class Payout_verification extends AppCompatActivity {
                     JSONObject data = (JSONObject) args[0];
 
 
-                    AppUtils.showMessageOKCancel(data.toString(), Payout_verification.this, new DialogInterface.OnClickListener() {
+                    AppUtils.showMessageOKCancel(data.toString(), Payout_verification.this,false, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);

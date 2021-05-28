@@ -3,13 +3,11 @@ package com.crypto.croytowallet.Rewards;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.crypto.croytowallet.Adapter.Product_HistoryAdapter;
 import com.crypto.croytowallet.Adapter.Product_adapter;
 import com.crypto.croytowallet.Extra_Class.DrawableTextView;
 import com.crypto.croytowallet.R;
