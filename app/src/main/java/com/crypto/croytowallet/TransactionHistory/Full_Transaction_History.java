@@ -108,8 +108,8 @@ SharedPreferences sharedPreferences;
                 }else{
                     card2.setVisibility(View.GONE);
                     card3.setVisibility(View.GONE);
-                    showBtn.setVisibility(View.GONE);
-                    hideBtn.setVisibility(View.VISIBLE);
+                    showBtn.setVisibility(View.VISIBLE);
+                    hideBtn.setVisibility(View.GONE);
 
                 }
 

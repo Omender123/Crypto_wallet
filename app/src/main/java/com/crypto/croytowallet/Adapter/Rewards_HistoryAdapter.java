@@ -82,6 +82,12 @@ public class Rewards_HistoryAdapter extends RecyclerView.Adapter<Rewards_History
 
 
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    historyClickLister.onHistoryItemClickListener(getAdapterPosition());
+                }
+            });
 
         }
     }

@@ -208,12 +208,7 @@ public class Rewards extends AppCompatActivity implements HistoryClickLister {
             }
         });
    
-       /* rewards_historyAdapter = new Rewards_HistoryAdapter(price);
-        RecyclerView.LayoutManager mLayoutManager1 = new LinearLayoutManager(Rewards.this, LinearLayoutManager.VERTICAL, false);
-        history_recyclerView.setLayoutManager(mLayoutManager1);
-        history_recyclerView.setItemAnimator(new DefaultItemAnimator());
-        history_recyclerView.setAdapter(rewards_historyAdapter);
-   */ 
+
     }
 
     private void getAllprouct() {
@@ -253,6 +248,17 @@ public class Rewards extends AppCompatActivity implements HistoryClickLister {
 
     @Override
     public void onHistoryItemClickListener(int position) {
+      RewardHistoryResponse.Result  result = new RewardHistoryResponse.Result();
+       String trans_id = data.get(position).getId();
+        String Rewards = data.get(position).getEarnedReward();
+        String airdrop_amount = data.get(position).getAmount();
+        String Date_and_Time = data.get(position).getCreatedAt();
+        result.setId(trans_id);
+        result.setEarnedReward(Rewards);
+        result.setAmount(airdrop_amount);
+        result.setCreatedAt(Date_and_Time);
+
+      startActivity(new Intent(getApplicationContext(),Reward_History.class).putExtra("result",result));
 
     }
 }

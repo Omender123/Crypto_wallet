@@ -41,6 +41,8 @@ TransactionPinBottomSheet transactionPinBottomSheet;
     }
 
     public void Term_Condition(View view) {
+        BottomSheetTC bottomSheet = new BottomSheetTC();
+        bottomSheet.show(getSupportFragmentManager(),bottomSheet.getTag());
     }
 
     @Override

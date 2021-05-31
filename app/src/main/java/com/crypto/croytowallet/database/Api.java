@@ -7,6 +7,7 @@ import com.crypto.croytowallet.Extra_Class.ApiResponse.PearToPearResponse;
 import com.crypto.croytowallet.Extra_Class.ApiResponse.ResponseBankDetails;
 import com.crypto.croytowallet.Extra_Class.ApiResponse.RewardHistoryResponse;
 import com.crypto.croytowallet.Extra_Class.ApiResponse.SendAddAmountRequestResponse;
+import com.crypto.croytowallet.Extra_Class.ApiResponse.TCResponse;
 import com.crypto.croytowallet.Extra_Class.ApiResponse.TransactionHistoryResponse;
 import com.google.gson.JsonObject;
 
@@ -509,5 +510,8 @@ public interface Api {
             @Header("Authorization") String Authtoken
     );
 
-
+    @GET("TC")
+    Call<TCResponse>getTCs(
+            @Header("Authorization") String Authtoken
+    );
 }

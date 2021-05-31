@@ -3,6 +3,8 @@ package com.crypto.croytowallet.Extra_Class.ApiResponse;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 public class RewardHistoryResponse {
     @SerializedName("result")
     @Expose
@@ -12,7 +14,7 @@ public class RewardHistoryResponse {
         return results;
     }
 
-    public class Result {
+    public static class Result   implements Serializable {
 
         @SerializedName("type")
         @Expose
@@ -177,4 +179,5 @@ public class RewardHistoryResponse {
             this.withdrawlFees = withdrawlFees;
         }
     }
+
 }

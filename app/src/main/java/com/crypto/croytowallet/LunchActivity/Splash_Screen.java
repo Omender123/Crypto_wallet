@@ -111,10 +111,15 @@ public class Splash_Screen extends AppCompatActivity {
         switch (requestCode) {
             case LOCK_REQUEST_CODE:
                 if (resultCode == RESULT_OK) {
-                    //If screen lock authentication is success update text
-                    startActivity(new Intent(Splash_Screen.this, Login.class));
-                    finish();
-                  //  Toast.makeText(getApplicationContext(), "Successfull", Toast.LENGTH_LONG).show();
+                    if (SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()) {
+                        startActivity(new Intent(Splash_Screen.this, MainActivity.class));
+                        finish();
+
+                    }else{
+                        startActivity(new Intent(Splash_Screen.this, Login.class));
+                        finish();
+                    }
+
                 } else {
                     //If screen lock authentication is failed update text
                     Snacky.builder()

@@ -51,7 +51,7 @@ public class Enter_TopUp_Amount extends AppCompatActivity {
     String  Amount, currencyType,imtPrices,token,options;
     UserData userData;
     KProgressHUD progressDialog;
-    TextView text_send,text_currency;
+    TextView text_send,text_currency,Show_amount;
     Double totalAmoumt;
     BottomSheetDialogFragment myBottomSheet;
 
@@ -64,6 +64,7 @@ public class Enter_TopUp_Amount extends AppCompatActivity {
         done = findViewById(R.id.add_money);
         text_send = findViewById(R.id.txt_send_amount);
         text_currency = findViewById(R.id.txt_currency);
+        Show_amount = findViewById(R.id.Show_amount);
         Currency = new ArrayList<String>();
 
         userData = SharedPrefManager.getInstance(getApplicationContext()).getUser();
@@ -352,8 +353,10 @@ public class Enter_TopUp_Amount extends AppCompatActivity {
                         for (int i=0; i<=jsonArray.length();i++){
                             JSONObject object = jsonArray.getJSONObject(i);
                             imtPrices =object.getString("price");
+                            Show_amount.setText(" 1  IMT-Utility"+"="+imtPrices+" "+currencyType.toUpperCase() );
 
-                             }
+
+                        }
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }
@@ -369,7 +372,6 @@ public class Enter_TopUp_Amount extends AppCompatActivity {
                             enterAmount=Double.parseDouble(Amount);
 
                             totalAmoumt = enterAmount/coinprices;
-
                             text_send.setText(Amount +" "+currencyType.toUpperCase() +"="+df.format(totalAmoumt)+" IMT-Utility"  );
                         }
 

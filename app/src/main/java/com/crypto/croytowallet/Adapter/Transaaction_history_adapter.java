@@ -67,7 +67,6 @@ public class Transaaction_history_adapter extends RecyclerView.Adapter<Transaact
         }else{
             holder.transaction_amount.setText("-"+transactionHistoryModels.get(position).getAmount());
             holder.transaction_amount.setTextColor(context.getResources().getColor(R.color.red));
-
         }
 
         String dateAndTime = transactionHistoryModels.get(position).getCreatedAt();
