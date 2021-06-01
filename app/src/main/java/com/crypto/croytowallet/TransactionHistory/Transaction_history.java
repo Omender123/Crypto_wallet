@@ -20,6 +20,7 @@ import com.crypto.croytowallet.Adapter.Transaaction_history_adapter;
 import com.crypto.croytowallet.Extra_Class.ApiResponse.TransactionHistoryResponse;
 import com.crypto.croytowallet.Interface.HistoryClickLister;
 import com.crypto.croytowallet.R;
+import com.crypto.croytowallet.Rewards.BottomSheetTC;
 import com.crypto.croytowallet.SharedPrefernce.SharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.TransactionHistorySharedPrefManager;
 import com.crypto.croytowallet.SharedPrefernce.Transaction_HistoryModel;
@@ -30,6 +31,7 @@ import com.kaopiz.kprogresshud.KProgressHUD;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -228,5 +230,10 @@ public class Transaction_history extends AppCompatActivity implements HistoryCli
         Intent intent = new Intent(Transaction_history.this,Full_Transaction_History.class);
         startActivity(intent);
 
+    }
+
+    public void filter(View view) {
+        FilterBottomSheet filterBottomSheet = new FilterBottomSheet();
+        filterBottomSheet.show(getSupportFragmentManager(),filterBottomSheet.getTag());
     }
 }
