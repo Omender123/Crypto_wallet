@@ -1,12 +1,15 @@
 package com.crypto.croytowallet.TransactionHistory;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -29,7 +32,7 @@ import java.util.Calendar;
 
 public class FilterBottomSheet extends BottomSheetDialogFragment {
     TextView exit, Clear_All;
-    EditText startDate, endDate;
+    TextView startDate, endDate;
     CheckBox L_to_H, H_to_L;
     RadioGroup radioGroup, radioGroup1;
     CardView find;
@@ -179,9 +182,8 @@ public class FilterBottomSheet extends BottomSheetDialogFragment {
                 if (day7.isChecked()) {
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     Calendar currentCal = Calendar.getInstance();
-
                     startDate1 = dateFormat.format(currentCal.getTime());
-                    currentCal.add(Calendar.DATE, -30);
+                    currentCal.add(Calendar.DATE, -7);
                     endDate1 = dateFormat.format(currentCal.getTime());
                     startDate.setText(endDate1);
                     endDate.setText(startDate1);
@@ -190,45 +192,59 @@ public class FilterBottomSheet extends BottomSheetDialogFragment {
                 }
             }
         });
-   /*     to1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (to1.isChecked()) {
-                    lowAmount = "1";
-                    highAmount = "200";
-                } else {
-                    lowAmount = "";
-                    highAmount = "";
-                }
-            }
-        });
-        to200.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (to200.isChecked()) {
-                    lowAmount = "201";
-                    highAmount = "500";
 
-                } else {
-                    lowAmount = "";
-                    highAmount = "";
-                }
-            }
-        });
-        to500.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        startDate.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (to500.isChecked()) {
-                    lowAmount = "500";
-                    highAmount = "";
-                }else {
-                    lowAmount = "";
-                    highAmount = "";
-                }
+            public void onClick(View v) {
+                showPickerDialog();
             }
         });
-   */     return bottomSheet;
+
+        endDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPickerDialog1();
+            }
+        });
+        return bottomSheet;
     }
 
+    private void showPickerDialog() {
 
+        DatePickerDialog dtPickerDlg =  new DatePickerDialog(getContext(), android.R.style.Theme_Holo_Dialog, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                Calendar c = Calendar.getInstance();
+                c.set(Calendar.YEAR,year);
+                c.set(Calendar.MONTH,month);
+                c.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+              String  mDate = DateFormat.format("yyyy-MM-dd",c).toString();
+               startDate.setText(mDate);
+            }
+        }, 2020, 01, 01);
+        dtPickerDlg.getDatePicker().setSpinnersShown(true);
+        dtPickerDlg.getDatePicker().setCalendarViewShown(false);
+        dtPickerDlg.setTitle("Select your StartDate");
+        dtPickerDlg.show();
+    }
+
+    private void showPickerDialog1() {
+
+        DatePickerDialog dtPickerDlg =  new DatePickerDialog(getContext(), android.R.style.Theme_Holo_Dialog, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                Calendar c = Calendar.getInstance();
+                c.set(Calendar.YEAR,year);
+                c.set(Calendar.MONTH,month);
+                c.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+                String  mDate = DateFormat.format("yyyy-MM-dd",c).toString();
+                endDate.setText(mDate);
+            }
+        }, 2020, 01, 01);
+        dtPickerDlg.getDatePicker().setSpinnersShown(true);
+        dtPickerDlg.getDatePicker().setCalendarViewShown(false);
+        dtPickerDlg.setTitle("Select your endDate");
+        dtPickerDlg.show();
+
+    }
 }
