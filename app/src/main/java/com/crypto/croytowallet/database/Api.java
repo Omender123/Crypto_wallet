@@ -1,6 +1,7 @@
 package com.crypto.croytowallet.database;
 
 import com.crypto.croytowallet.Extra_Class.ApiResponse.ActiveDeviceResponse;
+import com.crypto.croytowallet.Extra_Class.ApiResponse.FilterBody;
 import com.crypto.croytowallet.Extra_Class.ApiResponse.GetNewCoinRespinse;
 import com.crypto.croytowallet.Extra_Class.ApiResponse.PublicKeyResponse;
 import com.crypto.croytowallet.Extra_Class.ApiResponse.PearToPearResponse;
@@ -491,6 +492,11 @@ public interface Api {
     Call<TransactionHistoryResponse>GetAllTransactionHistory(
             @Header("Authorization") String Authtoken
     );
+     @POST("transaction/allPeerTransactiones2")
+    Call<TransactionHistoryResponse>GetAllTransactionHistory1(
+            @Header("Authorization") String Authtoken,
+            @Body FilterBody filterBody
+            );
 
     @FormUrlEncoded
     @POST("transaction/swapRewards")

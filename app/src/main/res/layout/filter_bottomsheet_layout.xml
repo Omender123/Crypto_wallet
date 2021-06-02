@@ -11,6 +11,7 @@
 
 
     <TextView
+        android:id="@+id/exit"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:drawableLeft="@drawable/ic_baseline_close_24"
@@ -64,12 +65,16 @@
                 android:textColor="@color/drawer_icon"
                 android:fontFamily="@font/montserrat"/>
             <EditText
+                android:id="@+id/startDate"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:gravity="start|center_vertical"
+                android:paddingStart="10dp"
                 android:textSize="15sp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
+                android:hint="2021-03-21"
+                android:textColorHint="@color/drawer_icon"
                 android:inputType="text"
                 android:layout_marginRight="15sp"
                 android:layout_marginLeft="15sp"
@@ -91,11 +96,15 @@
                 android:textColor="@color/drawer_icon"
                 android:fontFamily="@font/montserrat"/>
             <EditText
+                android:id="@+id/endDate"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:gravity="start|center_vertical"
                 android:textSize="15sp"
                 android:inputType="text"
+                android:hint="2021-04-21"
+                android:textColorHint="@color/drawer_icon"
+                android:paddingStart="10dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:layout_marginRight="15sp"
@@ -106,6 +115,7 @@
                 android:fontFamily="@font/montserrat"/>
 
             <RadioGroup
+                android:id="@+id/radioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -115,6 +125,7 @@
                 >
 
                 <RadioButton
+                    android:id="@+id/month"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/drawer_icon"
@@ -126,6 +137,7 @@
                     android:fontFamily="@font/montserrat"/>
 
                 <RadioButton
+                    android:id="@+id/day"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/drawer_icon"
@@ -150,6 +162,7 @@
                 android:textColor="@color/drawer_icon"
                 android:fontFamily="@font/montserrat"/>
             <CheckBox
+                android:id="@+id/L_to_H"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/drawer_icon"
@@ -162,6 +175,7 @@
                 android:textStyle="normal"
                 android:fontFamily="@font/montserrat"/>
             <CheckBox
+                android:id="@+id/H_to_L"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/drawer_icon"
@@ -188,6 +202,7 @@
                 android:fontFamily="@font/montserrat"/>
 
             <RadioGroup
+                android:id="@+id/radioGroup1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="08dp"
@@ -197,10 +212,11 @@
                 >
 
                 <RadioButton
+                    android:id="@+id/radio_1to200"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/drawer_icon"
-                    android:text="1-200 Rs."
+                    android:text="1-200 Rs"
                     android:textAlignment="textStart"
                     android:textSize="14sp"
                     android:layoutDirection="rtl"
@@ -209,20 +225,22 @@
                     android:fontFamily="@font/montserrat"/>
 
                 <RadioButton
+                    android:id="@+id/radio_201to500"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/drawer_icon"
-                    android:text="201-500 Rs."
+                    android:text="201-500 Rs"
                     android:textSize="14sp"
                     android:layoutDirection="rtl"
                     android:bufferType="normal"
                     android:textStyle="normal"
                     android:fontFamily="@font/montserrat"/>
                 <RadioButton
+                    android:id="@+id/radio_500"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/drawer_icon"
-                    android:text="500+ Rs."
+                    android:text="500+ Rs"
                     android:textSize="14sp"
                     android:layoutDirection="rtl"
                     android:bufferType="normal"
@@ -238,6 +256,7 @@
               android:layout_marginTop="05dp">
 
               <TextView
+                  android:id="@+id/clear_all"
                   android:layout_width="match_parent"
                   android:layout_height="40dp"
                   android:layout_alignParentStart="true"

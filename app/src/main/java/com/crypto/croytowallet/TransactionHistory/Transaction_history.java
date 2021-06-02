@@ -15,9 +15,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.crypto.croytowallet.Adapter.Transaaction_history_adapter;
+import com.crypto.croytowallet.Extra_Class.ApiResponse.FilterBody;
 import com.crypto.croytowallet.Extra_Class.ApiResponse.TransactionHistoryResponse;
+import com.crypto.croytowallet.Extra_Class.MyPreferences;
+import com.crypto.croytowallet.Extra_Class.PrefConf;
 import com.crypto.croytowallet.Interface.HistoryClickLister;
 import com.crypto.croytowallet.R;
 import com.crypto.croytowallet.Rewards.BottomSheetTC;
@@ -33,8 +37,10 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 
 import de.mateware.snacky.Snacky;
 import retrofit2.Call;
@@ -88,7 +94,33 @@ public class Transaction_history extends AppCompatActivity implements HistoryCli
 
         showpDialog();
 
-        Call<TransactionHistoryResponse> call = RetrofitClient.getInstance().getApi().GetAllTransactionHistory(token);
+        String Check = MyPreferences.getInstance(Transaction_history.this).getString(PrefConf.CHECK,"false");
+
+        Call<TransactionHistoryResponse> call;
+
+        if (Check.equalsIgnoreCase("false")){
+            call  = RetrofitClient.getInstance().getApi().GetAllTransactionHistory(token);
+        }else{
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Calendar currentCal = Calendar.getInstance();
+            String endDate1 = dateFormat.format(currentCal.getTime());
+            currentCal.add(Calendar.DATE, -180);
+            String   startDate1 = dateFormat.format(currentCal.getTime());
+            String startDate = MyPreferences.getInstance(Transaction_history.this).getString(PrefConf.START_DATE,startDate1);
+            String endDate = MyPreferences.getInstance(Transaction_history.this).getString(PrefConf.END_DATE,endDate1);
+            String lowAmount = MyPreferences.getInstance(Transaction_history.this).getString(PrefConf.LOW_AMOUNT,"1");
+            String highAmount = MyPreferences.getInstance(Transaction_history.this).getString(PrefConf.HIGH_AMOUNT,"NULL");
+            String Short = MyPreferences.getInstance(Transaction_history.this).getString(PrefConf.SHORT,"1");
+
+
+            FilterBody.Filters  filters = new FilterBody.Filters(startDate,endDate,lowAmount,highAmount);
+            FilterBody.Sort  sort = new FilterBody.Sort(Short);
+            FilterBody filterBody = new FilterBody(filters,sort);
+
+            call  = RetrofitClient.getInstance().getApi().GetAllTransactionHistory1(token,filterBody);
+
+        }
+
 
         call.enqueue(new Callback<TransactionHistoryResponse>() {
             @Override
@@ -187,6 +219,11 @@ public class Transaction_history extends AppCompatActivity implements HistoryCli
         public void onBackPressed() {
             super.onBackPressed();
           onSaveInstanceState(new Bundle());
+          MyPreferences.getInstance(getApplicationContext()).deletePreference(PrefConf.SHORT);
+          MyPreferences.getInstance(getApplicationContext()).deletePreference(PrefConf.LOW_AMOUNT);
+          MyPreferences.getInstance(getApplicationContext()).deletePreference(PrefConf.HIGH_AMOUNT);
+          MyPreferences.getInstance(getApplicationContext()).deletePreference(PrefConf.START_DATE);
+          MyPreferences.getInstance(getApplicationContext()).deletePreference(PrefConf.END_DATE);
 
         }
         public void back(){
@@ -235,5 +272,16 @@ public class Transaction_history extends AppCompatActivity implements HistoryCli
     public void filter(View view) {
         FilterBottomSheet filterBottomSheet = new FilterBottomSheet();
         filterBottomSheet.show(getSupportFragmentManager(),filterBottomSheet.getTag());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MyPreferences.getInstance(getApplicationContext()).deletePreference(PrefConf.SHORT);
+        MyPreferences.getInstance(getApplicationContext()).deletePreference(PrefConf.LOW_AMOUNT);
+        MyPreferences.getInstance(getApplicationContext()).deletePreference(PrefConf.HIGH_AMOUNT);
+        MyPreferences.getInstance(getApplicationContext()).deletePreference(PrefConf.START_DATE);
+        MyPreferences.getInstance(getApplicationContext()).deletePreference(PrefConf.END_DATE);
+
     }
 }
