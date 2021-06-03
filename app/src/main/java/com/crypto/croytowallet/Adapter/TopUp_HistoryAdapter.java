@@ -79,16 +79,9 @@ public class TopUp_HistoryAdapter extends RecyclerView.Adapter<TopUp_HistoryAdap
         holder.transaction_status.setText(transactionHistoryModels.get(position).getTransactionId());
 
 
-        if (transactionHistoryModels.get(position).getUtility()==null){
-            Integer Amount =transactionHistoryModels.get(position).getAmount();
-            Double price1 = Double.valueOf(price);
-            Double Total = Amount*price1;
-            holder.transaction_amount.setText(String.valueOf(Total)+" UT");
 
-        }else{
             holder.transaction_amount.setText(transactionHistoryModels.get(position).getUtility()+"UT");
 
-        }
 
 
         String dateAndTime = transactionHistoryModels.get(position).getCreatedAt();
@@ -97,7 +90,7 @@ public class TopUp_HistoryAdapter extends RecyclerView.Adapter<TopUp_HistoryAdap
          holder.transaction_username.setText(time);
 
 
-        holder.transaction_date.setText(transactionHistoryModels.get(position).getAmount()+" "+transactionHistoryModels.get(position).getCurrency().toUpperCase());
+        holder.transaction_date.setText(transactionHistoryModels.get(position).getAmount()+" "+transactionHistoryModels.get(position).getCurrency());
 
        // setAnimation(holder.itemView);
 
