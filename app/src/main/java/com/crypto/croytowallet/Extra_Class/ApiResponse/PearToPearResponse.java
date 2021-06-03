@@ -39,7 +39,7 @@ public class PearToPearResponse {
         private String status;
         @SerializedName("amount")
         @Expose
-        private Integer amount;
+        private String amount;
         @SerializedName("withdrawlFees")
         @Expose
         private Integer withdrawlFees;
@@ -112,11 +112,11 @@ public class PearToPearResponse {
             this.status = status;
         }
 
-        public Integer getAmount() {
+        public String getAmount() {
             return amount;
         }
 
-        public void setAmount(Integer amount) {
+        public void setAmount(String amount) {
             this.amount = amount;
         }
 

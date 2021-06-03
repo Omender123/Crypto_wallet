@@ -14,7 +14,7 @@ import com.crypto.croytowallet.R;
 import de.mateware.snacky.Snacky;
 
 public class Top_up_Money extends AppCompatActivity implements View.OnClickListener {
-CardView card_paypal,card_bank,card_qrCode;
+CardView card_paypal,card_bank,card_qrCode,card_History;
 
 
       @Override
@@ -24,10 +24,11 @@ CardView card_paypal,card_bank,card_qrCode;
         card_paypal = findViewById(R.id.card_paypal);
           card_bank = findViewById(R.id.card_bank);
           card_qrCode = findViewById(R.id.card_QrCode);
+          card_History = findViewById(R.id.card_History);
           card_paypal.setOnClickListener(this);
           card_bank.setOnClickListener(this);
           card_qrCode.setOnClickListener(this);
-
+          card_History.setOnClickListener(this);
 
 
       }
@@ -67,6 +68,9 @@ CardView card_paypal,card_bank,card_qrCode;
                           .success()
                           .show();
 
+                  break;
+              case R.id.card_History:
+                  startActivity(new Intent(Top_up_Money.this,TopUp_History.class));
                   break;
           }
 

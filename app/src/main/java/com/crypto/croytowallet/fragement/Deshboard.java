@@ -362,6 +362,10 @@ Deshboard extends Fragment implements View.OnClickListener, CryptoClickListner, 
 
 
         } else if (id == R.id.lytaddMoney) {
+            SharedPreferences.Editor editor = sharedPreferences1.edit();
+            editor.putString("price", imtPrices);
+            editor.putString("chanage", increaseRate1);
+            editor.commit();
             deepChangeTextColor(4);
             startActivity(new Intent(getContext(), Top_up_Money.class));
 

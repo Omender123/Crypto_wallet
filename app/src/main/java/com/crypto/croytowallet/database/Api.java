@@ -9,9 +9,11 @@ import com.crypto.croytowallet.Extra_Class.ApiResponse.ResponseBankDetails;
 import com.crypto.croytowallet.Extra_Class.ApiResponse.RewardHistoryResponse;
 import com.crypto.croytowallet.Extra_Class.ApiResponse.SendAddAmountRequestResponse;
 import com.crypto.croytowallet.Extra_Class.ApiResponse.TCResponse;
+import com.crypto.croytowallet.Extra_Class.ApiResponse.TopUp_HistoryResponse;
 import com.crypto.croytowallet.Extra_Class.ApiResponse.TransactionHistoryResponse;
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.MultipartBody;
@@ -518,6 +520,11 @@ public interface Api {
 
     @GET("TC")
     Call<TCResponse>getTCs(
+            @Header("Authorization") String Authtoken
+    );
+
+    @GET("pending/userPendingTrans")
+    Call<List<TopUp_HistoryResponse>>getRewardHistory(
             @Header("Authorization") String Authtoken
     );
 }

@@ -146,7 +146,7 @@ CardView pay_money;
                             pearToPearResponse.getResult().getId(),
                             pearToPearResponse.getResult().getReceiverName(),
                             pearToPearResponse.getResult().getSenderName(),
-                            String.valueOf(pearToPearResponse.getResult().getAmount()),
+                            pearToPearResponse.getResult().getAmount(),
                             pearToPearResponse.getResult().getStatus(),
                             "",
                             pearToPearResponse.getResult().getEarnedReward());
